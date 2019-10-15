@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/blog/blog/2019/10/15/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/blog/blog/2019/10/15/函数式编程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mr.RS">
@@ -210,7 +210,7 @@
         <h1 class="post-title" itemprop="name headline">
           
             
-            <a href="/blog/2019/10/15/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/blog/2019/10/15/函数式编程/" class="post-title-link" itemprop="url">函数式编程</a>
           
         </h1>
 
@@ -225,7 +225,28 @@
                 
               
 
-              <time title="创建时间：2019-10-15 09:31:00" itemprop="dateCreated datePublished" datetime="2019-10-15T09:31:00+08:00">2019-10-15</time>
+              <time title="创建时间：2019-10-15 10:10:17 / 修改时间：11:41:17" itemprop="dateCreated datePublished" datetime="2019-10-15T10:10:17+08:00">2019-10-15</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/函数式编程/" itemprop="url" rel="index">
+                    <span itemprop="name">函数式编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
             </span>
           
 
@@ -240,19 +261,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+          <h1 id="WHAT"><a href="#WHAT" class="headerlink" title="WHAT"></a>WHAT</h1><ul>
+<li>本质上，函数式编程只是<strong>范畴论的运算方法</strong>，跟数理逻辑、微积分、行列式是同一类痛惜，都是数学方法，只是碰巧它能用来写程序</li>
+<li>FP 的目的是使用函数来抽象作用在数据之上的控制力和操作，从而在系统中消除副作用并减少对状态的改变</li>
+<li>OOP 通过封装使得代码更易理解，FP 通过最小化变化使得代码更易理解</li>
+<li>ps: 为什么函数式编程要求函数必须是纯的，不能有副作用？因为它是一种数学运算，原始目的就是求值，不做其他事情，否则就无法满足函数运算法则了</li>
+</ul>
+<h1 id="WHY"><a href="#WHY" class="headerlink" title="WHY"></a>WHY</h1><ul>
+<li>使用纯函数的代码绝不会更改或破环全局状态，有助于提高代码的可测性和可维护性</li>
+<li>FP 采用声明式的风格，易于推理，蹄盖代码的可读性</li>
+<li>函数式编程将函数视为积木，通过高阶函数来提高代码的模块化和可重用性</li>
+<li>可以利用响应式编程组合各个函数来降低事件驱动程序的复杂性</li>
+</ul>
+<h1 id="HOW"><a href="#HOW" class="headerlink" title="HOW"></a>HOW</h1><ul>
+<li>纯函数(pure function)<br>相同的输入总是得到相同的输出，不依赖外部环境，完全做到”自给自足”</li>
+<li>合成(compose)<br>如果一个值要经过多个函数才能编程另外一个值，就可以把所用中间步骤合并成一个函数，这叫做<strong>函数的合成(compose)</strong></li>
+<li>柯里化(curry)<br>在 compose 时，如果函数有多个参数 compose 将会变得非常麻烦，所谓柯里化就是把一个多参数的函数转化为单参数的函数</li>
+<li>函字(functor)<br>FP 里基本的运算单位和功能单位，可以将一个容器转换为另一个容器。任何具有 map 方法的数据结构都可当作函子的实现</li>
+</ul>
 
         
       
@@ -1613,7 +1639,7 @@ String: Bar</code></pre>
         
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1622,7 +1648,7 @@ String: Bar</code></pre>
       
       <div class="site-state-item site-state-categories">
         
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span>
         
       </div>
@@ -1631,7 +1657,7 @@ String: Bar</code></pre>
       
       <div class="site-state-item site-state-tags">
         
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span>
         
       </div>

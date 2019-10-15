@@ -55,25 +55,19 @@
   };
 </script>
 
-  <meta name="description" content="MySQL高级-存储过程管理@(mysql)[procedure]  查看数据库的存储过程 ： 1show procedure status where db=&apos;test&apos;\G    查看当前数据库下的存储过程 ： 1select specific_name from mysql.proc;\G    查看存储过程的内容 ： 1select specific_name, body from mys">
-<meta name="keywords" content="MySQL procedure">
+  <meta name="description" content="WHAT 本质上，函数式编程只是范畴论的运算方法，跟数理逻辑、微积分、行列式是同一类痛惜，都是数学方法，只是碰巧它能用来写程序 FP 的目的是使用函数来抽象作用在数据之上的控制力和操作，从而在系统中消除副作用并减少对状态的改变 OOP 通过封装使得代码更易理解，FP 通过最小化变化使得代码更易理解 ps: 为什么函数式编程要求函数必须是纯的，不能有副作用？因为它是一种数学运算，原始目的就是求值，不">
+<meta name="keywords" content="函数式编程 基本&#x2F;核心概念">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL高级-存储过程管理">
-<meta property="og:url" content="https://mrrs878.github.io/blog/2018/11/12/MySQL高级-存储过程管理/index.html">
+<meta property="og:title" content="函数式编程">
+<meta property="og:url" content="https://mrrs878.github.io/blog/2019/10/15/函数式编程/index.html">
 <meta property="og:site_name" content="Mr.RS">
-<meta property="og:description" content="MySQL高级-存储过程管理@(mysql)[procedure]  查看数据库的存储过程 ： 1show procedure status where db=&apos;test&apos;\G    查看当前数据库下的存储过程 ： 1select specific_name from mysql.proc;\G    查看存储过程的内容 ： 1select specific_name, body from mys">
+<meta property="og:description" content="WHAT 本质上，函数式编程只是范畴论的运算方法，跟数理逻辑、微积分、行列式是同一类痛惜，都是数学方法，只是碰巧它能用来写程序 FP 的目的是使用函数来抽象作用在数据之上的控制力和操作，从而在系统中消除副作用并减少对状态的改变 OOP 通过封装使得代码更易理解，FP 通过最小化变化使得代码更易理解 ps: 为什么函数式编程要求函数必须是纯的，不能有副作用？因为它是一种数学运算，原始目的就是求值，不">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://i.loli.net/2018/11/12/5be94f5043e82.png">
-<meta property="og:image" content="https://i.loli.net/2018/11/12/5be94ee471819.png">
-<meta property="og:image" content="https://i.loli.net/2018/11/12/5be94f5050259.png">
-<meta property="og:image" content="https://i.loli.net/2018/11/12/5be94f504e883.png">
-<meta property="og:image" content="https://i.loli.net/2018/11/12/5be94f504cd4b.png">
-<meta property="og:updated_time" content="2019-10-15T02:03:37.380Z">
+<meta property="og:updated_time" content="2019-10-15T03:41:17.629Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MySQL高级-存储过程管理">
-<meta name="twitter:description" content="MySQL高级-存储过程管理@(mysql)[procedure]  查看数据库的存储过程 ： 1show procedure status where db=&apos;test&apos;\G    查看当前数据库下的存储过程 ： 1select specific_name from mysql.proc;\G    查看存储过程的内容 ： 1select specific_name, body from mys">
-<meta name="twitter:image" content="https://i.loli.net/2018/11/12/5be94f5043e82.png">
-  <link rel="canonical" href="https://mrrs878.github.io/blog/2018/11/12/MySQL高级-存储过程管理/">
+<meta name="twitter:title" content="函数式编程">
+<meta name="twitter:description" content="WHAT 本质上，函数式编程只是范畴论的运算方法，跟数理逻辑、微积分、行列式是同一类痛惜，都是数学方法，只是碰巧它能用来写程序 FP 的目的是使用函数来抽象作用在数据之上的控制力和操作，从而在系统中消除副作用并减少对状态的改变 OOP 通过封装使得代码更易理解，FP 通过最小化变化使得代码更易理解 ps: 为什么函数式编程要求函数必须是纯的，不能有副作用？因为它是一种数学运算，原始目的就是求值，不">
+  <link rel="canonical" href="https://mrrs878.github.io/blog/2019/10/15/函数式编程/">
 
 
 <script id="page-configurations">
@@ -87,7 +81,7 @@
   };
 </script>
 
-  <title>MySQL高级-存储过程管理 | Mr.RS</title>
+  <title>函数式编程 | Mr.RS</title>
   
 
 
@@ -206,7 +200,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/blog/blog/2018/11/12/MySQL高级-存储过程管理/">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/blog/blog/2019/10/15/函数式编程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mr.RS">
@@ -220,7 +214,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            MySQL高级-存储过程管理
+            函数式编程
             
 
           
@@ -237,19 +231,11 @@
                 
               
 
-              <time title="创建时间：2018-11-12 17:07:28" itemprop="dateCreated datePublished" datetime="2018-11-12T17:07:28+08:00">2018-11-12</time>
+              <time title="创建时间：2019-10-15 10:10:17 / 修改时间：11:41:17" itemprop="dateCreated datePublished" datetime="2019-10-15T10:10:17+08:00">2019-10-15</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-15 10:03:37" itemprop="dateModified" datetime="2019-10-15T10:03:37+08:00">2019-10-15</time>
-              </span>
             
           
             <span class="post-meta-item">
@@ -259,8 +245,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/数据库-MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库 MySQL</span>
+                  <a href="/blog/categories/函数式编程/" itemprop="url" rel="index">
+                    <span itemprop="name">函数式编程</span>
                   </a>
                 </span>
 
@@ -281,33 +267,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="MySQL高级-存储过程管理"><a href="#MySQL高级-存储过程管理" class="headerlink" title="MySQL高级-存储过程管理"></a>MySQL高级-存储过程管理</h1><p>@(mysql)[procedure]</p>
-<ul>
-<li><p><strong>查看数据库的存储过程</strong> ：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">procedure</span> <span class="keyword">status</span> <span class="keyword">where</span> db=<span class="string">'test'</span>\G</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><img src="https://i.loli.net/2018/11/12/5be94f5043e82.png" alt="enter image description here"></p>
-</li>
-<li><p><strong>查看当前数据库下的存储过程</strong> ：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> specific_name <span class="keyword">from</span> mysql.proc;\G</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><img src="https://i.loli.net/2018/11/12/5be94ee471819.png" alt="enter image description here"></p>
-</li>
-<li><p><strong>查看存储过程的内容</strong> ：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> specific_name, <span class="keyword">body</span> <span class="keyword">from</span> mysql.proc\G</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><img src="https://i.loli.net/2018/11/12/5be94f5050259.png" alt="enter image description here"></p>
-</li>
-<li><p><strong>查看某个存储过程的内容</strong>：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> specific_name, <span class="keyword">body</span> <span class="keyword">from</span> mysql.proc <span class="keyword">where</span> specific_name = <span class="string">'load_t'</span>\G</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><img src="https://i.loli.net/2018/11/12/5be94f504e883.png" alt="enter image description here"></p>
-</li>
-<li><p><strong>删除某个存储过程</strong></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">procedure</span> <span class="keyword">if</span> <span class="keyword">exists</span> load_t;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><img src="https://i.loli.net/2018/11/12/5be94f504cd4b.png" alt="enter image description here"></p>
-</li>
+        <h1 id="WHAT"><a href="#WHAT" class="headerlink" title="WHAT"></a>WHAT</h1><ul>
+<li>本质上，函数式编程只是<strong>范畴论的运算方法</strong>，跟数理逻辑、微积分、行列式是同一类痛惜，都是数学方法，只是碰巧它能用来写程序</li>
+<li>FP 的目的是使用函数来抽象作用在数据之上的控制力和操作，从而在系统中消除副作用并减少对状态的改变</li>
+<li>OOP 通过封装使得代码更易理解，FP 通过最小化变化使得代码更易理解</li>
+<li>ps: 为什么函数式编程要求函数必须是纯的，不能有副作用？因为它是一种数学运算，原始目的就是求值，不做其他事情，否则就无法满足函数运算法则了</li>
+</ul>
+<h1 id="WHY"><a href="#WHY" class="headerlink" title="WHY"></a>WHY</h1><ul>
+<li>使用纯函数的代码绝不会更改或破环全局状态，有助于提高代码的可测性和可维护性</li>
+<li>FP 采用声明式的风格，易于推理，蹄盖代码的可读性</li>
+<li>函数式编程将函数视为积木，通过高阶函数来提高代码的模块化和可重用性</li>
+<li>可以利用响应式编程组合各个函数来降低事件驱动程序的复杂性</li>
+</ul>
+<h1 id="HOW"><a href="#HOW" class="headerlink" title="HOW"></a>HOW</h1><ul>
+<li>纯函数(pure function)<br>相同的输入总是得到相同的输出，不依赖外部环境，完全做到”自给自足”</li>
+<li>合成(compose)<br>如果一个值要经过多个函数才能编程另外一个值，就可以把所用中间步骤合并成一个函数，这叫做<strong>函数的合成(compose)</strong></li>
+<li>柯里化(curry)<br>在 compose 时，如果函数有多个参数 compose 将会变得非常麻烦，所谓柯里化就是把一个多参数的函数转化为单参数的函数</li>
+<li>函字(functor)<br>FP 里基本的运算单位和功能单位，可以将一个容器转换为另一个容器。任何具有 map 方法的数据结构都可当作函子的实现</li>
 </ul>
 
     </div>
@@ -324,7 +300,7 @@
           
           <div class="post-tags">
             
-              <a href="/blog/tags/MySQL-procedure/" rel="tag"># MySQL procedure</a>
+              <a href="/blog/tags/函数式编程-基本-核心概念/" rel="tag"># 函数式编程 基本/核心概念</a>
             
           </div>
         
@@ -334,8 +310,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/blog/2018/11/08/hello-world/" rel="next" title="hello world">
-                  <i class="fa fa-chevron-left"></i> hello world
+                <a href="/blog/2019/06/30/浏览器缓存/" rel="next" title="浏览器缓存">
+                  <i class="fa fa-chevron-left"></i> 浏览器缓存
                 </a>
               
             </div>
@@ -343,10 +319,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/blog/2018/11/12/MySQL高级-函数/" rel="prev" title="MySQL高级-函数">
-                  MySQL高级-函数 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -392,7 +364,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL高级-存储过程管理"><span class="nav-number">1.</span> <span class="nav-text">MySQL高级-存储过程管理</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WHAT"><span class="nav-number">1.</span> <span class="nav-text">WHAT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WHY"><span class="nav-number">2.</span> <span class="nav-text">WHY</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HOW"><span class="nav-number">3.</span> <span class="nav-text">HOW</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
