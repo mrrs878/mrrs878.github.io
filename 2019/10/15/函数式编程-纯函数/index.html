@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="纯函数的基本概念纯函数是这样一种函数，相同的输入永远会得到相同的输出，而且没有任何可观察的副作用。 可能会导致不纯的情况：  修改调用/传入的参数 123456789let array = [1, 2, 3, 4, 5];// 纯的array.slice(0, 3); //[1, 2, 3]array.slice(0, 3); //[1, 2, 3]// 不纯的 --&amp;gt; 会修改arrayar">
+<meta name="keywords" content="函数式编程 纯函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数式编程-纯函数">
+<meta property="og:url" content="https://mrrs878.github.io/2019/10/15/函数式编程-纯函数/index.html">
+<meta property="og:site_name" content="Mr.RS">
+<meta property="og:description" content="纯函数的基本概念纯函数是这样一种函数，相同的输入永远会得到相同的输出，而且没有任何可观察的副作用。 可能会导致不纯的情况：  修改调用/传入的参数 123456789let array = [1, 2, 3, 4, 5];// 纯的array.slice(0, 3); //[1, 2, 3]array.slice(0, 3); //[1, 2, 3]// 不纯的 --&amp;gt; 会修改arrayar">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-15T07:18:31.333Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="函数式编程-纯函数">
+<meta name="twitter:description" content="纯函数的基本概念纯函数是这样一种函数，相同的输入永远会得到相同的输出，而且没有任何可观察的副作用。 可能会导致不纯的情况：  修改调用/传入的参数 123456789let array = [1, 2, 3, 4, 5];// 纯的array.slice(0, 3); //[1, 2, 3]array.slice(0, 3); //[1, 2, 3]// 不纯的 --&amp;gt; 会修改arrayar">
+  <link rel="canonical" href="https://mrrs878.github.io/2019/10/15/函数式编程-纯函数/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>函数式编程-纯函数 | Mr.RS</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.RS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Read The Fucking Source Code!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/10/15/函数式编程-纯函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            函数式编程-纯函数
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-15 13:43:45 / 修改时间：15:18:31" itemprop="dateCreated datePublished" datetime="2019-10-15T13:43:45+08:00">2019-10-15</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/函数式编程/" itemprop="url" rel="index">
+                    <span itemprop="name">函数式编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="纯函数的基本概念"><a href="#纯函数的基本概念" class="headerlink" title="纯函数的基本概念"></a>纯函数的基本概念</h1><p>纯函数是这样一种函数，相同的输入永远会得到相同的输出，而且没有任何可观察的副作用。</p>
+<p>可能会导致不纯的情况：</p>
+<ul>
+<li><p>修改调用/传入的参数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> array = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 纯的</span></span><br><span class="line">array.slice(<span class="number">0</span>, <span class="number">3</span>); <span class="comment">//[1, 2, 3]</span></span><br><span class="line">array.slice(<span class="number">0</span>, <span class="number">3</span>); <span class="comment">//[1, 2, 3]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 不纯的 --&gt; 会修改array</span></span><br><span class="line">array.splice(<span class="number">0</span>, <span class="number">3</span>); <span class="comment">//[1, 2, 3]</span></span><br><span class="line">array.splice(<span class="number">0</span>, <span class="number">3</span>); <span class="comment">//[4, 5]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>依赖外部环境</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 纯的</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkAge</span>(<span class="params">minmun, age</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> age &gt; minmun;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不纯的 --&gt; 引入了外部的环境，从而增加了认知负荷(cognitive load)</span></span><br><span class="line"><span class="keyword">let</span> minmum = <span class="number">21</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkAge</span>(<span class="params">age</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> age &gt; minmun;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="副作用"><a href="#副作用" class="headerlink" title="副作用"></a>副作用</h1><p>副作用是在计算结果的过程中，系统状态的一种变化，或者与外部世界进行的可观察的交互。</p>
+<p>副作用可能包括：</p>
+<ul>
+<li>更改文件系统</li>
+<li>往数据库插入记录</li>
+<li>发送一个 http 请求</li>
+<li>修改传入的数据</li>
+<li>打印/log</li>
+<li>获取用户输入</li>
+<li>DOM 查询</li>
+<li>访问系统状态</li>
+<li>……</li>
+</ul>
+<h1 id="追求纯的理由"><a href="#追求纯的理由" class="headerlink" title="追求纯的理由"></a>追求纯的理由</h1><ul>
+<li><p>可缓存性(cacheable)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">memoize</span>(<span class="params">f</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> cache = &#123;&#125;;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> arg_str = <span class="built_in">JSON</span>.stringify(<span class="built_in">arguments</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(cache[arg_str]);</span><br><span class="line">    cache[arg_str] = cache[arg_str] || f.apply(f, <span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">return</span> cache[arg_str];</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> squareNumber = memoize(<span class="function"><span class="params">x</span> =&gt;</span> x * x);</span><br><span class="line"></span><br><span class="line">squareNumber(<span class="number">3</span>);</span><br><span class="line">squareNumber(<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可移植性/自文档化(portable/self-documenting)</p>
+</li>
+<li><p>可测试性(testable)</p>
+</li>
+<li><p>合理性(reasonable)</p>
+<p>使用纯函数的最大好处是<a href="https://en.wikipedia.org/wiki/Referential_transparency" target="_blank" rel="noopener">引用透明性(referential transparency)</a>。</p>
+<p>如果一段代码可以替换成它执行所得的结果，而且是在不改变整个程序行为的前提下替换的，那么就认为这段代码是引用透明的。由于纯函数总是能够根据相同的输入返回相同的输出，所以它们就能够保证总是返回同一个结果，这也就保证了引用透明性。对于引用透明的代码，可以使用”等式推导”(equational reasoning)的技术来分析代码，所谓”等式推导”就是”一对一”替换，有点像在不考虑程序行执行的怪异行为(quirks of programmatic evaluation)的情况下手动执行相关代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> Immutable = <span class="built_in">require</span>(<span class="string">"immutable"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// decrementHP是纯函数！！！因为player的来源是immutable.Map，set方法不会使map改变，而是返回一个新的map对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">decrementHP</span>(<span class="params">player</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> player.set(<span class="string">"hp"</span>, player.hp - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isSameTeam</span>(<span class="params">player1, player2</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> player1.team === player2.team;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">punch</span>(<span class="params">player, target</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (isSameTeam(player, target)) &#123;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> decrementHP(target);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> jobe = Immutable.Map(&#123; <span class="attr">name</span>: <span class="string">"Jobe"</span>, <span class="attr">hp</span>: <span class="number">20</span>, <span class="attr">team</span>: <span class="string">"red"</span> &#125;);</span><br><span class="line"><span class="keyword">let</span> michael = Immutable.Map(&#123; <span class="attr">name</span>: <span class="string">"Michael"</span>, <span class="attr">hp</span>: <span class="number">20</span>, <span class="attr">team</span>: <span class="string">"green"</span> &#125;);</span><br><span class="line"></span><br><span class="line">punch(jobe, michael);</span><br><span class="line"><span class="comment">//=&gt; Immutable.Map(&#123;name:"Michael", hp:19, team: "green"&#125;)</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/MostlyAdequate/mostly-adequate-guide/issues/244" target="_blank" rel="noopener">关于 decrementHP 是不是纯函数的讨论</a></p>
+</li>
+<li><p>并行代码</p>
+<p>可以并行运行任意纯函数，因为纯函数根本不需要访问共享内存，而且根据其定义，纯函数也不会因副作用而进入<a href="https://en.wikipedia.org/wiki/Race_condition" target="_blank" rel="noopener">竞态(race condition)</a></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/函数式编程-纯函数/" rel="tag"># 函数式编程 纯函数</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/10/15/函数式编程/" rel="next" title="函数式编程">
+                  <i class="fa fa-chevron-left"></i> 函数式编程
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#纯函数的基本概念"><span class="nav-number">1.</span> <span class="nav-text">纯函数的基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#副作用"><span class="nav-number">2.</span> <span class="nav-text">副作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#追求纯的理由"><span class="nav-number">3.</span> <span class="nav-text">追求纯的理由</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/imgs/avatar.png"
+      alt="Mr.RS">
+  <p class="site-author-name" itemprop="name">Mr.RS</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
