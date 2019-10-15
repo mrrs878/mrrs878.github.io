@@ -10,22 +10,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=7.4.1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=7.4.1">
-  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=7.4.1">
-  <link rel="mask-icon" href="/blog/images/logo.svg?v=7.4.1" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
 
-<link rel="stylesheet" href="/blog/css/main.css?v=7.4.1">
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
 
 
-<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    root: '/blog/',
-    scheme: 'Muse',
+    root: '/',
+    scheme: 'Gemini',
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
@@ -59,7 +59,7 @@
 <meta name="keywords" content="Python requests">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python-requests库的使用">
-<meta property="og:url" content="https://mrrs878.github.io/blog/2018/11/14/Python-requests库的使用/index.html">
+<meta property="og:url" content="https://mrrs878.github.io/2018/11/14/Python-requests库的使用/index.html">
 <meta property="og:site_name" content="Mr.RS">
 <meta property="og:description" content="Python-requests库的使用urllib 的用法中有一些不方便的地方，比如处理网页验证和Cooki es 时，需要写 Opener 和 Handler 来处理。 为了更加方便地实现这些操作，就有了更为强大的库requests ，有了它 ， Cookies 、登录验证、代理设置等操作都变得极为简单。 一切以官网为主http://docs.python-requests.org/en/mas">
 <meta property="og:locale" content="zh-CN">
@@ -81,7 +81,7 @@
 <meta name="twitter:title" content="Python-requests库的使用">
 <meta name="twitter:description" content="Python-requests库的使用urllib 的用法中有一些不方便的地方，比如处理网页验证和Cooki es 时，需要写 Opener 和 Handler 来处理。 为了更加方便地实现这些操作，就有了更为强大的库requests ，有了它 ， Cookies 、登录验证、代理设置等操作都变得极为简单。 一切以官网为主http://docs.python-requests.org/en/mas">
 <meta name="twitter:image" content="https://t1.picb.cc/uploads/2018/11/14/JShz6r.png">
-  <link rel="canonical" href="https://mrrs878.github.io/blog/2018/11/14/Python-requests库的使用/">
+  <link rel="canonical" href="https://mrrs878.github.io/2018/11/14/Python-requests库的使用/">
 
 
 <script id="page-configurations">
@@ -139,7 +139,7 @@
   <div class="site-meta">
 
     <div>
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Mr.RS</span>
         <span class="logo-line-after"><i></i></span>
@@ -170,7 +170,46 @@
       
     
 
-    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
 
   </li>
       
@@ -183,14 +222,12 @@
       
     
 
-    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
   </li>
       
     
   </ul>
-
-    
 
 </nav>
 </div>
@@ -206,6 +243,8 @@
     <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
+            
+
           <div class="content">
             
 
@@ -214,12 +253,12 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/blog/blog/2018/11/14/Python-requests库的使用/">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2018/11/14/Python-requests库的使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mr.RS">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="image" content="/imgs/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -267,7 +306,7 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Python-lib/" itemprop="url" rel="index">
+                  <a href="/categories/Python-lib/" itemprop="url" rel="index">
                     <span itemprop="name">Python lib</span>
                   </a>
                 </span>
@@ -353,7 +392,7 @@
           
           <div class="post-tags">
             
-              <a href="/blog/tags/Python-requests/" rel="tag"># Python requests</a>
+              <a href="/tags/Python-requests/" rel="tag"># Python requests</a>
             
           </div>
         
@@ -363,7 +402,7 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/blog/2018/11/13/MySQL-触发器/" rel="next" title="MySQL-触发器">
+                <a href="/2018/11/13/MySQL-触发器/" rel="next" title="MySQL-触发器">
                   <i class="fa fa-chevron-left"></i> MySQL-触发器
                 </a>
               
@@ -373,7 +412,7 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/blog/2018/11/14/MySQL-锁/" rel="prev" title="MySQL-锁">
+                <a href="/2018/11/14/MySQL-锁/" rel="prev" title="MySQL-锁">
                   MySQL-锁 <i class="fa fa-chevron-right"></i>
                 </a>
               
@@ -428,6 +467,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/imgs/avatar.png"
+      alt="Mr.RS">
   <p class="site-author-name" itemprop="name">Mr.RS</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -435,7 +477,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         
-          <a href="/blog/archives/">
+          <a href="/archives/">
         
           <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
@@ -446,18 +488,26 @@
       
       <div class="site-state-item site-state-categories">
         
+          
+            <a href="/categories/">
+          
+        
         <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span>
-        
+        </a>
       </div>
     
       
       
       <div class="site-state-item site-state-tags">
         
+          
+            <a href="/tags/">
+          
+        
         <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span>
-        
+        </a>
       </div>
     
   </nav>
@@ -490,9 +540,7 @@
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">
-      
-    主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.1
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.1
   </div>
 
         
@@ -514,12 +562,13 @@
   </div>
 
   
-  <script src="/blog/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/blog/js/utils.js?v=7.4.1"></script><script src="/blog/js/motion.js?v=7.4.1"></script>
-<script src="/blog/js/schemes/muse.js?v=7.4.1"></script>
-<script src="/blog/js/next-boot.js?v=7.4.1"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
 
 
 

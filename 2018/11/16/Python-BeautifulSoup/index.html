@@ -10,22 +10,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=7.4.1">
-  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=7.4.1">
-  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=7.4.1">
-  <link rel="mask-icon" href="/blog/images/logo.svg?v=7.4.1" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
 
-<link rel="stylesheet" href="/blog/css/main.css?v=7.4.1">
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
 
 
-<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    root: '/blog/',
-    scheme: 'Muse',
+    root: '/',
+    scheme: 'Gemini',
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
@@ -59,7 +59,7 @@
 <meta name="keywords" content="Python BeautifulSoup">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python-BeautifulSoup">
-<meta property="og:url" content="https://mrrs878.github.io/blog/2018/11/16/Python-BeautifulSoup/index.html">
+<meta property="og:url" content="https://mrrs878.github.io/2018/11/16/Python-BeautifulSoup/index.html">
 <meta property="og:site_name" content="Mr.RS">
 <meta property="og:description" content="Python-BeautifulSoup的使用BeautiSoup，是借助网页的结构和属性等特性来解析网页的工具，有了它我们不用再去写一些复杂的正则，只需要简单的几条语句就可以完成网页中某个元素的提取。 BeautifulSoup简介官方解释如下：BeautifulSoup提供一些简单的、Python式的函数用来处理导航、搜索、修改分析树等功能。它是一个工具箱，通过解析文档为用户提供需要抓取的数据">
 <meta property="og:locale" content="zh-CN">
@@ -69,7 +69,7 @@
 <meta name="twitter:title" content="Python-BeautifulSoup">
 <meta name="twitter:description" content="Python-BeautifulSoup的使用BeautiSoup，是借助网页的结构和属性等特性来解析网页的工具，有了它我们不用再去写一些复杂的正则，只需要简单的几条语句就可以完成网页中某个元素的提取。 BeautifulSoup简介官方解释如下：BeautifulSoup提供一些简单的、Python式的函数用来处理导航、搜索、修改分析树等功能。它是一个工具箱，通过解析文档为用户提供需要抓取的数据">
 <meta name="twitter:image" content="https://t1.picb.cc/uploads/2018/11/16/JXuhZc.png">
-  <link rel="canonical" href="https://mrrs878.github.io/blog/2018/11/16/Python-BeautifulSoup/">
+  <link rel="canonical" href="https://mrrs878.github.io/2018/11/16/Python-BeautifulSoup/">
 
 
 <script id="page-configurations">
@@ -127,7 +127,7 @@
   <div class="site-meta">
 
     <div>
-      <a href="/blog/" class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Mr.RS</span>
         <span class="logo-line-after"><i></i></span>
@@ -158,7 +158,46 @@
       
     
 
-    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
 
   </li>
       
@@ -171,14 +210,12 @@
       
     
 
-    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
   </li>
       
     
   </ul>
-
-    
 
 </nav>
 </div>
@@ -194,6 +231,8 @@
     <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
+            
+
           <div class="content">
             
 
@@ -202,12 +241,12 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/blog/blog/2018/11/16/Python-BeautifulSoup/">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2018/11/16/Python-BeautifulSoup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mr.RS">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="image" content="/imgs/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -255,7 +294,7 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/Python-lib/" itemprop="url" rel="index">
+                  <a href="/categories/Python-lib/" itemprop="url" rel="index">
                     <span itemprop="name">Python lib</span>
                   </a>
                 </span>
@@ -367,7 +406,7 @@ String: Bar</code></pre>
           
           <div class="post-tags">
             
-              <a href="/blog/tags/Python-BeautifulSoup/" rel="tag"># Python BeautifulSoup</a>
+              <a href="/tags/Python-BeautifulSoup/" rel="tag"># Python BeautifulSoup</a>
             
           </div>
         
@@ -377,7 +416,7 @@ String: Bar</code></pre>
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/blog/2018/11/15/Python-正则表达式/" rel="next" title="Python-正则表达式">
+                <a href="/2018/11/15/Python-正则表达式/" rel="next" title="Python-正则表达式">
                   <i class="fa fa-chevron-left"></i> Python-正则表达式
                 </a>
               
@@ -387,7 +426,7 @@ String: Bar</code></pre>
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/blog/2018/12/03/Java-IO/" rel="prev" title="Java-IO">
+                <a href="/2018/12/03/Java-IO/" rel="prev" title="Java-IO">
                   Java-IO <i class="fa fa-chevron-right"></i>
                 </a>
               
@@ -442,6 +481,9 @@ String: Bar</code></pre>
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/imgs/avatar.png"
+      alt="Mr.RS">
   <p class="site-author-name" itemprop="name">Mr.RS</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -449,7 +491,7 @@ String: Bar</code></pre>
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         
-          <a href="/blog/archives/">
+          <a href="/archives/">
         
           <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
@@ -460,18 +502,26 @@ String: Bar</code></pre>
       
       <div class="site-state-item site-state-categories">
         
+          
+            <a href="/categories/">
+          
+        
         <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span>
-        
+        </a>
       </div>
     
       
       
       <div class="site-state-item site-state-tags">
         
+          
+            <a href="/tags/">
+          
+        
         <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span>
-        
+        </a>
       </div>
     
   </nav>
@@ -504,9 +554,7 @@ String: Bar</code></pre>
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">
-      
-    主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.1
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.1
   </div>
 
         
@@ -528,12 +576,13 @@ String: Bar</code></pre>
   </div>
 
   
-  <script src="/blog/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/blog/js/utils.js?v=7.4.1"></script><script src="/blog/js/motion.js?v=7.4.1"></script>
-<script src="/blog/js/schemes/muse.js?v=7.4.1"></script>
-<script src="/blog/js/next-boot.js?v=7.4.1"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
 
 
 
