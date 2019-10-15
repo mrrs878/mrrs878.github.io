@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Muse',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="MySQL高级-函数@(mysql)[procedure] 查看数据库是否支持函数 ：1SHOW VARIABLES LIKE &apos;%FUN%&apos;;   若为off，则需要开启1SET GLOBAL log_bin_trust_function_creators = TRUE;    创建函数的语法 ：12345678910111213CREATE FUNCTION func_name(variabl">
+<meta name="keywords" content="MySQL function">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL高级-函数">
+<meta property="og:url" content="https://mrrs878.github.io/blog/2018/11/12/MySQL高级-函数/index.html">
+<meta property="og:site_name" content="Mr.RS">
+<meta property="og:description" content="MySQL高级-函数@(mysql)[procedure] 查看数据库是否支持函数 ：1SHOW VARIABLES LIKE &apos;%FUN%&apos;;   若为off，则需要开启1SET GLOBAL log_bin_trust_function_creators = TRUE;    创建函数的语法 ：12345678910111213CREATE FUNCTION func_name(variabl">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-12/68702030.jpg">
+<meta property="og:image" content="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-12/68702030.jpg">
+<meta property="og:image" content="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-12/35546849.jpg">
+<meta property="og:updated_time" content="2019-10-15T02:03:37.833Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL高级-函数">
+<meta name="twitter:description" content="MySQL高级-函数@(mysql)[procedure] 查看数据库是否支持函数 ：1SHOW VARIABLES LIKE &apos;%FUN%&apos;;   若为off，则需要开启1SET GLOBAL log_bin_trust_function_creators = TRUE;    创建函数的语法 ：12345678910111213CREATE FUNCTION func_name(variabl">
+<meta name="twitter:image" content="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-12/68702030.jpg">
+  <link rel="canonical" href="https://mrrs878.github.io/blog/2018/11/12/MySQL高级-函数/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>MySQL高级-函数 | Mr.RS</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.RS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Read The Fucking Source Code!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/blog/blog/2018/11/12/MySQL高级-函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            MySQL高级-函数
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-11-12 20:12:37" itemprop="dateCreated datePublished" datetime="2018-11-12T20:12:37+08:00">2018-11-12</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-15 10:03:37" itemprop="dateModified" datetime="2019-10-15T10:03:37+08:00">2019-10-15</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/数据库-MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库 MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="MySQL高级-函数"><a href="#MySQL高级-函数" class="headerlink" title="MySQL高级-函数"></a>MySQL高级-函数</h1><p>@(mysql)[procedure]</p>
+<h2 id="查看数据库是否支持函数-："><a href="#查看数据库是否支持函数-：" class="headerlink" title="查看数据库是否支持函数 ："></a><strong>查看数据库是否支持函数</strong> ：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">VARIABLES</span> <span class="keyword">LIKE</span> <span class="string">'%FUN%'</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>若为off，则需要开启</strong><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">GLOBAL</span> log_bin_trust_function_creators = <span class="literal">TRUE</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="创建函数的语法-："><a href="#创建函数的语法-：" class="headerlink" title="创建函数的语法 ："></a><strong>创建函数的语法</strong> ：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> func_name(variable1, variable2 ...)</span><br><span class="line"><span class="keyword">RETURNS</span> return_type</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">	...</span><br><span class="line"><span class="keyword">END</span>;</span><br><span class="line"></span><br><span class="line">DELIMITER //</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> func_add(a <span class="built_in">INT</span>, b <span class="built_in">INT</span>)</span><br><span class="line"><span class="keyword">RETURNS</span> <span class="built_in">INT</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">	<span class="keyword">RETURN</span> a + b;</span><br><span class="line"><span class="keyword">END</span>;</span><br><span class="line">//</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-12/68702030.jpg" alt="enter image description here"></p>
+<h2 id="函数的管理-："><a href="#函数的管理-：" class="headerlink" title="函数的管理 ："></a><strong>函数的管理</strong> ：</h2><ul>
+<li><strong>函数的管理类似于存储过程</strong><h3 id="查看函数"><a href="#查看函数" class="headerlink" title="查看函数"></a><strong>查看函数</strong></h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> mysql.proc;</span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">FUNCTION</span> <span class="keyword">STATUS</span> <span class="keyword">WHERE</span> db = <span class="string">'test'</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-12/68702030.jpg" alt="enter image description here"></p>
+<h3 id="删除函数"><a href="#删除函数" class="headerlink" title="删除函数"></a><strong>删除函数</strong></h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">FUNCTION</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> func_add;</span><br></pre></td></tr></table></figure>
+
+<h2 id="实例："><a href="#实例：" class="headerlink" title="实例："></a>实例：</h2><pre><code class="SQL"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> user_info (<span class="keyword">id</span> <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT PRIMARY <span class="keyword">KEY</span>,
+                        user_name <span class="built_in">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,
+                        user_pwd  <span class="built_in">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>
+                        )<span class="keyword">ENGINE</span> = <span class="keyword">INNODB</span> <span class="keyword">CHARSET</span> = utf8;
+
+<span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> func_login(<span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">20</span>), pwd <span class="built_in">VARCHAR</span>(<span class="number">20</span>))
+<span class="keyword">RETURNS</span> <span class="built_in">VARCHAR</span>(<span class="number">30</span>)
+<span class="keyword">BEGIN</span>
+    <span class="keyword">DECLARE</span> cnt <span class="built_in">INT</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>;
+    <span class="keyword">SELECT</span> <span class="keyword">count</span>(*) <span class="keyword">INTO</span> cnt <span class="keyword">FROM</span> user_info <span class="keyword">WHERE</span> user_name = <span class="keyword">name</span>;
+    IF cnt = 0 THEN
+        RETURN 'user not exists';
+    <span class="keyword">END</span> <span class="keyword">IF</span>;
+    <span class="keyword">SELECT</span> <span class="keyword">count</span>(*) <span class="keyword">INTO</span> cnt <span class="keyword">FROM</span> user_info <span class="keyword">WHERE</span> user_name = <span class="keyword">name</span> <span class="keyword">AND</span> user_pwd = pwd;
+    IF cnt = 0 THEN
+        RETURN 'pwd input error';
+    ELSE
+        RETURN 'user login success';
+    <span class="keyword">END</span> <span class="keyword">IF</span>;
+<span class="keyword">END</span>;
+//</code></pre>
+<p><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-12/35546849.jpg" alt="enter image description here"></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/blog/tags/MySQL-function/" rel="tag"># MySQL function</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/blog/2018/11/12/MySQL高级-存储过程管理/" rel="next" title="MySQL高级-存储过程管理">
+                  <i class="fa fa-chevron-left"></i> MySQL高级-存储过程管理
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/blog/2018/11/13/python-urllib库的使用/" rel="prev" title="python-urllib库的使用">
+                  python-urllib库的使用 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL高级-函数"><span class="nav-number">1.</span> <span class="nav-text">MySQL高级-函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看数据库是否支持函数-："><span class="nav-number">1.1.</span> <span class="nav-text">查看数据库是否支持函数 ：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建函数的语法-："><span class="nav-number">1.1.1.</span> <span class="nav-text">创建函数的语法 ：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的管理-："><span class="nav-number">1.2.</span> <span class="nav-text">函数的管理 ：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看函数"><span class="nav-number">1.2.1.</span> <span class="nav-text">查看函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除函数"><span class="nav-number">1.2.2.</span> <span class="nav-text">删除函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例："><span class="nav-number">1.3.</span> <span class="nav-text">实例：</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Mr.RS</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span>
+        
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/blog/js/utils.js?v=7.4.1"></script><script src="/blog/js/motion.js?v=7.4.1"></script>
+<script src="/blog/js/schemes/muse.js?v=7.4.1"></script>
+<script src="/blog/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

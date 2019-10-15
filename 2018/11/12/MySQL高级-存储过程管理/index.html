@@ -55,18 +55,25 @@
   };
 </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="MySQL高级-存储过程管理@(mysql)[procedure]  查看数据库的存储过程 ： 1show procedure status where db=&apos;test&apos;\G    查看当前数据库下的存储过程 ： 1select specific_name from mysql.proc;\G    查看存储过程的内容 ： 1select specific_name, body from mys">
+<meta name="keywords" content="MySQL procedure">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://mrrs878.github.io/blog/2019/10/15/hello-world/index.html">
+<meta property="og:title" content="MySQL高级-存储过程管理">
+<meta property="og:url" content="https://mrrs878.github.io/blog/2018/11/12/MySQL高级-存储过程管理/index.html">
 <meta property="og:site_name" content="Mr.RS">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="MySQL高级-存储过程管理@(mysql)[procedure]  查看数据库的存储过程 ： 1show procedure status where db=&apos;test&apos;\G    查看当前数据库下的存储过程 ： 1select specific_name from mysql.proc;\G    查看存储过程的内容 ： 1select specific_name, body from mys">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-15T01:31:00.611Z">
+<meta property="og:image" content="https://i.loli.net/2018/11/12/5be94f5043e82.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/12/5be94ee471819.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/12/5be94f5050259.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/12/5be94f504e883.png">
+<meta property="og:image" content="https://i.loli.net/2018/11/12/5be94f504cd4b.png">
+<meta property="og:updated_time" content="2019-10-15T02:03:37.380Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-  <link rel="canonical" href="https://mrrs878.github.io/blog/2019/10/15/hello-world/">
+<meta name="twitter:title" content="MySQL高级-存储过程管理">
+<meta name="twitter:description" content="MySQL高级-存储过程管理@(mysql)[procedure]  查看数据库的存储过程 ： 1show procedure status where db=&apos;test&apos;\G    查看当前数据库下的存储过程 ： 1select specific_name from mysql.proc;\G    查看存储过程的内容 ： 1select specific_name, body from mys">
+<meta name="twitter:image" content="https://i.loli.net/2018/11/12/5be94f5043e82.png">
+  <link rel="canonical" href="https://mrrs878.github.io/blog/2018/11/12/MySQL高级-存储过程管理/">
 
 
 <script id="page-configurations">
@@ -80,7 +87,7 @@
   };
 </script>
 
-  <title>Hello World | Mr.RS</title>
+  <title>MySQL高级-存储过程管理 | Mr.RS</title>
   
 
 
@@ -199,7 +206,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/blog/blog/2019/10/15/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/blog/blog/2018/11/12/MySQL高级-存储过程管理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mr.RS">
@@ -213,7 +220,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            Hello World
+            MySQL高级-存储过程管理
             
 
           
@@ -230,7 +237,36 @@
                 
               
 
-              <time title="创建时间：2019-10-15 09:31:00" itemprop="dateCreated datePublished" datetime="2019-10-15T09:31:00+08:00">2019-10-15</time>
+              <time title="创建时间：2018-11-12 17:07:28" itemprop="dateCreated datePublished" datetime="2018-11-12T17:07:28+08:00">2018-11-12</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-15 10:03:37" itemprop="dateModified" datetime="2019-10-15T10:03:37+08:00">2019-10-15</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/数据库-MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库 MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
             </span>
           
 
@@ -245,19 +281,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h1 id="MySQL高级-存储过程管理"><a href="#MySQL高级-存储过程管理" class="headerlink" title="MySQL高级-存储过程管理"></a>MySQL高级-存储过程管理</h1><p>@(mysql)[procedure]</p>
+<ul>
+<li><p><strong>查看数据库的存储过程</strong> ：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">procedure</span> <span class="keyword">status</span> <span class="keyword">where</span> db=<span class="string">'test'</span>\G</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><img src="https://i.loli.net/2018/11/12/5be94f5043e82.png" alt="enter image description here"></p>
+</li>
+<li><p><strong>查看当前数据库下的存储过程</strong> ：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> specific_name <span class="keyword">from</span> mysql.proc;\G</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><img src="https://i.loli.net/2018/11/12/5be94ee471819.png" alt="enter image description here"></p>
+</li>
+<li><p><strong>查看存储过程的内容</strong> ：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> specific_name, <span class="keyword">body</span> <span class="keyword">from</span> mysql.proc\G</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><img src="https://i.loli.net/2018/11/12/5be94f5050259.png" alt="enter image description here"></p>
+</li>
+<li><p><strong>查看某个存储过程的内容</strong>：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> specific_name, <span class="keyword">body</span> <span class="keyword">from</span> mysql.proc <span class="keyword">where</span> specific_name = <span class="string">'load_t'</span>\G</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><img src="https://i.loli.net/2018/11/12/5be94f504e883.png" alt="enter image description here"></p>
+</li>
+<li><p><strong>删除某个存储过程</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">procedure</span> <span class="keyword">if</span> <span class="keyword">exists</span> load_t;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><img src="https://i.loli.net/2018/11/12/5be94f504cd4b.png" alt="enter image description here"></p>
+</li>
+</ul>
 
     </div>
 
@@ -268,21 +319,30 @@
       
 
       <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/blog/tags/MySQL-procedure/" rel="tag"># MySQL procedure</a>
+            
+          </div>
+        
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/blog/2019/06/30/浏览器缓存/" rel="next" title="浏览器缓存">
-                  <i class="fa fa-chevron-left"></i> 浏览器缓存
-                </a>
-              
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/blog/2018/11/12/MySQL高级-函数/" rel="prev" title="MySQL高级-函数">
+                  MySQL高级-函数 <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
@@ -328,7 +388,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL高级-存储过程管理"><span class="nav-number">1.</span> <span class="nav-text">MySQL高级-存储过程管理</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
