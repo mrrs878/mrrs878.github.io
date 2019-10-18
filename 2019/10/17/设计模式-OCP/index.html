@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/avatar.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="开放封闭原则对扩展开放，对修改封闭 假设我们是一个大型 Web 项目的维护人员，在接手这个项目时，发现它已经拥有 10 万行以上的 JavaScript 代码和数百个 JS 文件。 不久后接到了一个新的需求，即在 window.onload 函数中打印出页面中的所有节点数量 12345678910111213141516171819202122232425// 普通版window.onload =">
+<meta name="keywords" content="设计模式 OCP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式&#x2F;OCP">
+<meta property="og:url" content="https://mrrs878.github.io/2019/10/17/设计模式-OCP/index.html">
+<meta property="og:site_name" content="Mr.RS">
+<meta property="og:description" content="开放封闭原则对扩展开放，对修改封闭 假设我们是一个大型 Web 项目的维护人员，在接手这个项目时，发现它已经拥有 10 万行以上的 JavaScript 代码和数百个 JS 文件。 不久后接到了一个新的需求，即在 window.onload 函数中打印出页面中的所有节点数量 12345678910111213141516171819202122232425// 普通版window.onload =">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-18T09:27:08.198Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式&#x2F;OCP">
+<meta name="twitter:description" content="开放封闭原则对扩展开放，对修改封闭 假设我们是一个大型 Web 项目的维护人员，在接手这个项目时，发现它已经拥有 10 万行以上的 JavaScript 代码和数百个 JS 文件。 不久后接到了一个新的需求，即在 window.onload 函数中打印出页面中的所有节点数量 12345678910111213141516171819202122232425// 普通版window.onload =">
+  <link rel="canonical" href="https://mrrs878.github.io/2019/10/17/设计模式-OCP/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>设计模式/OCP | Mr.RS</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.RS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Read The Fucking Source Code!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/10/17/设计模式-OCP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            设计模式/OCP
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-17 18:12:29" itemprop="dateCreated datePublished" datetime="2019-10-17T18:12:29+08:00">2019-10-17</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-18 17:27:08" itemprop="dateModified" datetime="2019-10-18T17:27:08+08:00">2019-10-18</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="开放封闭原则"><a href="#开放封闭原则" class="headerlink" title="开放封闭原则"></a>开放封闭原则</h2><p>对扩展开放，对修改封闭</p>
+<p>假设我们是一个大型 Web 项目的维护人员，在接手这个项目时，发现它已经拥有 10 万行以上的 JavaScript 代码和数百个 JS 文件。 不久后接到了一个新的需求，即在 window.onload 函数中打印出页面中的所有节点数量</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 普通版</span></span><br><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">//原有代码</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">document</span>.getElementByName(<span class="string">"*"</span>).length);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// OCP版 ---- AOP(面向切面编程)</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.after = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> _self = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> ret = _self.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    fn &amp;&amp; fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Function</span>.prototype.before = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> _self = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    fn &amp;&amp; fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">return</span> _self.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">window</span>.onload = (<span class="built_in">window</span>.onload || <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;).after(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">document</span>.getElementByName(<span class="string">"*"</span>).length);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写符合-OCP-的代码"><a href="#编写符合-OCP-的代码" class="headerlink" title="编写符合 OCP 的代码"></a>编写符合 OCP 的代码</h2><p>开放-封闭原则是一个看起来比较虚幻的原则，并没有实际的模板教导我们怎样亦步亦趋地 实现它。但还是能找到一些让程序尽量遵守开放-封闭原则的规律，明显的就是找出程序中将要发生变化的地方，然后把变化封装起来。过多的条件语句是造成程序违反开放封闭原则的一个常见原因。</p>
+<h3 id="运用-AOP"><a href="#运用-AOP" class="headerlink" title="运用 AOP"></a>运用 AOP</h3><h3 id="利用多态的思想"><a href="#利用多态的思想" class="headerlink" title="利用多态的思想"></a>利用多态的思想</h3><h3 id="放置-hook"><a href="#放置-hook" class="headerlink" title="放置 hook"></a>放置 hook</h3><p>我们在程序有可能变化的地方放置一个 hook，hook 的返回结果决定了程序的下一步走向，这样一来原本的代码执行路径上就出现了一个分岔路口，程序未来的执行方向被预埋下多种可能性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line">  boilWater() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"把水煮沸"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  brew() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"子类必须重写brew方法"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  pourInCup() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"子类必须重写pourInCup方法"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  addCondiments() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"子类必须重写addCondiments方法"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// hook</span></span><br><span class="line">  customWantsCondiments() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  init() &#123;</span><br><span class="line">    <span class="keyword">this</span>.boilWater();</span><br><span class="line">    <span class="keyword">this</span>.brew();</span><br><span class="line">    <span class="keyword">this</span>.pourInCup();</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.customWantsCondiments()) <span class="keyword">this</span>.addCondiments();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CoffeeWithHook</span> <span class="keyword">extends</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line">  brew() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"用沸水冲泡咖啡"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  pourInCup() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"把咖啡倒进杯"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  addCondiments() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"加糖和牛奶"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// hook</span></span><br><span class="line">  customWantsCondiments() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">window</span>.confirm(<span class="string">"请问需要饮料吗?"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> CoffeeWithHook().init();</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用回调函数"><a href="#使用回调函数" class="headerlink" title="使用回调函数"></a>使用回调函数</h3><p>回调函数是一种特殊的挂钩。我们可以把一部分易于变化的逻辑封装在回调函数里，然后把 回调函数当作参数传入一个稳定和封闭的函数中。当回调函数被执行的时候，程序就可以因为回 调函数的内部逻辑不同，而产生不同的结果。</p>
+<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> strategies = &#123;</span><br><span class="line">  ADD: <span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> paramA + paramB;</span><br><span class="line">  &#125;,</span><br><span class="line">  SUB: <span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> paramA - paramB;</span><br><span class="line">  &#125;,</span><br><span class="line">  MULTI: <span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> paramA * paramB;</span><br><span class="line">  &#125;,</span><br><span class="line">  DIV: <span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> paramA / paramB;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> calc = <span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB, type</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> strategies[type](paramA, paramB);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(calc(<span class="number">1</span>, <span class="number">2</span>, <span class="string">"ADD"</span>));</span><br><span class="line"><span class="built_in">console</span>.log(calc(<span class="number">1</span>, <span class="number">2</span>, <span class="string">"SUB"</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> calc_ = R.curry(<span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB, fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> fn(paramA, paramB);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(calc_(<span class="number">2</span>, <span class="number">3</span>)(R.add));</span><br><span class="line"><span class="built_in">console</span>.log(calc_(<span class="number">2</span>, <span class="number">3</span>, R.add));</span><br></pre></td></tr></table></figure>
+
+<h3 id="发布-订阅模式"><a href="#发布-订阅模式" class="headerlink" title="发布-订阅模式"></a>发布-订阅模式</h3><h3 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a>模板方法模式</h3><h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><h3 id="职责链模式"><a href="#职责链模式" class="headerlink" title="职责链模式"></a>职责链模式</h3>
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/设计模式-OCP/" rel="tag"># 设计模式 OCP</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/10/16/柯里化/" rel="next" title="柯里化">
+                  <i class="fa fa-chevron-left"></i> 柯里化
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开放封闭原则"><span class="nav-number">1.</span> <span class="nav-text">开放封闭原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写符合-OCP-的代码"><span class="nav-number">2.</span> <span class="nav-text">编写符合 OCP 的代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#运用-AOP"><span class="nav-number">2.1.</span> <span class="nav-text">运用 AOP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用多态的思想"><span class="nav-number">2.2.</span> <span class="nav-text">利用多态的思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#放置-hook"><span class="nav-number">2.3.</span> <span class="nav-text">放置 hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用回调函数"><span class="nav-number">2.4.</span> <span class="nav-text">使用回调函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#策略模式"><span class="nav-number">2.5.</span> <span class="nav-text">策略模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高阶函数"><span class="nav-number">2.6.</span> <span class="nav-text">高阶函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布-订阅模式"><span class="nav-number">2.7.</span> <span class="nav-text">发布-订阅模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模板方法模式"><span class="nav-number">2.8.</span> <span class="nav-text">模板方法模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代理模式"><span class="nav-number">2.9.</span> <span class="nav-text">代理模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#职责链模式"><span class="nav-number">2.10.</span> <span class="nav-text">职责链模式</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/imgs/avatar.png"
+      alt="Mr.RS">
+  <p class="site-author-name" itemprop="name">Mr.RS</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
