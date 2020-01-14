@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/avatar.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="依赖包管理工具 dep未完待续…  go vendor未完待续…  glide未完待续…  go modules 伴随Go 1.11出现，官方推荐   go mod 命令 go mod tidy 拉取缺少的模块，移除不用的模块  go mod vandor 将依赖复制到vendor下  go mod download 下载依赖包  go mod verify 检测依赖  go mod graph">
+<meta name="keywords" content="go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="go-极速入门">
+<meta property="og:url" content="https://mrrs878.github.io/2020/01/14/go-基础/index.html">
+<meta property="og:site_name" content="Mr.RS">
+<meta property="og:description" content="依赖包管理工具 dep未完待续…  go vendor未完待续…  glide未完待续…  go modules 伴随Go 1.11出现，官方推荐   go mod 命令 go mod tidy 拉取缺少的模块，移除不用的模块  go mod vandor 将依赖复制到vendor下  go mod download 下载依赖包  go mod verify 检测依赖  go mod graph">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-01-14T06:08:01.775Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="go-极速入门">
+<meta name="twitter:description" content="依赖包管理工具 dep未完待续…  go vendor未完待续…  glide未完待续…  go modules 伴随Go 1.11出现，官方推荐   go mod 命令 go mod tidy 拉取缺少的模块，移除不用的模块  go mod vandor 将依赖复制到vendor下  go mod download 下载依赖包  go mod verify 检测依赖  go mod graph">
+  <link rel="canonical" href="https://mrrs878.github.io/2020/01/14/go-基础/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>go-极速入门 | Mr.RS</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.RS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Read The Fucking Source Code!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/01/14/go-基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            go-极速入门
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-01-14 13:43:45 / 修改时间：14:08:01" itemprop="dateCreated datePublished" datetime="2020-01-14T13:43:45+08:00">2020-01-14</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/go/" itemprop="url" rel="index">
+                    <span itemprop="name">go</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="依赖包管理工具"><a href="#依赖包管理工具" class="headerlink" title="依赖包管理工具"></a>依赖包管理工具</h1><ul>
+<li><p>dep<br>未完待续…</p>
+</li>
+<li><p>go vendor<br>未完待续…</p>
+</li>
+<li><p>glide<br>未完待续…</p>
+</li>
+<li><p><strong>go modules</strong></p>
+<p>伴随Go 1.11出现，<strong>官方推荐</strong></p>
+</li>
+</ul>
+<h1 id="go-mod-命令"><a href="#go-mod-命令" class="headerlink" title="go mod 命令"></a>go mod 命令</h1><ul>
+<li><p><code>go mod tidy</code></p>
+<p>拉取缺少的模块，移除不用的模块</p>
+</li>
+<li><p><code>go mod vandor</code></p>
+<p>将依赖复制到vendor下</p>
+</li>
+<li><p><code>go mod download</code></p>
+<p>下载依赖包</p>
+</li>
+<li><p><code>go mod verify</code></p>
+<p>检测依赖</p>
+</li>
+<li><p><code>go mod graph</code></p>
+<p>打印模块依赖图</p>
+</li>
+</ul>
+<h1 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h1><h2 id="切片就像数组的引用"><a href="#切片就像数组的引用" class="headerlink" title="切片就像数组的引用"></a>切片就像数组的引用</h2><h2 id="切片拥有-长度-和-容量"><a href="#切片拥有-长度-和-容量" class="headerlink" title="切片拥有 长度 和 容量"></a>切片拥有 <em>长度</em> 和 <em>容量</em></h2><ul>
+<li>切片的长度就是它所包含的元素个数。</li>
+<li>切片的容量是从它的第一个元素开始数，到其底层数组元素末尾的个数。</li>
+<li>切片 s 的长度和容量可通过表达式 <code>len(s)</code> 和 <code>cap(s)</code> 来获取。</li>
+</ul>
+<h2 id="切片可以用内建函数-make-来创建，这也是创建动态数组的方式。make-函数会分配一个元素为零值的数组并返回一个引用了它的切片："><a href="#切片可以用内建函数-make-来创建，这也是创建动态数组的方式。make-函数会分配一个元素为零值的数组并返回一个引用了它的切片：" class="headerlink" title="切片可以用内建函数 make 来创建，这也是创建动态数组的方式。make 函数会分配一个元素为零值的数组并返回一个引用了它的切片："></a>切片可以用内建函数 <code>make</code> 来创建，这也是创建动态数组的方式。<code>make</code> 函数会分配一个元素为零值的数组并返回一个引用了它的切片：</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">5</span>)  <span class="comment">// len(a)=5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 要指定它的容量，需向 make 传入第三个参数：</span></span><br><span class="line">b := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">0</span>, <span class="number">5</span>) <span class="comment">// len(b)=0, cap(b)=5</span></span><br><span class="line">b = b[:<span class="built_in">cap</span>(b)] <span class="comment">// len(b)=5, cap(b)=5</span></span><br><span class="line">b = b[<span class="number">1</span>:]      <span class="comment">// len(b)=4, cap(b)=4</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="向切片追加元素"><a href="#向切片追加元素" class="headerlink" title="向切片追加元素"></a>向切片追加元素</h2><p>append 的第一个参数 s 是一个元素类型为 T 的切片，其余类型为 T 的值将会追加到该切片的末尾。append 的结果是一个包含原切片所有元素加上新添加元素的切片。当 s 的底层数组太小，不足以容纳所有给定的值时，它就会分配一个(<strong>cap值翻倍</strong>)更大的数组。返回的切片会指向这个新分配的数组。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> s []<span class="keyword">int</span></span><br><span class="line">    printSlice(s)</span><br><span class="line">    <span class="comment">// len=0 cap=0 []</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// cap不够用——&gt;cap翻倍——&gt;cap=2</span></span><br><span class="line">	s = <span class="built_in">append</span>(s, <span class="number">0</span>)</span><br><span class="line">    printSlice(s)</span><br><span class="line">    <span class="comment">// len=1 cap=2 [0]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// cap够用——&gt;保持不变——&gt;cap=2</span></span><br><span class="line">	s = <span class="built_in">append</span>(s, <span class="number">1</span>)</span><br><span class="line">    printSlice(s)</span><br><span class="line">    <span class="comment">// len=2 cap=2 [0 1]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// cap不够用——&gt;cap翻倍——&gt;cap=8</span></span><br><span class="line">	s = <span class="built_in">append</span>(s, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">    printSlice(s)</span><br><span class="line">    <span class="comment">// len=5 cap=8 [0 1 2 3 4]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// cap够用——&gt;cap保持不变——&gt;cap=8</span></span><br><span class="line">    s = <span class="built_in">append</span>(s, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>)</span><br><span class="line">    printSlice(s)</span><br><span class="line">    <span class="comment">// len=8 cap=8 [0 1 2 3 4 5 6 7]</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">printSlice</span><span class="params">(s []<span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	fmt.Printf(<span class="string">"len=%d cap=%d %v\n"</span>, <span class="built_in">len</span>(s), <span class="built_in">cap</span>(s), s)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="map-无序的-key-value-数据结构"><a href="#map-无序的-key-value-数据结构" class="headerlink" title="map-无序的 key-value 数据结构"></a><code>map</code>-无序的 <code>key-value</code> 数据结构</h1><p>map集合中的 <code>key/value</code> 可以是任意类型，但所有<code>key</code>必须同属于一种数据类型，所有的<code>value</code>必须同属于一种数据类型。<code>key</code> 和 <code>value</code> 的数据类型可以不相同</p>
+<h1 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a><code>for</code>循环</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">person := [<span class="number">3</span>]<span class="keyword">string</span> &#123; <span class="string">"tom"</span>, <span class="string">"john"</span>, <span class="string">"jerry"</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k, v := <span class="keyword">range</span> person &#123;</span><br><span class="line">  fmt.Printf(<span class="string">"person[%d]: %s\n"</span>, k, v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="go关键字"><a href="#go关键字" class="headerlink" title="go关键字"></a><code>go</code>关键字</h1><p>在go关键字后面加一个函数，就可以创建一个线程，函数可以为已经写好的函数，也可以是匿名函数</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  fmt.Printf(<span class="string">"main start"</span>)</span><br><span class="line">  <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">"goroutine"</span>)</span><br><span class="line">  &#125;()</span><br><span class="line">  time.sleep(<span class="number">1</span> * time.Second)</span><br><span class="line">  fmt.Printf(<span class="string">"main end"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="chan-类似于队列，遵循先进先出的规则"><a href="#chan-类似于队列，遵循先进先出的规则" class="headerlink" title="chan-类似于队列，遵循先进先出的规则"></a><code>chan</code>-类似于队列，遵循先进先出的规则</h1><h2 id="声明chan"><a href="#声明chan" class="headerlink" title="声明chan"></a>声明<code>chan</code></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 声明不带缓冲的通道</span></span><br><span class="line">ch1 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明带10个缓冲的通道</span></span><br><span class="line">ch2 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明只读通道</span></span><br><span class="line">ch3 := <span class="built_in">make</span>(&lt;-<span class="keyword">chan</span> <span class="keyword">string</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明只写通道</span></span><br><span class="line">ch4 := <span class="built_in">make</span>(<span class="keyword">chan</span>&lt;- <span class="keyword">string</span>)</span><br></pre></td></tr></table></figure>
+
+<p>不带缓冲的通道，进何处都会阻塞<br>带缓冲的通道，进一次长度+1，出一次长度-1，如果长度等于缓冲区长度时，再进就会阻塞</p>
+<h2 id="写入chan"><a href="#写入chan" class="headerlink" title="写入chan"></a>写入<code>chan</code></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ch1 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">10</span>)</span><br><span class="line">ch1 &lt;- <span class="string">"a"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="读取chan"><a href="#读取chan" class="headerlink" title="读取chan"></a>读取<code>chan</code></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val, ok := &lt;- ch1</span><br><span class="line">val := &lt;- ch1</span><br></pre></td></tr></table></figure>
+
+<h2 id="关闭chan"><a href="#关闭chan" class="headerlink" title="关闭chan"></a>关闭<code>chan</code></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">close</span>(<span class="keyword">chan</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">productor</span><span class="params">(ch <span class="keyword">chan</span> <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">  fmt.Println(<span class="string">"producer start"</span>)</span><br><span class="line">  ch &lt;- <span class="string">"a"</span></span><br><span class="line">  ch &lt;- <span class="string">"b"</span></span><br><span class="line">  ch &lt;- <span class="string">"c"</span></span><br><span class="line">  ch &lt;- <span class="string">"d"</span></span><br><span class="line">  fmt.Println(<span class="string">"producer end"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  fmt.Println(<span class="string">"main start"</span>)</span><br><span class="line">  ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">3</span>)</span><br><span class="line">  <span class="keyword">go</span> producer(ch)</span><br><span class="line"></span><br><span class="line">  time.Sleep(<span class="number">1</span> * time.Second)</span><br><span class="line">  fmt.Println(<span class="string">"main end"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main start</span></span><br><span class="line"><span class="comment">// producer start  发生阻塞</span></span><br><span class="line"><span class="comment">// main end</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="defer"><a href="#defer" class="headerlink" title="defer"></a><code>defer</code></h1><p>主要应用场景有异常处理、记录日志、清理数据、释放资源 等等。</p>
+<ul>
+<li><code>defer</code>在声明时不会立刻去执行，而是在函数 <code>return</code> 后去执行的。</li>
+<li><code>defer</code>函数定义的顺序与实际执行的顺序是相反的，也就是最先声明的最后才执行</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">defer</span> fmt.Println(<span class="string">"a"</span>)</span><br><span class="line">  <span class="keyword">defer</span> fmt.Println(<span class="string">"b"</span>)</span><br><span class="line">  <span class="keyword">defer</span> fmt.Println(<span class="string">"c"</span>)</span><br><span class="line">  <span class="keyword">defer</span> fmt.Println(<span class="string">"d"</span>)</span><br><span class="line"></span><br><span class="line">  fmt.Println(<span class="string">"main"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main</span></span><br><span class="line"><span class="comment">// d</span></span><br><span class="line"><span class="comment">// c</span></span><br><span class="line"><span class="comment">// b</span></span><br><span class="line"><span class="comment">// a</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">calc</span><span class="params">(index <span class="keyword">string</span>, a, b <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	ret := a + b</span><br><span class="line">	fmt.Println(index, a, b, ret)</span><br><span class="line">	<span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	x := <span class="number">1</span></span><br><span class="line">	y := <span class="number">2</span></span><br><span class="line">	<span class="keyword">defer</span> calc(<span class="string">"A"</span>, x, calc(<span class="string">"B"</span>, x, y))</span><br><span class="line">	x = <span class="number">3</span></span><br><span class="line">	<span class="keyword">defer</span> calc(<span class="string">"C"</span>, x, calc(<span class="string">"D"</span>, x, y))</span><br><span class="line">	y = <span class="number">4</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// B 1 2 3</span></span><br><span class="line"><span class="comment">// D 3 2 5</span></span><br><span class="line"><span class="comment">// C 3 5 8</span></span><br><span class="line"><span class="comment">// A 1 3 4</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/go/" rel="tag"># go</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/10/21/设计模式-职责链模式/" rel="next" title="设计模式-职责链模式">
+                  <i class="fa fa-chevron-left"></i> 设计模式-职责链模式
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/01/14/go-gin-基础/" rel="prev" title="go-gin-基础">
+                  go-gin-基础 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#依赖包管理工具"><span class="nav-number">1.</span> <span class="nav-text">依赖包管理工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#go-mod-命令"><span class="nav-number">2.</span> <span class="nav-text">go mod 命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#切片"><span class="nav-number">3.</span> <span class="nav-text">切片</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#切片就像数组的引用"><span class="nav-number">3.1.</span> <span class="nav-text">切片就像数组的引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#切片拥有-长度-和-容量"><span class="nav-number">3.2.</span> <span class="nav-text">切片拥有 长度 和 容量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#切片可以用内建函数-make-来创建，这也是创建动态数组的方式。make-函数会分配一个元素为零值的数组并返回一个引用了它的切片："><span class="nav-number">3.3.</span> <span class="nav-text">切片可以用内建函数 make 来创建，这也是创建动态数组的方式。make 函数会分配一个元素为零值的数组并返回一个引用了它的切片：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#向切片追加元素"><span class="nav-number">3.4.</span> <span class="nav-text">向切片追加元素</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#map-无序的-key-value-数据结构"><span class="nav-number">4.</span> <span class="nav-text">map-无序的 key-value 数据结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#for循环"><span class="nav-number">5.</span> <span class="nav-text">for循环</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#go关键字"><span class="nav-number">6.</span> <span class="nav-text">go关键字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chan-类似于队列，遵循先进先出的规则"><span class="nav-number">7.</span> <span class="nav-text">chan-类似于队列，遵循先进先出的规则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#声明chan"><span class="nav-number">7.1.</span> <span class="nav-text">声明chan</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写入chan"><span class="nav-number">7.2.</span> <span class="nav-text">写入chan</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读取chan"><span class="nav-number">7.3.</span> <span class="nav-text">读取chan</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭chan"><span class="nav-number">7.4.</span> <span class="nav-text">关闭chan</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#defer"><span class="nav-number">8.</span> <span class="nav-text">defer</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/imgs/avatar.png"
+      alt="Mr.RS">
+  <p class="site-author-name" itemprop="name">Mr.RS</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

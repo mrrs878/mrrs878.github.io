@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/avatar.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="BufferJS自身只能只有字符串数据类型，没有二进制数据类型，因此nodejs提供了一个与string对等的全局构造函数Buffer来提供对二进制数据的操作  Buffer.form 创建一个buffer   12Buffer.form([ 0x68, 0x65, 0x6c, 0x6c, 0x6f ]).toString()// hello  Burrer与String的一个重要区别就是字符串时">
+<meta name="keywords" content="Node.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node.js-基础">
+<meta property="og:url" content="https://mrrs878.github.io/2020/01/14/Node.js-基础/index.html">
+<meta property="og:site_name" content="Mr.RS">
+<meta property="og:description" content="BufferJS自身只能只有字符串数据类型，没有二进制数据类型，因此nodejs提供了一个与string对等的全局构造函数Buffer来提供对二进制数据的操作  Buffer.form 创建一个buffer   12Buffer.form([ 0x68, 0x65, 0x6c, 0x6c, 0x6f ]).toString()// hello  Burrer与String的一个重要区别就是字符串时">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-01-14T06:13:09.535Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node.js-基础">
+<meta name="twitter:description" content="BufferJS自身只能只有字符串数据类型，没有二进制数据类型，因此nodejs提供了一个与string对等的全局构造函数Buffer来提供对二进制数据的操作  Buffer.form 创建一个buffer   12Buffer.form([ 0x68, 0x65, 0x6c, 0x6c, 0x6f ]).toString()// hello  Burrer与String的一个重要区别就是字符串时">
+  <link rel="canonical" href="https://mrrs878.github.io/2020/01/14/Node.js-基础/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Node.js-基础 | Mr.RS</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.RS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Read The Fucking Source Code!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/01/14/Node.js-基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            Node.js-基础
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-01-14 14:11:45 / 修改时间：14:13:09" itemprop="dateCreated datePublished" datetime="2020-01-14T14:11:45+08:00">2020-01-14</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Node.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a><a href="http://nodejs.cn/api/buffer.html" target="_blank" rel="noopener">Buffer</a></h1><p>JS自身只能只有字符串数据类型，没有二进制数据类型，因此nodejs提供了一个与string对等的全局构造函数Buffer来提供对二进制数据的操作</p>
+<ul>
+<li><p><code>Buffer.form</code> 创建一个buffer</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Buffer.form([ <span class="number">0x68</span>, <span class="number">0x65</span>, <span class="number">0x6c</span>, <span class="number">0x6c</span>, <span class="number">0x6f</span> ]).toString()</span><br><span class="line"><span class="comment">// hello</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>Burrer</code>与<code>String</code>的一个重要区别就是字符串时只读的，并且对于字符串的任何修改得到的都是一个新的字符串，源字符串保持不变。至于<code>Buffer</code>，更像是可以做指针操作的C语言数组，例如，可以使用<code>[index]</code>方式直接修改某个位置的字节</p>
+</li>
+</ul>
+<h1 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a><a href="http://nodejs.cn/api/stream.html" target="_blank" rel="noopener">Stream</a></h1><ul>
+<li><p>当内存中无法一次装下需要处理的数据时，或者一边读取一边处理更加高效时，我们就需要用到数据流。NodeJS中通过各种<code>Stream</code>来提供对数据流的操作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> rs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copy</span> (<span class="params">src, dst</span>) </span>&#123;</span><br><span class="line">    fs.createReadStream(src).pipe(fs.createWriteSreeam(dst));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span> (<span class="params">argv</span>) </span>&#123;</span><br><span class="line">    copy(argv[<span class="number">0</span>], argv[<span class="number">1</span>])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main(process.argv.slice(<span class="number">2</span>));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>Stream</code>基于事件机制工作，所有<code>Stream</code>的实例都继承于NodeJS提供的<a href="http://nodejs.cn/api/events.html#events_class_eventemitter" target="_blank" rel="noopener"><code>EventEmitter</code></a></p>
+</li>
+</ul>
+<h1 id="File-System"><a href="#File-System" class="headerlink" title="File System"></a><a href="http://nodejs.cn/api/fs.html" target="_blank" rel="noopener">File System</a></h1><p>NodeJS通过<code>fs</code>内置模块提供对文件的操作，<code>fs</code>模块提供的API基本上可以分为以下三类：</p>
+<ul>
+<li>文件属性读<br>其中常见的有<code>fs.state</code> <code>fs.chmod</code> <code>fs.chown</code></li>
+<li>文件属性写<br>其中常见的有<code>fs.readFile</code> <code>fs.readdir</code> <code>fs.writeFile</code> <code>fs.mkdir</code></li>
+<li>底层文件操作<br>其中常见的操作有<code>fs.open</code> <code>fs.read</code> <code>fs.write</code> <code>fs.close</code><br>所有的<code>fs</code>模块API的回调参数都有两个，第一个参数在有错误发生时等于异常对象，第二个参数始终用于返回API方法执行结果<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fs.readFile(pathname, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;&#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="Path"><a href="#Path" class="headerlink" title="Path"></a><a href="http://nodejs.cn/api/path.html" target="_blank" rel="noopener">Path</a></h2><p>操作文件时难免不与文件路径打交道。NodeJS提供了<code>path</code>内置模块来简化路径相关操作，并提升代码可读性。</p>
+<ul>
+<li><p><code>path.normalize</code><br>  将传入的参数转为标准路径，具体讲的话，除了解析路径中的<code>.</code>与<code>..</code>外，还能去掉多余的斜杠。如果有程序需要使用路径作为某些数据的索引，但又允许用户随意输入路径时，就需要使用该方法保证路径的唯一性。</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cache = &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">store</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    cache[path.normalize(key)] = value</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">store(<span class="string">'foo/bar'</span>, <span class="number">1</span>);</span><br><span class="line">store(<span class="string">'foo//baz//../bar'</span>, <span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(cache);  <span class="comment">// =&gt; &#123; "foo/bar": 2 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>  标准化之后的路径里的斜杠在Windows系统下是\，而在Linux系统下是/。如果想保证任何系统下都使用/作为路径分隔符的话，需要用<code>.replace(/\\/g, &#39;/&#39;)</code>再替换一下标准路径。</p>
+</li>
+<li><p><code>path.join</code><br>  将传入的多个路径拼接为标准路径。该方法可避免手工拼接路径字符串的繁琐，并且能在不同系统下正确使用相应的路径分隔符。</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path.join(<span class="string">'foo/'</span>, <span class="string">'baz/'</span>, <span class="string">'../bar'</span>); <span class="comment">// =&gt; "foo/bar"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>path.extname</code><br>  当我们需要根据不同文件扩展名做不同操作时，该方法就显得很好用。</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path.extname(<span class="string">'foo/bar.js'</span>); <span class="comment">// =&gt; ".js"</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="遍历目录"><a href="#遍历目录" class="headerlink" title="遍历目录"></a>遍历目录</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">travel</span> (<span class="params">dir, callback</span>) </span>&#123;</span><br><span class="line">    fs.readdirSync(dir).forEach(<span class="function"><span class="params">file</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> pathname = path.join(dir, file)</span><br><span class="line">        <span class="keyword">if</span> (fs.statSync(pathname).isDirectory())</span><br><span class="line">            travel(pathname, callback)</span><br><span class="line">        <span class="keyword">else</span> callback(pathname)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">travel(__dirname, file =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(file)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// c:\Users\mrrs8\Desktop\desktop.ini</span></span><br><span class="line"><span class="comment">// c:\Users\mrrs8\Desktop\Postman.lnk</span></span><br><span class="line"><span class="comment">// c:\Users\mrrs8\Desktop\test.js</span></span><br><span class="line"><span class="comment">// c:\Users\mrrs8\Desktop\微信开发者工具.lnk</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="文本编码"><a href="#文本编码" class="headerlink" title="文本编码"></a>文本编码</h1><p>使用NodeJS编写前端工具时，操作得最多的是文本文件，因此也就涉及到了文件编码的处理问题。我们常用的文本编码有<code>UTF8</code>和<code>GBK</code>两种，并且<code>UTF8</code>文件还可能带有<code>BOM</code>。在读取不同编码的文本文件时，需要将文件内容转换为JS使用的<code>UTF8</code>编码字符串后才能正常处理。</p>
+<h2 id="BOM的移除"><a href="#BOM的移除" class="headerlink" title="BOM的移除"></a>BOM的移除</h2><p>BOM用于标记一个文本文件使用<code>Unicode</code>编码，其本身是一个<code>Unicode</code>字符<code>（&quot;\uFEFF&quot;）</code>，位于文本文件头部。在不同的<code>Unicode</code>编码下，<code>BOM</code>字符对应的二进制字节如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    Bytes      Encoding</span><br><span class="line">----------------------------</span><br><span class="line">    FE FF       UTF16BE</span><br><span class="line">    FF FE       UTF16LE</span><br><span class="line">    EF BB BF    UTF8</span><br></pre></td></tr></table></figure>
+
+<p>因此，我们可以根据文本文件头几个字节等于啥来判断文件是否包含<code>BOM</code>，以及使用哪种<code>Unicode</code>编码。但是，<code>BOM</code>字符虽然起到了标记文件编码的作用，其本身却不属于文件内容的一部分，如果读取文本文件时不去掉<code>BOM</code>，在某些使用场景下就会有问题。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 识别和去除UTF8 BOM</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">readText</span> (<span class="params">pathname</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> bin = fs.readFileSync(pathname);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (bin[<span class="number">0</span>] === <span class="number">0xEF</span> &amp;&amp; bin[<span class="number">1</span>] === <span class="number">0xBB</span> &amp;&amp; bin[<span class="number">2</span>] === <span class="number">0xBF</span>) &#123;</span><br><span class="line">        bin = bin.slice(<span class="number">3</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> bin.toString(<span class="string">'utf-8'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="GBK转UTF8"><a href="#GBK转UTF8" class="headerlink" title="GBK转UTF8"></a>GBK转UTF8</h2><p>NodeJS支持在读取文本文件时，或者在<code>Buffer</code>转换为字符串时指定文本编码，但遗憾的是，<code>GBK</code>编码不在NodeJS自身支持范围内。因此，一般我们借助<code>iconv-lite</code>这个三方包来转换编码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GBK转UTF8</span></span><br><span class="line"><span class="keyword">const</span> iconv = <span class="built_in">require</span>(<span class="string">'iconv-lite'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">readGBKText</span>(<span class="params">pathname</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> bin = fs.readFileSync(pathname);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> iconv.decode(bin, <span class="string">'gbk'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="单字节编码"><a href="#单字节编码" class="headerlink" title="单字节编码"></a>单字节编码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">replace</span>(<span class="params">pathname</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> str = fs.readFileSync(pathname, <span class="string">'binary'</span>);</span><br><span class="line">    str = str.replace(<span class="string">'foo'</span>, <span class="string">'bar'</span>);</span><br><span class="line">    fs.writeFileSync(pathname, str, <span class="string">'binary'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/01/14/go-gin-基础/" rel="next" title="go-gin-基础">
+                  <i class="fa fa-chevron-left"></i> go-gin-基础
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Buffer"><span class="nav-number">1.</span> <span class="nav-text">Buffer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stream"><span class="nav-number">2.</span> <span class="nav-text">Stream</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File-System"><span class="nav-number">3.</span> <span class="nav-text">File System</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Path"><span class="nav-number">3.1.</span> <span class="nav-text">Path</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遍历目录"><span class="nav-number">3.2.</span> <span class="nav-text">遍历目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文本编码"><span class="nav-number">4.</span> <span class="nav-text">文本编码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#BOM的移除"><span class="nav-number">4.1.</span> <span class="nav-text">BOM的移除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GBK转UTF8"><span class="nav-number">4.2.</span> <span class="nav-text">GBK转UTF8</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单字节编码"><span class="nav-number">4.3.</span> <span class="nav-text">单字节编码</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/imgs/avatar.png"
+      alt="Mr.RS">
+  <p class="site-author-name" itemprop="name">Mr.RS</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
