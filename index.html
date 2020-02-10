@@ -264,7 +264,7 @@
                 
               
 
-              <time title="创建时间：2020-02-10 23:18:10 / 修改时间：23:23:52" itemprop="dateCreated datePublished" datetime="2020-02-10T23:18:10+08:00">2020-02-10</time>
+              <time title="创建时间：2020-02-10 23:18:10 / 修改时间：23:37:50" itemprop="dateCreated datePublished" datetime="2020-02-10T23:18:10+08:00">2020-02-10</time>
             </span>
           
             
@@ -455,13 +455,13 @@
 <td>以逗号分隔</td>
 <td>数组</td>
 </tr>
-<tr>
-<td><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> leo = &#123;</span><br><span class="line">	name: <span class="string">"Leo"</span>,</span><br><span class="line">	sayHi() &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">"Hi! I'm "</span> + <span class="keyword">this</span>.name) </span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> neil = &#123;</span><br><span class="line">	name: <span class="string">"Neil"</span></span><br><span class="line">&#125;;</span><br><span class="line">leo.sayHi(); <span class="comment">// "Hi! I'm Leo"</span></span><br><span class="line">leo.sayHi.call(neil); <span class="comment">// "Hi! I'm Neil"</span></span><br><span class="line">leo.sayHi.call(<span class="literal">null</span>); <span class="comment">// "Hi! I'm undefined"</span></span><br><span class="line"><span class="keyword">var</span> neilSayHi = leo.sayHi.bind(neil)</span><br><span class="line">consolo.log(<span class="keyword">typeof</span> neilSayHi)  <span class="comment">// function</span></span><br><span class="line">nei.sayHi() <span class="comment">// "Hi! I'm Neil"</span></span><br></pre></td></tr></table></figure></td>
-<td></td>
-<td></td>
-</tr>
 </tbody></table>
-<h2 id="bind"><a href="#bind" class="headerlink" title="bind"></a><code>bind</code></h2>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> leo = &#123;</span><br><span class="line">	name: <span class="string">"Leo"</span>,</span><br><span class="line">	sayHi() &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">"Hi! I'm "</span> + <span class="keyword">this</span>.name) </span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> neil = &#123;</span><br><span class="line">	name: <span class="string">"Neil"</span></span><br><span class="line">&#125;;</span><br><span class="line">leo.sayHi(); <span class="comment">// "Hi! I'm Leo"</span></span><br><span class="line">leo.sayHi.call(neil); <span class="comment">// "Hi! I'm Neil"</span></span><br><span class="line">leo.sayHi.call(<span class="literal">null</span>); <span class="comment">// "Hi! I'm undefined"</span></span><br><span class="line"><span class="keyword">var</span> neilSayHi = leo.sayHi.bind(neil)</span><br><span class="line">consolo.log(<span class="keyword">typeof</span> neilSayHi)  <span class="comment">// function</span></span><br><span class="line">nei.sayHi() <span class="comment">// "Hi! I'm Neil"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="bind"><a href="#bind" class="headerlink" title="bind"></a><code>bind</code></h2><p>也用于改变<code>this</code>的只想相较于<code>call</code>、<code>apply</code>，<code>bind</code>返回的是一个函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">12</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.x)</span><br><span class="line">&#125;</span><br><span class="line">test()</span><br><span class="line">test.bind(&#123; <span class="attr">x</span>: <span class="number">100</span> &#125;)()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 12</span></span><br><span class="line"><span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
+
+
         
       
     </div>
