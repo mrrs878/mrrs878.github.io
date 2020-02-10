@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/avatar.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="事件委托 （event delegation）事件委托是将事件监听器添加到父元素，而不是每个子元素单独设置事件监听器，当触发子元素时，事件会冒泡到父元素，监听器就会触发，这种技术的好处是：  内存占用少，因为只需要一个父元素的事件处理程序，而不必为每个后代都添加事件处理程序。 无需从已删除的元素中解绑处理程序，也无需将处理程序绑定到新元素上。  JavaScript中的this指向简单来讲，thi">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript相关-0">
+<meta property="og:url" content="https://mrrs878.github.io/2020/02/10/JavaScript相关-0/index.html">
+<meta property="og:site_name" content="Mr.RS">
+<meta property="og:description" content="事件委托 （event delegation）事件委托是将事件监听器添加到父元素，而不是每个子元素单独设置事件监听器，当触发子元素时，事件会冒泡到父元素，监听器就会触发，这种技术的好处是：  内存占用少，因为只需要一个父元素的事件处理程序，而不必为每个后代都添加事件处理程序。 无需从已删除的元素中解绑处理程序，也无需将处理程序绑定到新元素上。  JavaScript中的this指向简单来讲，thi">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://mrrs878.github.io/2020/02/10/imgs/1581317824537.png">
+<meta property="og:updated_time" content="2020-02-10T15:23:52.468Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript相关-0">
+<meta name="twitter:description" content="事件委托 （event delegation）事件委托是将事件监听器添加到父元素，而不是每个子元素单独设置事件监听器，当触发子元素时，事件会冒泡到父元素，监听器就会触发，这种技术的好处是：  内存占用少，因为只需要一个父元素的事件处理程序，而不必为每个后代都添加事件处理程序。 无需从已删除的元素中解绑处理程序，也无需将处理程序绑定到新元素上。  JavaScript中的this指向简单来讲，thi">
+<meta name="twitter:image" content="https://mrrs878.github.io/2020/02/10/imgs/1581317824537.png">
+  <link rel="canonical" href="https://mrrs878.github.io/2020/02/10/JavaScript相关-0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>JavaScript相关-0 | Mr.RS</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.RS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Read The Fucking Source Code!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/02/10/JavaScript相关-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            JavaScript相关-0
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-10 23:18:10 / 修改时间：23:23:52" itemprop="dateCreated datePublished" datetime="2020-02-10T23:18:10+08:00">2020-02-10</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="事件委托-（event-delegation）"><a href="#事件委托-（event-delegation）" class="headerlink" title="事件委托 （event delegation）"></a>事件委托 （event delegation）</h2><p>事件委托是将事件监听器添加到父元素，而不是每个子元素单独设置事件监听器，当触发子元素时，事件会冒泡到父元素，监听器就会触发，这种技术的好处是：</p>
+<ol>
+<li>内存占用少，因为只需要一个父元素的事件处理程序，而不必为每个后代都添加事件处理程序。</li>
+<li>无需从已删除的元素中解绑处理程序，也无需将处理程序绑定到新元素上。</li>
+</ol>
+<h2 id="JavaScript中的this指向"><a href="#JavaScript中的this指向" class="headerlink" title="JavaScript中的this指向"></a>JavaScript中的this指向</h2><p>简单来讲，<code>this</code>的指向取决于函数的调用方式</p>
+<ol start="0">
+<li>如果是箭头函数，<code>this</code>被设置为调用时的上下文</li>
+<li>如果使用<code>new</code>，函数内的<code>this</code>是一个全新的对象</li>
+<li>如果<code>apply、call、bind</code>方法用于调用/创建一个函数，函数内的<code>this</code>就是作为参数传入这些方法的对象</li>
+<li>当函数作为对象里的方法被调用时，函数内的<code>this</code>是调用该函数的对象，比如当<code>obj.method()</code>被调用时，函数内的<code>this</code>将绑定到<code>obj</code>对象</li>
+<li>如果不符合上述规则，那么<code>this</code>的值指向全局对象<code>global object</code>，浏览器环境下<code>this</code>的值指向<code>window</code>对象，但在严格模式下<code>use strict</code>，<code>this</code>的值为<code>undefined</code></li>
+<li>如果符合上述多个规则，从上到下权重依次递减</li>
+</ol>
+<h2 id="原型继承-prototypal-inheritance"><a href="#原型继承-prototypal-inheritance" class="headerlink" title="原型继承 prototypal inheritance"></a>原型继承 <code>prototypal inheritance</code></h2><p>所有的JS对象都有一个<code>prototype</code>对象，指向它的原型对象，当试图访问一个对象的属性时，如果没有在该对象上找到它还会搜索该对象的原型，以及该对象的原型的原型，依次层层向上搜索，直到找到一个名字匹配的属性或达到原型链的末尾。这种行为是在模拟经典的继承，但与其说时继承还不如说是委托<code>delegation</code></p>
+<p>读取对象的属性值时，会自动到原型链中查找</p>
+<p>设置对象的属性值时，不会查找原型链，如果当前对象中没有此属性，直接添加此属性并设置其值</p>
+<p><img src="../imgs/1581317824537.png" alt="原型"></p>
+<h2 id="JavaScript的模块化机制"><a href="#JavaScript的模块化机制" class="headerlink" title="JavaScript的模块化机制"></a>JavaScript的模块化机制</h2><ul>
+<li><p>AMD</p>
+<p><strong>Asynchronous Module Definition 异步模块加载机制</strong>，ReqireJS实现了AMD规范</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a.js</span></span><br><span class="line"><span class="comment">//define可以传入三个参数，分别是字符串-模块名、数组-依赖模块、函数-回调函数</span></span><br><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// b.js</span></span><br><span class="line"><span class="comment">//数组中声明需要加载的模块，可以是模块名、js文件路径</span></span><br><span class="line"><span class="built_in">require</span>([<span class="string">'a'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a);<span class="comment">// 1</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>特点：</p>
+<p>对于依赖的模块，AMD推崇<strong>依赖前置，提前执行</strong>，也就是说，在<code>define</code>方法里传入的依赖模块（数组）会在一开始就下载并执行。适合在<strong>浏览器端</strong>使用</p>
+</li>
+<li><p>CommonJS</p>
+<p>CommonJS规范为CommonJS小组所提出，目的是弥补JavaScript在服务器端缺少模块化机制，<strong>NodeJS、webpack</strong>都是基于该规范来实现的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"hello world"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//b.js</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'./a'</span>);</span><br><span class="line"></span><br><span class="line">a();<span class="comment">//"hello world"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//或者</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//a2.js</span></span><br><span class="line">exports.num = <span class="number">1</span>;</span><br><span class="line">exports.obj = &#123;<span class="attr">xx</span>: <span class="number">2</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//b2.js</span></span><br><span class="line"><span class="keyword">var</span> a2 = <span class="built_in">require</span>(<span class="string">'./a2'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a2);<span class="comment">//&#123; num: 1, obj: &#123; xx: 2 &#125; &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>特点：</p>
+<ul>
+<li>所有代码都运行在<strong>模块作用域</strong>，不会污染全局作用域</li>
+<li>模块是<strong>同步加载</strong>的，即只有加载完成才能执行后面的操作</li>
+<li>模块在首次执行后就会<strong>缓存</strong>，再次加载只返回缓存结果，如果想要再次执行，可清除缓存</li>
+<li><code>require</code>返回的是被输出的<strong>值的拷贝</strong>，模块内部的变化也不会影响这个值</li>
+</ul>
+</li>
+<li><p>ES6 Module</p>
+<p>ES6 Module是<strong>ES6</strong>中规定的模块体系</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a.js</span></span><br><span class="line"><span class="keyword">var</span> name = <span class="string">'lin'</span>;</span><br><span class="line"><span class="keyword">var</span> age = <span class="number">13</span>;</span><br><span class="line"><span class="keyword">var</span> job = <span class="string">'ninja'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123; name, age, job&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//b.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; name, age, job&#125; <span class="keyword">from</span> <span class="string">'./a.js'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(name, age, job);<span class="comment">// lin 13 ninja</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//或者</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//a2.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'default '</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//b2.js</span></span><br><span class="line"><span class="keyword">import</span> customName <span class="keyword">from</span> <span class="string">'./a2.js'</span>;</span><br><span class="line">customName(); <span class="comment">// 'default'</span></span><br></pre></td></tr></table></figure>
+
+<p>特点（对比CommonJS）：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>CommonJS</th>
+<th>ES6 Module</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>加载时间</td>
+<td>运行时加载</td>
+<td>编译时输出接口</td>
+</tr>
+<tr>
+<td>加载方式</td>
+<td>加载整个模块</td>
+<td>按需加载</td>
+</tr>
+<tr>
+<td>输出方式</td>
+<td>值的拷贝</td>
+<td>值的引用</td>
+</tr>
+<tr>
+<td>this</td>
+<td>指向当前模块</td>
+<td>undefined</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h2 id="闭包（closure）"><a href="#闭包（closure）" class="headerlink" title="闭包（closure）"></a>闭包（closure）</h2><ul>
+<li><p>WHAT</p>
+<p>定义：</p>
+<ol>
+<li><p>即使被外部函数返回，依然可以访问到外部（封闭）函数作用域的<strong>函数</strong>。</p>
+</li>
+<li><p>包含被引用变量（函数）的<strong>对象</strong></p>
+</li>
+</ol>
+<p>生命周期：</p>
+<p>​    产生：在嵌套内部函数<strong>定义执行完</strong>时就产生了（<strong>不是在调用</strong>）</p>
+<p>​    死亡：在嵌套内部函数成为垃圾对象时</p>
+</li>
+<li><p>WHY</p>
+<ul>
+<li><p>可以实现数据私有化或特权方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">count</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> tmp = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> tmp++;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> counter1 = count()</span><br><span class="line"><span class="built_in">console</span>.log(counter1());</span><br><span class="line"><span class="built_in">console</span>.log(counter1());</span><br><span class="line"><span class="built_in">console</span>.log(counter1());</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"---------"</span>);</span><br><span class="line"><span class="keyword">let</span> counter2 = count()</span><br><span class="line"><span class="built_in">console</span>.log(counter2());</span><br><span class="line"><span class="built_in">console</span>.log(counter2());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 0</span></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// ----new counter-----</span></span><br><span class="line"><span class="comment">// 0</span></span><br><span class="line"><span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实现单例模式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单例模式</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Single</span> </span>&#123;</span><br><span class="line">  test () &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"test"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ()()的作用：使函数立即调用一次</span></span><br><span class="line"><span class="comment">// 闭包的作用：私有化变量</span></span><br><span class="line">Single.getIntance = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> instance = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!instance) &#123;</span><br><span class="line">      instance = <span class="keyword">new</span> Single()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instance</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>部分参数函数（partial applications）柯里化（currying）</p>
+<p>函数式编程-柯里化</p>
+</li>
+</ul>
+</li>
+<li><p>HOW</p>
+<p>常见的创建闭包的方式是在一个函数内部创建另一个函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> a = <span class="number">12</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"test"</span>, a)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="foreach和-map的区别"><a href="#foreach和-map的区别" class="headerlink" title=".foreach和.map的区别"></a><code>.foreach</code>和<code>.map</code>的区别</h2><ul>
+<li>都是用来遍历一个数组</li>
+<li><code>foreach</code>对原数组有副作用，而<code>map</code>则会返回一个新的数组</li>
+</ul>
+<h2 id="匿名函数的使用场景"><a href="#匿名函数的使用场景" class="headerlink" title="匿名函数的使用场景"></a>匿名函数的使用场景</h2><ul>
+<li><p>在IIFE中使用,用来封装局部作用域内的代码，避免污染全局作用域</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以作为回调函数，简洁易读</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">settimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用作函数式编程</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">arr.map(<span class="function"><span class="params">el</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(el)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="宿主对象（host-objects）和原生对象（native-objects）的区别"><a href="#宿主对象（host-objects）和原生对象（native-objects）的区别" class="headerlink" title="宿主对象（host objects）和原生对象（native objects）的区别"></a>宿主对象（host objects）和原生对象（native objects）的区别</h2><ul>
+<li>原生对象是由ECMAScript规范定义的JavaScript内置对象，如<code>String</code>、<code>Math</code>、<code>RegExp</code>等</li>
+<li>宿主对象是指由运行时环境（浏览器或Node）提供，如<code>window</code>、<code>XMLRequest</code>、<code>Buffer</code></li>
+</ul>
+<h2 id="function-Persion-、var-person-Person-、var-person-new-Person-的区别"><a href="#function-Persion-、var-person-Person-、var-person-new-Person-的区别" class="headerlink" title="function Persion() {}、var person = Person()、var person = new Person()的区别"></a><code>function Persion() {}</code>、<code>var person = Person()</code>、<code>var person = new Person()</code>的区别</h2><p><code>function Persion() {}</code>只是一个普通的函数声明。使用PascalCase方式命名的函数作为构造函数是一种惯例</p>
+<p><code>var person = Person()</code>将<code>Person</code>作为普通函数调用而不是构造函数。如果该函数是用作构造函数，那么这种调用方式是一种创建错误，通常情况下构造函数不会返回任何东西，因此向普通函数一样调用构造函数只会返回<code>undefined</code></p>
+<p><code>var person = new Person()</code>使用<code>new</code>操作符，创建<code>Person</code>对象的实例，该实例继承自<code>Person.prototype</code><br>在使用new的过程中会发生以下事情：</p>
+<ol>
+<li>新生成了一个对象</li>
+<li>链接到原型</li>
+<li>绑定this</li>
+<li>返回新对象</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person = Person()</span><br><span class="line"><span class="built_in">console</span>.log(person) <span class="comment">//undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person(<span class="string">"tom"</span>)</span><br><span class="line"><span class="built_in">console</span>.log(person) <span class="comment">// Person &#123; name: "tom" &#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="call和-apply的区别"><a href="#call和-apply的区别" class="headerlink" title=".call和.apply的区别"></a><code>.call</code>和<code>.apply</code>的区别</h2><table>
+<thead>
+<tr>
+<th></th>
+<th><code>call</code></th>
+<th><code>apply</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>作用</td>
+<td>指定函数<code>this</code></td>
+<td>指定函数<code>this</code></td>
+</tr>
+<tr>
+<td>传参方式</td>
+<td>以逗号分隔</td>
+<td>数组</td>
+</tr>
+<tr>
+<td><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> leo = &#123;</span><br><span class="line">	name: <span class="string">"Leo"</span>,</span><br><span class="line">	sayHi() &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">"Hi! I'm "</span> + <span class="keyword">this</span>.name) </span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">let</span> neil = &#123;</span><br><span class="line">	name: <span class="string">"Neil"</span></span><br><span class="line">&#125;;</span><br><span class="line">leo.sayHi(); <span class="comment">// "Hi! I'm Leo"</span></span><br><span class="line">leo.sayHi.call(neil); <span class="comment">// "Hi! I'm Neil"</span></span><br><span class="line">leo.sayHi.call(<span class="literal">null</span>); <span class="comment">// "Hi! I'm undefined"</span></span><br><span class="line"><span class="keyword">var</span> neilSayHi = leo.sayHi.bind(neil)</span><br><span class="line">consolo.log(<span class="keyword">typeof</span> neilSayHi)  <span class="comment">// function</span></span><br><span class="line">nei.sayHi() <span class="comment">// "Hi! I'm Neil"</span></span><br></pre></td></tr></table></figure></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="bind"><a href="#bind" class="headerlink" title="bind"></a><code>bind</code></h2>
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/01/14/Node.js-基础/" rel="next" title="Node.js-基础">
+                  <i class="fa fa-chevron-left"></i> Node.js-基础
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#事件委托-（event-delegation）"><span class="nav-number">1.</span> <span class="nav-text">事件委托 （event delegation）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript中的this指向"><span class="nav-number">2.</span> <span class="nav-text">JavaScript中的this指向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型继承-prototypal-inheritance"><span class="nav-number">3.</span> <span class="nav-text">原型继承 prototypal inheritance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript的模块化机制"><span class="nav-number">4.</span> <span class="nav-text">JavaScript的模块化机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#闭包（closure）"><span class="nav-number">5.</span> <span class="nav-text">闭包（closure）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#foreach和-map的区别"><span class="nav-number">6.</span> <span class="nav-text">.foreach和.map的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#匿名函数的使用场景"><span class="nav-number">7.</span> <span class="nav-text">匿名函数的使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宿主对象（host-objects）和原生对象（native-objects）的区别"><span class="nav-number">8.</span> <span class="nav-text">宿主对象（host objects）和原生对象（native objects）的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#function-Persion-、var-person-Person-、var-person-new-Person-的区别"><span class="nav-number">9.</span> <span class="nav-text">function Persion() {}、var person = Person()、var person = new Person()的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#call和-apply的区别"><span class="nav-number">10.</span> <span class="nav-text">.call和.apply的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bind"><span class="nav-number">11.</span> <span class="nav-text">bind</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/imgs/avatar.png"
+      alt="Mr.RS">
+  <p class="site-author-name" itemprop="name">Mr.RS</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
