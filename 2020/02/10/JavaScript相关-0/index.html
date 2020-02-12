@@ -63,12 +63,12 @@
 <meta property="og:site_name" content="Mr.RS">
 <meta property="og:description" content="事件委托 （event delegation）事件委托是将事件监听器添加到父元素，而不是每个子元素单独设置事件监听器，当触发子元素时，事件会冒泡到父元素，监听器就会触发，这种技术的好处是：  内存占用少，因为只需要一个父元素的事件处理程序，而不必为每个后代都添加事件处理程序。 无需从已删除的元素中解绑处理程序，也无需将处理程序绑定到新元素上。  JavaScript中的this指向简单来讲，thi">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://mrrs878.github.io/2020/02/10/imgs/1581317824537.png">
-<meta property="og:updated_time" content="2020-02-10T15:37:50.970Z">
+<meta property="og:image" content="https://mrrs878.github.io/2020/02/10/JavaScript相关-0/imgs/1581317824537.png">
+<meta property="og:updated_time" content="2020-02-12T15:16:00.048Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript相关-0">
 <meta name="twitter:description" content="事件委托 （event delegation）事件委托是将事件监听器添加到父元素，而不是每个子元素单独设置事件监听器，当触发子元素时，事件会冒泡到父元素，监听器就会触发，这种技术的好处是：  内存占用少，因为只需要一个父元素的事件处理程序，而不必为每个后代都添加事件处理程序。 无需从已删除的元素中解绑处理程序，也无需将处理程序绑定到新元素上。  JavaScript中的this指向简单来讲，thi">
-<meta name="twitter:image" content="https://mrrs878.github.io/2020/02/10/imgs/1581317824537.png">
+<meta name="twitter:image" content="https://mrrs878.github.io/2020/02/10/JavaScript相关-0/imgs/1581317824537.png">
   <link rel="canonical" href="https://mrrs878.github.io/2020/02/10/JavaScript相关-0/">
 
 
@@ -272,11 +272,19 @@
                 
               
 
-              <time title="创建时间：2020-02-10 23:18:10 / 修改时间：23:37:50" itemprop="dateCreated datePublished" datetime="2020-02-10T23:18:10+08:00">2020-02-10</time>
+              <time title="创建时间：2020-02-10 23:18:10" itemprop="dateCreated datePublished" datetime="2020-02-10T23:18:10+08:00">2020-02-10</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-12 23:16:00" itemprop="dateModified" datetime="2020-02-12T23:16:00+08:00">2020-02-12</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -325,7 +333,7 @@
 <h2 id="原型继承-prototypal-inheritance"><a href="#原型继承-prototypal-inheritance" class="headerlink" title="原型继承 prototypal inheritance"></a>原型继承 <code>prototypal inheritance</code></h2><p>所有的JS对象都有一个<code>prototype</code>对象，指向它的原型对象，当试图访问一个对象的属性时，如果没有在该对象上找到它还会搜索该对象的原型，以及该对象的原型的原型，依次层层向上搜索，直到找到一个名字匹配的属性或达到原型链的末尾。这种行为是在模拟经典的继承，但与其说时继承还不如说是委托<code>delegation</code></p>
 <p>读取对象的属性值时，会自动到原型链中查找</p>
 <p>设置对象的属性值时，不会查找原型链，如果当前对象中没有此属性，直接添加此属性并设置其值</p>
-<p><img src="../imgs/1581317824537.png" alt="原型"></p>
+<p><img src="./imgs/1581317824537.png" alt="原型"></p>
 <h2 id="JavaScript的模块化机制"><a href="#JavaScript的模块化机制" class="headerlink" title="JavaScript的模块化机制"></a>JavaScript的模块化机制</h2><ul>
 <li><p>AMD</p>
 <p><strong>Asynchronous Module Definition 异步模块加载机制</strong>，ReqireJS实现了AMD规范</p>

@@ -264,7 +264,7 @@
                 
               
 
-              <time title="创建时间：2020-02-12 22:53:13 / 修改时间：22:55:11" itemprop="dateCreated datePublished" datetime="2020-02-12T22:53:13+08:00">2020-02-12</time>
+              <time title="创建时间：2020-02-12 22:53:13 / 修改时间：23:14:02" itemprop="dateCreated datePublished" datetime="2020-02-12T22:53:13+08:00">2020-02-12</time>
             </span>
           
             
@@ -397,13 +397,13 @@
 <li>当执行完所有微任务，如有必要会渲染页面</li>
 <li>然后开始下一轮<code>event loop</code>，执行宏任务中的异步代码也就是<code>setTimeout</code>（宏任务）中的回调函数</li>
 </ol>
-<p><img src="D:%5CmyBlog_src%5Csource_posts%5Cassets%5Cbrowser_event_loop.png" alt="浏览器中的event loop"></p>
-<p><img src="D:%5CmyBlog_src%5Csource_posts%5Cassets%5Cbrowser_event_loop2.png" alt="浏览器中的event loop"></p>
+<p><img src="./imgs/browser_event_loop.png" alt="浏览器中的event loop"></p>
+<p><img src="./imgs/browser_event_loop2.png" alt="浏览器中的event loop"></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">  <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">4</span>);</span><br><span class="line">  resolve(<span class="number">5</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">6</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">7</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1 4 7 5 2 3 6</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p><strong>Node.js中的event loop</strong></p>
 <p>Node.js中的<code>event loop</code>分为6个阶段，他们会按照顺序反复运行。每当进入某一个阶段的时候都会从对应的回调队列中取出函数去执行。当<strong>队列为空</strong>或者<strong>执行的回调函数数量到达系统设定的阈值</strong>，就会进入下一阶段</p>
-<p><img src="D:%5CmyBlog_src%5Csource_posts%5Cassets%5Cnode_event_loop.png" alt="Node.js中的event loop"></p>
+<p><img src="./imgs/node_event_loop.png" alt="Node.js中的event loop"></p>
 <ol>
 <li><p><strong>timers</strong></p>
 <p><strong>timers</strong>阶段会执行<code>setTimeout</code>和<code>setinterval</code>回调，并且是由<strong>poll</strong>阶段控制的。同样在<code>Node.js</code>中定时器指定的事件也不是准确时间，只是尽快执行</p>
@@ -437,7 +437,7 @@
 <p>执行close事件</p>
 </li>
 </ol>
-<p><img src="D:%5CmyBlog_src%5Csource_posts%5Cassets%5Cnode_event_loop2.png" alt="Node.js中的event loop"></p>
+<p><img src="./imgs/node_event_loop2.png" alt="Node.js中的event loop"></p>
 </li>
 </ul>
 <h2 id="ES6的类和ES6的构造函数的区别"><a href="#ES6的类和ES6的构造函数的区别" class="headerlink" title="ES6的类和ES6的构造函数的区别"></a>ES6的类和ES6的构造函数的区别</h2><p>在普通使用中没有区别：</p>
@@ -503,11 +503,19 @@
                 
               
 
-              <time title="创建时间：2020-02-11 23:33:22 / 修改时间：23:37:41" itemprop="dateCreated datePublished" datetime="2020-02-11T23:33:22+08:00">2020-02-11</time>
+              <time title="创建时间：2020-02-11 23:33:22" itemprop="dateCreated datePublished" datetime="2020-02-11T23:33:22+08:00">2020-02-11</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-12 23:16:12" itemprop="dateModified" datetime="2020-02-12T23:16:12+08:00">2020-02-12</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -683,7 +691,7 @@
 <p>single page application 单页面应用</p>
 <p>现如今，web程序员将他们构建的产品成为web应用而不是网站。虽然这两个术语之间没有严格的区别，但网络应用往往具有高度的交互性和动态性，允许用户执行操作并接受他们的操作响应。在过去，浏览器从服务器接收HTML并渲染，当用户导航到其他URL时，需要整页刷新，服务器会为新页面发送新的HTML，这被称为服务端渲染</p>
 <p>然而，在现代的SPA中，客户端渲染取而代之。浏览器从都武器加载<strong>初始页面</strong>，整个应用程序所所需的脚本（库、框架、应用代码）和样式表。当用户导航到其他页面时，<strong>不会触发页面刷新</strong>，该页面的URL通过<a href="https://developer.mozilla.org/en-US/docs/Web/API/History_API" target="_blank" rel="noopener">HTML5 History API</a>进行更新。浏览器通过Ajax请求向服务器检索所需的数据（通常采用json格式），然后SPA<strong>通过JavaScript来动态更新页面</strong>，这些JavaScript在初始页面已经下载。这种模式类似于原生移动应用的工作方式。</p>
-<p><img src="../imgs/spa.png" alt="SPA"></p>
+<p><img src="./imgs/spa.png" alt="SPA"></p>
 <p><strong>WHY</strong></p>
 <p>好处：</p>
 <ul>
@@ -757,11 +765,19 @@
                 
               
 
-              <time title="创建时间：2020-02-10 23:18:10 / 修改时间：23:37:50" itemprop="dateCreated datePublished" datetime="2020-02-10T23:18:10+08:00">2020-02-10</time>
+              <time title="创建时间：2020-02-10 23:18:10" itemprop="dateCreated datePublished" datetime="2020-02-10T23:18:10+08:00">2020-02-10</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-12 23:16:00" itemprop="dateModified" datetime="2020-02-12T23:16:00+08:00">2020-02-12</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -810,7 +826,7 @@
 <h2 id="原型继承-prototypal-inheritance"><a href="#原型继承-prototypal-inheritance" class="headerlink" title="原型继承 prototypal inheritance"></a>原型继承 <code>prototypal inheritance</code></h2><p>所有的JS对象都有一个<code>prototype</code>对象，指向它的原型对象，当试图访问一个对象的属性时，如果没有在该对象上找到它还会搜索该对象的原型，以及该对象的原型的原型，依次层层向上搜索，直到找到一个名字匹配的属性或达到原型链的末尾。这种行为是在模拟经典的继承，但与其说时继承还不如说是委托<code>delegation</code></p>
 <p>读取对象的属性值时，会自动到原型链中查找</p>
 <p>设置对象的属性值时，不会查找原型链，如果当前对象中没有此属性，直接添加此属性并设置其值</p>
-<p><img src="../imgs/1581317824537.png" alt="原型"></p>
+<p><img src="./imgs/1581317824537.png" alt="原型"></p>
 <h2 id="JavaScript的模块化机制"><a href="#JavaScript的模块化机制" class="headerlink" title="JavaScript的模块化机制"></a>JavaScript的模块化机制</h2><ul>
 <li><p>AMD</p>
 <p><strong>Asynchronous Module Definition 异步模块加载机制</strong>，ReqireJS实现了AMD规范</p>

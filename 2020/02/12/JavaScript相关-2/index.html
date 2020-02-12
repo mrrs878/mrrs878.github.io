@@ -63,15 +63,15 @@
 <meta property="og:site_name" content="Mr.RS">
 <meta property="og:description" content="PromiseWHAT Promise 对象用于表示一个异步操作的最终完成 (或失败), 及其结果值. 异步编程的一种解决方案 Promise可能处于以下三个状态之一：fulfilled、rejected、pending。用户可以对Promise添加回调函数来处理操作成功的结果或失败的原因 WHY 传统的异步编程缺点难以忍受:  代码臃肿 可读性差 耦合度过高，可维护性差 代码复用性差 只能在回调">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="d:%5CmyBlog_src%5Csource_posts%5Cassets%5Cbrowser_event_loop.png">
-<meta property="og:image" content="d:%5CmyBlog_src%5Csource_posts%5Cassets%5Cbrowser_event_loop2.png">
-<meta property="og:image" content="d:%5CmyBlog_src%5Csource_posts%5Cassets%5Cnode_event_loop.png">
-<meta property="og:image" content="d:%5CmyBlog_src%5Csource_posts%5Cassets%5Cnode_event_loop2.png">
-<meta property="og:updated_time" content="2020-02-12T14:55:11.844Z">
+<meta property="og:image" content="https://mrrs878.github.io/2020/02/12/JavaScript相关-2/imgs/browser_event_loop.png">
+<meta property="og:image" content="https://mrrs878.github.io/2020/02/12/JavaScript相关-2/imgs/browser_event_loop2.png">
+<meta property="og:image" content="https://mrrs878.github.io/2020/02/12/JavaScript相关-2/imgs/node_event_loop.png">
+<meta property="og:image" content="https://mrrs878.github.io/2020/02/12/JavaScript相关-2/imgs/node_event_loop2.png">
+<meta property="og:updated_time" content="2020-02-12T15:14:02.729Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript相关-2">
 <meta name="twitter:description" content="PromiseWHAT Promise 对象用于表示一个异步操作的最终完成 (或失败), 及其结果值. 异步编程的一种解决方案 Promise可能处于以下三个状态之一：fulfilled、rejected、pending。用户可以对Promise添加回调函数来处理操作成功的结果或失败的原因 WHY 传统的异步编程缺点难以忍受:  代码臃肿 可读性差 耦合度过高，可维护性差 代码复用性差 只能在回调">
-<meta name="twitter:image" content="d:%5CmyBlog_src%5Csource_posts%5Cassets%5Cbrowser_event_loop.png">
+<meta name="twitter:image" content="https://mrrs878.github.io/2020/02/12/JavaScript相关-2/imgs/browser_event_loop.png">
   <link rel="canonical" href="https://mrrs878.github.io/2020/02/12/JavaScript相关-2/">
 
 
@@ -275,7 +275,7 @@
                 
               
 
-              <time title="创建时间：2020-02-12 22:53:13 / 修改时间：22:55:11" itemprop="dateCreated datePublished" datetime="2020-02-12T22:53:13+08:00">2020-02-12</time>
+              <time title="创建时间：2020-02-12 22:53:13 / 修改时间：23:14:02" itemprop="dateCreated datePublished" datetime="2020-02-12T22:53:13+08:00">2020-02-12</time>
             </span>
           
             
@@ -408,13 +408,13 @@
 <li>当执行完所有微任务，如有必要会渲染页面</li>
 <li>然后开始下一轮<code>event loop</code>，执行宏任务中的异步代码也就是<code>setTimeout</code>（宏任务）中的回调函数</li>
 </ol>
-<p><img src="D:%5CmyBlog_src%5Csource_posts%5Cassets%5Cbrowser_event_loop.png" alt="浏览器中的event loop"></p>
-<p><img src="D:%5CmyBlog_src%5Csource_posts%5Cassets%5Cbrowser_event_loop2.png" alt="浏览器中的event loop"></p>
+<p><img src="./imgs/browser_event_loop.png" alt="浏览器中的event loop"></p>
+<p><img src="./imgs/browser_event_loop2.png" alt="浏览器中的event loop"></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">  <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">4</span>);</span><br><span class="line">  resolve(<span class="number">5</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">6</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">7</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1 4 7 5 2 3 6</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p><strong>Node.js中的event loop</strong></p>
 <p>Node.js中的<code>event loop</code>分为6个阶段，他们会按照顺序反复运行。每当进入某一个阶段的时候都会从对应的回调队列中取出函数去执行。当<strong>队列为空</strong>或者<strong>执行的回调函数数量到达系统设定的阈值</strong>，就会进入下一阶段</p>
-<p><img src="D:%5CmyBlog_src%5Csource_posts%5Cassets%5Cnode_event_loop.png" alt="Node.js中的event loop"></p>
+<p><img src="./imgs/node_event_loop.png" alt="Node.js中的event loop"></p>
 <ol>
 <li><p><strong>timers</strong></p>
 <p><strong>timers</strong>阶段会执行<code>setTimeout</code>和<code>setinterval</code>回调，并且是由<strong>poll</strong>阶段控制的。同样在<code>Node.js</code>中定时器指定的事件也不是准确时间，只是尽快执行</p>
@@ -448,7 +448,7 @@
 <p>执行close事件</p>
 </li>
 </ol>
-<p><img src="D:%5CmyBlog_src%5Csource_posts%5Cassets%5Cnode_event_loop2.png" alt="Node.js中的event loop"></p>
+<p><img src="./imgs/node_event_loop2.png" alt="Node.js中的event loop"></p>
 </li>
 </ul>
 <h2 id="ES6的类和ES6的构造函数的区别"><a href="#ES6的类和ES6的构造函数的区别" class="headerlink" title="ES6的类和ES6的构造函数的区别"></a>ES6的类和ES6的构造函数的区别</h2><p>在普通使用中没有区别：</p>
