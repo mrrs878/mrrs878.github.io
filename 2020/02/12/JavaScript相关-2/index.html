@@ -67,7 +67,7 @@
 <meta property="og:image" content="https://mrrs878.github.io/2020/02/12/JavaScript相关-2/imgs/browser_event_loop2.png">
 <meta property="og:image" content="https://mrrs878.github.io/2020/02/12/JavaScript相关-2/imgs/node_event_loop.png">
 <meta property="og:image" content="https://mrrs878.github.io/2020/02/12/JavaScript相关-2/imgs/node_event_loop2.png">
-<meta property="og:updated_time" content="2020-02-13T15:08:21.307Z">
+<meta property="og:updated_time" content="2020-02-18T02:44:40.382Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript相关-2">
 <meta name="twitter:description" content="PromiseWHAT Promise 对象用于表示一个异步操作的最终完成 (或失败), 及其结果值. 异步编程的一种解决方案 Promise可能处于以下三个状态之一：fulfilled、rejected、pending。用户可以对Promise添加回调函数来处理操作成功的结果或失败的原因 WHY 传统的异步编程缺点难以忍受:  代码臃肿 可读性差 耦合度过高，可维护性差 代码复用性差 只能在回调">
@@ -286,7 +286,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-13 23:08:21" itemprop="dateModified" datetime="2020-02-13T23:08:21+08:00">2020-02-13</time>
+                <time title="修改时间：2020-02-18 10:44:40" itemprop="dateModified" datetime="2020-02-18T10:44:40+08:00">2020-02-18</time>
               </span>
             
           
@@ -359,7 +359,7 @@
 
 <p>缺点：会遍历到它的继承属性，在使用之前需要加入<code>obj.hasOwnProperty(property)</code></p>
 </li>
-<li><p>Object.keys(obj).forEach()` 👍</p>
+<li><p><code>Object.keys(obj).forEach()</code> 👍</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.keys(obj).forEach(<span class="function"><span class="params">property</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(property)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <p><code>Object.keys</code>返回一个有给定对象的自身可枚举属性组成的数组</p>
@@ -368,6 +368,9 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.getOwnPropertyNames(obj).forEach(<span class="function"><span class="params">property</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(property)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <p><code>Object.getOwnPropertyNames</code>返回一个由指定对象的所有自身属性的属性名（包括不可枚举属性但不包括<code>Symbol</code>值作为名称的属性）组成的数组</p>
+</li>
+<li><p><code>Reflect.ownKeys(target)</code> 👍</p>
+<p>基本等同于<code>Object.getOwnPeopertyNames</code> + <code>Object.getOwnPropertySymbols</code></p>
 </li>
 </ul>
 <p>数组：<strong>各取所需</strong></p>
@@ -600,7 +603,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -626,7 +629,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">30</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
