@@ -234,6 +234,103 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/10/21/设计模式-职责链模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2019/10/21/设计模式-职责链模式/" class="post-title-link" itemprop="url">设计模式-职责链模式</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-21 10:51:52 / 修改时间：11:36:52" itemprop="dateCreated datePublished" datetime="2019-10-21T10:51:52+08:00">2019-10-21</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="WHAT"><a href="#WHAT" class="headerlink" title="WHAT"></a>WHAT</h1><p>使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系，将这些对象练成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止</p>
+<p><img src="../imgs/chainOfResponsibility0.png" alt="普通设计"></p>
+<p><img src="../imgs/chainOfResponsibility1.png" alt="职责链模式"></p>
+<h1 id="WHY"><a href="#WHY" class="headerlink" title="WHY"></a>WHY</h1><ul>
+<li>职责链模式解耦了请求发送者 A 和 N 个接收者之间的复杂关系，由于不知道链中的哪个节点可以处理你发出的请求，所以你只需要把请求传递给第一个节点即可</li>
+<li>使用职责链后，链中的节点可以灵活拆分重组，增加/删除/改动一个节点都轻而易举</li>
+<li>可以手动指定起始节点，请求并不是非得从链中的第一个节点开始传递，这样就可以减少请求在链中的传递次数，更快的找到合适的请求接收者</li>
+</ul>
+<h1 id="HOW"><a href="#HOW" class="headerlink" title="HOW"></a>HOW</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 职责链模式普通实现</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Chain</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(fn) &#123;</span><br><span class="line">    <span class="keyword">this</span>.fn = fn;</span><br><span class="line">    <span class="keyword">this</span>.successor = <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  setNextSuccessor(successor) &#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">this</span>.successor = successor);</span><br><span class="line">  &#125;</span><br><span class="line">  passRequest() &#123;</span><br><span class="line">    <span class="keyword">let</span> ret = <span class="keyword">this</span>.fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">if</span> (ret === <span class="literal">false</span>)</span><br><span class="line">      <span class="keyword">return</span> (</span><br><span class="line">        <span class="keyword">this</span>.successor &amp;&amp;</span><br><span class="line">        <span class="keyword">this</span>.successor.passRequest.apply(<span class="keyword">this</span>.successor, <span class="built_in">arguments</span>)</span><br><span class="line">      );</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> aChain = <span class="keyword">new</span> Chain(a);</span><br><span class="line"><span class="keyword">let</span> bChain = <span class="keyword">new</span> Chain(b);</span><br><span class="line"><span class="keyword">let</span> cChain = <span class="keyword">new</span> Chain(c);</span><br><span class="line">aChain.setNextSuccessor(bChain);</span><br><span class="line">bChain.setNextSuccessor(cChain);</span><br><span class="line"></span><br><span class="line">aChain.passRequest(<span class="number">12</span>); <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// AOP实现职责链模式</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.after = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> _self = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> tmp = _self.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">if</span> (tmp === <span class="literal">false</span>) <span class="keyword">return</span> fn &amp;&amp; fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">a.after(b).after(c)(<span class="number">12</span>); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/10/20/设计模式-策略模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1193,121 +1290,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/06/30/浏览器渲染/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2019/06/30/浏览器渲染/" class="post-title-link" itemprop="url">浏览器渲染</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-06-30 15:10:22" itemprop="dateCreated datePublished" datetime="2019-06-30T15:10:22+08:00">2019-06-30</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-15 13:32:29" itemprop="dateModified" datetime="2019-10-15T13:32:29+08:00">2019-10-15</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/浏览器/" itemprop="url" rel="index">
-                    <span itemprop="name">浏览器</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="渲染流程图示"><a href="#渲染流程图示" class="headerlink" title="渲染流程图示"></a>渲染流程图示</h2><p><img src="../imgs/browser_render_0.png" alt="浏览器渲染过程"></p>
-<h3 id="解析-HTML-文件"><a href="#解析-HTML-文件" class="headerlink" title="解析 HTML 文件"></a>解析 HTML 文件</h3><p><img src="../imgs/browser_render_2.png" alt="解析HTML文件"><br>token：标记，本质上还是字符串，是构成代码的最小单位，这一过程会将代码分为一块块，并在这些内容打上标记，便于理解这些最小单位的代码是什么意思<br><img src="../imgs/browser_render_3.png" alt="token"></p>
-<h3 id="解析-CSS-文件"><a href="#解析-CSS-文件" class="headerlink" title="解析 CSS 文件"></a>解析 CSS 文件</h3><p><img src="/../imgs/browser_render_4.png" alt="解析CSS文件"></p>
-<h3 id="生成渲染树"><a href="#生成渲染树" class="headerlink" title="生成渲染树"></a>生成渲染树</h3><p><img src="/../imgs/browser_render_1.png" alt="生成渲染树"><br>渲染树只会包含需要显示的节点和这些节点的样式信息，如果这个节点是 display: none，那么就不会在渲染树上显示<br>当浏览器生成渲染树以后就会根据渲染树来进行布局（回流），然后调用 GPU 绘制，合成图层，显示在屏幕上</p>
-<h2 id="操作-DOM-慢的原因"><a href="#操作-DOM-慢的原因" class="headerlink" title="操作 DOM 慢的原因"></a>操作 DOM 慢的原因</h2><p>DOM 属于渲染引擎中的东西，JS 又是 JS 引擎中的东西，当通过 JS 操作 DOM 的时候，其实这个操作涉及到了<strong>两个线程之间的通信</strong>，那么势必会带来一些性能上的损耗，操作 DOM 次数一多，也就等同于一直在进行线程之间的通信，并且操作 DOM 可能还会带来<strong>重绘回流</strong>的情况，所以就导致了性能上的问题</p>
-<h2 id="什么情况阻塞渲染"><a href="#什么情况阻塞渲染" class="headerlink" title="什么情况阻塞渲染"></a>什么情况阻塞渲染</h2><p>渲染的前提是生成渲染树，所以 HTML 和 CSS 肯定会阻塞渲染，如果想渲染的越快，就越应该降低一开始需要渲染的文件大小，并且扁平层级，优化选择器<br>然后当浏览器解析到 script 标签时，会暂停构建 DOM，完成后才会从暂停的地方重新开始，也就是说，如果你想首屏渲染的越快，就越不应该在首屏就加载 JS 文件，这也是都建议将 script 标签放在 body 标签底部的原因。<br>当然在当下，并不是说 script 标签必须放在底部，因为你可以给 script 标签添加 defer 或者 async 属性。<br>当 script 标签加上 defer 属性以后，表示该 JS 文件会并行下载，但是会放到 HTML 解析完成后顺序执行，所以对于这种情况你可以把 script 标签放在任意位置。<br>对于没有任何依赖的 JS 文件可以加上 async 属性，表示 JS 文件下载和解析不会阻塞渲染。</p>
-<h2 id="重绘和回流"><a href="#重绘和回流" class="headerlink" title="重绘和回流"></a>重绘和回流</h2><p>重绘会在设置节点样式时频繁出现，同时也会很大程度上影响性能</p>
-<ul>
-<li>重绘是当节点需要更改外观而不会影响布局的时候发生，比如改变 color 就叫重绘</li>
-<li>回流是布局或者几何属性需要改变就称为回流</li>
-</ul>
-<p>回流必然会引起重绘，重绘不一定为引发回流</p>
-<h2 id="减少重绘和回流"><a href="#减少重绘和回流" class="headerlink" title="减少重绘和回流"></a>减少重绘和回流</h2><ul>
-<li>使用 transform 代替 top</li>
-<li>使用 visiblity 代替 display: none（前者引起重绘，后者引起回流）</li>
-<li>不要把节点的属性值放在一个循环里当循环的变量</li>
-<li>不要使用 table 布局</li>
-<li>动画的选择</li>
-<li>CSS 选择符从右到左匹配查找，避免节点层级过多</li>
-</ul>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1360,7 +1342,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
