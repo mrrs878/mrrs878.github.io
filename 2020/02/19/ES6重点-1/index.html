@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="Mr.RS">
 <meta property="og:description" content="字符串新增方法 padStart 用于字符串长度补全，如果某个字符串长度不够指定长度会在头部或尾部补全 123456789console.log(&apos;xxx&apos;.padStart(4, &apos;ab&apos;));console.log(&apos;x&apos;.padStart(4, &apos;ab&apos;)); //补全位数，有需要会重复或截取console.log(&apos;x&apos;.padStart(4)); // 不传第二个参数默认使用空格补全co">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-19T15:02:26.151Z">
+<meta property="og:updated_time" content="2020-02-20T15:00:40.566Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES6重点-1">
 <meta name="twitter:description" content="字符串新增方法 padStart 用于字符串长度补全，如果某个字符串长度不够指定长度会在头部或尾部补全 123456789console.log(&apos;xxx&apos;.padStart(4, &apos;ab&apos;));console.log(&apos;x&apos;.padStart(4, &apos;ab&apos;)); //补全位数，有需要会重复或截取console.log(&apos;x&apos;.padStart(4)); // 不传第二个参数默认使用空格补全co">
@@ -270,11 +270,19 @@
                 
               
 
-              <time title="创建时间：2020-02-19 23:01:48 / 修改时间：23:02:26" itemprop="dateCreated datePublished" datetime="2020-02-19T23:01:48+08:00">2020-02-19</time>
+              <time title="创建时间：2020-02-19 23:01:48" itemprop="dateCreated datePublished" datetime="2020-02-19T23:01:48+08:00">2020-02-19</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-20 23:00:40" itemprop="dateModified" datetime="2020-02-20T23:00:40+08:00">2020-02-20</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -376,10 +384,44 @@
 <p><code>flatMap()</code>相当于<code>Array.prorotype.Map</code> + <code>Array.prorotype.flat</code></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].flatMap(<span class="function"><span class="params">x</span> =&gt;</span> [x, x * <span class="number">2</span>])</span><br><span class="line"><span class="comment">// [1, 2, 2, 4, 3, 6]</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].flatMap(<span class="function"><span class="params">x</span> =&gt;</span> x * <span class="number">2</span>)</span><br><span class="line"><span class="comment">// [2, 4, 6]</span></span><br></pre></td></tr></table></figure>
 
-
-
 </li>
 </ul>
+<h2 id="iterator"><a href="#iterator" class="headerlink" title="iterator"></a>iterator</h2><p><strong>WHAT</strong></p>
+<p>遍历器（<code>iterator</code>）就是这样一种机制。它是一种接口，为各种不同的数据结构提供统一的访问机制。任何数据结构执法了部署<code>iterator</code>接口，就可以完成<strong>遍历</strong>操作</p>
+<p><strong>WHY</strong></p>
+<p>JavaScript原有的表示集合的数据结构主要是数组（Array）和对象（Object），ES6又添加了<code>Map</code>、<code>Set</code>。这样就有了四种数据集合，用户可以组合使用它们，定义自己的数据结构，比如数组的成员是<code>Map</code>，<code>Map</code>的成员是对象。这样需要一种统一的接口机制来处理不同的数据结构</p>
+<p>主要作用</p>
+<ul>
+<li><p>为各种数据结构提供一个统一的、简便的访问接口</p>
+</li>
+<li><p>使得数据结构的成员能够按某种次序排列</p>
+</li>
+<li><p>为<code>for...of</code>所使用</p>
+<p>适合遍历Array，既有<code>forEach</code>的简洁又有<code>for</code>的<code>break</code>、<code>return</code>、<code>continue</code></p>
+</li>
+</ul>
+<p><strong>HOW</strong></p>
+<p><code>iterator</code>的遍历过程</p>
+<ol>
+<li>创建一个指针对象，指向当前的数据结构的起始位置。也就是说遍历器对象本质上就是一个指针对象</li>
+<li>第一次调用指针对象的<code>next</code>方法，可以将指针指向数据结构的第一个成员</li>
+<li>第二次调用指针对象的<code>next</code>方法，指针就指向数据结构的第二个成员</li>
+<li>不断调用指针对象的<code>next</code>方法，直到它指向数据结构的结束位置</li>
+</ol>
+<p>每一次调用<code>next</code>方法，都会返回数据结构的当前成员的信息。具体来说，就是返回一个包含<code>value</code>和<code>done</code>两个属性的对象，其中<code>value</code>属性是当前成员的值，<code>done</code>属性是一个布尔值，表示是否遍历结束</p>
+<p>ES6规定，默认的<code>iterator</code>接口部署在数据结构的<code>Symbol.iterator</code>属性，或者说，一个数据结构只要具有<code>Symbol.iterator</code>属性，就可以认为是可遍历的（<code>iterable</code>）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">    data: [<span class="string">'hello'</span>, <span class="string">'world'</span>],</span><br><span class="line">    [<span class="built_in">Symbol</span>.iterator](): &#123;</span><br><span class="line">    	<span class="keyword">const</span> self = <span class="keyword">this</span></span><br><span class="line">    	<span class="keyword">let</span> index = <span class="number">0</span></span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            next() &#123;</span><br><span class="line">                <span class="keyword">if</span> (index &lt; self.data.length) &#123;</span><br><span class="line">                    <span class="keyword">return</span> &#123;</span><br><span class="line">                        value: self.data[index++]</span><br><span class="line">                    	done: <span class="literal">false</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> &#123;</span><br><span class="line">                    value: <span class="literal">undefined</span>,</span><br><span class="line">                    done: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>原生具备iterator接口的数据结构：<code>Map、Array、Set、String、TypedArray、arguments、NodeList对象</code></p>
+<h2 id="let-VS-const"><a href="#let-VS-const" class="headerlink" title="let VS const"></a>let VS const</h2><p>在let和const之间，建议优先使用const，尤其是在全局环境。const优于let的几个原因：</p>
+<ul>
+<li>const可以提醒阅读程序的人，这个变量不应该改变</li>
+<li>const比较符合函数式编程思想，运算不改变值，只是新建值，而且这样也有利于将来的分布式计算</li>
+<li>JavaScript编译器会对const进行优化</li>
+<li>长远来看，JavaScript可能会有多线程的实现，这时let表示的变量只应出现在单线程运行的代码中，不是多线程共享的，这样有利于线程安全</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>, b = <span class="number">2</span>, c = <span class="number">3</span></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> c = <span class="number">3</span>;</span><br><span class="line"><span class="comment">// best</span></span><br><span class="line"><span class="keyword">const</span> [a, b, c] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -459,7 +501,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串新增方法"><span class="nav-number">1.</span> <span class="nav-text">字符串新增方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象新增扩展"><span class="nav-number">2.</span> <span class="nav-text">对象新增扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象新增方法"><span class="nav-number">3.</span> <span class="nav-text">对象新增方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array扩展"><span class="nav-number">4.</span> <span class="nav-text">Array扩展</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串新增方法"><span class="nav-number">1.</span> <span class="nav-text">字符串新增方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象新增扩展"><span class="nav-number">2.</span> <span class="nav-text">对象新增扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象新增方法"><span class="nav-number">3.</span> <span class="nav-text">对象新增方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array扩展"><span class="nav-number">4.</span> <span class="nav-text">Array扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iterator"><span class="nav-number">5.</span> <span class="nav-text">iterator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#let-VS-const"><span class="nav-number">6.</span> <span class="nav-text">let VS const</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
