@@ -234,6 +234,285 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2018/11/14/Python-requests库的使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2018/11/14/Python-requests库的使用/" class="post-title-link" itemprop="url">Python-requests库的使用</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-11-14 11:41:55" itemprop="dateCreated datePublished" datetime="2018-11-14T11:41:55+08:00">2018-11-14</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-15 10:03:38" itemprop="dateModified" datetime="2019-10-15T10:03:38+08:00">2019-10-15</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python-lib/" itemprop="url" rel="index">
+                    <span itemprop="name">Python lib</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Python-requests库的使用"><a href="#Python-requests库的使用" class="headerlink" title="Python-requests库的使用"></a>Python-requests库的使用</h1><p>urllib 的用法中有一些不方便的地方，比如处理网页验证和Cooki es 时，需要写 Opener 和 Handler 来处理。 为了更加方便地实现这些操作，就有了更为强大的库requests ，有了它 ， Cookies 、登录验证、代理设置等操作都变得极为简单。</p>
+<h2 id="一切以官网为主"><a href="#一切以官网为主" class="headerlink" title="一切以官网为主"></a>一切以官网为主</h2><p><a href="http://docs.python-requests.org/en/master/" target="_blank" rel="noopener">http://docs.python-requests.org/en/master/</a></p>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><h3 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h3><p>urllib库中的 urlopen()法实际上是以GET方式请求网页，而requests中相应的方法就是get()<br>方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">response = requests.get(<span class="string">'https://www.baidu.com'</span>)</span><br><span class="line">print(type(response))</span><br><span class="line">print(response.status_code)</span><br><span class="line">print(type(response.text))</span><br><span class="line">print(response.text)</span><br><span class="line">print(response.cookies)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://t1.picb.cc/uploads/2018/11/14/JShz6r.png" alt="enter image description here"></p>
+<h3 id="GET请求"><a href="#GET请求" class="headerlink" title="GET请求"></a>GET请求</h3><h4 id="基本实例"><a href="#基本实例" class="headerlink" title="基本实例"></a>基本实例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">print(<span class="string">'simple test'</span>)</span><br><span class="line">response = requests.get(<span class="string">'https://httpbin.org/get'</span>)</span><br><span class="line">print(response.text)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'params test'</span>)</span><br><span class="line">data = &#123;<span class="string">'name'</span>: <span class="string">'germey'</span>, <span class="string">'age'</span>: <span class="number">22</span>&#125;</span><br><span class="line">response = requests.get(<span class="string">'https://httpbin.org/get'</span>, params=data)</span><br><span class="line">print(response.text)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将json格式解析为字典格式</span></span><br><span class="line">print(<span class="string">'json() test'</span>)</span><br><span class="line">response = requests.get(<span class="string">'https://httpbin.org/get'</span>)</span><br><span class="line">print(type(response.text))</span><br><span class="line">print(response.json())</span><br><span class="line">print(type(response.json()))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://t1.picb.cc/uploads/2018/11/14/JShDOJ.png" alt="enter image description here"><br><img src="https://t1.picb.cc/uploads/2018/11/14/JShYg1.png" alt="enter image description here"><br><img src="https://t1.picb.cc/uploads/2018/11/14/JShEP0.png" alt="enter image description here"></p>
+<h4 id="抓取网页"><a href="#抓取网页" class="headerlink" title="抓取网页"></a>抓取网页</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests, re</span><br><span class="line"></span><br><span class="line">print(<span class="string">'抓取网页测试'</span>)</span><br><span class="line">headers = &#123;<span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0'</span>&#125;</span><br><span class="line">response = requests.get(<span class="string">'https://www.zhihu.com/explore'</span>, headers = headers)</span><br><span class="line">pattern = re.compile(<span class="string">'explore-feed.*?question_link.*?&gt;(.*?)&lt;/a&gt;'</span>, re.S)</span><br><span class="line">title = re.findall(pattern, response.text)</span><br><span class="line">print(title)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://t1.picb.cc/uploads/2018/11/14/JSvydu.png" alt="enter image description here"></p>
+<h4 id="抓取二进制数据"><a href="#抓取二进制数据" class="headerlink" title="抓取二进制数据"></a>抓取二进制数据</h4><p>图片、音频、视频这些文件本质上都是由二进制码组成的，由于有特定的保存格式和对应的解析方式， 我们才可以看到这些形形色色的多媒体 。 所以，想要抓取它们，就要拿到它们的二进制码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">print(<span class="string">'抓取二进制数据测试'</span>)</span><br><span class="line">response = requests.get(<span class="string">'https://github.com/favicon.ico'</span>)</span><br><span class="line">print(response.text)</span><br><span class="line">print(response.content)  <span class="comment"># Content of the response, in bytes</span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'favicon.ico'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(response.content)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://t1.picb.cc/uploads/2018/11/14/JSvJuD.png" alt="enter image description here"></p>
+<h4 id="添加headers"><a href="#添加headers" class="headerlink" title="添加headers"></a>添加headers</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'添加headers测试'</span>)</span><br><span class="line">headers = &#123;<span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0'</span>&#125;</span><br><span class="line">response = requests.get(<span class="string">'https://www.zhihu.com/explore'</span>, headers = headers)</span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://t1.picb.cc/uploads/2018/11/14/JSvgsi.png" alt="enter image description here"></p>
+<h3 id="POST请求"><a href="#POST请求" class="headerlink" title="POST请求"></a>POST请求</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">data = &#123;<span class="string">'name'</span>: <span class="string">'germy'</span>, <span class="string">'age'</span>: <span class="string">'22'</span>&#125;</span><br><span class="line">response = requests.post(<span class="string">'https://httpbin.org/post'</span>, data=data)</span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://t1.picb.cc/uploads/2018/11/14/JSvt6L.png" alt="enter image description here"></p>
+<h3 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h3><p>发送请求后，得到的自然就是响应 。 在上面的实例中，我们使用 text 和 content 获取了响应的内容。 此外，还有很多属性和方法可以用来获取其他信息，比如状态码、响应头、 Cookies 等。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">print(<span class="string">'响应测试'</span>)</span><br><span class="line">headers = &#123;<span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0'</span>&#125;</span><br><span class="line">response = requests.get(<span class="string">'https://www.jianshu.com'</span>, headers = headers)</span><br><span class="line">print(response.headers)</span><br><span class="line">print(response.cookies)</span><br><span class="line"><span class="comment"># print(response.status_code)</span></span><br><span class="line">exit() <span class="keyword">if</span> <span class="keyword">not</span> response.status_code == requests.codes.ok <span class="keyword">else</span> print(<span class="string">'request successfully'</span>)</span><br><span class="line">print(response.content)</span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://t1.picb.cc/uploads/2018/11/14/JSx5ST.png" alt="enter image description here"></p>
+<h2 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h2><h3 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">files = &#123;<span class="string">'file'</span>: open(<span class="string">'favicon.ico'</span>, <span class="string">'rb'</span>)&#125;</span><br><span class="line">response = requests.post(<span class="string">'https://httpbin.org/post'</span>, files = files)</span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://t1.picb.cc/uploads/2018/11/14/JSxvT1.png" alt="enter image description here"></p>
+<h3 id="会话维持"><a href="#会话维持" class="headerlink" title="会话维持"></a>会话维持</h3><p>在 requests 中，如果直接利用 get()、post()等方法的确可以做到模拟网页的请求，但是这实际上是相当于不同的会话，也就是说相当于用了两个浏览器打开了不同的页面，其实解决这个问题的主要方法就是维持同一个会话 ， 也就是相当于打开一个新的浏览器选项卡而不是新开一个浏览器 。 但是又不想每次设置 cookies ，那该怎么办呢？这时候就有了新的利器–Session 对象 。利用它，我们可以方便地维护一个会话，而且不用担心cookies的问题，它会帮我们自动处理好。利用 Session ，可以做到模拟同一个会话而不用担心 Cookies 的问题。 它通常用于模拟登录成功之后再进行下一步的操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">print(<span class="string">'session测试'</span>)</span><br><span class="line">session = requests.Session()</span><br><span class="line">session.get(<span class="string">'https://httpbin.org/cookies/set/number/123456789'</span>)</span><br><span class="line">response = session.get(<span class="string">'https://httpbin.org/cookies'</span>)</span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://t1.picb.cc/uploads/2018/11/14/JSLtir.png" alt="enter image description here"></p>
+<h3 id="SSL证书验证"><a href="#SSL证书验证" class="headerlink" title="SSL证书验证"></a>SSL证书验证</h3><p>如果请求一个 HTTPS 站点，但是证书验证错误的页面时，就会报这样的错误，那么如何避免这个错误呢？很简单，把 verify 参数设置为False 即可。当然，我们也可以指定一个本地证书用作客户端证书，这可以是单个文件（包含密钥和证书）或一个包含两个文件路径的元组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">from</span> requests.packages <span class="keyword">import</span> urllib3</span><br><span class="line"></span><br><span class="line">urllib3.disable_warnings()  <span class="comment"># 忽略警告</span></span><br><span class="line">logging.captureWarnings(true)  <span class="comment"># 捕获警告</span></span><br><span class="line">response = requests.get(url, **verify = false**)  <span class="comment"># 设置verify</span></span><br><span class="line">response = requests.get(url, cert = (crt_path, key_path))  <span class="comment"># 设置证书文件地址</span></span><br><span class="line">print(response)</span><br></pre></td></tr></table></figure>
+
+<h3 id="代理设置"><a href="#代理设置" class="headerlink" title="代理设置"></a>代理设置</h3><p>对于某些网站，在测试的时候请求几次 ， 能正常获取内容。 但是一旦开始大规模爬取，对于大规模且频繁的请求，网站可能会弹出验证码，或者跳转到登录认证页面 ， 更甚者可能会直接封禁客户端的 IP ，导致一定时间段内无法访问 。那么，为了防止这种情况发生，我们需要设置代理来解决这个问题，这就需要用到 proxies 参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">proxies = &#123;<span class="string">'http'</span>: <span class="string">'...'</span></span><br><span class="line">		   <span class="string">'https'</span>: <span class="string">'...'</span></span><br><span class="line">		   ...</span><br><span class="line">		   &#125;</span><br><span class="line">response = requests.get(url, proxies = proxies)</span><br></pre></td></tr></table></figure>
+
+<h3 id="超时设置"><a href="#超时设置" class="headerlink" title="超时设置"></a>超时设置</h3><p>在本机网络状况不好或者服务器网络响应太慢甚至无响应时，我们可能会等待特别久的时间才可能收到响应，甚至到最后收不到响应而报错。 为了防止服务器不能及时响应，应该设置一个超时时间 ，即超过了这个时间还没有得到响应，那就报错。 这需要用到 timeout 参数。 这个时间的计算是发归请求到服务器返回响应的时间。实际上，请求分两个阶段，即连接()connect )和读取(read )。如果想永久等待，可以直接将 timeout 设置为 None(默认) 。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">print(<span class="string">'有timeout异常捕获'</span>)</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    response = requests.get(<span class="string">'https://www.baidu.com'</span>, timeout = <span class="number">0.01</span>)</span><br><span class="line">    print(response.status_code)</span><br><span class="line"><span class="keyword">except</span> requests.exceptions.Timeout:</span><br><span class="line">    print(<span class="string">'Timeout'</span>)</span><br><span class="line"><span class="keyword">except</span> requests.exceptions.ConnectionError:</span><br><span class="line">    print(<span class="string">'ConnextionError'</span>)</span><br><span class="line"><span class="keyword">except</span> requests.exceptions.HTTPError:</span><br><span class="line">    print(<span class="string">'HTTPError'</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'无timeout异常捕获'</span>)</span><br><span class="line">response = requests.get(<span class="string">'https://www.baidu.com'</span>, timeout = (<span class="number">0.01</span>, <span class="number">0.01</span>))</span><br><span class="line">print(response.status_code)</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-14/91035917.jpg" alt="enter image description here"></p>
+<h3 id="身份认证"><a href="#身份认证" class="headerlink" title="身份认证"></a>身份认证</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> requests.auth <span class="keyword">import</span> HTTPBasicAuth</span><br><span class="line"></span><br><span class="line">response = requests.get(url, auth=HTTPBasicAuth(username, userpassword))</span><br><span class="line">response = requests,get(url, auth=(username, userpassword))</span><br></pre></td></tr></table></figure>
+
+<h3 id="prepared-request"><a href="#prepared-request" class="headerlink" title="prepared request"></a>prepared request</h3><p>前面介绍 urllib 时，我们可以将请求表示为数据结构，其中各个参数都可以通过一个 Request 对象来表示 。 这在 requests 里同样可以做到，这个数据结构就叫 Prepared Request。有了 Request 这个对象，就可以将请求当作独立的对象来看待，这样在进行队列调度时会非常方便。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> requests <span class="keyword">import</span> Request, Session</span><br><span class="line"></span><br><span class="line">print(<span class="string">'prepared request测试'</span>)</span><br><span class="line">url = <span class="string">'https://httpbin.org/post'</span></span><br><span class="line">data = &#123;<span class="string">'name'</span>: <span class="string">'germey'</span>&#125;</span><br><span class="line">headers = &#123;<span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:63.0) Gecko/20100101 Firefox/63.0'</span>&#125;</span><br><span class="line"></span><br><span class="line">session = Session()</span><br><span class="line">request = Request(<span class="string">'POST'</span>, url, data = data, headers = headers)</span><br><span class="line">prepped = session.prepare_request(request)</span><br><span class="line">response = session.send(prepped)</span><br><span class="line">print(response.status_code)</span><br><span class="line">print(response.text)</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-14/46350763.jpg" alt="enter image description here"></p>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2018/11/13/MySQL-触发器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2018/11/13/MySQL-触发器/" class="post-title-link" itemprop="url">MySQL-触发器</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-11-13 22:51:06" itemprop="dateCreated datePublished" datetime="2018-11-13T22:51:06+08:00">2018-11-13</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-15 10:03:38" itemprop="dateModified" datetime="2019-10-15T10:03:38+08:00">2019-10-15</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库-MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库 MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="MySQL-触发器"><a href="#MySQL-触发器" class="headerlink" title="MySQL-触发器"></a>MySQL-触发器</h1><h2 id="什么是触发器"><a href="#什么是触发器" class="headerlink" title="什么是触发器"></a>什么是触发器</h2><ul>
+<li>触发器是一种<strong>特殊的存储过程</strong>，它在插入/删除或修改表中的数据时<strong>触发执行</strong>，它比数据库本身有着更精细和更复杂的数据约束力。</li>
+</ul>
+<h2 id="触发器的作用"><a href="#触发器的作用" class="headerlink" title="触发器的作用"></a>触发器的作用</h2><ul>
+<li>用于实现完整性约束</li>
+<li>通过触发器，用户可以实现MySQL数据库本身并不支持的一些特性，如对于传统CHECK约束的支持，物化视图，高级复制，审计等特性</li>
+</ul>
+<h2 id="触发器的特性"><a href="#触发器的特性" class="headerlink" title="触发器的特性"></a>触发器的特性</h2><ul>
+<li>监视地点：一般就是某一张表</li>
+<li>监视/触发事件：UPDATE/INSERT/DELETE</li>
+<li>触发时间：AFTER/BEFORE</li>
+</ul>
+<h2 id="触发器的创建语法"><a href="#触发器的创建语法" class="headerlink" title="触发器的创建语法"></a>触发器的创建语法</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span></span><br><span class="line">[DEFINER = &#123; <span class="keyword">user</span> | <span class="keyword">CURRENT_USER</span> &#125;]</span><br><span class="line"><span class="keyword">TRIGGER</span> trigger_name</span><br><span class="line">trigger_time trigger_event</span><br><span class="line"><span class="keyword">ON</span> tbl_name <span class="keyword">FOR</span> <span class="keyword">EACH</span> <span class="keyword">ROW</span></span><br><span class="line">trigger_body</span><br><span class="line"></span><br><span class="line">trigger_time: &#123; <span class="keyword">BEFORE</span> | <span class="keyword">AFTER</span> &#125;</span><br><span class="line">trigger_event: &#123; <span class="keyword">INSERT</span> | <span class="keyword">UPDATE</span> | <span class="keyword">DELETE</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>触发程序是与表有关的数据库对象，当表上出现特定事件时将激活该对象。触发程序与tbl_name相关，tbl_name必须引用永久性表，不能将触发程序与TEMPORARY表或视图关联起来。</li>
+<li>对于具有相同触发程序动作事件和时间的给定表，不能有两个触发程序。</li>
+<li>trigger_body是当触发程序激活时执行的语句。可以使用BEGIN…END复合语句结构。</li>
+<li>对于INSERT而言，新插入的行用NEW表示，行中的每一列值用NEW.col_name表示。</li>
+<li>对于DELETE而言，欲删除的那一行用OLD表示，行中的每一列值用OLD.col_name表示。</li>
+<li>对于UPDATE而言，修改前的行用OLD表示，修改后的行用NEW表示。</li>
+</ul>
+<h2 id="触发器的管理"><a href="#触发器的管理" class="headerlink" title="触发器的管理"></a>触发器的管理</h2><ul>
+<li><p>查看所有触发器</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">TRIGGERS</span> [<span class="keyword">FROM</span> db_name] [like_or_where]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>MySQL中有一个information_schema.TRIGGERS表，存储所有库中的触发器，查看：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DESC information_schema.TRIGGERS</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除触发器</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">VIEW</span> [<span class="keyword">IF</span> <span class="keyword">EXISTS</span>]</span><br><span class="line">view_name [, view_name] ...</span><br><span class="line">[RESTRICT | <span class="keyword">CASCADE</span>]</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="触发器的使用示例"><a href="#触发器的使用示例" class="headerlink" title="触发器的使用示例"></a>触发器的使用示例</h2><h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER //</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TRIGGER</span> user_trg</span><br><span class="line"><span class="keyword">AFTER</span> <span class="keyword">INSERT</span></span><br><span class="line"><span class="keyword">ON</span> user_info <span class="keyword">FOR</span> <span class="keyword">EACH</span> <span class="keyword">ROW</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">   <span class="keyword">INSERT</span> <span class="keyword">INTO</span> user_salaries <span class="keyword">SELECT</span> new.id, new.user_name, <span class="number">0</span>;</span><br><span class="line"><span class="keyword">END</span>;</span><br><span class="line">//</span><br><span class="line">DELIMITER;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> user_info <span class="keyword">SELECT</span> <span class="number">1</span>, <span class="string">'张三'</span>， <span class="string">'123456'</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://t1.picb.cc/uploads/2018/11/13/JS7x7L.png" alt="enter image description here"></p>
+<h3 id="对于约束的支持"><a href="#对于约束的支持" class="headerlink" title="对于约束的支持"></a>对于约束的支持</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> userCash(<span class="keyword">id</span> <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT PRIMARY <span class="keyword">KEY</span>, </span><br><span class="line">					   cash <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span></span><br><span class="line">)<span class="keyword">ENGINE</span> = <span class="keyword">INNODB</span> <span class="keyword">CHARSET</span> = <span class="string">'UTF8'</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> userCashErr_log (</span><br><span class="line">	<span class="keyword">id</span> <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line">	old_cash <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">	new_cash <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">	user_name <span class="built_in">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">	<span class="built_in">time</span> DATETIME</span><br><span class="line">)<span class="keyword">ENGINE</span> = <span class="keyword">INNODB</span> <span class="keyword">CHARSET</span> = <span class="string">'UTF8'</span>;</span><br><span class="line"></span><br><span class="line">DELIMITER //</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TRIGGER</span> userCashUpdate_tgr </span><br><span class="line"><span class="keyword">BEFORE</span> <span class="keyword">UPDATE</span></span><br><span class="line"><span class="keyword">ON</span> userCash <span class="keyword">FOR</span> <span class="keyword">EACH</span> <span class="keyword">ROW</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">	<span class="keyword">IF</span> new.cash - old.cash &gt; <span class="number">0</span> <span class="keyword">THEN</span></span><br><span class="line">		<span class="keyword">INSERT</span> <span class="keyword">INTO</span> userCashErr_log <span class="keyword">SELECT</span> old.id, old.cash, new.cash, <span class="keyword">USER</span>(), <span class="keyword">NOW</span>();</span><br><span class="line">		<span class="keyword">SET</span> new.cash = old.cash;</span><br><span class="line">	<span class="keyword">END</span> <span class="keyword">IF</span>;</span><br><span class="line"><span class="keyword">END</span>;</span><br><span class="line">//</span><br><span class="line">DELIMITER ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> userCash <span class="keyword">SELECT</span> <span class="number">1</span>, <span class="number">10000</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> userCashErr_log;</span><br><span class="line"><span class="keyword">UPDATE</span> userCash <span class="keyword">SET</span> cash = cash - (<span class="number">-20</span>) <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> userCashErr_log;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://t1.picb.cc/uploads/2018/11/13/JS7T9W.png" alt="enter image description here"></p>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2018/11/13/MySQL-视图/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -935,7 +1214,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -961,7 +1240,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
