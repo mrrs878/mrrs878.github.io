@@ -55,25 +55,21 @@
   };
 </script>
 
-  <meta name="description" content="MySQL高级-存储过程管理@(mysql)[procedure]  查看数据库的存储过程 ： 1show procedure status where db=&apos;test&apos;\G    查看当前数据库下的存储过程 ： 1select specific_name from mysql.proc;\G    查看存储过程的内容 ： 1select specific_name, body from mys">
-<meta name="keywords" content="MySQL procedure">
+  <meta name="description" content="vue-router路由路由最早由后端提出，用于根据不同的请求返回不同的页面。大致流程如下：  浏览器发出请求 服务器监听到端口有请求过来 根据服务器的路由配置，返回相应信息（可以是html、json、图片等） 浏览器根据数据包的Context-Type来决定如何解析  前端路由随着ajax的流行，异步数据请求交互在不刷新浏览器的情况下运行。而异步交互体验的高级版本就是SPA-单页应用。单页应用不">
+<meta name="keywords" content="Vue.js研读 vue-router">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL高级-存储过程管理">
-<meta property="og:url" content="https://mrrs878.github.io/2018/11/12/MySQL高级-存储过程管理/index.html">
+<meta property="og:title" content="vue-router剖析">
+<meta property="og:url" content="https://mrrs878.github.io/2020/03/09/vue-router剖析/index.html">
 <meta property="og:site_name" content="Mr.RS">
-<meta property="og:description" content="MySQL高级-存储过程管理@(mysql)[procedure]  查看数据库的存储过程 ： 1show procedure status where db=&apos;test&apos;\G    查看当前数据库下的存储过程 ： 1select specific_name from mysql.proc;\G    查看存储过程的内容 ： 1select specific_name, body from mys">
+<meta property="og:description" content="vue-router路由路由最早由后端提出，用于根据不同的请求返回不同的页面。大致流程如下：  浏览器发出请求 服务器监听到端口有请求过来 根据服务器的路由配置，返回相应信息（可以是html、json、图片等） 浏览器根据数据包的Context-Type来决定如何解析  前端路由随着ajax的流行，异步数据请求交互在不刷新浏览器的情况下运行。而异步交互体验的高级版本就是SPA-单页应用。单页应用不">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://i.loli.net/2018/11/12/5be94f5043e82.png">
-<meta property="og:image" content="https://i.loli.net/2018/11/12/5be94ee471819.png">
-<meta property="og:image" content="https://i.loli.net/2018/11/12/5be94f5050259.png">
-<meta property="og:image" content="https://i.loli.net/2018/11/12/5be94f504e883.png">
-<meta property="og:image" content="https://i.loli.net/2018/11/12/5be94f504cd4b.png">
-<meta property="og:updated_time" content="2019-10-15T02:03:37.380Z">
+<meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/vue-router.png">
+<meta property="og:updated_time" content="2020-03-09T15:30:51.301Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MySQL高级-存储过程管理">
-<meta name="twitter:description" content="MySQL高级-存储过程管理@(mysql)[procedure]  查看数据库的存储过程 ： 1show procedure status where db=&apos;test&apos;\G    查看当前数据库下的存储过程 ： 1select specific_name from mysql.proc;\G    查看存储过程的内容 ： 1select specific_name, body from mys">
-<meta name="twitter:image" content="https://i.loli.net/2018/11/12/5be94f5043e82.png">
-  <link rel="canonical" href="https://mrrs878.github.io/2018/11/12/MySQL高级-存储过程管理/">
+<meta name="twitter:title" content="vue-router剖析">
+<meta name="twitter:description" content="vue-router路由路由最早由后端提出，用于根据不同的请求返回不同的页面。大致流程如下：  浏览器发出请求 服务器监听到端口有请求过来 根据服务器的路由配置，返回相应信息（可以是html、json、图片等） 浏览器根据数据包的Context-Type来决定如何解析  前端路由随着ajax的流行，异步数据请求交互在不刷新浏览器的情况下运行。而异步交互体验的高级版本就是SPA-单页应用。单页应用不">
+<meta name="twitter:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/vue-router.png">
+  <link rel="canonical" href="https://mrrs878.github.io/2020/03/09/vue-router剖析/">
 
 
 <script id="page-configurations">
@@ -87,7 +83,7 @@
   };
 </script>
 
-  <title>MySQL高级-存储过程管理 | Mr.RS</title>
+  <title>vue-router剖析 | Mr.RS</title>
   
 
 
@@ -245,7 +241,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2018/11/12/MySQL高级-存储过程管理/">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/09/vue-router剖析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mr.RS">
@@ -259,7 +255,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            MySQL高级-存储过程管理
+            vue-router剖析
             
 
           
@@ -276,19 +272,11 @@
                 
               
 
-              <time title="创建时间：2018-11-12 17:07:28" itemprop="dateCreated datePublished" datetime="2018-11-12T17:07:28+08:00">2018-11-12</time>
+              <time title="创建时间：2020-03-09 22:05:40 / 修改时间：23:30:51" itemprop="dateCreated datePublished" datetime="2020-03-09T22:05:40+08:00">2020-03-09</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-15 10:03:37" itemprop="dateModified" datetime="2019-10-15T10:03:37+08:00">2019-10-15</time>
-              </span>
             
           
             <span class="post-meta-item">
@@ -298,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据库-MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库 MySQL</span>
+                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue.js</span>
                   </a>
                 </span>
 
@@ -320,34 +308,46 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="MySQL高级-存储过程管理"><a href="#MySQL高级-存储过程管理" class="headerlink" title="MySQL高级-存储过程管理"></a>MySQL高级-存储过程管理</h1><p>@(mysql)[procedure]</p>
-<ul>
-<li><p><strong>查看数据库的存储过程</strong> ：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">procedure</span> <span class="keyword">status</span> <span class="keyword">where</span> db=<span class="string">'test'</span>\G</span><br></pre></td></tr></table></figure>
+        <h1 id="vue-router"><a href="#vue-router" class="headerlink" title="vue-router"></a>vue-router</h1><h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>路由最早由后端提出，用于根据不同的请求返回不同的页面。大致流程如下：</p>
+<ol>
+<li>浏览器发出请求</li>
+<li>服务器监听到端口有请求过来</li>
+<li>根据服务器的路由配置，返回相应信息（可以是html、json、图片等）</li>
+<li>浏览器根据数据包的<code>Context-Type</code>来决定如何解析</li>
+</ol>
+<h2 id="前端路由"><a href="#前端路由" class="headerlink" title="前端路由"></a>前端路由</h2><p>随着<code>ajax</code>的流行，异步数据请求交互在不刷新浏览器的情况下运行。而异步交互体验的高级版本就是SPA-单页应用。单页应用不仅仅是在页面交互是无刷新的，连页面跳转都是无刷新的，为了实现单页应用，所以就有了前端路由。类似于后端路由，前端路由就是匹配不同的url路径进行解析，然后动态渲染html内容。</p>
+<h3 id="hash模式"><a href="#hash模式" class="headerlink" title="hash模式"></a>hash模式</h3><p><code>https://www.xxx.com/#/hash</code></p>
+<p>这种<code>#</code>后面<code>hash</code>值得变化，并不会触发新的请求，因此也不会刷新页面。每次<code>hash</code>值的变化都会触发<code>hashchange</code>事件，通过这个事件就可以知道更新哪些页面内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onhashchange = <span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(e.oldURL, e.newURL)</span><br><span class="line">    <span class="keyword">const</span> hash = location.hash.slice(<span class="number">1</span>)</span><br><span class="line">    app.innerHTML = hash</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="history模式"><a href="#history模式" class="headerlink" title="history模式"></a>history模式</h3><p><code>https://www.xxx.com/login</code></p>
+<p>随着HTML5的发布，带来了两个新的API：<code>pushState</code>和<code>replaceState</code>，通过这两个API可以改变url地址且不会发送请求。同时还有<code>popstate</code>事件用来监听url的改变。使用history模式，url就不会出现丑陋的<code>#</code>，url也变得比较美观。</p>
+<p>通过history api去掉了丑陋的<code>#</code>，但也存在问题：不怕前进/后退，就怕<strong>刷新</strong>。因为刷新是去请求服务器的，在<code>hash</code>下，前端路由修改的是#之后的内容，在发送请求时是不会带上的，但在history下可以自由地修改路径、参数，当刷新时，如果服务器中没有相应的响应或资源，容易爆<code>404</code></p>
+<h2 id="vue-router核心原理"><a href="#vue-router核心原理" class="headerlink" title="vue-router核心原理"></a>vue-router核心原理</h2><ol>
+<li><p>通过<code>new VueRouter</code>中的<code>mode</code>参数来选择使用那种路由模式</p>
 </li>
-<li><p><img src="https://i.loli.net/2018/11/12/5be94f5043e82.png" alt="enter image description here"></p>
+<li><p>在<code>router</code>中使用<code>current</code>保存当前url</p>
 </li>
-<li><p><strong>查看当前数据库下的存储过程</strong> ：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> specific_name <span class="keyword">from</span> mysql.proc;\G</span><br></pre></td></tr></table></figure>
+<li><p>作为一个插件，大部分功能都在<code>install</code>函数中完成</p>
 </li>
-<li><p><img src="https://i.loli.net/2018/11/12/5be94ee471819.png" alt="enter image description here"></p>
+<li><p>在<code>install</code>中使用<code>Vue.mixin</code>注入的<code>beforeCreate</code>来给组件添加全局唯一的<code>router</code>实例（挂载在根组件上，其余组件通过<code>$parent._routerRoot._router</code>挂载）</p>
 </li>
-<li><p><strong>查看存储过程的内容</strong> ：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> specific_name, <span class="keyword">body</span> <span class="keyword">from</span> mysql.proc\G</span><br></pre></td></tr></table></figure>
+<li><p>使用<code>popstate</code>或<code>hashchange</code>两个事件来监听url变化（针对于手动输入url）并设置<code>current</code></p>
 </li>
-<li><p><img src="https://i.loli.net/2018/11/12/5be94f5050259.png" alt="enter image description here"></p>
+<li><p>使用<code>Vue.util.defineReactive(this, &#39;_route&#39;, this._router.history.current)</code>来使<code>router</code>变为响应式</p>
+<p>current变化    👉    重新渲染<code>router-view</code>中的组件 </p>
 </li>
-<li><p><strong>查看某个存储过程的内容</strong>：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> specific_name, <span class="keyword">body</span> <span class="keyword">from</span> mysql.proc <span class="keyword">where</span> specific_name = <span class="string">'load_t'</span>\G</span><br></pre></td></tr></table></figure>
+<li><p>解析路由配置从而可以更加便利地找到url所对应的页面</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>&lt;&#123; <span class="attr">name</span>: component &#125;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>👇</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Map</span>&lt;&#123; <span class="attr">name</span>: component &#125;&gt;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p><img src="https://i.loli.net/2018/11/12/5be94f504e883.png" alt="enter image description here"></p>
+<li><p>实现<code>&lt;router-link&gt;&lt;/router-link&gt;</code>和<code>&lt;router-view / &gt;</code>两个组件</p>
 </li>
-<li><p><strong>删除某个存储过程</strong></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">procedure</span> <span class="keyword">if</span> <span class="keyword">exists</span> load_t;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><img src="https://i.loli.net/2018/11/12/5be94f504cd4b.png" alt="enter image description here"></p>
-</li>
-</ul>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>vue-router</code>以插件方式侵入<code>Vue</code>，从而支持一个额外的<code>router</code>属性，以提供监听并改变组件路由数据的能力，这样每次路由发生变化后，可以同步到数据，从而响应式地触发组件的更新</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/vue-router.png" alt="vue-router"></p>
 
     </div>
 
@@ -363,7 +363,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/MySQL-procedure/" rel="tag"># MySQL procedure</a>
+              <a href="/tags/Vue-js研读-vue-router/" rel="tag"># Vue.js研读 vue-router</a>
             
           </div>
         
@@ -373,8 +373,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2018/11/08/hello-world/" rel="next" title="hello world">
-                  <i class="fa fa-chevron-left"></i> hello world
+                <a href="/2020/03/06/Vue.js研读-4/" rel="next" title="Vue.js研读-4">
+                  <i class="fa fa-chevron-left"></i> Vue.js研读-4
                 </a>
               
             </div>
@@ -382,10 +382,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2018/11/12/MySQL高级-函数/" rel="prev" title="MySQL高级-函数">
-                  MySQL高级-函数 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -431,7 +427,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL高级-存储过程管理"><span class="nav-number">1.</span> <span class="nav-text">MySQL高级-存储过程管理</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-router"><span class="nav-number">1.</span> <span class="nav-text">vue-router</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#路由"><span class="nav-number">1.1.</span> <span class="nav-text">路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端路由"><span class="nav-number">1.2.</span> <span class="nav-text">前端路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hash模式"><span class="nav-number">1.2.1.</span> <span class="nav-text">hash模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#history模式"><span class="nav-number">1.2.2.</span> <span class="nav-text">history模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-router核心原理"><span class="nav-number">1.3.</span> <span class="nav-text">vue-router核心原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.4.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
