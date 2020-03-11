@@ -55,19 +55,19 @@
   };
 </script>
 
-  <meta name="description" content="生命周期概览">
+  <meta name="description" content="生命周期概览 生命周期函数 beforeCreate new Vue()之后触发的第一个钩子，在当前阶段data、methods、computed以及watch上的数据和方法均不能被访问  created 在实例创建完成之后触发，当前阶段已完成了数据观测，也就是可以使用数据，更改数据，在这个更改数据不会触发updated函数。可以做一些初始数据的获取，在当前阶段无法获取DOM（可使用vm.$nex">
 <meta name="keywords" content="Vue.js研读 生命周期">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue.js研读-4">
 <meta property="og:url" content="https://mrrs878.github.io/2020/03/06/Vue.js研读-4/index.html">
 <meta property="og:site_name" content="Mr.RS">
-<meta property="og:description" content="生命周期概览">
+<meta property="og:description" content="生命周期概览 生命周期函数 beforeCreate new Vue()之后触发的第一个钩子，在当前阶段data、methods、computed以及watch上的数据和方法均不能被访问  created 在实例创建完成之后触发，当前阶段已完成了数据观测，也就是可以使用数据，更改数据，在这个更改数据不会触发updated函数。可以做一些初始数据的获取，在当前阶段无法获取DOM（可使用vm.$nex">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/lifecycle.png">
-<meta property="og:updated_time" content="2020-03-06T16:11:49.766Z">
+<meta property="og:updated_time" content="2020-03-11T06:26:35.903Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue.js研读-4">
-<meta name="twitter:description" content="生命周期概览">
+<meta name="twitter:description" content="生命周期概览 生命周期函数 beforeCreate new Vue()之后触发的第一个钩子，在当前阶段data、methods、computed以及watch上的数据和方法均不能被访问  created 在实例创建完成之后触发，当前阶段已完成了数据观测，也就是可以使用数据，更改数据，在这个更改数据不会触发updated函数。可以做一些初始数据的获取，在当前阶段无法获取DOM（可使用vm.$nex">
 <meta name="twitter:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/lifecycle.png">
   <link rel="canonical" href="https://mrrs878.github.io/2020/03/06/Vue.js研读-4/">
 
@@ -283,7 +283,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-07 00:11:49" itemprop="dateModified" datetime="2020-03-07T00:11:49+08:00">2020-03-07</time>
+                <time title="修改时间：2020-03-11 14:26:35" itemprop="dateModified" datetime="2020-03-11T14:26:35+08:00">2020-03-11</time>
               </span>
             
           
@@ -317,6 +317,43 @@
 
       
         <h2 id="生命周期概览"><a href="#生命周期概览" class="headerlink" title="生命周期概览"></a>生命周期概览</h2><p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/lifecycle.png" alt="生命周期"></p>
+<h2 id="生命周期函数"><a href="#生命周期函数" class="headerlink" title="生命周期函数"></a>生命周期函数</h2><ul>
+<li><p>beforeCreate</p>
+<p><code>new Vue()</code>之后触发的第一个钩子，在当前阶段<code>data</code>、methods、<code>computed</code>以及watch上的数据和方法均不能被访问</p>
+</li>
+<li><p>created</p>
+<p>在实例创建完成之后触发，当前阶段已完成了数据观测，也就是可以使用数据，更改数据，在这个更改数据不会触发<code>updated</code>函数。可以做一些<strong>初始数据的获取</strong>，在当前阶段无法获取DOM（可使用vm.$nextTick）</p>
+</li>
+<li><p>beforeMounte</p>
+<p>发生在挂载之前，在这之前template模板已导入渲染函数编译。而当前阶段虚拟DOM已创建完成，即将开始渲染。在此时也可以对数据进行更改，不会触发<code>updated</code></p>
+</li>
+<li><p>mounted</p>
+<p>在挂载之后被触发。在当前阶段，真实的DOM被挂载完毕，数据完成双向绑定，可以访问到DOM阶段，使用$ref属性对DOM进行操作</p>
+</li>
+<li><p>beforeUpdate</p>
+<p>在界面发生更新之前被触发。也就是响应式数据发生改变之前、虚拟DOM重新渲染之前被触发，可以在此阶段进行更改数据，不会造成重渲染</p>
+</li>
+<li><p>updated</p>
+<p>在发生更新之后被触发。当前阶段DOM已完成更新。要注意的是避免在此期间更改数据，因为这可能会导致无限循环的更新</p>
+</li>
+<li><p>beforeDestory</p>
+<p>在实例被销毁之前触发。在当前阶段实例完全可以被使用，可以在此阶段做些善后工作，如清除定时器</p>
+</li>
+<li><p>destoryed</p>
+<p>在实例被销毁之后触发。这个时候只剩下DOM，组件已被拆解，数据绑定被卸载、监听被移除、子实例也统统被销毁</p>
+</li>
+</ul>
+<h2 id="组件的生命周期函数调用顺序"><a href="#组件的生命周期函数调用顺序" class="headerlink" title="组件的生命周期函数调用顺序"></a>组件的生命周期函数调用顺序</h2><ul>
+<li><p>加载渲染顺序</p>
+<p>父beforeCreate👉父created👉父beforeMmount👉子beforeCreate👉子created👉子beforeMount👉子mounted👉父mounted</p>
+</li>
+<li><p>更新顺序</p>
+<p>父beforeUpdate👉子beforeUpdate👉子updated👉父updated</p>
+</li>
+<li><p>销毁顺序</p>
+<p>父beforeDestory👉子beforeDestory👉子destoryed👉父destoryed</p>
+</li>
+</ul>
 
     </div>
 
@@ -400,7 +437,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期概览"><span class="nav-number">1.</span> <span class="nav-text">生命周期概览</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期概览"><span class="nav-number">1.</span> <span class="nav-text">生命周期概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期函数"><span class="nav-number">2.</span> <span class="nav-text">生命周期函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件的生命周期函数调用顺序"><span class="nav-number">3.</span> <span class="nav-text">组件的生命周期函数调用顺序</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->

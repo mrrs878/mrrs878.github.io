@@ -64,7 +64,7 @@
 <meta property="og:description" content="模板编译模板编译的主要目标是生成渲染函数。而渲染函数的作用是每次执行它，它就会使用当前最新的状态生成一份新的vnode，然后使用这份vnode进行渲染。 将模板编译成渲染函数 将模板编译成AST（解析器）  遍历AST标记静态节点（优化器）  使用AST生成渲染函数（代码生成器）    解析器将模板编译成AST 在解析器内部，分成了很多小解析器，其中包括过滤解析器、文本解析器和HTML解析器。然后">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E6%A8%A1%E6%9D%BF%E7%BC%96%E8%AF%91-0.png">
-<meta property="og:updated_time" content="2020-03-06T16:12:21.023Z">
+<meta property="og:updated_time" content="2020-03-11T03:17:01.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue.js研读-3">
 <meta name="twitter:description" content="模板编译模板编译的主要目标是生成渲染函数。而渲染函数的作用是每次执行它，它就会使用当前最新的状态生成一份新的vnode，然后使用这份vnode进行渲染。 将模板编译成渲染函数 将模板编译成AST（解析器）  遍历AST标记静态节点（优化器）  使用AST生成渲染函数（代码生成器）    解析器将模板编译成AST 在解析器内部，分成了很多小解析器，其中包括过滤解析器、文本解析器和HTML解析器。然后">
@@ -283,7 +283,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-07 00:12:21" itemprop="dateModified" datetime="2020-03-07T00:12:21+08:00">2020-03-07</time>
+                <time title="修改时间：2020-03-11 11:17:01" itemprop="dateModified" datetime="2020-03-11T11:17:01+08:00">2020-03-11</time>
               </span>
             
           
@@ -330,7 +330,7 @@
 <p>在解析器内部，分成了很多小解析器，其中包括过滤解析器、文本解析器和HTML解析器。然后再通过一条主线将这些解析器组装在一起。</p>
 <p>HTML解析器是解析器中最核心的模块，它的作用是解析HTML模板，每当解析到HTML标签的开始位置、结束位置、文本或注释时，都会<strong>触发钩子函数</strong>，然后将相关信息通过参数传递出来。在解析期间，使用栈来记录层级关系（触发start钩子函数时入栈，触发end钩子函数时出栈）。</p>
 <p>事实上，解析HTML模板的过程就是循环的过程，简单来说就是用HTML模板字符串来循环，每轮循环都从HTML模板中截取一小段字符串，然后重复上述过程👆，直到HTML模板被截成一个空字符串时结束。</p>
-<p>文本解析器的主要作用是对HTML解析器解析出来的文本进行二次加工，处理带变量的文本。HTML解析器在解析文本时并不会区分文本是否是带有变量的文本，如果是纯文本，不需要进行任何处理；但如果是带变量的文本那个需要使用文本解析器进一步解析。</p>
+<p>文本解析器的主要作用是对HTML解析器解析出来的文本进行二次加工，处理<strong>带变量</strong>的文本。HTML解析器在解析文本时并不会区分文本是否是带有变量的文本，如果是纯文本，不需要进行任何处理；但如果是带变量的文本那个需要使用文本解析器进一步解析。</p>
 <h2 id="优化器"><a href="#优化器" class="headerlink" title="优化器"></a>优化器</h2><p>优化器的目标是遍历AST，检测出所有静态子树（永远不会变化的DOM节点）并给其打标记</p>
 <p>标记静态子树有两点好处：</p>
 <ul>
