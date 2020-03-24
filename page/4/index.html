@@ -234,6 +234,176 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/06/30/浏览器中的进程与线程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2019/06/30/浏览器中的进程与线程/" class="post-title-link" itemprop="url">浏览器中的进程与线程</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-30 14:01:50" itemprop="dateCreated datePublished" datetime="2019-06-30T14:01:50+08:00">2019-06-30</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-15 10:03:38" itemprop="dateModified" datetime="2019-10-15T10:03:38+08:00">2019-10-15</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/浏览器/" itemprop="url" rel="index">
+                    <span itemprop="name">浏览器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="浏览器是多进程的"><a href="#浏览器是多进程的" class="headerlink" title="浏览器是多进程的"></a>浏览器是多进程的</h1><h2 id="浏览器包含的进程"><a href="#浏览器包含的进程" class="headerlink" title="浏览器包含的进程"></a>浏览器包含的进程</h2><ul>
+<li>browser 进程–浏览器的主进程，负责协调，主控，有且只有一个<ul>
+<li>负责浏览器界面的显示，与用户交互（前进，后退等）</li>
+<li>负责各个页面的管理，创建和销毁其他进程</li>
+<li>将 render 进程得到的内存中的 bitmap 绘制到用户界面上</li>
+<li>网络资源的下载与管理等</li>
+</ul>
+</li>
+<li>第三方插件进程–每种类型的插件对用一个进程，仅当使用该插件时创建</li>
+<li>GUI 进程–最多只有一个，用于 3D 图形的绘制</li>
+<li>render 进程（浏览器内核），默认为一个 tab 页一个进程，互不影响<ul>
+<li>页面渲染，脚本执行，事件处理等</li>
+</ul>
+</li>
+</ul>
+<h2 id="浏览器使用多进程的优势"><a href="#浏览器使用多进程的优势" class="headerlink" title="浏览器使用多进程的优势"></a>浏览器使用多进程的优势</h2><ul>
+<li>避免单个 page crash 后影响到整个浏览器</li>
+<li>避免第三方插件 crash 后影响整个浏览器</li>
+<li>多进程充分利用多核优势</li>
+<li>方便使用沙盒模型隔离插件等进程，提高浏览器稳定性</li>
+</ul>
+<h2 id="render-进程"><a href="#render-进程" class="headerlink" title="render 进程"></a>render 进程</h2><p>常驻线程</p>
+<ul>
+<li>GUI 渲染线程<ul>
+<li>负责渲染浏览器界面，解析 HTML，CSS，构建 DOM 树和 RenderObject 树，布局和绘制等</li>
+<li>当界面需要重绘（repaint）或由于某种操作引发回流（reflow）时，该线程就会执行</li>
+<li>GUI 线程与 JS 引擎线程是互斥的，当 JS 引擎执行时 GUI 线程就会被挂起，GUI 更新会被保存在一个队列中等到 JS 引擎空闲时立即执行</li>
+</ul>
+</li>
+<li>JS 引擎线程<ul>
+<li>也称为 JS 内核，负责处理 JavaScript 脚本程序（例如 V8 引擎）</li>
+<li>JS 引擎线程负责解析 JavaScript 脚本，运行代码</li>
+<li>JS 引擎一直等待着任务队列中任务的到来，然后加以处理，一个 tab 页（render 进程）中无论何时只有一个 js 线程在运行 js 程序</li>
+<li>GUI 线程与 js 引擎线程时互斥的，如果 js 执行时间过长，这样就会造成页面渲染不连贯，导致页面渲染加载阻塞</li>
+</ul>
+</li>
+<li>事件触发线程<ul>
+<li>归属于浏览器而不是 JS 引擎，用来<strong>控制事件循环</strong></li>
+<li>当 js 引擎执行代码块如 setimeout 时（也可来自浏览器内核的其他线程，如鼠标点击、Ajax 异步请求等），会将对应任务添加到事件线程中</li>
+<li>当对应的事件符合触发条件时该线程会把事件添加到待处理队列的队尾，等待 JS 引擎的处理</li>
+</ul>
+</li>
+<li>定时器触发线程<ul>
+<li>传说中的 setInterval 与 setTimeout 所在线程</li>
+<li>浏览器定时计数器并不是由 JavaScript 引擎计数的,（因为 JavaScript 引擎是单线程的, 如果处于阻塞线程状态就会影响记计时的准确）</li>
+<li>因此通过单独线程来计时并触发定时（计时完毕后，添加到事件队列中，等待 JS 引擎空闲后执行）</li>
+<li>注意，W3C 在 HTML 标准中规定，规定要求 setTimeout 中低于 4ms 的时间间隔算为 4ms。</li>
+</ul>
+</li>
+<li>异步 http 线程<ul>
+<li>在 XMLHttpRequest 在连接后是通过浏览器新开一个线程请求</li>
+<li>将检测到状态变更时，如果设置有回调函数，异步线程就产生状态变更事件，将这个回调再放入事件队列中。再由 JavaScript 引擎执行。</li>
+</ul>
+</li>
+</ul>
+<h2 id="browser-进程与-render-进程之间的通信"><a href="#browser-进程与-render-进程之间的通信" class="headerlink" title="browser 进程与 render 进程之间的通信"></a>browser 进程与 render 进程之间的通信</h2><ul>
+<li>Browser 进程收到用户请求，首先需要获取页面内容（譬如通过网络下载资源），随后将该任务通过 RendererHost 接口传递给 Render 进程</li>
+<li>Renderer 进程的 Renderer 接口收到消息，简单解释后，交给渲染线程，然后开始渲染</li>
+<li>渲染线程接收请求，加载网页并渲染网页，这其中可能需要 Browser 进程获取资源和需要 GPU 进程来帮助渲染</li>
+<li>当然可能会有 JS 线程操作 DOM（这样可能会造成回流并重绘）</li>
+<li>最后 Render 进程将结果传递给 Browser 进程</li>
+<li>Browser 进程接收到结果并将结果绘制出来</li>
+</ul>
+<h1 id="浏览器内核（render-进程）中线程的关系"><a href="#浏览器内核（render-进程）中线程的关系" class="headerlink" title="浏览器内核（render 进程）中线程的关系"></a>浏览器内核（render 进程）中线程的关系</h1><h2 id="GUI-渲染线程与-JS-引擎线程互斥"><a href="#GUI-渲染线程与-JS-引擎线程互斥" class="headerlink" title="GUI 渲染线程与 JS 引擎线程互斥"></a>GUI 渲染线程与 JS 引擎线程互斥</h2><p>由于 JavaScript 是可操纵 DOM 的，如果在修改这些元素属性同时渲染界面（即 JS 线程和 UI 线程同时运行），那么渲染线程前后获得的元素数据就可能不一致了。<br>因此为防止渲染出现不可预期的结果，浏览器设置 GUI 渲染线程与 JS 引擎为互斥，当 JS 引擎执行时 GUI 线程会被挂起。<br>GUI 更新则会被保存在一个队列中等到 JS 引擎线程空闲时立即被执行。</p>
+<h2 id="JS-引擎阻塞"><a href="#JS-引擎阻塞" class="headerlink" title="JS 引擎阻塞"></a>JS 引擎阻塞</h2><h2 id="web-worker-线程"><a href="#web-worker-线程" class="headerlink" title="web worker 线程"></a>web worker 线程</h2><p>为解决上一个问题而提出</p>
+<ul>
+<li>创建 worker 时，JS 引擎会向浏览器申请开一个子线程</li>
+<li>JS 引擎线程与 worker 线程间通过特定的方式通信（postMessage API），需要通过序列化对象来与线程交互特定的数据<br>所以，如果有非常耗时的操作，可以单独打开一个 worker 线程，这样不管如何天翻地覆都不会影响 JS 引擎主线程，只待计算出结果后，将结果通信给 JS 主线程即可</li>
+</ul>
+<h2 id="shared-worker-线程"><a href="#shared-worker-线程" class="headerlink" title="shared worker 线程"></a>shared worker 线程</h2><p>web worker 与 shared worker 的区别</p>
+<ul>
+<li>web worker 只属于某个页面，不会和其他页面的 render 进程共享</li>
+<li>shared worker 是浏览器所有页面共享的，不能采用与 worker 同样的方式实现，不属于某个 render 进程</li>
+<li>web worker 相当于“线程”，shared worker 相当于“进程”</li>
+</ul>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/06/30/JavaScript-执行机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1634,142 +1804,6 @@ String: Bar</code></pre>
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2018/11/12/MySQL高级-函数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2018/11/12/MySQL高级-函数/" class="post-title-link" itemprop="url">MySQL高级-函数</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2018-11-12 20:12:37" itemprop="dateCreated datePublished" datetime="2018-11-12T20:12:37+08:00">2018-11-12</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-15 10:03:37" itemprop="dateModified" datetime="2019-10-15T10:03:37+08:00">2019-10-15</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据库-MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库 MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="MySQL高级-函数"><a href="#MySQL高级-函数" class="headerlink" title="MySQL高级-函数"></a>MySQL高级-函数</h1><p>@(mysql)[procedure]</p>
-<h2 id="查看数据库是否支持函数-："><a href="#查看数据库是否支持函数-：" class="headerlink" title="查看数据库是否支持函数 ："></a><strong>查看数据库是否支持函数</strong> ：</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">VARIABLES</span> <span class="keyword">LIKE</span> <span class="string">'%FUN%'</span>;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>若为off，则需要开启</strong><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">GLOBAL</span> log_bin_trust_function_creators = <span class="literal">TRUE</span>;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="创建函数的语法-："><a href="#创建函数的语法-：" class="headerlink" title="创建函数的语法 ："></a><strong>创建函数的语法</strong> ：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> func_name(variable1, variable2 ...)</span><br><span class="line"><span class="keyword">RETURNS</span> return_type</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">	...</span><br><span class="line"><span class="keyword">END</span>;</span><br><span class="line"></span><br><span class="line">DELIMITER //</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> func_add(a <span class="built_in">INT</span>, b <span class="built_in">INT</span>)</span><br><span class="line"><span class="keyword">RETURNS</span> <span class="built_in">INT</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">	<span class="keyword">RETURN</span> a + b;</span><br><span class="line"><span class="keyword">END</span>;</span><br><span class="line">//</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-12/68702030.jpg" alt="enter image description here"></p>
-<h2 id="函数的管理-："><a href="#函数的管理-：" class="headerlink" title="函数的管理 ："></a><strong>函数的管理</strong> ：</h2><ul>
-<li><strong>函数的管理类似于存储过程</strong><h3 id="查看函数"><a href="#查看函数" class="headerlink" title="查看函数"></a><strong>查看函数</strong></h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> mysql.proc;</span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">FUNCTION</span> <span class="keyword">STATUS</span> <span class="keyword">WHERE</span> db = <span class="string">'test'</span>;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-12/68702030.jpg" alt="enter image description here"></p>
-<h3 id="删除函数"><a href="#删除函数" class="headerlink" title="删除函数"></a><strong>删除函数</strong></h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">FUNCTION</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> func_add;</span><br></pre></td></tr></table></figure>
-
-<h2 id="实例："><a href="#实例：" class="headerlink" title="实例："></a>实例：</h2><pre><code class="SQL"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> user_info (<span class="keyword">id</span> <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT PRIMARY <span class="keyword">KEY</span>,
-                        user_name <span class="built_in">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>,
-                        user_pwd  <span class="built_in">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span>
-                        )<span class="keyword">ENGINE</span> = <span class="keyword">INNODB</span> <span class="keyword">CHARSET</span> = utf8;
-
-<span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> func_login(<span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">20</span>), pwd <span class="built_in">VARCHAR</span>(<span class="number">20</span>))
-<span class="keyword">RETURNS</span> <span class="built_in">VARCHAR</span>(<span class="number">30</span>)
-<span class="keyword">BEGIN</span>
-    <span class="keyword">DECLARE</span> cnt <span class="built_in">INT</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>;
-    <span class="keyword">SELECT</span> <span class="keyword">count</span>(*) <span class="keyword">INTO</span> cnt <span class="keyword">FROM</span> user_info <span class="keyword">WHERE</span> user_name = <span class="keyword">name</span>;
-    IF cnt = 0 THEN
-        RETURN 'user not exists';
-    <span class="keyword">END</span> <span class="keyword">IF</span>;
-    <span class="keyword">SELECT</span> <span class="keyword">count</span>(*) <span class="keyword">INTO</span> cnt <span class="keyword">FROM</span> user_info <span class="keyword">WHERE</span> user_name = <span class="keyword">name</span> <span class="keyword">AND</span> user_pwd = pwd;
-    IF cnt = 0 THEN
-        RETURN 'pwd input error';
-    ELSE
-        RETURN 'user login success';
-    <span class="keyword">END</span> <span class="keyword">IF</span>;
-<span class="keyword">END</span>;
-//</code></pre>
-<p><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-12/35546849.jpg" alt="enter image description here"></p>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1822,7 +1856,7 @@ String: Bar</code></pre>
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1835,7 +1869,7 @@ String: Bar</code></pre>
             <a href="/categories/">
           
         
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -1848,7 +1882,7 @@ String: Bar</code></pre>
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
