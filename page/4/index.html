@@ -234,6 +234,114 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/10/15/函数式编程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2019/10/15/函数式编程/" class="post-title-link" itemprop="url">函数式编程</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-15 10:10:17 / 修改时间：11:46:33" itemprop="dateCreated datePublished" datetime="2019-10-15T10:10:17+08:00">2019-10-15</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/函数式编程/" itemprop="url" rel="index">
+                    <span itemprop="name">函数式编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="WHAT"><a href="#WHAT" class="headerlink" title="WHAT"></a>WHAT</h1><ul>
+<li><p>本质上，函数式编程只是<strong>范畴论的运算方法</strong>，跟数理逻辑、微积分、行列式是同一类痛惜，都是数学方法，只是碰巧它能用来写程序</p>
+</li>
+<li><p>FP 的目的是使用函数来抽象作用在数据之上的控制力和操作，从而在系统中消除副作用并减少对状态的改变</p>
+</li>
+<li><p>OOP 通过封装使得代码更易理解，FP 通过最小化变化使得代码更易理解</p>
+<p>ps: 为什么函数式编程要求函数必须是纯的，不能有副作用？因为它是一种数学运算，原始目的就是求值，不做其他事情，否则就无法满足函数运算法则了</p>
+</li>
+</ul>
+<h1 id="WHY"><a href="#WHY" class="headerlink" title="WHY"></a>WHY</h1><ul>
+<li>使用纯函数的代码绝不会更改或破环全局状态，有助于提高代码的可测性和可维护性</li>
+<li>FP 采用声明式的风格，易于推理，蹄盖代码的可读性</li>
+<li>函数式编程将函数视为积木，通过高阶函数来提高代码的模块化和可重用性</li>
+<li>可以利用响应式编程组合各个函数来降低事件驱动程序的复杂性</li>
+</ul>
+<h1 id="HOW"><a href="#HOW" class="headerlink" title="HOW"></a>HOW</h1><ul>
+<li>纯函数(pure function)<br>相同的输入总是得到相同的输出，不依赖外部环境，完全做到”自给自足”</li>
+<li>合成(compose)<br>如果一个值要经过多个函数才能编程另外一个值，就可以把所用中间步骤合并成一个函数，这叫做<strong>函数的合成(compose)</strong></li>
+<li>柯里化(curry)<br>在 compose 时，如果函数有多个参数 compose 将会变得非常麻烦，所谓柯里化就是把一个多参数的函数转化为单参数的函数</li>
+<li>函字(functor)<br>FP 里基本的运算单位和功能单位，可以将一个容器转换为另一个容器。任何具有 map 方法的数据结构都可当作函子的实现</li>
+</ul>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/06/30/浏览器相关-缓存/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -249,7 +357,7 @@
         <h1 class="post-title" itemprop="name headline">
           
             
-            <a href="/2019/06/30/浏览器相关-缓存/" class="post-title-link" itemprop="url">浏览器缓存</a>
+            <a href="/2019/06/30/浏览器相关-缓存/" class="post-title-link" itemprop="url">浏览器相关-缓存</a>
           
         </h1>
 
@@ -275,7 +383,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-07 23:17:14" itemprop="dateModified" datetime="2020-04-07T23:17:14+08:00">2020-04-07</time>
+                <time title="修改时间：2020-04-08 23:18:48" itemprop="dateModified" datetime="2020-04-08T23:18:48+08:00">2020-04-08</time>
               </span>
             
           
@@ -411,7 +519,7 @@
         <h1 class="post-title" itemprop="name headline">
           
             
-            <a href="/2019/06/30/浏览器相关-渲染/" class="post-title-link" itemprop="url">浏览器渲染</a>
+            <a href="/2019/06/30/浏览器相关-渲染/" class="post-title-link" itemprop="url">浏览器相关-渲染</a>
           
         </h1>
 
@@ -437,7 +545,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-15 13:32:29" itemprop="dateModified" datetime="2019-10-15T13:32:29+08:00">2019-10-15</time>
+                <time title="修改时间：2020-04-08 23:18:37" itemprop="dateModified" datetime="2020-04-08T23:18:37+08:00">2020-04-08</time>
               </span>
             
           
@@ -526,7 +634,7 @@
         <h1 class="post-title" itemprop="name headline">
           
             
-            <a href="/2019/06/30/浏览器相关-模型/" class="post-title-link" itemprop="url">浏览器中的进程与线程</a>
+            <a href="/2019/06/30/浏览器相关-模型/" class="post-title-link" itemprop="url">浏览器相关-进程与线程</a>
           
         </h1>
 
@@ -552,7 +660,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-15 10:03:38" itemprop="dateModified" datetime="2019-10-15T10:03:38+08:00">2019-10-15</time>
+                <time title="修改时间：2020-04-08 23:18:54" itemprop="dateModified" datetime="2020-04-08T23:18:54+08:00">2020-04-08</time>
               </span>
             
           
@@ -1630,141 +1738,6 @@ String: Bar</code></pre>
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2018/11/13/MySQL-触发器/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2018/11/13/MySQL-触发器/" class="post-title-link" itemprop="url">MySQL-触发器</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2018-11-13 22:51:06" itemprop="dateCreated datePublished" datetime="2018-11-13T22:51:06+08:00">2018-11-13</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-15 10:03:38" itemprop="dateModified" datetime="2019-10-15T10:03:38+08:00">2019-10-15</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据库-MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库 MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="MySQL-触发器"><a href="#MySQL-触发器" class="headerlink" title="MySQL-触发器"></a>MySQL-触发器</h1><h2 id="什么是触发器"><a href="#什么是触发器" class="headerlink" title="什么是触发器"></a>什么是触发器</h2><ul>
-<li>触发器是一种<strong>特殊的存储过程</strong>，它在插入/删除或修改表中的数据时<strong>触发执行</strong>，它比数据库本身有着更精细和更复杂的数据约束力。</li>
-</ul>
-<h2 id="触发器的作用"><a href="#触发器的作用" class="headerlink" title="触发器的作用"></a>触发器的作用</h2><ul>
-<li>用于实现完整性约束</li>
-<li>通过触发器，用户可以实现MySQL数据库本身并不支持的一些特性，如对于传统CHECK约束的支持，物化视图，高级复制，审计等特性</li>
-</ul>
-<h2 id="触发器的特性"><a href="#触发器的特性" class="headerlink" title="触发器的特性"></a>触发器的特性</h2><ul>
-<li>监视地点：一般就是某一张表</li>
-<li>监视/触发事件：UPDATE/INSERT/DELETE</li>
-<li>触发时间：AFTER/BEFORE</li>
-</ul>
-<h2 id="触发器的创建语法"><a href="#触发器的创建语法" class="headerlink" title="触发器的创建语法"></a>触发器的创建语法</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span></span><br><span class="line">[DEFINER = &#123; <span class="keyword">user</span> | <span class="keyword">CURRENT_USER</span> &#125;]</span><br><span class="line"><span class="keyword">TRIGGER</span> trigger_name</span><br><span class="line">trigger_time trigger_event</span><br><span class="line"><span class="keyword">ON</span> tbl_name <span class="keyword">FOR</span> <span class="keyword">EACH</span> <span class="keyword">ROW</span></span><br><span class="line">trigger_body</span><br><span class="line"></span><br><span class="line">trigger_time: &#123; <span class="keyword">BEFORE</span> | <span class="keyword">AFTER</span> &#125;</span><br><span class="line">trigger_event: &#123; <span class="keyword">INSERT</span> | <span class="keyword">UPDATE</span> | <span class="keyword">DELETE</span> &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>触发程序是与表有关的数据库对象，当表上出现特定事件时将激活该对象。触发程序与tbl_name相关，tbl_name必须引用永久性表，不能将触发程序与TEMPORARY表或视图关联起来。</li>
-<li>对于具有相同触发程序动作事件和时间的给定表，不能有两个触发程序。</li>
-<li>trigger_body是当触发程序激活时执行的语句。可以使用BEGIN…END复合语句结构。</li>
-<li>对于INSERT而言，新插入的行用NEW表示，行中的每一列值用NEW.col_name表示。</li>
-<li>对于DELETE而言，欲删除的那一行用OLD表示，行中的每一列值用OLD.col_name表示。</li>
-<li>对于UPDATE而言，修改前的行用OLD表示，修改后的行用NEW表示。</li>
-</ul>
-<h2 id="触发器的管理"><a href="#触发器的管理" class="headerlink" title="触发器的管理"></a>触发器的管理</h2><ul>
-<li><p>查看所有触发器</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">TRIGGERS</span> [<span class="keyword">FROM</span> db_name] [like_or_where]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>MySQL中有一个information_schema.TRIGGERS表，存储所有库中的触发器，查看：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DESC information_schema.TRIGGERS</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>删除触发器</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">VIEW</span> [<span class="keyword">IF</span> <span class="keyword">EXISTS</span>]</span><br><span class="line">view_name [, view_name] ...</span><br><span class="line">[RESTRICT | <span class="keyword">CASCADE</span>]</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="触发器的使用示例"><a href="#触发器的使用示例" class="headerlink" title="触发器的使用示例"></a>触发器的使用示例</h2><h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER //</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TRIGGER</span> user_trg</span><br><span class="line"><span class="keyword">AFTER</span> <span class="keyword">INSERT</span></span><br><span class="line"><span class="keyword">ON</span> user_info <span class="keyword">FOR</span> <span class="keyword">EACH</span> <span class="keyword">ROW</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">   <span class="keyword">INSERT</span> <span class="keyword">INTO</span> user_salaries <span class="keyword">SELECT</span> new.id, new.user_name, <span class="number">0</span>;</span><br><span class="line"><span class="keyword">END</span>;</span><br><span class="line">//</span><br><span class="line">DELIMITER;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> user_info <span class="keyword">SELECT</span> <span class="number">1</span>, <span class="string">'张三'</span>， <span class="string">'123456'</span>;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://t1.picb.cc/uploads/2018/11/13/JS7x7L.png" alt="enter image description here"></p>
-<h3 id="对于约束的支持"><a href="#对于约束的支持" class="headerlink" title="对于约束的支持"></a>对于约束的支持</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> userCash(<span class="keyword">id</span> <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT PRIMARY <span class="keyword">KEY</span>, </span><br><span class="line">					   cash <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span></span><br><span class="line">)<span class="keyword">ENGINE</span> = <span class="keyword">INNODB</span> <span class="keyword">CHARSET</span> = <span class="string">'UTF8'</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> userCashErr_log (</span><br><span class="line">	<span class="keyword">id</span> <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line">	old_cash <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">	new_cash <span class="built_in">INT</span> <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">	user_name <span class="built_in">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">	<span class="built_in">time</span> DATETIME</span><br><span class="line">)<span class="keyword">ENGINE</span> = <span class="keyword">INNODB</span> <span class="keyword">CHARSET</span> = <span class="string">'UTF8'</span>;</span><br><span class="line"></span><br><span class="line">DELIMITER //</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TRIGGER</span> userCashUpdate_tgr </span><br><span class="line"><span class="keyword">BEFORE</span> <span class="keyword">UPDATE</span></span><br><span class="line"><span class="keyword">ON</span> userCash <span class="keyword">FOR</span> <span class="keyword">EACH</span> <span class="keyword">ROW</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">	<span class="keyword">IF</span> new.cash - old.cash &gt; <span class="number">0</span> <span class="keyword">THEN</span></span><br><span class="line">		<span class="keyword">INSERT</span> <span class="keyword">INTO</span> userCashErr_log <span class="keyword">SELECT</span> old.id, old.cash, new.cash, <span class="keyword">USER</span>(), <span class="keyword">NOW</span>();</span><br><span class="line">		<span class="keyword">SET</span> new.cash = old.cash;</span><br><span class="line">	<span class="keyword">END</span> <span class="keyword">IF</span>;</span><br><span class="line"><span class="keyword">END</span>;</span><br><span class="line">//</span><br><span class="line">DELIMITER ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> userCash <span class="keyword">SELECT</span> <span class="number">1</span>, <span class="number">10000</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> userCashErr_log;</span><br><span class="line"><span class="keyword">UPDATE</span> userCash <span class="keyword">SET</span> cash = cash - (<span class="number">-20</span>) <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> userCashErr_log;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://t1.picb.cc/uploads/2018/11/13/JS7T9W.png" alt="enter image description here"></p>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1817,7 +1790,7 @@ String: Bar</code></pre>
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1843,7 +1816,7 @@ String: Bar</code></pre>
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>

@@ -234,7 +234,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/02/浏览器相关-存储/">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/08/浏览器相关-安全/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mr.RS">
@@ -249,7 +249,7 @@
         <h1 class="post-title" itemprop="name headline">
           
             
-            <a href="/2020/04/02/浏览器相关-存储/" class="post-title-link" itemprop="url">浏览器-存储</a>
+            <a href="/2020/04/08/浏览器相关-安全/" class="post-title-link" itemprop="url">浏览器相关-安全</a>
           
         </h1>
 
@@ -264,7 +264,7 @@
                 
               
 
-              <time title="创建时间：2020-04-02 22:49:39 / 修改时间：22:50:58" itemprop="dateCreated datePublished" datetime="2020-04-02T22:49:39+08:00">2020-04-02</time>
+              <time title="创建时间：2020-04-08 23:15:51 / 修改时间：23:17:35" itemprop="dateCreated datePublished" datetime="2020-04-08T23:15:51+08:00">2020-04-08</time>
             </span>
           
             
@@ -300,7 +300,182 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="浏览器存储-从cookie到WebStorage、IndexedDB"><a href="#浏览器存储-从cookie到WebStorage、IndexedDB" class="headerlink" title="浏览器存储-从cookie到WebStorage、IndexedDB"></a>浏览器存储-从cookie到WebStorage、IndexedDB</h1><p>关于存储的问题都会涉及到三个问题:</p>
+          <h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><p>XSS(cross-site scripting)，跨站脚本攻击（缩写和CSS重叠，所以称之为XSS）。XSS指的是通过存在安全漏洞的web网站注册用户的<strong>浏览器</strong>内<strong>自动运行非法的HTML标签或JavaScript</strong>进行的一种攻击</p>
+<p>如果 Web 应用程序没有部署足够的安全验证，那么，这些攻击很容易成功。浏览器无法探测到这些恶意脚本是不可信的，所以，这些脚本可以任意读取 cookie，session tokens，或者其它敏感的网站信息，或者让恶意脚本重写<a href="https://developer.mozilla.org/en-US/docs/Glossary/HTML" target="_blank" rel="noopener">HTML</a>内容。</p>
+<p>XSS可能会造成以下影响：</p>
+<ul>
+<li>利用虚假表单骗取用户个人信息</li>
+<li>利用脚本窃取用户的cookie值，被害者在不知情的情况下帮助攻击者发送恶意请求</li>
+<li>显示伪造的文章或图片</li>
+</ul>
+<h3 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h3><p>注入型脚本永久<strong>存储在目标服务器上</strong>。当浏览器请求数据时，脚本从服务器上传回并执行。</p>
+<h3 id="反射性XSS"><a href="#反射性XSS" class="headerlink" title="反射性XSS"></a>反射性XSS</h3><p>当<strong>用户点击</strong>一个恶意链接，或者提交一个表单，或者进入一个恶意网站时，注入脚本进入被攻击者的网站。Web服务器将注入脚本，比如一个错误信息，搜索结果等 返回到用户的浏览器上。由于浏览器认为这个响应来自”可信任”的服务器，所以会执行这段脚本。</p>
+<h3 id="如何防御"><a href="#如何防御" class="headerlink" title="如何防御"></a>如何防御</h3><ul>
+<li><p>CSP</p>
+<p>建立白名单，明确告诉浏览器那些外部资源可以进行加载和执行。</p>
+<ol>
+<li><p>设置<code>HTTP Header</code>中的<code>Content-Security-Policy</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--- 只允许加载本站资源 ---&gt;</span></span><br><span class="line">Content-Security-Policy: default-src 'self'</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 只允许加载HTTPS图片 --&gt;</span></span><br><span class="line">Content-Security-Policy: img-src https://*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置<code>meta</code>标签</p>
+</li>
+</ol>
+</li>
+<li><p>转义字符</p>
+<p>对引号、尖括号、斜杠进行转义</p>
+</li>
+<li><p>httponly cookie</p>
+<p>这是预防XSS攻击窃取用户cookie最有效的防御手段。Web应用程序在设置cookie时，将其属性设为HttpOnly，就可以避免该网页的cookie被客户端恶意JavaScript窃取，保护用户cookie信息</p>
+</li>
+</ul>
+<h3 id="基于DOM的XSS"><a href="#基于DOM的XSS" class="headerlink" title="基于DOM的XSS"></a>基于DOM的XSS</h3><h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><p>CSRF(Cross Site Request Forgery)，即跨站请求伪造，是一种常见的Web攻击，它利用用户已登录的身份，在用户毫不知情的情况下，以用户的名义完成非法操作。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/1/24/1688030a24702301?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="CSRF原理"></p>
+<h3 id="如何防御-1"><a href="#如何防御-1" class="headerlink" title="如何防御"></a>如何防御</h3><p>防范 CSRF 攻击可以遵循以下几种规则：</p>
+<ul>
+<li>Get 请求不对数据进行修改</li>
+<li>不让第三方网站访问到用户 Cookie</li>
+<li>阻止第三方网站请求接口</li>
+<li>请求时附带验证信息，比如验证码或者 Token</li>
+</ul>
+<ol>
+<li><p>samesite</p>
+<p>可以对 Cookie 设置 SameSite 属性。该属性表示 <strong>Cookie 不随着跨域请求发送</strong>，可以很大程度减少 CSRF 的攻击，但是该属性目前并不是所有浏览器都兼容。</p>
+</li>
+<li><p>referer check</p>
+<p>HTTP Referer是header的一部分，当浏览器向web服务器发送请求时，一般会带上Referer信息告诉服务器是从哪个页面链接过来的，服务器籍此可以获得一些信息用于处理。可以通过检查请求的来源来防御CSRF攻击。正常请求的referer具有一定规律，如在提交表单的referer必定是在该页面发起的请求。所以<strong>通过检查http包头referer的值是不是这个页面，来判断是不是CSRF攻击</strong>。</p>
+<p>但在某些情况下如从https跳转到http，浏览器处于安全考虑，不会发送referer，服务器就无法进行check了。若与该网站同域的其他网站有XSS漏洞，那么攻击者可以在其他网站注入恶意脚本，受害者进入了此类同域的网址，也会遭受攻击。出于以上原因，无法完全依赖Referer Check作为防御CSRF的主要手段。但是可以通过Referer Check来监控CSRF攻击的发生。</p>
+</li>
+<li><p>anti CSRF token</p>
+<p>目前比较完善的解决方案是加入Anti-CSRF-Token。即发送请求时在HTTP 请求中以参数的形式加入一个随机产生的token，并在服务器建立一个拦截器来验证这个token。服务器读取浏览器当前域cookie中这个token值，会进行校验该请求当中的token和cookie当中的token值是否都存在且相等，才认为这是合法的请求。否则认为这次请求是违法的，拒绝该次服务。</p>
+<p><strong>这种方法相比Referer检查要安全很多</strong>，token可以在用户登陆后产生并放于session或cookie中，然后在每次请求时服务器把token从session或cookie中拿出，与本次请求中的token 进行比对。由于token的存在，攻击者无法再构造出一个完整的URL实施CSRF攻击。但在处理多个页面共存问题时，当某个页面消耗掉token后，其他页面的表单保存的还是被消耗掉的那个token，其他页面的表单提交时会出现token错误。</p>
+</li>
+<li><p>验证码</p>
+<p>在关键业务点设置验证码</p>
+</li>
+</ol>
+<h2 id="点击劫持"><a href="#点击劫持" class="headerlink" title="点击劫持"></a>点击劫持</h2><p>点击劫持是一种视觉欺骗的攻击手段。攻击者将需要攻击的网站通过 <strong>iframe</strong> 嵌套的方式嵌入自己的网页中，并将 iframe 设置为透明，在页面中透出一个按钮诱导用户点击。</p>
+<h3 id="如何防御-2"><a href="#如何防御-2" class="headerlink" title="如何防御"></a>如何防御</h3><ul>
+<li><p>X-FRAME-OPTIONS</p>
+<p><code>X-FRAME-OPTIONS</code>是一个 HTTP 响应头，三个值可选，分别是</p>
+<ul>
+<li>DENY，表示页面不允许通过 iframe 的方式展示</li>
+<li>SAMEORIGIN，表示页面可以在相同域名下通过 iframe 的方式展示</li>
+<li>ALLOW-FROM，表示页面可以在指定来源的 iframe 中展示</li>
+</ul>
+</li>
+</ul>
+<h2 id="URL跳转漏洞"><a href="#URL跳转漏洞" class="headerlink" title="URL跳转漏洞"></a>URL跳转漏洞</h2><h2 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h2><p>SQL注入攻击指的是通过构建特殊的输入作为参数传入Web应用程序，而这些输入大都是SQL语法里的一些组合，通过执行SQL语句进而执行攻击者所要的操作，其主要原因是程序没有细致地过滤用户输入的数据，致使非法数据侵入系统。</p>
+<p>SQL注入必备条件：</p>
+<ol>
+<li>可以控制输入的数据</li>
+<li>服务器要执行的代码拼接了控制的数据</li>
+</ol>
+<h3 id="如何防御-3"><a href="#如何防御-3" class="headerlink" title="如何防御"></a>如何防御</h3><ul>
+<li><p><strong>严格限制Web应用的数据库的操作权限</strong>，给此用户提供仅仅能够满足其工作的最低权限，从而最大限度的减少注入攻击对数据库的危害</p>
+</li>
+<li><p><strong>后端代码检查输入的数据是否符合预期</strong>，严格限制变量的类型，例如使用正则表达式进行一些匹配处理。</p>
+</li>
+<li><p><strong>对进入数据库的特殊字符（’，”，\，&lt;，&gt;，&amp;，*，; 等）进行转义处理，或编码转换</strong>。基本上所有的后端语言都有对字符串进行转义处理的方法，比如 lodash 的 lodash._escapehtmlchar 库。</p>
+</li>
+<li><p><strong>所有的查询语句建议使用数据库提供的参数化查询接口</strong>，参数化的语句使用参数而不是将用户输入变量嵌入到 SQL 语句中，即不要直接拼接 SQL 语句。例如 Node.js 中的 mysqljs 库的 query 方法中的 ? 占位参数。</p>
+</li>
+</ul>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/02/浏览器相关-存储/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2020/04/02/浏览器相关-存储/" class="post-title-link" itemprop="url">浏览器相关-存储</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-02 22:49:39" itemprop="dateCreated datePublished" datetime="2020-04-02T22:49:39+08:00">2020-04-02</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-08 23:18:46" itemprop="dateModified" datetime="2020-04-08T23:18:46+08:00">2020-04-08</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/浏览器/" itemprop="url" rel="index">
+                    <span itemprop="name">浏览器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>关于存储的问题都会涉及到三个问题:</p>
 <ol>
 <li>存储场所</li>
 <li>存储空间</li>
@@ -1513,129 +1688,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/03/Vue.js研读-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2020/03/03/Vue.js研读-1/" class="post-title-link" itemprop="url">Vue.js研读-1</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-03 23:15:13" itemprop="dateCreated datePublished" datetime="2020-03-03T23:15:13+08:00">2020-03-03</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-11 16:14:17" itemprop="dateModified" datetime="2020-03-11T16:14:17+08:00">2020-03-11</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue.js</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="响应式原理"><a href="#响应式原理" class="headerlink" title="响应式原理"></a>响应式原理</h2><p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/vue-1.png" alt="响应式管理"></p>
-<p>Data通过<code>Observer</code>转换成了<strong>getter/setter</strong>的形式类追踪变化</p>
-<p>当外界通过<code>Watcher</code>读取数据（Compile时会根据<strong>{}</strong>、<strong>v-*</strong>来创建Watcher）时会触发getter从而将Watcher添加到依赖中</p>
-<p>当数据发生变化时，会触发setter，从而向<code>Dep</code>中的依赖（Watcher）发送通知</p>
-<p>Wacher接收到通知后，会向外界发送通知，变化通知到外界后可能会触发视图更新，也有可能触发用户的某个回调函数</p>
-<h2 id="简易版响应式（Proxy-Observer-Watcher-Dep）"><a href="#简易版响应式（Proxy-Observer-Watcher-Dep）" class="headerlink" title="简易版响应式（Proxy + Observer/Watcher/Dep）"></a>简易版响应式（Proxy + Observer/Watcher/Dep）</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> uid = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parsePath</span>(<span class="params">obj, path</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (path === <span class="string">""</span>) <span class="keyword">return</span> obj</span><br><span class="line">    <span class="keyword">return</span> path.split(<span class="string">"."</span>).reduce(<span class="function">(<span class="params">data, current</span>) =&gt;</span> data[current], obj)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">defineReactive</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> data !== <span class="string">"object"</span>) <span class="keyword">return</span> data</span><br><span class="line">    <span class="keyword">let</span> dep = <span class="keyword">new</span> Dep()</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Proxy</span>(data, &#123;</span><br><span class="line">        <span class="keyword">set</span>: (target, prop, value, receiver) =&gt; &#123;</span><br><span class="line">            <span class="keyword">const</span> oldVal = target[prop]</span><br><span class="line">            <span class="keyword">const</span> res = <span class="built_in">Reflect</span>.set(target, prop, defineReactive(value), receiver)</span><br><span class="line">            <span class="keyword">if</span> (oldVal !== value) dep.notify()</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="keyword">get</span>: (target, prop, receiver) =&gt; &#123;</span><br><span class="line">            dep.depend()</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Reflect</span>.get(target, prop, receiver)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span> (vm) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> vm !== <span class="string">"object"</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">"vm must be an object"</span>)</span><br><span class="line">        <span class="keyword">this</span>.walk(vm)</span><br><span class="line">        <span class="keyword">return</span> defineReactive(vm)</span><br><span class="line">    &#125;</span><br><span class="line">    walk (vm) &#123;</span><br><span class="line">        <span class="built_in">Object</span>.keys(vm).forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">typeof</span> vm[item] === <span class="string">"object"</span>) <span class="keyword">this</span>.walk(vm[item])</span><br><span class="line">            vm[item] = defineReactive(vm[item])</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dep</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span> () &#123;</span><br><span class="line">        <span class="keyword">this</span>.id = uid++</span><br><span class="line">        <span class="keyword">this</span>.subs = []</span><br><span class="line">    &#125;</span><br><span class="line">    addSub (sub) &#123;</span><br><span class="line">        <span class="keyword">this</span>.subs.push(sub)</span><br><span class="line">    &#125;</span><br><span class="line">    depend () &#123;</span><br><span class="line">        Dep.target &amp;&amp; Dep.target.addDep(<span class="keyword">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    notify () &#123;</span><br><span class="line">        <span class="keyword">this</span>.subs.slice().forEach(<span class="function"><span class="params">item</span> =&gt;</span> item.update())</span><br><span class="line">    &#125;</span><br><span class="line">    removeSub (sub) &#123;</span><br><span class="line">        <span class="keyword">const</span> index = <span class="keyword">this</span>.subs.indexOf(sub)</span><br><span class="line">        index &gt; <span class="number">-1</span> &amp;&amp; <span class="keyword">this</span>.subs.splice(index, <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Watcher</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span> (vm, exp, cb) &#123;</span><br><span class="line">        <span class="keyword">this</span>.vm = vm</span><br><span class="line">        <span class="keyword">this</span>.exp = exp</span><br><span class="line">        <span class="keyword">this</span>.cb = cb</span><br><span class="line">        <span class="keyword">this</span>.deps = []</span><br><span class="line">        <span class="keyword">this</span>.depIds = <span class="keyword">new</span> <span class="built_in">Set</span>()</span><br><span class="line">        <span class="keyword">this</span>.value = <span class="keyword">this</span>.get() </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">get</span> () &#123;</span><br><span class="line">        Dep.target = <span class="keyword">this</span></span><br><span class="line">        <span class="keyword">let</span> value = parsePath(<span class="keyword">this</span>.vm, <span class="keyword">this</span>.exp)</span><br><span class="line">        Dep.target = <span class="literal">undefined</span></span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line">    &#125;</span><br><span class="line">    update () &#123;</span><br><span class="line">        <span class="keyword">const</span> oldValue = <span class="keyword">this</span>.value</span><br><span class="line">        <span class="keyword">this</span>.value = <span class="keyword">this</span>.get()</span><br><span class="line">        <span class="keyword">this</span>.cb.call(<span class="keyword">this</span>.vm, <span class="keyword">this</span>.value, oldValue)</span><br><span class="line">    &#125;</span><br><span class="line">    addDep (dep) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.depIds.has(dep.id)) <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">this</span>.depIds.add(dep.id)</span><br><span class="line">        <span class="keyword">this</span>.deps.push(dep)</span><br><span class="line">        dep.addSub(<span class="keyword">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    teardown () &#123;</span><br><span class="line">        <span class="keyword">this</span>.deps.forEach(<span class="function"><span class="params">item</span> =&gt;</span> item.removeSub(<span class="keyword">this</span>))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">watch</span>(<span class="params">vm, exp, cb, options = &#123;&#125;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> watcher = <span class="keyword">new</span> Watcher(vm, exp, cb)</span><br><span class="line">    <span class="keyword">if</span> (options.immediate) cb.call(vm, watcher.value)</span><br><span class="line">    <span class="keyword">return</span> watcher.teardown.bind(watcher)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123; Observer, watch &#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./mvvm.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> data = <span class="keyword">new</span> Observer(&#123;</span></span><br><span class="line">        student: &#123;</span><br><span class="line"><span class="javascript">            name: <span class="string">"tom"</span>,</span></span><br><span class="line">            age: 23</span><br><span class="line">        &#125;,</span><br><span class="line">        address: &#123;</span><br><span class="line">            province: &#123;</span><br><span class="line">                id: 41,</span><br><span class="line"><span class="javascript">                view: <span class="string">"河南"</span></span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"><span class="javascript">        friends: [ <span class="string">"zhangsan"</span>, <span class="string">"lisi"</span>, <span class="string">"wangwu"</span> ],</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="keyword">new</span> Watcher(data, <span class="string">"student"</span>, val =&gt; &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'update student'</span>, val)</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="keyword">new</span> Watcher(data, <span class="string">"student.name"</span>, val =&gt; &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'update student.name'</span>, val)</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="keyword">new</span> Watcher(data, <span class="string">"student.age"</span>, val =&gt; &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'update student.age'</span>, val)</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="keyword">new</span> Watcher(data, <span class="string">"address.province.id"</span>, val =&gt; &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"update address.province.id"</span>, val);</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="keyword">new</span> Watcher(data, <span class="string">"friends.length"</span>, val =&gt; &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'update student.friends'</span>, data.friends[val - <span class="number">1</span>]);</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> unwatch = watch(data, <span class="string">"address.province.view"</span>, val =&gt; &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'address.province.view'</span>, val);</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="vm-watch-expOrFn-callback-options"><a href="#vm-watch-expOrFn-callback-options" class="headerlink" title="$vm.watch(expOrFn, callback, [options])"></a>$vm.watch(expOrFn, callback, [options])</h2><p>用于观察一个表达式或computed函数在Vue.js实例上的变化。回调函数调用时，会从参数中得到oldValue和newValue</p>
-<p>vm.$watch其实是对Watcher的一种封装，没有缓存性，通过Watcher完全可以实现vm.$watch的功能</p>
-<ol>
-<li>先执行new Watcher来实现vm.$watch的基本功能</li>
-<li>判断用户是否使用immediate参数，如果使用了则立即执行一次cb</li>
-<li>判断用户是否使用deep参数，如果使用除了要触发当前这个被监听数据的依赖收集的逻辑之外，还要把当前监听的这个值在内的所有子值都要触发一遍依赖收集逻辑</li>
-<li>返回一个函数unwatchFn，用于取消观察数据</li>
-</ol>
-<h2 id="vm-computed"><a href="#vm-computed" class="headerlink" title="$vm.computed"></a>$vm.computed</h2><p><code>computed</code>是定义在<code>vm</code>上的一个特殊的<code>getter</code>方法。之所以说特殊是因为在vm上定义<code>getter</code>方法时，<code>get</code>并不是由用户提供的函数，而是Vue.js内部的一个代理函数。在代理函数中可以结合<code>Watcher</code>实现缓存与收集依赖等功能。在模板中使用一个数据渲染视图时，如果这个数据恰好是计算属性，那么读取数据这个操作其实会触发计算属性的<code>getter</code>方法。</p>
-<p>当这个getter方法被触发时会做两件事：</p>
-<ol>
-<li>计算当前属性的值，此时会使用Watcher去观察计算属性中用到的所有其他数据的变化。同时将计算属性的Watcher的dirty属性设置为false，这样再次读取计算属性时将不再重新计算，除非计算属性所依赖的值发生了变化</li>
-<li>当计算属性中用到的树发生变化时，将得到通知从而进行重新渲染操作</li>
-</ol>
-<p>我们知道计算属性的结果会被缓存，且只有在计算属性所依赖的响应式属性或者计算属性的返回值发生变化时才会重新计算。这是结合<code>Watcher</code>的<code>dirty</code>属性来分辨的：当<code>dirty===true</code>时，说明需要重新计算“计算属性”的返回值；当计算属性中的内容发生变化后，计算属性的<code>Watcher</code>与组件的<code>Watcher</code>都会得到通知。计算属性的<code>Watcher</code>会将自己的<code>dirty</code>属性设置为true，当下一次读取计算属性时就会重新计算一次值。与此同时组件的<code>Watcher</code>也会得到通知，从而执行render函数进行重新渲染的操作。由于要重新执行<code>render</code>函数，所以会重新读取计算属性的值，这时候计算属性的Watcher已经把自己的<code>dirty</code>置为<code>true</code>，所以会重新计算一次计算属性的值用于本次渲染</p>
-<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/computed-0.png" alt="computed原理0"></p>
-<p>这种方式实现的computed有一个弊端：只是观察它所用到的数据是否发生了变化，并<strong>没有真正去校验它自身的返回值是否有变化</strong>，所以当它所使用的数据发生变化后，组件<strong>总会重新走一遍渲染流程</strong>。</p>
-<p>为解决这个问题，新版计算属性做了一些改动：组件的Watcher不再观察计算属性用到的数据的变化，而是让计算属性的Watcher得到通知后计算一次计算属性的值，如果发现这一次计算属性的值与上一次计算出来的值不一样，再去主动通知组件的Watcher进行重新渲染操作。</p>
-<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/computed-1.png" alt="computed原理1"></p>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1688,7 +1740,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1714,7 +1766,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
