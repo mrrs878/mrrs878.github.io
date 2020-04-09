@@ -234,6 +234,129 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/04/Vue.js研读-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2020/03/04/Vue.js研读-2/" class="post-title-link" itemprop="url">Vue.js研读-2</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-04 23:18:13" itemprop="dateCreated datePublished" datetime="2020-03-04T23:18:13+08:00">2020-03-04</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-11 16:23:19" itemprop="dateModified" datetime="2020-03-11T16:23:19+08:00">2020-03-11</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Vue-js为什么要引入虚拟DOM"><a href="#Vue-js为什么要引入虚拟DOM" class="headerlink" title="Vue.js为什么要引入虚拟DOM"></a>Vue.js为什么要引入虚拟DOM</h2><p>虚拟DOM是通过状态生成一个虚拟节点树，然后使用虚拟节点树进行渲染。在渲染之前，会使用新生成的虚拟节点树和上次生成的虚拟节点树进行对比，只渲染不同的部分</p>
+<p>在Vue.js中，当状态发生变化时，它在一定程度上知道哪些节点使用了这个状态，从而对这些节点进行更新操作，根本不需要比对（Vue.js 1.0）。但这样做缺点很明显：因为粒度太细，每一个绑定都会有一个对应的watcher来观察状态的变化，这样就会有一些内存开销以及依赖追踪的开销。当状态被越来越多的节点使用时，开销就越大。</p>
+<p>因此Vue.js 2.0开始选择了一个中等粒度的解决方案，那就是引入虚拟DOM。组件级别是一个watcher实例。就是说即使一个组件内有10个节点使用了某个状态，但其实也只有一个watcher在观察这个状态的变化。所以当这个状态发生变化时，只能通知到组件，然后组件内部通过虚拟DOM去进行比对渲染，这是一个折中方案</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-0.png" alt="虚拟DOM"></p>
+<h2 id="VNode"><a href="#VNode" class="headerlink" title="VNode"></a>VNode</h2><p>vnode可以理解成节点描述对象，它描述了应该怎样去创建真实的DOM节点。渲染视图的过程是先创建vnode，然后再使用vnode去生成真实的DOM元素，最后再插入到页面渲染视图</p>
+<p>vnode的类型包括：注释节点(isComment=true)、文本节点、元素节点(具有tag属性)、组件节点、函数式组件、克隆节点</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-1.png" alt="虚拟DOM"></p>
+<h2 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h2><p>对比两个vnode之间的差异只是patch的一部分，这是手段，而不是目的。patch的目的是修改DOM节点，也可以理解为渲染视图。包括：创建新增的节点、删除已经废弃的节点、修改需要更新的节点</p>
+<p>path的核心算法diff是通过<strong>同层</strong>的树节点进行比较而非对树进行逐层遍历的方式，所以时间复杂度只有O(n)</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/patch-0.png" alt></p>
+<ul>
+<li><p>创建新节点</p>
+<p>事实上，只有三种类型的节点会被创建并插入到DOM中：元素节点、注释节点、文本节点</p>
+<ul>
+<li>oldVnode中不存在而vnode中存在</li>
+<li>oldVnode和vnode完全不是同一个节点</li>
+</ul>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-2.png" alt="创建节点"></p>
+</li>
+<li><p>删除节点</p>
+<p>某个节点只在oldVnode中存在</p>
+</li>
+<li><p>更新节点</p>
+<p>oldVnode和vnode相同（通过sameVnode判断）</p>
+<p>判断依据：key、tag、isComment、data、input的type均相同</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-3.png" alt="更新节点"></p>
+</li>
+</ul>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/03/Vue.js研读-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1178,7 +1301,7 @@
 <li>作用域链（Scope），JavaScript采用词法作用域，也就是说变量的作用域实在定义的时候就决定了，包含自身变量对象和上级变量对象的列表，通过<code>[[Scope]]</code>属性查找上级变量</li>
 <li><code>this</code></li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">10</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> b = <span class="number">20</span></span><br><span class="line">&#125;</span><br><span class="line">foo()</span><br><span class="line"></span><br><span class="line">stack = [</span><br><span class="line">    globalContext,</span><br><span class="line">    fooContext</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">globalContext.VO === global</span><br><span class="line">globalContext.VO = &#123;</span><br><span class="line">    a: <span class="literal">undefined</span>,</span><br><span class="line">    foo: &lt;Function&gt;</span><br><span class="line">&#125;</span><br><span class="line">fooContext.AO === foo.AO</span><br><span class="line">fooContext.AO = &#123;</span><br><span class="line">    i: undefined,</span><br><span class="line">    b: undefined,</span><br><span class="line">    arguments: &lt;&gt;</span><br><span class="line">&#125;</span><br><span class="line">// arguments 是函数独有的对象（箭头函数没有）</span><br><span class="line">// 该对象时一个伪数组</span><br><span class="line"></span><br><span class="line">fooContext.[[Scope]] = &#123;</span><br><span class="line">    globalContext.VO</span><br><span class="line">&#125;</span><br><span class="line">fooContext.Scope = fooContext.[[Scope]] + fooContext.VO</span><br><span class="line">fooContext.Scope = [</span><br><span class="line">    fooContext.VO,</span><br><span class="line">    globalContext.VO</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">10</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> b = <span class="number">20</span></span><br><span class="line">&#125;</span><br><span class="line">foo()</span><br><span class="line"></span><br><span class="line">stack = [</span><br><span class="line">    globalContext,</span><br><span class="line">    fooContext</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">globalContext.VO === global</span><br><span class="line">globalContext.VO = &#123;</span><br><span class="line">    a: <span class="literal">undefined</span>,</span><br><span class="line">    foo: <span class="xml"><span class="tag">&lt;<span class="name">Function</span>&gt;</span></span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml">fooContext.AO === foo.AO</span></span><br><span class="line"><span class="xml">fooContext.AO = &#123;</span></span><br><span class="line"><span class="xml">    i: undefined,</span></span><br><span class="line"><span class="xml">    b: undefined,</span></span><br><span class="line"><span class="xml">    arguments: <span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml">// arguments 是函数独有的对象（箭头函数没有）</span></span><br><span class="line"><span class="xml">// 该对象时一个伪数组</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">fooContext.[[Scope]] = &#123;</span></span><br><span class="line"><span class="xml">    globalContext.VO</span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml">fooContext.Scope = fooContext.[[Scope]] + fooContext.VO</span></span><br><span class="line"><span class="xml">fooContext.Scope = [</span></span><br><span class="line"><span class="xml">    fooContext.VO,</span></span><br><span class="line"><span class="xml">    globalContext.VO</span></span><br><span class="line"><span class="xml">]</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="变量提升"><a href="#变量提升" class="headerlink" title="变量提升"></a>变量提升</h2><p>通俗解释：</p>
 <p>将声明的代码移动到了顶部</p>
@@ -2003,143 +2126,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/01/14/Node.js-基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2020/01/14/Node.js-基础/" class="post-title-link" itemprop="url">Node.js-基础</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-01-14 14:11:45 / 修改时间：14:13:09" itemprop="dateCreated datePublished" datetime="2020-01-14T14:11:45+08:00">2020-01-14</time>
-            </span>
-          
-            
-
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Node-js/" itemprop="url" rel="index">
-                    <span itemprop="name">Node.js</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a><a href="http://nodejs.cn/api/buffer.html" target="_blank" rel="noopener">Buffer</a></h1><p>JS自身只能只有字符串数据类型，没有二进制数据类型，因此nodejs提供了一个与string对等的全局构造函数Buffer来提供对二进制数据的操作</p>
-<ul>
-<li><p><code>Buffer.form</code> 创建一个buffer</p>
-  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Buffer.form([ <span class="number">0x68</span>, <span class="number">0x65</span>, <span class="number">0x6c</span>, <span class="number">0x6c</span>, <span class="number">0x6f</span> ]).toString()</span><br><span class="line"><span class="comment">// hello</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>Burrer</code>与<code>String</code>的一个重要区别就是字符串时只读的，并且对于字符串的任何修改得到的都是一个新的字符串，源字符串保持不变。至于<code>Buffer</code>，更像是可以做指针操作的C语言数组，例如，可以使用<code>[index]</code>方式直接修改某个位置的字节</p>
-</li>
-</ul>
-<h1 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a><a href="http://nodejs.cn/api/stream.html" target="_blank" rel="noopener">Stream</a></h1><ul>
-<li><p>当内存中无法一次装下需要处理的数据时，或者一边读取一边处理更加高效时，我们就需要用到数据流。NodeJS中通过各种<code>Stream</code>来提供对数据流的操作。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> rs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copy</span> (<span class="params">src, dst</span>) </span>&#123;</span><br><span class="line">    fs.createReadStream(src).pipe(fs.createWriteSreeam(dst));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span> (<span class="params">argv</span>) </span>&#123;</span><br><span class="line">    copy(argv[<span class="number">0</span>], argv[<span class="number">1</span>])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">main(process.argv.slice(<span class="number">2</span>));</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>Stream</code>基于事件机制工作，所有<code>Stream</code>的实例都继承于NodeJS提供的<a href="http://nodejs.cn/api/events.html#events_class_eventemitter" target="_blank" rel="noopener"><code>EventEmitter</code></a></p>
-</li>
-</ul>
-<h1 id="File-System"><a href="#File-System" class="headerlink" title="File System"></a><a href="http://nodejs.cn/api/fs.html" target="_blank" rel="noopener">File System</a></h1><p>NodeJS通过<code>fs</code>内置模块提供对文件的操作，<code>fs</code>模块提供的API基本上可以分为以下三类：</p>
-<ul>
-<li>文件属性读<br>其中常见的有<code>fs.state</code> <code>fs.chmod</code> <code>fs.chown</code></li>
-<li>文件属性写<br>其中常见的有<code>fs.readFile</code> <code>fs.readdir</code> <code>fs.writeFile</code> <code>fs.mkdir</code></li>
-<li>底层文件操作<br>其中常见的操作有<code>fs.open</code> <code>fs.read</code> <code>fs.write</code> <code>fs.close</code><br>所有的<code>fs</code>模块API的回调参数都有两个，第一个参数在有错误发生时等于异常对象，第二个参数始终用于返回API方法执行结果<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fs.readFile(pathname, <span class="function"><span class="keyword">function</span> (<span class="params">err, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;&#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="Path"><a href="#Path" class="headerlink" title="Path"></a><a href="http://nodejs.cn/api/path.html" target="_blank" rel="noopener">Path</a></h2><p>操作文件时难免不与文件路径打交道。NodeJS提供了<code>path</code>内置模块来简化路径相关操作，并提升代码可读性。</p>
-<ul>
-<li><p><code>path.normalize</code><br>  将传入的参数转为标准路径，具体讲的话，除了解析路径中的<code>.</code>与<code>..</code>外，还能去掉多余的斜杠。如果有程序需要使用路径作为某些数据的索引，但又允许用户随意输入路径时，就需要使用该方法保证路径的唯一性。</p>
-  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cache = &#123;&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">store</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    cache[path.normalize(key)] = value</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">store(<span class="string">'foo/bar'</span>, <span class="number">1</span>);</span><br><span class="line">store(<span class="string">'foo//baz//../bar'</span>, <span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(cache);  <span class="comment">// =&gt; &#123; "foo/bar": 2 &#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>  标准化之后的路径里的斜杠在Windows系统下是\，而在Linux系统下是/。如果想保证任何系统下都使用/作为路径分隔符的话，需要用<code>.replace(/\\/g, &#39;/&#39;)</code>再替换一下标准路径。</p>
-</li>
-<li><p><code>path.join</code><br>  将传入的多个路径拼接为标准路径。该方法可避免手工拼接路径字符串的繁琐，并且能在不同系统下正确使用相应的路径分隔符。</p>
-  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path.join(<span class="string">'foo/'</span>, <span class="string">'baz/'</span>, <span class="string">'../bar'</span>); <span class="comment">// =&gt; "foo/bar"</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>path.extname</code><br>  当我们需要根据不同文件扩展名做不同操作时，该方法就显得很好用。</p>
-  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path.extname(<span class="string">'foo/bar.js'</span>); <span class="comment">// =&gt; ".js"</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="遍历目录"><a href="#遍历目录" class="headerlink" title="遍历目录"></a>遍历目录</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">travel</span> (<span class="params">dir, callback</span>) </span>&#123;</span><br><span class="line">    fs.readdirSync(dir).forEach(<span class="function"><span class="params">file</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> pathname = path.join(dir, file)</span><br><span class="line">        <span class="keyword">if</span> (fs.statSync(pathname).isDirectory())</span><br><span class="line">            travel(pathname, callback)</span><br><span class="line">        <span class="keyword">else</span> callback(pathname)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">travel(__dirname, file =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(file)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// c:\Users\mrrs8\Desktop\desktop.ini</span></span><br><span class="line"><span class="comment">// c:\Users\mrrs8\Desktop\Postman.lnk</span></span><br><span class="line"><span class="comment">// c:\Users\mrrs8\Desktop\test.js</span></span><br><span class="line"><span class="comment">// c:\Users\mrrs8\Desktop\微信开发者工具.lnk</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="文本编码"><a href="#文本编码" class="headerlink" title="文本编码"></a>文本编码</h1><p>使用NodeJS编写前端工具时，操作得最多的是文本文件，因此也就涉及到了文件编码的处理问题。我们常用的文本编码有<code>UTF8</code>和<code>GBK</code>两种，并且<code>UTF8</code>文件还可能带有<code>BOM</code>。在读取不同编码的文本文件时，需要将文件内容转换为JS使用的<code>UTF8</code>编码字符串后才能正常处理。</p>
-<h2 id="BOM的移除"><a href="#BOM的移除" class="headerlink" title="BOM的移除"></a>BOM的移除</h2><p>BOM用于标记一个文本文件使用<code>Unicode</code>编码，其本身是一个<code>Unicode</code>字符<code>（&quot;\uFEFF&quot;）</code>，位于文本文件头部。在不同的<code>Unicode</code>编码下，<code>BOM</code>字符对应的二进制字节如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    Bytes      Encoding</span><br><span class="line">----------------------------</span><br><span class="line">    FE FF       UTF16BE</span><br><span class="line">    FF FE       UTF16LE</span><br><span class="line">    EF BB BF    UTF8</span><br></pre></td></tr></table></figure>
-
-<p>因此，我们可以根据文本文件头几个字节等于啥来判断文件是否包含<code>BOM</code>，以及使用哪种<code>Unicode</code>编码。但是，<code>BOM</code>字符虽然起到了标记文件编码的作用，其本身却不属于文件内容的一部分，如果读取文本文件时不去掉<code>BOM</code>，在某些使用场景下就会有问题。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 识别和去除UTF8 BOM</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">readText</span> (<span class="params">pathname</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> bin = fs.readFileSync(pathname);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (bin[<span class="number">0</span>] === <span class="number">0xEF</span> &amp;&amp; bin[<span class="number">1</span>] === <span class="number">0xBB</span> &amp;&amp; bin[<span class="number">2</span>] === <span class="number">0xBF</span>) &#123;</span><br><span class="line">        bin = bin.slice(<span class="number">3</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> bin.toString(<span class="string">'utf-8'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="GBK转UTF8"><a href="#GBK转UTF8" class="headerlink" title="GBK转UTF8"></a>GBK转UTF8</h2><p>NodeJS支持在读取文本文件时，或者在<code>Buffer</code>转换为字符串时指定文本编码，但遗憾的是，<code>GBK</code>编码不在NodeJS自身支持范围内。因此，一般我们借助<code>iconv-lite</code>这个三方包来转换编码</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GBK转UTF8</span></span><br><span class="line"><span class="keyword">const</span> iconv = <span class="built_in">require</span>(<span class="string">'iconv-lite'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">readGBKText</span>(<span class="params">pathname</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> bin = fs.readFileSync(pathname);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> iconv.decode(bin, <span class="string">'gbk'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="单字节编码"><a href="#单字节编码" class="headerlink" title="单字节编码"></a>单字节编码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">replace</span>(<span class="params">pathname</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> str = fs.readFileSync(pathname, <span class="string">'binary'</span>);</span><br><span class="line">    str = str.replace(<span class="string">'foo'</span>, <span class="string">'bar'</span>);</span><br><span class="line">    fs.writeFileSync(pathname, str, <span class="string">'binary'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -2192,7 +2178,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2218,7 +2204,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>

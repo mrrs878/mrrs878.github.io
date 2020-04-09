@@ -234,6 +234,125 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/09/浏览器相关-跨域/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2020/04/09/浏览器相关-跨域/" class="post-title-link" itemprop="url">浏览器相关-跨域</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-09 23:26:29 / 修改时间：23:27:40" itemprop="dateCreated datePublished" datetime="2020-04-09T23:26:29+08:00">2020-04-09</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/浏览器/" itemprop="url" rel="index">
+                    <span itemprop="name">浏览器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="WHAT-什么是跨域及同源策略"><a href="#WHAT-什么是跨域及同源策略" class="headerlink" title="WHAT-什么是跨域及同源策略"></a>WHAT-什么是跨域及同源策略</h1><h2 id="同源策略"><a href="#同源策略" class="headerlink" title="同源策略"></a>同源策略</h2><p><strong>同源策略</strong>是一个重要的安全策略，它用于限制一个<a href="https://developer.mozilla.org/zh-CN/docs/Glossary/源" target="_blank" rel="noopener">origin</a>的文档或者它加载的脚本如何能与另一个源的资源进行交互。它能帮助阻隔恶意文档，减少可能被攻击的媒介。</p>
+<p>如果两个 URL 的 <a href="https://developer.mozilla.org/zh-CN/docs/Glossary/Protocol" target="_blank" rel="noopener">protocol</a>、<a href="https://developer.mozilla.org/en-US/docs/Glossary/port" target="_blank" rel="noopener">port</a> (如果有指定的话)和 <a href="https://developer.mozilla.org/en-US/docs/Glossary/host" target="_blank" rel="noopener">host</a> 都相同的话，则这两个 URL 是<em>同源</em>。这个方案也被称为“协议/主机/端口元组”，或者直接是 “元组”。（“元组” 是指一组项目构成的整体，双重/三重/四重/五重/等的通用形式）。</p>
+<p><strong>同源策略限制内容有：</strong></p>
+<ul>
+<li>Cookie、LocalStorage、IndexedDB 等存储性内容</li>
+<li>DOM 节点</li>
+<li>AJAX 请求发送后，结果被浏览器拦截了</li>
+</ul>
+<p>但是有三个标签是允许跨域加载资源：</p>
+<ul>
+<li><code>&lt;img src=XXX&gt;</code></li>
+<li><code>&lt;link href=XXX&gt;</code></li>
+<li><code>&lt;script src=XXX&gt;</code></li>
+</ul>
+<h2 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h2><p>当协议、子域名、主域名、端口号中任意一个不相同时，都算作不同域。不同域之间相互请求资源就算做<strong>跨域</strong>。</p>
+<p>特别说明：</p>
+<ol>
+<li><p>如果是协议和端口造成的跨域问题，前端是无能为力的</p>
+</li>
+<li><p>在跨域问题上，仅仅是通过<strong>URL的首部</strong>来识别而不会根据域名对应的ip是否相同来判断。</p>
+</li>
+<li><p>请求跨域后，请求到底有没有发送出去：</p>
+<p>跨域不是请求发送不出去，请求能发送出去，服务端能接收到请求并正常的返回，只是结果被浏览器拦截了（同源策略）。</p>
+</li>
+<li><p>为什么通过表单的方式可以发起跨域请求，Ajax就不能？</p>
+<p>归根结底，跨域是因为了阻止用户读取到另一个域名下的内容，Ajax可以获取响应，浏览器任务这不安全所以拦截了响应；但是表单并不会获取新的内容，所以可以发起跨域请求。同时也说明了跨域并不能完全阻止 CSRF，因为请求毕竟是发出去了。</p>
+</li>
+</ol>
+<h1 id="WHY-为什么有同源策略"><a href="#WHY-为什么有同源策略" class="headerlink" title="WHY-为什么有同源策略"></a>WHY-为什么有同源策略</h1><p><strong>安全</strong></p>
+<h1 id="HOW-跨域解决方案"><a href="#HOW-跨域解决方案" class="headerlink" title="HOW-跨域解决方案"></a>HOW-跨域解决方案</h1><h2 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h2><p>原理：利用<code>&lt;script&gt;</code>标签没有同源策略限制的漏洞，网页可以得到从其他源动态产生的JSON数据。JSONP请求一定需要对方的<strong>服务器支持</strong>。JSONP优点是简单兼容性好，可用于解决主流浏览器的跨域数据访问的问题。缺点是<strong>仅支持get方法具有局限性,不安全可能会遭受XSS攻击。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">jsonp</span>(<span class="params">&#123; url, params, callback &#125;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> script = <span class="built_in">document</span>.createElement(<span class="string">"script"</span>)</span><br><span class="line">        <span class="built_in">window</span>[callback] = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">            resolve(data)</span><br><span class="line">            <span class="built_in">document</span>.body.removeChildren(script)</span><br><span class="line">        &#125;</span><br><span class="line">        params = &#123; ...params, callback &#125;</span><br><span class="line">        <span class="keyword">let</span> arrs = []</span><br><span class="line">        <span class="built_in">Object</span>.keys(params).forEach(<span class="function"><span class="params">item</span> =&gt;</span> arrs.push(<span class="string">`<span class="subst">$&#123; key &#125;</span>=<span class="subst">$&#123; params[key] &#125;</span>`</span>))</span><br><span class="line">        script.src = <span class="string">`<span class="subst">$&#123; url &#125;</span>?<span class="subst">$&#123; arrs.join(<span class="string">'&amp;'</span>) &#125;</span>`</span></span><br><span class="line">        <span class="built_in">document</span>.body.appendChild(script)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><h2 id="postMessage"><a href="#postMessage" class="headerlink" title="postMessage"></a>postMessage</h2><h2 id="websocket"><a href="#websocket" class="headerlink" title="websocket"></a>websocket</h2><h2 id="Nginx反向代理"><a href="#Nginx反向代理" class="headerlink" title="Nginx反向代理"></a>Nginx反向代理</h2>
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/08/浏览器相关-安全/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1565,129 +1684,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/04/Vue.js研读-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2020/03/04/Vue.js研读-2/" class="post-title-link" itemprop="url">Vue.js研读-2</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-04 23:18:13" itemprop="dateCreated datePublished" datetime="2020-03-04T23:18:13+08:00">2020-03-04</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-11 16:23:19" itemprop="dateModified" datetime="2020-03-11T16:23:19+08:00">2020-03-11</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue.js</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Vue-js为什么要引入虚拟DOM"><a href="#Vue-js为什么要引入虚拟DOM" class="headerlink" title="Vue.js为什么要引入虚拟DOM"></a>Vue.js为什么要引入虚拟DOM</h2><p>虚拟DOM是通过状态生成一个虚拟节点树，然后使用虚拟节点树进行渲染。在渲染之前，会使用新生成的虚拟节点树和上次生成的虚拟节点树进行对比，只渲染不同的部分</p>
-<p>在Vue.js中，当状态发生变化时，它在一定程度上知道哪些节点使用了这个状态，从而对这些节点进行更新操作，根本不需要比对（Vue.js 1.0）。但这样做缺点很明显：因为粒度太细，每一个绑定都会有一个对应的watcher来观察状态的变化，这样就会有一些内存开销以及依赖追踪的开销。当状态被越来越多的节点使用时，开销就越大。</p>
-<p>因此Vue.js 2.0开始选择了一个中等粒度的解决方案，那就是引入虚拟DOM。组件级别是一个watcher实例。就是说即使一个组件内有10个节点使用了某个状态，但其实也只有一个watcher在观察这个状态的变化。所以当这个状态发生变化时，只能通知到组件，然后组件内部通过虚拟DOM去进行比对渲染，这是一个折中方案</p>
-<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-0.png" alt="虚拟DOM"></p>
-<h2 id="VNode"><a href="#VNode" class="headerlink" title="VNode"></a>VNode</h2><p>vnode可以理解成节点描述对象，它描述了应该怎样去创建真实的DOM节点。渲染视图的过程是先创建vnode，然后再使用vnode去生成真实的DOM元素，最后再插入到页面渲染视图</p>
-<p>vnode的类型包括：注释节点(isComment=true)、文本节点、元素节点(具有tag属性)、组件节点、函数式组件、克隆节点</p>
-<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-1.png" alt="虚拟DOM"></p>
-<h2 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h2><p>对比两个vnode之间的差异只是patch的一部分，这是手段，而不是目的。patch的目的是修改DOM节点，也可以理解为渲染视图。包括：创建新增的节点、删除已经废弃的节点、修改需要更新的节点</p>
-<p>path的核心算法diff是通过<strong>同层</strong>的树节点进行比较而非对树进行逐层遍历的方式，所以时间复杂度只有O(n)</p>
-<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/patch-0.png" alt></p>
-<ul>
-<li><p>创建新节点</p>
-<p>事实上，只有三种类型的节点会被创建并插入到DOM中：元素节点、注释节点、文本节点</p>
-<ul>
-<li>oldVnode中不存在而vnode中存在</li>
-<li>oldVnode和vnode完全不是同一个节点</li>
-</ul>
-<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-2.png" alt="创建节点"></p>
-</li>
-<li><p>删除节点</p>
-<p>某个节点只在oldVnode中存在</p>
-</li>
-<li><p>更新节点</p>
-<p>oldVnode和vnode相同（通过sameVnode判断）</p>
-<p>判断依据：key、tag、isComment、data、input的type均相同</p>
-<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-3.png" alt="更新节点"></p>
-</li>
-</ul>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1740,7 +1736,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1766,7 +1762,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>

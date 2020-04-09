@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/avatar.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="WHAT-什么是跨域及同源策略同源策略同源策略是一个重要的安全策略，它用于限制一个origin的文档或者它加载的脚本如何能与另一个源的资源进行交互。它能帮助阻隔恶意文档，减少可能被攻击的媒介。 如果两个 URL 的 protocol、port (如果有指定的话)和 host 都相同的话，则这两个 URL 是同源。这个方案也被称为“协议/主机/端口元组”，或者直接是 “元组”。（“元组” 是指一组项">
+<meta name="keywords" content="跨域">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器相关-跨域">
+<meta property="og:url" content="https://mrrs878.github.io/2020/04/09/浏览器相关-跨域/index.html">
+<meta property="og:site_name" content="Mr.RS">
+<meta property="og:description" content="WHAT-什么是跨域及同源策略同源策略同源策略是一个重要的安全策略，它用于限制一个origin的文档或者它加载的脚本如何能与另一个源的资源进行交互。它能帮助阻隔恶意文档，减少可能被攻击的媒介。 如果两个 URL 的 protocol、port (如果有指定的话)和 host 都相同的话，则这两个 URL 是同源。这个方案也被称为“协议/主机/端口元组”，或者直接是 “元组”。（“元组” 是指一组项">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-04-09T15:27:40.168Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浏览器相关-跨域">
+<meta name="twitter:description" content="WHAT-什么是跨域及同源策略同源策略同源策略是一个重要的安全策略，它用于限制一个origin的文档或者它加载的脚本如何能与另一个源的资源进行交互。它能帮助阻隔恶意文档，减少可能被攻击的媒介。 如果两个 URL 的 protocol、port (如果有指定的话)和 host 都相同的话，则这两个 URL 是同源。这个方案也被称为“协议/主机/端口元组”，或者直接是 “元组”。（“元组” 是指一组项">
+  <link rel="canonical" href="https://mrrs878.github.io/2020/04/09/浏览器相关-跨域/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>浏览器相关-跨域 | Mr.RS</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.RS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Read The Fucking Source Code!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/09/浏览器相关-跨域/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            浏览器相关-跨域
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-09 23:26:29 / 修改时间：23:27:40" itemprop="dateCreated datePublished" datetime="2020-04-09T23:26:29+08:00">2020-04-09</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/浏览器/" itemprop="url" rel="index">
+                    <span itemprop="name">浏览器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="WHAT-什么是跨域及同源策略"><a href="#WHAT-什么是跨域及同源策略" class="headerlink" title="WHAT-什么是跨域及同源策略"></a>WHAT-什么是跨域及同源策略</h1><h2 id="同源策略"><a href="#同源策略" class="headerlink" title="同源策略"></a>同源策略</h2><p><strong>同源策略</strong>是一个重要的安全策略，它用于限制一个<a href="https://developer.mozilla.org/zh-CN/docs/Glossary/源" target="_blank" rel="noopener">origin</a>的文档或者它加载的脚本如何能与另一个源的资源进行交互。它能帮助阻隔恶意文档，减少可能被攻击的媒介。</p>
+<p>如果两个 URL 的 <a href="https://developer.mozilla.org/zh-CN/docs/Glossary/Protocol" target="_blank" rel="noopener">protocol</a>、<a href="https://developer.mozilla.org/en-US/docs/Glossary/port" target="_blank" rel="noopener">port</a> (如果有指定的话)和 <a href="https://developer.mozilla.org/en-US/docs/Glossary/host" target="_blank" rel="noopener">host</a> 都相同的话，则这两个 URL 是<em>同源</em>。这个方案也被称为“协议/主机/端口元组”，或者直接是 “元组”。（“元组” 是指一组项目构成的整体，双重/三重/四重/五重/等的通用形式）。</p>
+<p><strong>同源策略限制内容有：</strong></p>
+<ul>
+<li>Cookie、LocalStorage、IndexedDB 等存储性内容</li>
+<li>DOM 节点</li>
+<li>AJAX 请求发送后，结果被浏览器拦截了</li>
+</ul>
+<p>但是有三个标签是允许跨域加载资源：</p>
+<ul>
+<li><code>&lt;img src=XXX&gt;</code></li>
+<li><code>&lt;link href=XXX&gt;</code></li>
+<li><code>&lt;script src=XXX&gt;</code></li>
+</ul>
+<h2 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h2><p>当协议、子域名、主域名、端口号中任意一个不相同时，都算作不同域。不同域之间相互请求资源就算做<strong>跨域</strong>。</p>
+<p>特别说明：</p>
+<ol>
+<li><p>如果是协议和端口造成的跨域问题，前端是无能为力的</p>
+</li>
+<li><p>在跨域问题上，仅仅是通过<strong>URL的首部</strong>来识别而不会根据域名对应的ip是否相同来判断。</p>
+</li>
+<li><p>请求跨域后，请求到底有没有发送出去：</p>
+<p>跨域不是请求发送不出去，请求能发送出去，服务端能接收到请求并正常的返回，只是结果被浏览器拦截了（同源策略）。</p>
+</li>
+<li><p>为什么通过表单的方式可以发起跨域请求，Ajax就不能？</p>
+<p>归根结底，跨域是因为了阻止用户读取到另一个域名下的内容，Ajax可以获取响应，浏览器任务这不安全所以拦截了响应；但是表单并不会获取新的内容，所以可以发起跨域请求。同时也说明了跨域并不能完全阻止 CSRF，因为请求毕竟是发出去了。</p>
+</li>
+</ol>
+<h1 id="WHY-为什么有同源策略"><a href="#WHY-为什么有同源策略" class="headerlink" title="WHY-为什么有同源策略"></a>WHY-为什么有同源策略</h1><p><strong>安全</strong></p>
+<h1 id="HOW-跨域解决方案"><a href="#HOW-跨域解决方案" class="headerlink" title="HOW-跨域解决方案"></a>HOW-跨域解决方案</h1><h2 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h2><p>原理：利用<code>&lt;script&gt;</code>标签没有同源策略限制的漏洞，网页可以得到从其他源动态产生的JSON数据。JSONP请求一定需要对方的<strong>服务器支持</strong>。JSONP优点是简单兼容性好，可用于解决主流浏览器的跨域数据访问的问题。缺点是<strong>仅支持get方法具有局限性,不安全可能会遭受XSS攻击。</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">jsonp</span>(<span class="params">&#123; url, params, callback &#125;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> script = <span class="built_in">document</span>.createElement(<span class="string">"script"</span>)</span><br><span class="line">        <span class="built_in">window</span>[callback] = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">            resolve(data)</span><br><span class="line">            <span class="built_in">document</span>.body.removeChildren(script)</span><br><span class="line">        &#125;</span><br><span class="line">        params = &#123; ...params, callback &#125;</span><br><span class="line">        <span class="keyword">let</span> arrs = []</span><br><span class="line">        <span class="built_in">Object</span>.keys(params).forEach(<span class="function"><span class="params">item</span> =&gt;</span> arrs.push(<span class="string">`<span class="subst">$&#123; key &#125;</span>=<span class="subst">$&#123; params[key] &#125;</span>`</span>))</span><br><span class="line">        script.src = <span class="string">`<span class="subst">$&#123; url &#125;</span>?<span class="subst">$&#123; arrs.join(<span class="string">'&amp;'</span>) &#125;</span>`</span></span><br><span class="line">        <span class="built_in">document</span>.body.appendChild(script)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><h2 id="postMessage"><a href="#postMessage" class="headerlink" title="postMessage"></a>postMessage</h2><h2 id="websocket"><a href="#websocket" class="headerlink" title="websocket"></a>websocket</h2><h2 id="Nginx反向代理"><a href="#Nginx反向代理" class="headerlink" title="Nginx反向代理"></a>Nginx反向代理</h2>
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/跨域/" rel="tag"># 跨域</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/04/08/浏览器相关-安全/" rel="next" title="浏览器相关-安全">
+                  <i class="fa fa-chevron-left"></i> 浏览器相关-安全
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WHAT-什么是跨域及同源策略"><span class="nav-number">1.</span> <span class="nav-text">WHAT-什么是跨域及同源策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#同源策略"><span class="nav-number">1.1.</span> <span class="nav-text">同源策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨域"><span class="nav-number">1.2.</span> <span class="nav-text">跨域</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WHY-为什么有同源策略"><span class="nav-number">2.</span> <span class="nav-text">WHY-为什么有同源策略</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HOW-跨域解决方案"><span class="nav-number">3.</span> <span class="nav-text">HOW-跨域解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSONP"><span class="nav-number">3.1.</span> <span class="nav-text">JSONP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CORS"><span class="nav-number">3.2.</span> <span class="nav-text">CORS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#postMessage"><span class="nav-number">3.3.</span> <span class="nav-text">postMessage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#websocket"><span class="nav-number">3.4.</span> <span class="nav-text">websocket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx反向代理"><span class="nav-number">3.5.</span> <span class="nav-text">Nginx反向代理</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/imgs/avatar.png"
+      alt="Mr.RS">
+  <p class="site-author-name" itemprop="name">Mr.RS</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
