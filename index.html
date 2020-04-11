@@ -264,11 +264,19 @@
                 
               
 
-              <time title="创建时间：2020-04-09 23:26:29 / 修改时间：23:27:40" itemprop="dateCreated datePublished" datetime="2020-04-09T23:26:29+08:00">2020-04-09</time>
+              <time title="创建时间：2020-04-09 23:26:29" itemprop="dateCreated datePublished" datetime="2020-04-09T23:26:29+08:00">2020-04-09</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-11 20:44:03" itemprop="dateModified" datetime="2020-04-11T20:44:03+08:00">2020-04-11</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -332,7 +340,27 @@
 <h1 id="HOW-跨域解决方案"><a href="#HOW-跨域解决方案" class="headerlink" title="HOW-跨域解决方案"></a>HOW-跨域解决方案</h1><h2 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h2><p>原理：利用<code>&lt;script&gt;</code>标签没有同源策略限制的漏洞，网页可以得到从其他源动态产生的JSON数据。JSONP请求一定需要对方的<strong>服务器支持</strong>。JSONP优点是简单兼容性好，可用于解决主流浏览器的跨域数据访问的问题。缺点是<strong>仅支持get方法具有局限性,不安全可能会遭受XSS攻击。</strong></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">jsonp</span>(<span class="params">&#123; url, params, callback &#125;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> script = <span class="built_in">document</span>.createElement(<span class="string">"script"</span>)</span><br><span class="line">        <span class="built_in">window</span>[callback] = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">            resolve(data)</span><br><span class="line">            <span class="built_in">document</span>.body.removeChildren(script)</span><br><span class="line">        &#125;</span><br><span class="line">        params = &#123; ...params, callback &#125;</span><br><span class="line">        <span class="keyword">let</span> arrs = []</span><br><span class="line">        <span class="built_in">Object</span>.keys(params).forEach(<span class="function"><span class="params">item</span> =&gt;</span> arrs.push(<span class="string">`<span class="subst">$&#123; key &#125;</span>=<span class="subst">$&#123; params[key] &#125;</span>`</span>))</span><br><span class="line">        script.src = <span class="string">`<span class="subst">$&#123; url &#125;</span>?<span class="subst">$&#123; arrs.join(<span class="string">'&amp;'</span>) &#125;</span>`</span></span><br><span class="line">        <span class="built_in">document</span>.body.appendChild(script)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><h2 id="postMessage"><a href="#postMessage" class="headerlink" title="postMessage"></a>postMessage</h2><h2 id="websocket"><a href="#websocket" class="headerlink" title="websocket"></a>websocket</h2><h2 id="Nginx反向代理"><a href="#Nginx反向代理" class="headerlink" title="Nginx反向代理"></a>Nginx反向代理</h2>
+<h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><p>CORS需要<strong>浏览器和后端同时支持</strong></p>
+<p>浏览器会自动进行 CORS 通信，实现 CORS 通信的关键是后端。只要后端实现了 CORS，就实现了跨域。</p>
+<p>服务端设置 Access-Control-Allow-Origin 就可以开启 CORS。 该属性表示哪些域名可以访问资源，如果设置通配符则表示所有网站都可以访问资源。</p>
+<p>虽然设置 CORS 和前端没什么关系，但是通过这种方式解决跨域问题的话，会在发送请求时出现两种情况，分别为<strong>简单请求</strong>和<strong>复杂请求</strong>。</p>
+<h3 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h3><p>只要<strong>同时满足</strong>以下条件，就属于简单请求：</p>
+<ol>
+<li>method=GET/POST/HEAD</li>
+<li>Content-Type=text/plain或multipart/form-data或application/x-www-form-urlencoded</li>
+<li>请求中的任意<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequestUpload" target="_blank" rel="noopener"><code>XMLHttpRequestUpload</code></a> 对象均没有注册任何事件监听器；<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequestUpload" target="_blank" rel="noopener"><code>XMLHttpRequestUpload</code></a> 对象可以使用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/upload" target="_blank" rel="noopener"><code>XMLHttpRequest.upload</code></a> 属性访问</li>
+</ol>
+<h3 id="复杂请求"><a href="#复杂请求" class="headerlink" title="复杂请求"></a>复杂请求</h3><p> 复杂请求的CORS请求，会在正式通信之前，增加一次HTTP查询请求，称为<strong>预检请求</strong>,该请求是 option 方法的，通过该请求来知道服务端是否允许跨域请求。</p>
+<h2 id="postMessage"><a href="#postMessage" class="headerlink" title="postMessage"></a>postMessage</h2><p>postMessage是HTML5 XMLHttpRequest Level 2中的API，且是为数不多可以跨域操作的window属性之一，它可用于解决以下方面的问题：</p>
+<ul>
+<li>页面和其打开的新窗口的数据传递</li>
+<li>多窗口之间消息传递</li>
+<li>页面与嵌套的iframe消息传递</li>
+<li>上面三个场景的跨域数据传递</li>
+</ul>
+<h2 id="websocket"><a href="#websocket" class="headerlink" title="websocket"></a>websocket</h2><p>Websocket是HTML5的一个持久化协议，它实现了浏览器与服务器的全双工通信，同时也是跨域的一种解决方案。WebSocket和HTTP都是应用层协议，都基于 TCP 协议。但是 <strong>WebSocket 是一种双向通信协议，在建立连接之后，WebSocket 的 server 与 client 都能主动向对方发送或接收数据</strong>。同时，WebSocket 在建立连接时需要借助 HTTP 协议，连接建立好了之后 client 与 server 之间的双向通信就与 HTTP 无关了。</p>
+<h2 id="Nginx反向代理"><a href="#Nginx反向代理" class="headerlink" title="Nginx反向代理"></a>Nginx反向代理</h2><p>实现思路：通过nginx配置一个代理服务器（域名与domain1相同，端口不同）做跳板机，反向代理访问domain2接口，并且可以顺便修改cookie中domain信息，方便当前域cookie写入，实现跨域登录。</p>
+
         
       
     </div>
