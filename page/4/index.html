@@ -234,6 +234,113 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/10/16/函数式编程-容器-函子/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2019/10/16/函数式编程-容器-函子/" class="post-title-link" itemprop="url">函数式编程-容器/函子</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-16 13:43:11 / 修改时间：14:25:31" itemprop="dateCreated datePublished" datetime="2019-10-16T13:43:11+08:00">2019-10-16</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/函数式编程/" itemprop="url" rel="index">
+                    <span itemprop="name">函数式编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="声明式编程-Declarative-vs-命令式编程-Imperative"><a href="#声明式编程-Declarative-vs-命令式编程-Imperative" class="headerlink" title="声明式编程(Declarative) vs 命令式编程(Imperative)"></a>声明式编程(Declarative) vs 命令式编程(Imperative)</h1><ul>
+<li>命令式编程就是对硬件操作的抽象， 程序员需要通过指令，精确的告诉计算机干什么事情；声明式编程只会将需要什么告诉计算机，剩下的将交由计算机自行完成。</li>
+<li>声明式编程写表达式， 命令式编程写一步一步的指示</li>
+</ul>
+<h1 id="容器-container"><a href="#容器-container" class="headerlink" title="容器(container)"></a>容器(container)</h1><ul>
+<li>一个对象</li>
+<li>可以装载任意类型的值（大多数容器只有一个）</li>
+<li>使用 of 替代 new</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Container</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">of</span>(x) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Container(x);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">constructor</span>(x) &#123;</span><br><span class="line">    <span class="keyword">this</span>.__value = x;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(Container.of(<span class="number">3</span>)); <span class="comment">//Container &#123; __value: 3 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="函子-functor"><a href="#函子-functor" class="headerlink" title="函子(functor)"></a>函子(functor)</h1><p>functor 是实现了 map 函数并遵守一些特定规则的容器类型</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Functor</span> <span class="keyword">extends</span> <span class="title">Container</span> </span>&#123;</span><br><span class="line">  map(f) &#123;</span><br><span class="line">    <span class="keyword">return</span> Container.of(f(<span class="keyword">this</span>.__value));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(Functor.of(<span class="number">3</span>).map(<span class="function"><span class="params">x</span> =&gt;</span> x + <span class="number">3</span>));</span><br></pre></td></tr></table></figure>
+
+<h2 id="Maybe"><a href="#Maybe" class="headerlink" title="Maybe"></a>Maybe</h2><p>在 map 方法里设置了空值检查</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Maybe</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(x) &#123;</span><br><span class="line">    <span class="keyword">this</span>.__value = x;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">of</span>(x) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Maybe(x);</span><br><span class="line">  &#125;</span><br><span class="line">  map(f) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.__value ? Maybe.of(f(<span class="keyword">this</span>.__value)) : Maybe.of(<span class="literal">null</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Maybe.of(<span class="literal">null</span>).map(<span class="function"><span class="params">x</span> =&gt;</span> x);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Either"><a href="#Either" class="headerlink" title="Either"></a>Either</h2><p>用于实现 if…else…，Either 函子内部有两个值，<strong>左值(left)</strong>和<strong>右值(right)</strong>，右值是正常情况下使用的值，左值是右值不存在的时候使用的默认值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Either</span> <span class="keyword">extends</span> <span class="title">Functor</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(left, right) &#123;</span><br><span class="line">    <span class="keyword">super</span>(<span class="literal">null</span>);</span><br><span class="line">    <span class="keyword">this</span>.left = left;</span><br><span class="line">    <span class="keyword">this</span>.right = right;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">of</span>(left, right) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Either(left, right);</span><br><span class="line">  &#125;</span><br><span class="line">  map(f) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.right</span><br><span class="line">      ? Either.of(<span class="keyword">this</span>.left, f(<span class="keyword">this</span>.right))</span><br><span class="line">      : Either.of(f(<span class="keyword">this</span>.left), <span class="keyword">this</span>.right);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(Either.of(<span class="number">5</span>, <span class="number">6</span>).map(<span class="function"><span class="params">x</span> =&gt;</span> x + <span class="number">1</span>)); <span class="comment">// Either &#123; __value: null, left: 5, right: 7 &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(Either.of(<span class="number">5</span>, <span class="literal">null</span>).map(<span class="function"><span class="params">x</span> =&gt;</span> x + <span class="number">1</span>)); <span class="comment">// Either &#123; __value: null, left: 6, right: null &#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><h2 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h2>
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/10/15/函数式编程-柯里化-组合/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1494,146 +1601,6 @@ String: Bar</code></pre>
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2018/11/15/Python-正则表达式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2018/11/15/Python-正则表达式/" class="post-title-link" itemprop="url">Python-正则表达式</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2018-11-15 19:55:58" itemprop="dateCreated datePublished" datetime="2018-11-15T19:55:58+08:00">2018-11-15</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-15 10:03:38" itemprop="dateModified" datetime="2019-10-15T10:03:38+08:00">2019-10-15</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python-reg/" itemprop="url" rel="index">
-                    <span itemprop="name">Python reg</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h1><ul>
-<li>正则表达式匹配，就是按照一定的规则将特定的文本提取出来。<br><img src="https://t1.picb.cc/uploads/2018/11/15/JXfxNi.jpg" alt="enter image description here"></li>
-</ul>
-<h2 id="match"><a href="#match" class="headerlink" title="match"></a>match</h2><ul>
-<li>match(0)法会尝试从字符串的<strong>起始位置</strong>匹配正则表达式，如果匹配，就返回匹配成功的结果；如果不匹配，就返回 false。</li>
-</ul>
-<h2 id="match-示例"><a href="#match-示例" class="headerlink" title="match 示例"></a>match 示例</h2><h3 id="匹配目标"><a href="#匹配目标" class="headerlink" title="匹配目标"></a>匹配目标</h3><ul>
-<li>可以使用”（）”将想提取的子字符串括起来，”（）”实际上标记了一个子表达式的开始和结束位置，被标记的每个子表达式会依次对应每一个分组，调用 group()法传入分组的索引即可获取提取的结果。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'Hello 123 4567 World_This is a Regex Demo'</span></span><br><span class="line">result0 = re.match(<span class="string">'^Hello\s\d\d\d\s\d&#123;4&#125;\s\w&#123;10&#125;'</span>, content)</span><br><span class="line">result1 = re.match(<span class="string">'^Hello\s(\d+)\s(\d+)\sWorld'</span>, content)</span><br><span class="line">print(result0)</span><br><span class="line">print(result1)</span><br><span class="line">print(result1.group(<span class="number">1</span>), result1.group(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">25</span>), match=<span class="string">'Hello 123 4567 World_This'</span>&gt;</span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">20</span>), match=<span class="string">'Hello 123 4567 World'</span>&gt;</span><br><span class="line"><span class="number">123</span> <span class="number">4567</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="通用匹配"><a href="#通用匹配" class="headerlink" title="通用匹配"></a>通用匹配</h3><ul>
-<li>”.*“可以匹配任意长度字符串(换行符除外)。</li>
-<li>”.“可以匹配任意字符(换行符除外)</li>
-<li>”*“代表匹配前面的字符无限次</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'Hello 123 4567 World_This is a Regex Demo'</span></span><br><span class="line">result = re.match(<span class="string">'^Hello\s(\d+)\s(\d+)\s(.*?)Demo$'</span>, content)</span><br><span class="line">print(result)</span><br><span class="line">print(result.group(<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">41</span>), match=<span class="string">'Hello 123 4567 World_This is a Regex Demo'</span>&gt;</span><br><span class="line">World_This <span class="keyword">is</span> a Regex</span><br></pre></td></tr></table></figure>
-
-<h3 id="贪婪匹配"><a href="#贪婪匹配" class="headerlink" title="贪婪匹配"></a>贪婪匹配</h3><p>使用”.*“通用匹配时，可能会得不到想要的结果：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'Hello 1234567 World_This is a Regex Demo'</span></span><br><span class="line"></span><br><span class="line">result = re.match(<span class="string">'^He.*(\d+).*Demo$'</span>, content)</span><br><span class="line">print(result.group(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line"><span class="number">7</span></span><br></pre></td></tr></table></figure>
-
-<p>想要的结果是 123，却输出了 7。这就涉及到贪婪与非贪婪匹配了。</p>
-<ul>
-<li>在贪婪匹配下， “._”会匹配尽可能多的字符。<br>所以在上面的正则表达式中，”._“直接匹配到了’Hello 123 456’，’\d’匹配到了’7’。</li>
-<li>在非贪婪匹配下， “.<em>“会匹配尽可能少的字符。非贪婪匹配的写法是”.</em>?”。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'Hello 123 4567 World_This is a Regex Demo'</span></span><br><span class="line">result = re.match(<span class="string">'^He.*?(\d+).*Demo$'</span>, content)</span><br><span class="line">print(result.group(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line"><span class="number">123</span></span><br></pre></td></tr></table></figure>
-
-<p>在做匹配的时候，字符串<strong>中间尽量使用非贪婪匹配</strong>，但需要注意，如果匹配的结果在字符串结尾，”.*?”就有可能匹配不到任何内容了。</p>
-<h3 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h3><p>正则表达式可以包含一些<strong>可选标志修饰符来控制匹配的模式</strong> 。<br><img src="https://t1.picb.cc/uploads/2018/11/15/JX62zc.png" alt="enter image description here"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'''Hello 123 4567 World_This</span></span><br><span class="line"><span class="string">          is a Regex Demo'''</span></span><br><span class="line">result_none = re.match(<span class="string">'^He.*?(\d+).*Demo$'</span>, content)</span><br><span class="line">print(result_none)</span><br><span class="line"></span><br><span class="line">result = re.match(<span class="string">'^He.*?(\d+).*Demo$'</span>, content, re.S)</span><br><span class="line">print(result)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line"><span class="literal">None</span></span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">52</span>), match=<span class="string">'Hello 123 4567 World_This \n          is a Regex &gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="转义匹配"><a href="#转义匹配" class="headerlink" title="转义匹配"></a>转义匹配</h3><p>当遇到用于正则匹配模式的特殊字符时，在前面加反斜线转义一下即可 。</p>
-<h2 id="search"><a href="#search" class="headerlink" title="search"></a>search</h2><p>search ()，它在匹配时会扫描整个字符串，然后返回第一个成功匹配的结果 。</p>
-<h3 id="search-示例"><a href="#search-示例" class="headerlink" title="search 示例"></a>search 示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">html = <span class="string">'''&lt;div id="songs-list"&gt;</span></span><br><span class="line"><span class="string">    &lt;h2 class="title"&gt;经典老歌&lt;/h2&gt;</span></span><br><span class="line"><span class="string">    &lt;p class="introduction"&gt;</span></span><br><span class="line"><span class="string">        经典老歌列表</span></span><br><span class="line"><span class="string">    &lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;ul id="list" class="list-group"&gt;</span></span><br><span class="line"><span class="string">        &lt;li data-view="2"&gt;一路上有你&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;li data-view="7"&gt;</span></span><br><span class="line"><span class="string">            &lt;a href="/2.mp3" singer="任贤齐"&gt;沧海一声笑&lt;/a&gt;</span></span><br><span class="line"><span class="string">        &lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;li data-view="4" class="active"&gt;</span></span><br><span class="line"><span class="string">            &lt;a href="/3.mp3" singer="齐秦"&gt;往事随风&lt;/a&gt;</span></span><br><span class="line"><span class="string">        &lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;li data-view="6"&gt;&lt;a href="/4.mp3" singer="beyond"&gt;光辉岁月&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;li data-view="5"&gt;&lt;a href="/5.mp3" singer="陈慧琳"&gt;记事本&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">    &lt;/ul&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;'''</span></span><br><span class="line"></span><br><span class="line">result = re.search(<span class="string">'&lt;li.*?singer="(.*?)"&gt;(.*?)&lt;/a&gt;'</span>, html, re.S)</span><br><span class="line">print(result.group(<span class="number">1</span>), result.group(<span class="number">2</span>))</span><br><span class="line">result = re.search(<span class="string">'&lt;li.*?href="(.*?)"\ssinger="(.*?)"&gt;(.*?)&lt;/a&gt;'</span>, html, re.S)</span><br><span class="line"><span class="comment">#print(result)</span></span><br><span class="line">print(result.group(<span class="number">1</span>), result.group(<span class="number">2</span>), result.group(<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">任贤齐 沧海一声笑</span><br><span class="line">/<span class="number">2.</span>mp3 任贤齐 沧海一声笑</span><br></pre></td></tr></table></figure>
-
-<h2 id="findall"><a href="#findall" class="headerlink" title="findall"></a>findall</h2><p>findall()方法会搜索整个字符串然后返回匹配正则表达式的所有内容。</p>
-<h3 id="findall-示例"><a href="#findall-示例" class="headerlink" title="findall 示例"></a>findall 示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">...</span><br><span class="line">result = re.search(<span class="string">'&lt;li.*?singer="(.*?)"&gt;(.*?)&lt;/a&gt;'</span>, html, re.S)</span><br><span class="line">print(result.group(<span class="number">1</span>), result.group(<span class="number">2</span>))</span><br><span class="line">result = re.search(<span class="string">'&lt;li.*?href="(.*?)"\ssinger="(.*?)"&gt;(.*?)&lt;/a&gt;'</span>, html, re.S)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">任贤齐 沧海一声笑</span><br><span class="line">/<span class="number">2.</span>mp3 任贤齐 沧海一声笑</span><br><span class="line">/<span class="number">2.</span>mp3 任贤齐 沧海一声笑</span><br><span class="line">/<span class="number">3.</span>mp3 齐秦 往事随风</span><br><span class="line">/<span class="number">4.</span>mp3 beyond 光辉岁月</span><br><span class="line">/<span class="number">5.</span>mp3 陈慧琳 记事本</span><br></pre></td></tr></table></figure>
-
-<h2 id="sub"><a href="#sub" class="headerlink" title="sub"></a>sub</h2><p>用来修改/替换文本</p>
-<h3 id="sub-使用示例"><a href="#sub-使用示例" class="headerlink" title="sub 使用示例"></a>sub 使用示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'54ak54yr50ir54ix5L2g'</span></span><br><span class="line">content = re.sub(<span class="string">'\d'</span>, <span class="string">''</span>, content)</span><br><span class="line">print(content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">akyririxLg</span><br></pre></td></tr></table></figure>
-
-<h2 id="compile"><a href="#compile" class="headerlink" title="compile"></a>compile</h2><p>compile()可以将正则字符串编译成正则表达式对象，以便在以后的匹配中复用(也可以传入修饰符)。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content0 = <span class="string">'2016-12-15 12:00'</span></span><br><span class="line">content1 = <span class="string">'2016-12-17 12:55'</span></span><br><span class="line">content2 = <span class="string">'2016-12-22 13:21'</span></span><br><span class="line"></span><br><span class="line">pattern = re.compile(<span class="string">'\d&#123;2&#125;:\d&#123;2&#125;'</span>)</span><br><span class="line">result0 = re.sub(pattern, <span class="string">''</span>, content1)</span><br><span class="line">result1 = re.sub(pattern, <span class="string">''</span>, content1)</span><br><span class="line">result2 = re.sub(pattern, <span class="string">''</span>, content2)</span><br><span class="line"></span><br><span class="line">print(result0, result1, result2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line"><span class="number">2016</span><span class="number">-12</span><span class="number">-17</span>  <span class="number">2016</span><span class="number">-12</span><span class="number">-17</span>  <span class="number">2016</span><span class="number">-12</span><span class="number">-22</span></span><br></pre></td></tr></table></figure>
-
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1686,7 +1653,7 @@ String: Bar</code></pre>
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1712,7 +1679,7 @@ String: Bar</code></pre>
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>

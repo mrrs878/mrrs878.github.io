@@ -234,6 +234,129 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/14/webpack学习-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2020/04/14/webpack学习-2/" class="post-title-link" itemprop="url">webpack学习-2</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-14 23:04:37 / 修改时间：23:05:31" itemprop="dateCreated datePublished" datetime="2020-04-14T23:04:37+08:00">2020-04-14</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webpack/" itemprop="url" rel="index">
+                    <span itemprop="name">webpack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h2 id="提取公共的js文件-splitChunks-cacheGroups-commons"><a href="#提取公共的js文件-splitChunks-cacheGroups-commons" class="headerlink" title="提取公共的js文件-splitChunks.cacheGroups.commons"></a>提取公共的js文件-splitChunks.cacheGroups.commons</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">"./src/app.js"</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">"dist"</span>),</span><br><span class="line">        filname: <span class="string">"bundle.[hash:6].js"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    optimization: &#123;</span><br><span class="line">        splitChunks: &#123;</span><br><span class="line">            cacheGroups: &#123;</span><br><span class="line">                commons: &#123;</span><br><span class="line">                    chunks: <span class="string">"initial"</span>,</span><br><span class="line">                    minChunks: <span class="number">2</span>,</span><br><span class="line">                    maxInitialRequests: <span class="number">5</span>,</span><br><span class="line">                    minSize: <span class="number">2</span>,</span><br><span class="line">                    name: <span class="string">"common.[hash:6]"</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="压缩图片-image-webpack-loader"><a href="#压缩图片-image-webpack-loader" class="headerlink" title="压缩图片-image-webpack-loader"></a>压缩图片-image-webpack-loader</h2><p><a href="https://www.webpackjs.com/loaders/url-loader/" target="_blank" rel="noopener">url-loader</a>来处理图片文件解析，可以再使用 <a href="https://github.com/tcoopman/image-webpack-loader" target="_blank" rel="noopener">image-webpack-loader</a>来压缩图片</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    enter: <span class="string">"./src/app.js"</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">"dist"</span>),</span><br><span class="line">        filename: <span class="string">"bundle.[hash:6].js"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    modules: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.*\.(gif|png|jpe?g|svg|webp)$/i</span>,</span><br><span class="line">                use: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        laoder: <span class="string">"url-loader"</span>,</span><br><span class="line">                        options: &#123;</span><br><span class="line">                            limit: <span class="number">8192</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    &#123;</span><br><span class="line">                        laoder: <span class="string">"image-webpack-loader"</span>,</span><br><span class="line">                        options: &#123;</span><br><span class="line">                            mozjpeg: &#123;</span><br><span class="line">                                progress: <span class="literal">true</span>,</span><br><span class="line">                                quality: <span class="number">65</span></span><br><span class="line">                            &#125;,</span><br><span class="line">                            optipng: &#123;</span><br><span class="line">                                enable: <span class="literal">false</span></span><br><span class="line">                            &#125;,</span><br><span class="line">                            pngquant: &#123;</span><br><span class="line">                                quality: <span class="string">'65-90'</span>,</span><br><span class="line">                                speed: <span class="number">4</span></span><br><span class="line">                            &#125;,</span><br><span class="line">                            gifsicle: &#123;</span><br><span class="line">                                interlaced: <span class="literal">false</span></span><br><span class="line">                            &#125;,</span><br><span class="line">                            webp: &#123; <span class="comment">// 开启webp会把jpg、png压缩为webp格式</span></span><br><span class="line">                                quality: <span class="number">65</span></span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="多线程打包-happypack"><a href="#多线程打包-happypack" class="headerlink" title="多线程打包-happypack"></a>多线程打包-happypack</h2><p>在webpack运行在node中打包时是单线程去一件一件事情做，<a href="https://github.com/amireh/happypack#readme" target="_blank" rel="noopener">happypack</a>可以开启多个子进程去并发执行，子进程处理完成之后把结果交给主进程</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">yarn add happypack -D</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"><span class="keyword">const</span> HappyPack = reruire(<span class="string">"happypack"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">"./src/app.js"</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.reaolve(__dirname, <span class="string">"dist"</span>),</span><br><span class="line">        filename: <span class="string">"bundle_[hash:6].js"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                text: <span class="regexp">/\.jsx?$/</span>,</span><br><span class="line">                exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">                use: <span class="string">"happypack/loader?id=babel"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> HappyPack(&#123;</span><br><span class="line">            id: <span class="string">"babel"</span>,</span><br><span class="line">            threads: <span class="number">4</span>,</span><br><span class="line">            loaders: [<span class="string">"babel-loader"</span>]</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="作用域提升-ModuleConcatenationPlugin"><a href="#作用域提升-ModuleConcatenationPlugin" class="headerlink" title="作用域提升-ModuleConcatenationPlugin"></a>作用域提升-ModuleConcatenationPlugin</h2><p>如果项目里使用的是ES6的语法，并且webpack3+，那么建议启用这一插件，把所有的模块放到一个函数里：</p>
+<ul>
+<li>减少了函数声明</li>
+<li>文件体积变小</li>
+<li>函数作用域变少</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">"./src/app.js"</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">"dist"</span>),</span><br><span class="line">        filename: <span class="string">"bundle_[hash:6].js"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> webpack.optimize.ModuleConcatenationPlugin()</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="提取第三方库-enter-vendor"><a href="#提取第三方库-enter-vendor" class="headerlink" title="提取第三方库-enter.vendor"></a>提取第三方库-enter.vendor</h2><p>方便长期缓存第三方的库，新建一个入口，将第三方库作为一个<code>chunk</code>，生成<code>vendor.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        main: <span class="string">"./src/app.js"</span>,</span><br><span class="line">        vendor: [<span class="string">'react'</span>, <span class="string">'react-dom'</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="DLL动态链接-webpack-DllPlugin"><a href="#DLL动态链接-webpack-DllPlugin" class="headerlink" title="DLL动态链接-webpack.DllPlugin"></a>DLL动态链接-webpack.DllPlugin</h2><p>如果第三方库不是经常更新，打包的时候希望分开打包来提升打包速度。打包dll需要新建一个webpack配置文件，在打包dll的时候，webpack做一个索引，现在manifest文件中。然后打包项目的时候只需要读取manifest文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.vendor.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        vendor: [<span class="string">"react"</span>, <span class="string">"react-dom"</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.reaolve(__dirname, <span class="string">"dist"</span>),</span><br><span class="line">        filename: <span class="string">"dll/[name]_dll.js"</span>,</span><br><span class="line">        library: <span class="string">"_dll_[name]"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> webpack.DllPlugin(&#123;</span><br><span class="line">            path: path.resolve(__dirname, <span class="string">"dist/sll"</span>, <span class="string">"manifest.json"</span>),</span><br><span class="line">            name: <span class="string">"_dll_[name]"</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> path = resolve(<span class="string">"path"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    enter: &#123;</span><br><span class="line">        main: <span class="string">"./src/app.js"</span>,</span><br><span class="line">        vendor: [<span class="string">"react"</span>, <span class="string">"react-dom"</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> webpack.DllReferencePlugin(&#123;</span><br><span class="line">            manifest: path.resolve(__dirname, <span class="string">"dist/dll"</span>, <span class="string">"manifest.json"</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="多环境配置"><a href="#多环境配置" class="headerlink" title="多环境配置"></a>多环境配置</h1><p>创建多个配置文件：</p>
+<ul>
+<li><code>webpack.base.js</code>，共同的个配置</li>
+<li><code>webpack.dev.js</code>，在开发环境下的配置</li>
+<li><code>webpack.prod.js</code>，在生产环境下的配置】</li>
+</ul>
+<h2 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h2><p>配置测试服务器相关、HMR</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.dev.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>)</span><br><span class="line"><span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">"webpack-merge"</span>)</span><br><span class="line"><span class="keyword">const</span> abse = <span class="built_in">require</span>(<span class="string">"./webpack.base.js"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dev = &#123;</span><br><span class="line">    devServer: &#123;</span><br><span class="line">        contentNase: path.resolve(__dirname, <span class="string">"dist"</span>),</span><br><span class="line">        port: <span class="number">8080</span>,</span><br><span class="line">        host: <span class="string">"localhost"</span>,</span><br><span class="line">        overlay: <span class="literal">true</span>,</span><br><span class="line">        compress: <span class="literal">true</span>,</span><br><span class="line">        open: <span class="literal">false</span>,</span><br><span class="line">        hot: <span class="literal">true</span>,</span><br><span class="line">        inline: <span class="literal">true</span>,</span><br><span class="line">        progress: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    devtool: <span class="string">"inline-source-map"</span>,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> webpack.HotModuleReplacementPlugin(),</span><br><span class="line">        <span class="keyword">new</span> webpack.NamedModulesPlugin()</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = merge(base, dev)</span><br></pre></td></tr></table></figure>
+
+<h2 id="生产环境"><a href="#生产环境" class="headerlink" title="生产环境"></a>生产环境</h2><p>生产环境最重要的是开启代码压缩、混淆</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//webpack.prod.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"><span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">"webpack-merge"</span>)</span><br><span class="line"><span class="keyword">const</span> WebpackParallUglifyPlugin = <span class="built_in">require</span>(<span class="string">"webpack-parallel-uglify-plugin"</span>)</span><br><span class="line"><span class="keyword">const</span> base = <span class="built_in">require</span>(<span class="string">"./webpack.base.js"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> prod = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> WebpackParallUglifyPlugin(&#123;</span><br><span class="line">            uglifyJS: &#123;</span><br><span class="line">                mangle: <span class="literal">true</span>,</span><br><span class="line">                output: &#123;</span><br><span class="line">                    beautify: <span class="literal">false</span>,</span><br><span class="line">                    comments: <span class="literal">false</span></span><br><span class="line">                &#125;,</span><br><span class="line">                compress: &#123;</span><br><span class="line">                    warnings: <span class="literal">false</span>,</span><br><span class="line">                    drop_console: <span class="literal">true</span>,</span><br><span class="line">                    collpase_vars: <span class="literal">true</span>,</span><br><span class="line">                    reduce_vars: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = marge(base, prod)</span><br></pre></td></tr></table></figure>
+
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/13/webpack学习-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1580,139 +1703,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/06/Vue.js研读-4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2020/03/06/Vue.js研读-4/" class="post-title-link" itemprop="url">Vue.js研读-4</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-06 23:29:53" itemprop="dateCreated datePublished" datetime="2020-03-06T23:29:53+08:00">2020-03-06</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-11 14:26:35" itemprop="dateModified" datetime="2020-03-11T14:26:35+08:00">2020-03-11</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue.js</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="生命周期概览"><a href="#生命周期概览" class="headerlink" title="生命周期概览"></a>生命周期概览</h2><p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/lifecycle.png" alt="生命周期"></p>
-<h2 id="生命周期函数"><a href="#生命周期函数" class="headerlink" title="生命周期函数"></a>生命周期函数</h2><ul>
-<li><p>beforeCreate</p>
-<p><code>new Vue()</code>之后触发的第一个钩子，在当前阶段<code>data</code>、methods、<code>computed</code>以及watch上的数据和方法均不能被访问</p>
-</li>
-<li><p>created</p>
-<p>在实例创建完成之后触发，当前阶段已完成了数据观测，也就是可以使用数据，更改数据，在这个更改数据不会触发<code>updated</code>函数。可以做一些<strong>初始数据的获取</strong>，在当前阶段无法获取DOM（可使用vm.$nextTick）</p>
-</li>
-<li><p>beforeMounte</p>
-<p>发生在挂载之前，在这之前template模板已导入渲染函数编译。而当前阶段虚拟DOM已创建完成，即将开始渲染。在此时也可以对数据进行更改，不会触发<code>updated</code></p>
-</li>
-<li><p>mounted</p>
-<p>在挂载之后被触发。在当前阶段，真实的DOM被挂载完毕，数据完成双向绑定，可以访问到DOM阶段，使用$ref属性对DOM进行操作</p>
-</li>
-<li><p>beforeUpdate</p>
-<p>在界面发生更新之前被触发。也就是响应式数据发生改变之前、虚拟DOM重新渲染之前被触发，可以在此阶段进行更改数据，不会造成重渲染</p>
-</li>
-<li><p>updated</p>
-<p>在发生更新之后被触发。当前阶段DOM已完成更新。要注意的是避免在此期间更改数据，因为这可能会导致无限循环的更新</p>
-</li>
-<li><p>beforeDestory</p>
-<p>在实例被销毁之前触发。在当前阶段实例完全可以被使用，可以在此阶段做些善后工作，如清除定时器</p>
-</li>
-<li><p>destoryed</p>
-<p>在实例被销毁之后触发。这个时候只剩下DOM，组件已被拆解，数据绑定被卸载、监听被移除、子实例也统统被销毁</p>
-</li>
-</ul>
-<h2 id="组件的生命周期函数调用顺序"><a href="#组件的生命周期函数调用顺序" class="headerlink" title="组件的生命周期函数调用顺序"></a>组件的生命周期函数调用顺序</h2><ul>
-<li><p>加载渲染顺序</p>
-<p>父beforeCreate👉父created👉父beforeMmount👉子beforeCreate👉子created👉子beforeMount👉子mounted👉父mounted</p>
-</li>
-<li><p>更新顺序</p>
-<p>父beforeUpdate👉子beforeUpdate👉子updated👉父updated</p>
-</li>
-<li><p>销毁顺序</p>
-<p>父beforeDestory👉子beforeDestory👉子destoryed👉父destoryed</p>
-</li>
-</ul>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1765,7 +1755,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1791,7 +1781,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
