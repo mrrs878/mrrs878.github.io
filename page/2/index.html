@@ -234,6 +234,133 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/09/vue-router剖析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2020/03/09/vue-router剖析/" class="post-title-link" itemprop="url">vue-router剖析</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-09 22:05:40 / 修改时间：23:30:51" itemprop="dateCreated datePublished" datetime="2020-03-09T22:05:40+08:00">2020-03-09</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="vue-router"><a href="#vue-router" class="headerlink" title="vue-router"></a>vue-router</h1><h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>路由最早由后端提出，用于根据不同的请求返回不同的页面。大致流程如下：</p>
+<ol>
+<li>浏览器发出请求</li>
+<li>服务器监听到端口有请求过来</li>
+<li>根据服务器的路由配置，返回相应信息（可以是html、json、图片等）</li>
+<li>浏览器根据数据包的<code>Context-Type</code>来决定如何解析</li>
+</ol>
+<h2 id="前端路由"><a href="#前端路由" class="headerlink" title="前端路由"></a>前端路由</h2><p>随着<code>ajax</code>的流行，异步数据请求交互在不刷新浏览器的情况下运行。而异步交互体验的高级版本就是SPA-单页应用。单页应用不仅仅是在页面交互是无刷新的，连页面跳转都是无刷新的，为了实现单页应用，所以就有了前端路由。类似于后端路由，前端路由就是匹配不同的url路径进行解析，然后动态渲染html内容。</p>
+<h3 id="hash模式"><a href="#hash模式" class="headerlink" title="hash模式"></a>hash模式</h3><p><code>https://www.xxx.com/#/hash</code></p>
+<p>这种<code>#</code>后面<code>hash</code>值得变化，并不会触发新的请求，因此也不会刷新页面。每次<code>hash</code>值的变化都会触发<code>hashchange</code>事件，通过这个事件就可以知道更新哪些页面内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onhashchange = <span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(e.oldURL, e.newURL)</span><br><span class="line">    <span class="keyword">const</span> hash = location.hash.slice(<span class="number">1</span>)</span><br><span class="line">    app.innerHTML = hash</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="history模式"><a href="#history模式" class="headerlink" title="history模式"></a>history模式</h3><p><code>https://www.xxx.com/login</code></p>
+<p>随着HTML5的发布，带来了两个新的API：<code>pushState</code>和<code>replaceState</code>，通过这两个API可以改变url地址且不会发送请求。同时还有<code>popstate</code>事件用来监听url的改变。使用history模式，url就不会出现丑陋的<code>#</code>，url也变得比较美观。</p>
+<p>通过history api去掉了丑陋的<code>#</code>，但也存在问题：不怕前进/后退，就怕<strong>刷新</strong>。因为刷新是去请求服务器的，在<code>hash</code>下，前端路由修改的是#之后的内容，在发送请求时是不会带上的，但在history下可以自由地修改路径、参数，当刷新时，如果服务器中没有相应的响应或资源，容易爆<code>404</code></p>
+<h2 id="vue-router核心原理"><a href="#vue-router核心原理" class="headerlink" title="vue-router核心原理"></a>vue-router核心原理</h2><ol>
+<li><p>通过<code>new VueRouter</code>中的<code>mode</code>参数来选择使用那种路由模式</p>
+</li>
+<li><p>在<code>router</code>中使用<code>current</code>保存当前url</p>
+</li>
+<li><p>作为一个插件，大部分功能都在<code>install</code>函数中完成</p>
+</li>
+<li><p>在<code>install</code>中使用<code>Vue.mixin</code>注入的<code>beforeCreate</code>来给组件添加全局唯一的<code>router</code>实例（挂载在根组件上，其余组件通过<code>$parent._routerRoot._router</code>挂载）</p>
+</li>
+<li><p>使用<code>popstate</code>或<code>hashchange</code>两个事件来监听url变化（针对于手动输入url）并设置<code>current</code></p>
+</li>
+<li><p>使用<code>Vue.util.defineReactive(this, &#39;_route&#39;, this._router.history.current)</code>来使<code>router</code>变为响应式</p>
+<p>current变化    👉    重新渲染<code>router-view</code>中的组件 </p>
+</li>
+<li><p>解析路由配置从而可以更加便利地找到url所对应的页面</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>&lt;&#123; <span class="attr">name</span>: component &#125;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>👇</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Map</span>&lt;&#123; <span class="attr">name</span>: component &#125;&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实现<code>&lt;router-link&gt;&lt;/router-link&gt;</code>和<code>&lt;router-view / &gt;</code>两个组件</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>vue-router</code>以插件方式侵入<code>Vue</code>，从而支持一个额外的<code>router</code>属性，以提供监听并改变组件路由数据的能力，这样每次路由发生变化后，可以同步到数据，从而响应式地触发组件的更新</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/vue-router.png" alt="vue-router"></p>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/06/Vue.js研读-4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1561,7 +1688,7 @@
 <li>作用域链（Scope），JavaScript采用词法作用域，也就是说变量的作用域实在定义的时候就决定了，包含自身变量对象和上级变量对象的列表，通过<code>[[Scope]]</code>属性查找上级变量</li>
 <li><code>this</code></li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">10</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> b = <span class="number">20</span></span><br><span class="line">&#125;</span><br><span class="line">foo()</span><br><span class="line"></span><br><span class="line">stack = [</span><br><span class="line">    globalContext,</span><br><span class="line">    fooContext</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">globalContext.VO === global</span><br><span class="line">globalContext.VO = &#123;</span><br><span class="line">    a: <span class="literal">undefined</span>,</span><br><span class="line">    foo: <span class="xml"><span class="tag">&lt;<span class="name">Function</span>&gt;</span></span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml">fooContext.AO === foo.AO</span></span><br><span class="line"><span class="xml">fooContext.AO = &#123;</span></span><br><span class="line"><span class="xml">    i: undefined,</span></span><br><span class="line"><span class="xml">    b: undefined,</span></span><br><span class="line"><span class="xml">    arguments: <span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml">// arguments 是函数独有的对象（箭头函数没有）</span></span><br><span class="line"><span class="xml">// 该对象时一个伪数组</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">fooContext.[[Scope]] = &#123;</span></span><br><span class="line"><span class="xml">    globalContext.VO</span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml">fooContext.Scope = fooContext.[[Scope]] + fooContext.VO</span></span><br><span class="line"><span class="xml">fooContext.Scope = [</span></span><br><span class="line"><span class="xml">    fooContext.VO,</span></span><br><span class="line"><span class="xml">    globalContext.VO</span></span><br><span class="line"><span class="xml">]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">10</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> b = <span class="number">20</span></span><br><span class="line">&#125;</span><br><span class="line">foo()</span><br><span class="line"></span><br><span class="line">stack = [</span><br><span class="line">    globalContext,</span><br><span class="line">    fooContext</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">globalContext.VO === global</span><br><span class="line">globalContext.VO = &#123;</span><br><span class="line">    a: <span class="literal">undefined</span>,</span><br><span class="line">    foo: &lt;Function&gt;</span><br><span class="line">&#125;</span><br><span class="line">fooContext.AO === foo.AO</span><br><span class="line">fooContext.AO = &#123;</span><br><span class="line">    i: undefined,</span><br><span class="line">    b: undefined,</span><br><span class="line">    arguments: &lt;&gt;</span><br><span class="line">&#125;</span><br><span class="line">// arguments 是函数独有的对象（箭头函数没有）</span><br><span class="line">// 该对象时一个伪数组</span><br><span class="line"></span><br><span class="line">fooContext.[[Scope]] = &#123;</span><br><span class="line">    globalContext.VO</span><br><span class="line">&#125;</span><br><span class="line">fooContext.Scope = fooContext.[[Scope]] + fooContext.VO</span><br><span class="line">fooContext.Scope = [</span><br><span class="line">    fooContext.VO,</span><br><span class="line">    globalContext.VO</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
 <h2 id="变量提升"><a href="#变量提升" class="headerlink" title="变量提升"></a>变量提升</h2><p>通俗解释：</p>
 <p>将声明的代码移动到了顶部</p>
@@ -1575,283 +1702,6 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span> (<span class="params">func, wait = <span class="number">50</span>, immediate = true</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timer, context, args;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> later = <span class="function"><span class="params">()</span> =&gt;</span> setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    timer = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">if</span> (!immediate) &#123;</span><br><span class="line">      func.apply(context, args)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, wait)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">...params</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (timer) &#123;</span><br><span class="line">      clearTimeout(timer)</span><br><span class="line">      timer = later()</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      timer = later()</span><br><span class="line">      <span class="keyword">if</span> (immediate) &#123;</span><br><span class="line">        func.apply(<span class="keyword">this</span>, params)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        context = <span class="keyword">this</span></span><br><span class="line">        args = params</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/02/12/JavaScript相关-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2020/02/12/JavaScript相关-2/" class="post-title-link" itemprop="url">JavaScript相关-2</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-02-12 22:53:13" itemprop="dateCreated datePublished" datetime="2020-02-12T22:53:13+08:00">2020-02-12</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-18 10:44:40" itemprop="dateModified" datetime="2020-02-18T10:44:40+08:00">2020-02-18</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p><strong>WHAT</strong></p>
-<p><strong>Promise</strong> 对象用于表示一个异步操作的最终完成 (或失败), 及其结果值.</p>
-<p>异步编程的一种解决方案</p>
-<p><code>Promise</code>可能处于以下三个状态之一：<code>fulfilled</code>、<code>rejected</code>、<code>pending</code>。用户可以对<code>Promise</code>添加回调函数来处理操作成功的结果或失败的原因</p>
-<p><strong>WHY</strong></p>
-<p>传统的异步编程缺点难以忍受:</p>
-<ul>
-<li>代码臃肿</li>
-<li>可读性差</li>
-<li>耦合度过高，可维护性差</li>
-<li>代码复用性差</li>
-<li>只能在回调里处理异常</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">请求<span class="number">1</span>(<span class="function"><span class="keyword">function</span>(<span class="params">请求结果<span class="number">1</span></span>)</span>&#123;</span><br><span class="line">    请求<span class="number">2</span>(<span class="function"><span class="keyword">function</span>(<span class="params">请求结果<span class="number">2</span></span>)</span>&#123;</span><br><span class="line">        请求<span class="number">3</span>(<span class="function"><span class="keyword">function</span>(<span class="params">请求结果<span class="number">3</span></span>)</span>&#123;</span><br><span class="line">            请求<span class="number">4</span>(<span class="function"><span class="keyword">function</span>(<span class="params">请求结果<span class="number">4</span></span>)</span>&#123;</span><br><span class="line">                请求<span class="number">5</span>(<span class="function"><span class="keyword">function</span>(<span class="params">请求结果<span class="number">5</span></span>)</span>&#123;</span><br><span class="line">                    请求<span class="number">6</span>(<span class="function"><span class="keyword">function</span>(<span class="params">请求结果<span class="number">6</span></span>)</span>&#123;</span><br><span class="line">                        ...</span><br><span class="line">                    &#125;)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(请求<span class="number">1</span>)</span><br><span class="line">    .then(请求<span class="number">2</span>(请求结果<span class="number">1</span>))</span><br><span class="line">    .then(请求<span class="number">3</span>(请求结果<span class="number">2</span>))</span><br><span class="line">    .then(请求<span class="number">4</span>(请求结果<span class="number">3</span>))</span><br><span class="line">    .then(请求<span class="number">5</span>(请求结果<span class="number">4</span>))</span><br><span class="line">    .catch(处理异常(异常信息))</span><br></pre></td></tr></table></figure>
-
-<p><strong>HOW</strong></p>
-<p>常用API：</p>
-<ul>
-<li><p><code>Promise.resolve(value)</code></p>
-<p>返回一个状态由给定的<code>value</code>决定的<code>Promise</code>对象。如果该值时<code>theable</code>（即带有then方法的对象），返回的<code>Promise</code>对象的最终状态是由<code>then</code>方法决定；否则（该<code>value</code>为空、基本类型或不带<code>then</code>方法的对象）返回的<code>Promise</code>对象状态为<code>fulfilled</code>，并且将该<code>value</code>传递给对应的<code>then</code>方法。通常，如果不知道一个值是否是<code>Promise</code>对象，可以使用<code>Promsie.resolve(value)</code>来返回一个<code>Promise</code>对象，这样就能将该<code>value</code>以<code>Promise</code>对象形式使用</p>
-</li>
-<li><p><code>Promise.reject(value)</code></p>
-<p>返回一个状态为失败的<code>Promise</code>对象，并将给定的失败信息传递给对应的出处理方法</p>
-</li>
-<li><p><code>Promise.race(interable)</code></p>
-<p>当<code>interable</code>参数里的任意一个子<code>promise</code>被执行失败或成功后，父<code>promise</code>马上也会用子<code>promise</code>的成功返回值或失败详情作为参数调用父<code>promsie</code>绑定的相应句柄并返回该<code>promsie</code>对象</p>
-</li>
-<li><p><code>Promise.all(interable)</code></p>
-<p>这个方法返回的是一个新的<code>promise</code>对象，该<code>promise</code>对象在<code>interable</code>参数对象里所有的<code>promise</code>对象都成功的时候才会触发成功，一旦有任何一个<code>interable</code>里的<code>promise</code>对象失败则立即触发该<code>promise</code>对象的失败。这个新的<code>promise</code>对象在触发成功状态以后，会把一个包含<code>interable</code>里所有<code>promise</code>返回值的数组作为成功回调的返回值，顺序跟<code>interable</code>的顺序保持一致；如果这个新的<code>promise</code>对象出发了失败状态，它会把<code>interable</code>里第一个触发失败的<code>promise</code>对象的错误信息作为它的失败错误信息。<code>Promise.all</code>方法常用于处理多个<code>promise</code>对象的状态集合</p>
-</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>)</span><br><span class="line"></span><br><span class="line">fs.readFile(<span class="string">"./index.html"</span>, &#123; <span class="attr">encoding</span>: <span class="string">"utf8"</span> &#125;, (err, data) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(err, data);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_readFile</span>(<span class="params">path, options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    fs.readFile(<span class="string">"./index.html"</span>, options, (err, data) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span>(err)</span><br><span class="line">        reject(err)</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">        resolve(data)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> _readFile(<span class="string">"./index.html"</span>, <span class="string">"utf8"</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(error);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
-
-<h2 id="遍历对象的属性和数组元素的方法"><a href="#遍历对象的属性和数组元素的方法" class="headerlink" title="遍历对象的属性和数组元素的方法"></a>遍历对象的属性和数组元素的方法</h2><p>对象：</p>
-<ul>
-<li><p><code>for</code>循环 👎</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> property <span class="keyword">in</span> obj)</span><br><span class="line">    <span class="built_in">console</span>.log(property)</span><br></pre></td></tr></table></figure>
-
-<p>缺点：会遍历到它的继承属性，在使用之前需要加入<code>obj.hasOwnProperty(property)</code></p>
-</li>
-<li><p><code>Object.keys(obj).forEach()</code> 👍</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.keys(obj).forEach(<span class="function"><span class="params">property</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(property)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p><code>Object.keys</code>返回一个有给定对象的自身可枚举属性组成的数组</p>
-</li>
-<li><p><code>Object.getOwnPropertyNames(obj).forEach</code> 👍</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.getOwnPropertyNames(obj).forEach(<span class="function"><span class="params">property</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(property)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<p><code>Object.getOwnPropertyNames</code>返回一个由指定对象的所有自身属性的属性名（包括不可枚举属性但不包括<code>Symbol</code>值作为名称的属性）组成的数组</p>
-</li>
-<li><p><code>Reflect.ownKeys(target)</code> 👍</p>
-<p>基本等同于<code>Object.getOwnPeopertyNames</code> + <code>Object.getOwnPropertySymbols</code></p>
-</li>
-</ul>
-<p>数组：<strong>各取所需</strong></p>
-<ul>
-<li><p><code>for</code>循环</p>
-<p>普通遍历方法，较常用</p>
-</li>
-<li><p><code>arr.forEach</code></p>
-<p>相较于<code>for</code>，<code>forEach</code>不可提前结束循环</p>
-</li>
-<li><p><code>arr.map/reduce</code></p>
-</li>
-</ul>
-<h2 id="可变对象和不可变对象"><a href="#可变对象和不可变对象" class="headerlink" title="可变对象和不可变对象"></a>可变对象和不可变对象</h2><p><strong>可变对象</strong>在创建之后是可以被改变的</p>
-<p><strong>不可变对象</strong>在创建之后是不可以被改变的</p>
-<ol>
-<li>在<code>JavaScript</code>中，<code>string</code>和<code>number</code>从设计之初就是不可变的（immediate）</li>
-<li>不可变对象是保持一个对象状态不变，这样的好处是是的开发更加简单、可回溯、测试友好，减少了任何可能的副作用。但是，每当想添加点东西到一个不可变对象里时，它一定是先拷贝已存在的值到新实例里，然后再给新实例添加内容，最后返回新实例。相比可变对象，这势必会有更多内存、计算量消耗</li>
-</ol>
-<p>创建一个纯函数（pure function）</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> student = &#123;</span><br><span class="line">    school: <span class="string">"baidu"</span>,</span><br><span class="line">    name: <span class="string">"tom"</span>,</span><br><span class="line">    age: <span class="number">21</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateStudent</span>(<span class="params">student, name, age</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        ...student,</span><br><span class="line">        name,</span><br><span class="line">        age</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="同步函数和异步函数"><a href="#同步函数和异步函数" class="headerlink" title="同步函数和异步函数"></a>同步函数和异步函数</h2><p>同步函数阻塞，异步函数不阻塞。在同步函数中，语句完成后下一句才执行，在这种情况下，程序可以按照语句的顺序进行精确评估，如果其中一个语句需要很长时间，那么程序的执行会停滞很长时间</p>
-<p>异步函数通常接受回调作为参数，在调用异步函数后立即继续执行下一行。回调函数仅在异步操作完成且调用堆栈为空时调用，诸如从web服务器加载数据或查询数据库等重负载操作应该异步完成，以便主线程可以继续执行其他操作而不会出现一直阻塞</p>
-<p>在JavaScript中异步函数的解决方案通常有callback、Promise、async/await</p>
-<h2 id="JavaScript执行机制"><a href="#JavaScript执行机制" class="headerlink" title="JavaScript执行机制"></a>JavaScript执行机制</h2><ul>
-<li><p><strong>JavaScript的执行与运行</strong></p>
-<p>执行和与运行不太相同，在不同环境下，比如Node、浏览器下，JavaScript的执行结果是不一样的；而运行大多是指基于JavaScript引擎，如V8，结果是一致的 </p>
-</li>
-<li><p><strong>关于JavaScript</strong></p>
-<p>众所周知，JavaScript是一门<strong>单线程</strong>、<strong>异步执行</strong>的语言，虽然在HTML5中提出了<strong>web workers</strong>（可以理解为<strong>浏览器</strong>为JavaScript开的“外挂”），但JavaScript是单线程运行的这一核心仍未改变，所有多线程都是通过单线程<strong>模拟</strong>出来的</p>
-</li>
-<li><p><strong>JavaScript中的异步</strong> <strong>event-loop</strong></p>
-<p>JavaScript中的异步主要通过<strong>event loop</strong>进行模拟当我们执行JavaScript代码的时候其实就是往执行栈中放入函数，那么遇到异步代码怎么办？其实当遇到异步代码时，会被挂起并在需要执行的时候加入到<strong>Task</strong>（有多种Task）队列中。一旦执行栈为空，<strong>event loop</strong>就会从<strong>Task</strong>中拿出需要执行的代码并放入执行栈中执行，所以本质上说JavaScript中的异步还是同步行为</p>
-</li>
-<li><p><strong>浏览器中的event loop</strong></p>
-<p>来自不同的<strong>任务源</strong>的任务会被分配到不同的Task队列中，任务源可以分为<strong>微任务（micro task）</strong>和<strong>宏任务（macro task）</strong>。在ES6规范中，微任务被称为jobs，宏任务被称为task</p>
-<p>微任务包括：<code>precess.nextTick</code>、<code>promise</code>、<code>Mutation Observer</code></p>
-<p>宏任务包括：<code>script</code>、<code>setTimeout</code>、<code>setInterval</code>、<code>setImmediate</code>、<code>I/O</code>、UI Rendering</p>
-<p><strong>宏任务中包含了<code>script</code>，因此浏览器会先执行一个宏任务，接下来由异步代码的话才会先执行微任务</strong></p>
-<p><strong>event loop执行顺序</strong>：</p>
-<ol>
-<li>先执行同步代码，这属于宏任务</li>
-<li>当<strong>执行完所有同步代码</strong>后执行栈为空，查询是否有异步代码需要执行</li>
-<li><strong>执行所有微任务</strong></li>
-<li>当执行完所有微任务，如有必要会渲染页面</li>
-<li>然后开始下一轮<code>event loop</code>，执行宏任务中的异步代码也就是<code>setTimeout</code>（宏任务）中的回调函数</li>
-</ol>
-<p><img src="./imgs/browser_event_loop.png" alt="浏览器中的event loop"></p>
-<p><img src="./imgs/browser_event_loop2.png" alt="浏览器中的event loop"></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">  <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">4</span>);</span><br><span class="line">  resolve(<span class="number">5</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">6</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">7</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1 4 7 5 2 3 6</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>Node.js中的event loop</strong></p>
-<p>Node.js中的<code>event loop</code>分为6个阶段，他们会按照顺序反复运行。每当进入某一个阶段的时候都会从对应的回调队列中取出函数去执行。当<strong>队列为空</strong>或者<strong>执行的回调函数数量到达系统设定的阈值</strong>，就会进入下一阶段</p>
-<p><img src="./imgs/node_event_loop.png" alt="Node.js中的event loop"></p>
-<ol>
-<li><p><strong>timers</strong></p>
-<p><strong>timers</strong>阶段会执行<code>setTimeout</code>和<code>setinterval</code>回调，并且是由<strong>poll</strong>阶段控制的。同样在<code>Node.js</code>中定时器指定的事件也不是准确时间，只是尽快执行</p>
-</li>
-<li><p><strong>I/O</strong></p>
-<p><strong>I/O</strong>阶段会处理一些上一轮循环中少许未执行的<strong>I/O</strong>回调</p>
-</li>
-<li><p><strong>idle,prepare</strong></p>
-</li>
-<li><p><strong>poll</strong></p>
-<p><strong>poll</strong>是一个至关重要的阶段，在这一阶段中，系统会做两件事情</p>
-<ol>
-<li><p>回到<strong>timer</strong>阶段执行回调</p>
-</li>
-<li><p>执行<strong>I/O</strong>回调，并且在进入该阶段时如果没有设定了<strong>timer</strong>的话，会发生以下两件事情</p>
-</li>
-</ol>
-<ul>
-<li>如果<strong>poll</strong>队列不为空，会遍历回调队列并同步执行，直到队列为空或者达到系统限制</li>
-<li>如果<strong>poll</strong>队列为空<ul>
-<li>如果有<code>setImmediate</code>回调需要执行，<strong>poll</strong>阶段会停止并且<strong>进入到check阶段</strong>执行回调</li>
-<li>如果没有，会等待回调被加入到队列中并立即执行回调，这里同样会有个超时时间防止一直等待下去</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>check</strong></p>
-<p>执行<code>setImmediate</code></p>
-</li>
-<li><p><strong>close callbacks</strong></p>
-<p>执行close事件</p>
-</li>
-</ol>
-<p><img src="./imgs/node_event_loop2.png" alt="Node.js中的event loop"></p>
-</li>
-</ul>
-<h2 id="ES6的类和ES6的构造函数的区别"><a href="#ES6的类和ES6的构造函数的区别" class="headerlink" title="ES6的类和ES6的构造函数的区别"></a>ES6的类和ES6的构造函数的区别</h2><p>在普通使用中没有区别：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>主要区别在于类继承上：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params">name, id</span>) </span>&#123;</span><br><span class="line">    Person.call(<span class="keyword">this</span>, name)</span><br><span class="line">    <span class="keyword">this</span>.id = id</span><br><span class="line">&#125;</span><br><span class="line">Student.prototype = <span class="built_in">Object</span>.create(Person.prototype)</span><br><span class="line">Student.prototype.constructor = Student</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    consreuctor(name, id) &#123;</span><br><span class="line">        <span class="keyword">super</span>(name)</span><br><span class="line">        <span class="keyword">this</span>.id = id</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="扩展运算符和剩余参数语句的区别"><a href="#扩展运算符和剩余参数语句的区别" class="headerlink" title="扩展运算符和剩余参数语句的区别"></a>扩展运算符和剩余参数语句的区别</h2><p>在函数泛型编码时，ES6的扩展运算符非常有用吗，因为我们可以轻松创建数组和对象的拷贝，而无需使用<code>Object.create</code>、<code>slice</code>或其他函数库。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [ ...arr, <span class="string">"test"</span> ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> result = test([<span class="string">"hello"</span>, <span class="string">"world"</span>])</span><br><span class="line"><span class="comment">// ["hello", "world", "test"]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> person = &#123;</span><br><span class="line">    name: <span class="string">"tom"</span>,</span><br><span class="line">    age: <span class="number">21</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> copyPerson = &#123; ...person &#125;</span><br></pre></td></tr></table></figure>
-
-<p>ES6的剩余参数语句提供了一个简写，允许我们将不定数量的参数表示为一个<strong>数组</strong>，它就像扩展运算符语法的反面，将数据收集到数组中而不是解构数组。剩余参数语句在函数参数、数组和对象的解构赋值中有很大作用</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">...numbers</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> numbers.map(<span class="function"><span class="params">x</span> =&gt;</span> x + <span class="number">5</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> result1 = test(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"><span class="comment">// [6, 7, 8, 9]</span></span><br><span class="line"><span class="keyword">const</span> result2 = test(<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>)</span><br><span class="line"><span class="comment">// [10, 11, 12, 13, 14]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> [ a, b, ...rest ] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line"><span class="comment">// 1 2 [ 3, 4 ]</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="内置类型"><a href="#内置类型" class="headerlink" title="内置类型"></a>内置类型</h2><p>JavaScript中分为<strong>七种</strong>内置类型，其中内置类型又分为两大类型：<strong>基本类型</strong>和<strong>引用类型</strong>（对象 Object）</p>
-<p>基本类型：<code>null</code>、<code>undefined</code>、<code>boolean</code>、<code>number</code>、<code>string</code>、<code>symbol</code></p>
-<p>其中JavaScript的数字类型是浮点类型的，没有整形。并且浮点类型基于 IEEE 754 标准实现，在使用中会遇到某些 <a href="#2">Bug </a><code>NaN</code>也属于<code>number</code>类型并且<code>NaN</code>并不等于自身</p>
-<p>对于基本类型来说，如果使用字面量的方式，那个这个变量只是个字面量，只有在必要的时候才会转换成对应的类型</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">111</span> <span class="comment">// 这只是字面量，不是number类型</span></span><br><span class="line">a.toString() <span class="comment">// 使用的时候才会转换为对象类型</span></span><br></pre></td></tr></table></figure>
-
-<p>引用类型在使用过程中会遇到深拷贝和浅拷贝问题</p>
-<h2 id="Typeof"><a href="#Typeof" class="headerlink" title="Typeof"></a>Typeof</h2><p><code>typeof</code>对于基本类型，除了<code>null</code>都可以显示正确的类型</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="number">1</span> <span class="comment">// number</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="string">'1'</span> <span class="comment">// string</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">undefined</span> <span class="comment">// undefined</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">true</span> <span class="comment">// boolean</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Symbol</span>() <span class="comment">// symbol</span></span><br></pre></td></tr></table></figure>
-
-<p><code>typeof</code>对于对象，除了函数都会显示<code>object</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> [] <span class="comment">// object</span></span><br><span class="line"><span class="keyword">typeof</span> &#123;&#125; <span class="comment">// object</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">console</span>.log <span class="comment">// function</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">null</span> <span class="comment">// object</span></span><br></pre></td></tr></table></figure>
-
-<p>关于为什么<code>typeof null == object</code>：在JavaScript的最初版本中，使用的是32为系统，为了性能考虑使用低位存储了变量的类型信息。<code>000</code>开头的代表是对象，然而<code>null</code>表示为全零，所以将它错误的判断为<code>object</code></p>
-<p>如果想得到一个正确的数据类型，使用<code>Object.prototype.toString.call(xxx)</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.prototype.toString.call([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br></pre></td></tr></table></figure>
-
-<h2 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h2><p><code>instance</code>可以正确的判断对象的类型，因为内部机制是通过判断对象的原型链中是不是能正确的找到类型的<code>prototype</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">instanceof</span>(<span class="params">left, right</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> prototype = right.prototype</span><br><span class="line">    left = left.__proto__</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (left === <span class="literal">null</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        <span class="keyword">if</span> (prototypr === left)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        left = left.__proto__</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><p>在调用<code>new</code>的过程中会发生以下四件事情</p>
-<ol>
-<li>新生成了一个对象</li>
-<li>绑定到原型</li>
-<li>绑定<code>this</code></li>
-<li>返回新对象</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line">    <span class="keyword">let</span> Con = [].shift.call(<span class="built_in">arguments</span>)</span><br><span class="line">    obj.__proto__ = Con.prototype</span><br><span class="line">    <span class="keyword">let</span> result = Con.apply(obj, <span class="built_in">arguments</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">typeof</span> result === <span class="string">'object'</span> ? result : obj</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         
       
     </div>
@@ -1920,7 +1770,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1933,7 +1783,7 @@
             <a href="/categories/">
           
         
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -1946,7 +1796,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>

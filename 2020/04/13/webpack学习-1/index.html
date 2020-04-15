@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="Mr.RS">
 <meta property="og:description" content="模块解析解析规则 解析相对路径 查找相对当前模块的路径下是否有对应文件或文件夹 是文件则直接加载 是文件夹则继续查找文件夹下的 package.json 文件 有 package.json 文件则按照文件中 main 字段的文件名来查找文件 无 package.json 或者无 main 字段则查找 index.js 文件   解析模块名查找当前文件目录下，父级目录及以上目录下的 node_mod">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-13T15:30:38.013Z">
+<meta property="og:updated_time" content="2020-04-15T14:46:12.747Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webpack相关-1">
 <meta name="twitter:description" content="模块解析解析规则 解析相对路径 查找相对当前模块的路径下是否有对应文件或文件夹 是文件则直接加载 是文件夹则继续查找文件夹下的 package.json 文件 有 package.json 文件则按照文件中 main 字段的文件名来查找文件 无 package.json 或者无 main 字段则查找 index.js 文件   解析模块名查找当前文件目录下，父级目录及以上目录下的 node_mod">
@@ -270,11 +270,19 @@
                 
               
 
-              <time title="创建时间：2020-04-13 23:19:33 / 修改时间：23:30:38" itemprop="dateCreated datePublished" datetime="2020-04-13T23:19:33+08:00">2020-04-13</time>
+              <time title="创建时间：2020-04-13 23:19:33" itemprop="dateCreated datePublished" datetime="2020-04-13T23:19:33+08:00">2020-04-13</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-15 22:46:12" itemprop="dateModified" datetime="2020-04-15T22:46:12+08:00">2020-04-15</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -347,7 +355,26 @@
 <li><code>{ or: [...] }</code> 匹配数组中任意一个条件</li>
 <li><code>{ not: [...] }</code> 排除匹配数组中所有条件</li>
 </ul>
-<h2 id="module-type"><a href="#module-type" class="headerlink" title="module type"></a>module type</h2><h2 id="使用loader"><a href="#使用loader" class="headerlink" title="使用loader"></a>使用loader</h2><h2 id="loader加载顺序"><a href="#loader加载顺序" class="headerlink" title="loader加载顺序"></a>loader加载顺序</h2><h2 id="使用noParse"><a href="#使用noParse" class="headerlink" title="使用noParse"></a>使用noParse</h2>
+<h2 id="module-type"><a href="#module-type" class="headerlink" title="module type"></a>module type</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  test: <span class="regexp">/\.js?$/</span>,</span><br><span class="line">  include: [</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">"src"</span>)</span><br><span class="line">  ],</span><br><span class="line">  type: <span class="string">"javascript/esm"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现阶段webpack支持以下几种模块类型：</p>
+<ul>
+<li><code>javascript/auto</code>，默认类型，支持所有JS代码模块类型：CommonJS、AMD、ESM</li>
+<li><code>javascript/esm</code>，ECMAScript Modules</li>
+<li><code>javascript/dynamic</code>，CommonJS和AMD</li>
+<li><code>javascript/json</code>，JSON格式数据，<code>require</code>和<code>import</code>都可以引入，是<code>.json</code>文件的默认类型</li>
+<li><code>javascript/experimental</code>，WebAeesmbly Modules，是<code>.wasm</code>文件的默认类型</li>
+</ul>
+<h2 id="loader应用顺序"><a href="#loader应用顺序" class="headerlink" title="loader应用顺序"></a>loader应用顺序</h2><ul>
+<li><p>同一个rule下，<strong>从右往左执行</strong></p>
+</li>
+<li><p>多个rule匹配同一个模块文件：</p>
+<p>webpack 在 <code>rules</code> 中提供了一个 <code>enforce</code> 的字段来配置当前 rule 的 loader 类型，没配置的话是普通类型，可以配置 <code>pre</code> 或 <code>post</code>，分别对应前置类型或后置类型的 loader。</p>
+<p>执行顺序：<strong>前置 -&gt; 行内 -&gt; 普通 -&gt; 后置</strong></p>
+</li>
+</ul>
+<h2 id="使用noParse"><a href="#使用noParse" class="headerlink" title="使用noParse"></a>使用noParse</h2><p>除了<code>module.rules</code>字段用于配置loader之外，还有一个<code>module.noParse</code>字段可以用于配置哪些模块文件的内容不需要进行解析。对于一些不需要解析依赖（即无依赖，没有使用<code>import</code>、<code>require</code>、<code>define</code>等导入机制）的第三方大型类库可以通过这个字段配置以提高整体的构建速度</p>
+
     </div>
 
     
@@ -430,7 +457,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#模块解析"><span class="nav-number">1.</span> <span class="nav-text">模块解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解析规则"><span class="nav-number">1.1.</span> <span class="nav-text">解析规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用配置"><span class="nav-number">1.2.</span> <span class="nav-text">常用配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#loader"><span class="nav-number">2.</span> <span class="nav-text">loader</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#规则条件配置"><span class="nav-number">2.1.</span> <span class="nav-text">规则条件配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#module-type"><span class="nav-number">2.2.</span> <span class="nav-text">module type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用loader"><span class="nav-number">2.3.</span> <span class="nav-text">使用loader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#loader加载顺序"><span class="nav-number">2.4.</span> <span class="nav-text">loader加载顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用noParse"><span class="nav-number">2.5.</span> <span class="nav-text">使用noParse</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#模块解析"><span class="nav-number">1.</span> <span class="nav-text">模块解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解析规则"><span class="nav-number">1.1.</span> <span class="nav-text">解析规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用配置"><span class="nav-number">1.2.</span> <span class="nav-text">常用配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#loader"><span class="nav-number">2.</span> <span class="nav-text">loader</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#规则条件配置"><span class="nav-number">2.1.</span> <span class="nav-text">规则条件配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#module-type"><span class="nav-number">2.2.</span> <span class="nav-text">module type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#loader应用顺序"><span class="nav-number">2.3.</span> <span class="nav-text">loader应用顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用noParse"><span class="nav-number">2.4.</span> <span class="nav-text">使用noParse</span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -449,7 +476,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -462,7 +489,7 @@
             <a href="/categories/">
           
         
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -475,7 +502,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
