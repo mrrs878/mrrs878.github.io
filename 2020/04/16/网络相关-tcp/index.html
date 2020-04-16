@@ -55,18 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="TCP的特点 三次握手 四次挥手 可靠连接 丢包重传  TCP如何保证可靠传输tcp在传输的过程中都有一个ack，接收方通过ack告诉发送方收到哪些包了。这样发送方就能知道丢包情况进而重传 TCP的三次握手 client发送SYN到server发起握手 server回复SYN+ACK给client client回复server一个ACK表示收到了server的SYN+ACK  握手的核心目的是告知">
+  <meta name="description" content="TCP的特点 三次握手 四次挥手 可靠连接 面向字节流 提供拥塞控制 丢包重传  TCP如何保证可靠传输tcp在传输的过程中都有一个ack，接收方通过ack告诉发送方收到哪些包了。这样发送方就能知道丢包情况进而重传 TCP的三次握手 client发送SYN到server发起握手 server回复SYN+ACK给client client回复server一个ACK表示收到了server的SYN+AC">
 <meta name="keywords" content="TCP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="网络相关-tcp">
 <meta property="og:url" content="https://mrrs878.github.io/2020/04/16/网络相关-tcp/index.html">
 <meta property="og:site_name" content="Mr.RS">
-<meta property="og:description" content="TCP的特点 三次握手 四次挥手 可靠连接 丢包重传  TCP如何保证可靠传输tcp在传输的过程中都有一个ack，接收方通过ack告诉发送方收到哪些包了。这样发送方就能知道丢包情况进而重传 TCP的三次握手 client发送SYN到server发起握手 server回复SYN+ACK给client client回复server一个ACK表示收到了server的SYN+ACK  握手的核心目的是告知">
+<meta property="og:description" content="TCP的特点 三次握手 四次挥手 可靠连接 面向字节流 提供拥塞控制 丢包重传  TCP如何保证可靠传输tcp在传输的过程中都有一个ack，接收方通过ack告诉发送方收到哪些包了。这样发送方就能知道丢包情况进而重传 TCP的三次握手 client发送SYN到server发起握手 server回复SYN+ACK给client client回复server一个ACK表示收到了server的SYN+AC">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-16T13:01:11.652Z">
+<meta property="og:updated_time" content="2020-04-16T14:41:30.739Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网络相关-tcp">
-<meta name="twitter:description" content="TCP的特点 三次握手 四次挥手 可靠连接 丢包重传  TCP如何保证可靠传输tcp在传输的过程中都有一个ack，接收方通过ack告诉发送方收到哪些包了。这样发送方就能知道丢包情况进而重传 TCP的三次握手 client发送SYN到server发起握手 server回复SYN+ACK给client client回复server一个ACK表示收到了server的SYN+ACK  握手的核心目的是告知">
+<meta name="twitter:description" content="TCP的特点 三次握手 四次挥手 可靠连接 面向字节流 提供拥塞控制 丢包重传  TCP如何保证可靠传输tcp在传输的过程中都有一个ack，接收方通过ack告诉发送方收到哪些包了。这样发送方就能知道丢包情况进而重传 TCP的三次握手 client发送SYN到server发起握手 server回复SYN+ACK给client client回复server一个ACK表示收到了server的SYN+AC">
   <link rel="canonical" href="https://mrrs878.github.io/2020/04/16/网络相关-tcp/">
 
 
@@ -270,7 +270,7 @@
                 
               
 
-              <time title="创建时间：2020-04-16 21:00:43 / 修改时间：21:01:11" itemprop="dateCreated datePublished" datetime="2020-04-16T21:00:43+08:00">2020-04-16</time>
+              <time title="创建时间：2020-04-16 21:00:43 / 修改时间：22:41:30" itemprop="dateCreated datePublished" datetime="2020-04-16T21:00:43+08:00">2020-04-16</time>
             </span>
           
             
@@ -310,6 +310,8 @@
 <li>三次握手</li>
 <li>四次挥手</li>
 <li>可靠连接</li>
+<li>面向字节流</li>
+<li>提供拥塞控制</li>
 <li>丢包重传</li>
 </ul>
 <h1 id="TCP如何保证可靠传输"><a href="#TCP如何保证可靠传输" class="headerlink" title="TCP如何保证可靠传输"></a>TCP如何保证可靠传输</h1><p>tcp在传输的过程中都有一个ack，接收方通过ack告诉发送方收到哪些包了。这样发送方就能知道丢包情况进而重传</p>
@@ -361,6 +363,10 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/04/16/网络相关-udp/" rel="prev" title="网络相关-udp">
+                  网络相关-udp <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
@@ -425,7 +431,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -451,7 +457,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
