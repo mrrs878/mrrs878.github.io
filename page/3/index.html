@@ -234,6 +234,377 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/02/17/JavaScript相关-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2020/02/17/JavaScript相关-4/" class="post-title-link" itemprop="url">JavaScript相关-4</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-17 22:25:05 / 修改时间：22:25:45" itemprop="dateCreated datePublished" datetime="2020-02-17T22:25:05+08:00">2020-02-17</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="模拟实现call、apply"><a href="#模拟实现call、apply" class="headerlink" title="模拟实现call、apply"></a>模拟实现call、apply</h2><p>实现思路：</p>
+<ul>
+<li>不传入第一个参数，那么默认为<code>window</code></li>
+<li>改变了<code>this</code>指向，让新对象可以执行该函数，那个思路可以变成给新对象添加一个函数，然后在执行完成之后删除</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span> (<span class="params">context</span>) </span>&#123;</span><br><span class="line">  context = context || <span class="built_in">window</span></span><br><span class="line">  context.fn = <span class="keyword">this</span></span><br><span class="line">  <span class="keyword">const</span> args = [...arguments].slice(<span class="number">1</span>)</span><br><span class="line">  <span class="keyword">const</span> result = context.fn(...args)</span><br><span class="line">  <span class="keyword">delete</span> context.fn</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Function</span>.prototype.myApply = <span class="function"><span class="keyword">function</span>(<span class="params">context</span>) </span>&#123;</span><br><span class="line">  context = context || <span class="built_in">window</span></span><br><span class="line">  context.fn = <span class="keyword">this</span></span><br><span class="line">  <span class="keyword">const</span> result = <span class="built_in">arguments</span>[<span class="number">1</span>] ? context.fn(...arguments[<span class="number">1</span>]) : context.fn()</span><br><span class="line">  <span class="keyword">delete</span> context.fn</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Function</span>.prototype.myBind = <span class="function"><span class="keyword">function</span>(<span class="params">context</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="keyword">this</span> !== <span class="string">'function'</span>)</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">"error"</span>)</span><br><span class="line">  <span class="keyword">const</span> that = <span class="keyword">this</span></span><br><span class="line">  <span class="keyword">const</span> args = [...arguments].slice(<span class="number">1</span>)</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> <span class="keyword">instanceof</span> F) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> that(...args, ...arguments)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> that.apply(context, args.concat(...arguments))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> tom = &#123;</span><br><span class="line">  name: <span class="string">"tom"</span>,</span><br><span class="line">  say (tmp1, tmp2) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name, tmp1, tmp2);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> jack = &#123;</span><br><span class="line">  name: <span class="string">"jack"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tom.say.myCall(jack, <span class="string">"111"</span>, <span class="string">"222"</span>)</span><br><span class="line">tom.say.call(jack, <span class="string">"111"</span>, <span class="string">"222"</span>)</span><br><span class="line"></span><br><span class="line">tom.say.myApply(jack, [<span class="string">"111"</span>, <span class="string">"222"</span>])</span><br><span class="line">tom.say.apply(jack, [<span class="string">"111"</span>, <span class="string">"222"</span>])</span><br><span class="line"></span><br><span class="line">tom.say.myBind(jack)(<span class="string">"111"</span>, <span class="string">"222"</span>)</span><br><span class="line">tom.say.bind(jack)(<span class="string">"111"</span>, <span class="string">"222"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// jack 111 222</span></span><br><span class="line"><span class="comment">// jack 111 222</span></span><br><span class="line"><span class="comment">// jack 111 222</span></span><br><span class="line"><span class="comment">// jack 111 222</span></span><br><span class="line"><span class="comment">// jack 111 222</span></span><br><span class="line"><span class="comment">// jack 111 222</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Promise-实现"><a href="#Promise-实现" class="headerlink" title="Promise 实现"></a>Promise 实现</h2><p><code>Promise</code>是ES6新增的语法，解决了回调地狱的问题。可以把<code>Promise</code>看作是一个状态机，可以通过函数<code>resolve</code>和<code>reject</code>将状态转变为<code>resolved</code>或<code>rejected</code>，状态一旦转变就不能再次变化</p>
+<p><code>then</code>函数会返回一个新的<code>Promise</code>实例。因为<code>Promise</code>规范规定除了<code>pending</code>状态，其他状态是不可以改变的，如果返回的是一个相同实例的话，多个<code>then</code>调用就失去意义了</p>
+<p>对于<code>then</code>，本质上可以把它看成是<code>flatMap</code></p>
+<h2 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h2><p>proxy是ES6中新增的功能，用来定义对象中的操作</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onwatch</span>(<span class="params">obj, setBind, getLogger</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> handler = &#123;</span><br><span class="line">    <span class="keyword">get</span>(target, property, receiver) &#123;</span><br><span class="line">      getLogger(target, property)</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">Reflect</span>.get(target, property, receiver)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">set</span>(target, property, value) &#123;</span><br><span class="line">      setBind(target, property, value)</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">Reflect</span>.set(target, property, value)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Proxy</span>(obj, handler)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> obj = &#123; <span class="attr">a</span>: <span class="number">1</span> &#125;</span><br><span class="line"><span class="keyword">let</span> p = onwatch(obj, (target, property, value) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`set <span class="subst">$&#123; property &#125;</span> = <span class="subst">$&#123; value &#125;</span>`</span>);</span><br><span class="line">&#125;, (target, property) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`get <span class="subst">$&#123; property &#125;</span> = <span class="subst">$&#123; target[property] &#125;</span>`</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">p.a = <span class="number">2</span></span><br><span class="line"><span class="built_in">console</span>.log(p.a);</span><br><span class="line"></span><br><span class="line"><span class="comment">// set a = 2</span></span><br><span class="line"><span class="comment">// get a = 2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><p><strong>元字符</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">元字符</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">.</td>
+<td align="center">匹配任意字符除了换行、回车符</td>
+</tr>
+<tr>
+<td align="center">?</td>
+<td align="center">？之前字符可选</td>
+</tr>
+<tr>
+<td align="center">[ ]</td>
+<td align="center">匹配方括号内任意字符</td>
+</tr>
+<tr>
+<td align="center">^</td>
+<td align="center">^9表示匹配以9开头</td>
+</tr>
+<tr>
+<td align="center">{1, 2}</td>
+<td align="center">匹配1到2位字符</td>
+</tr>
+<tr>
+<td align="center">(abc)</td>
+<td align="center">只匹配abc</td>
+</tr>
+<tr>
+<td align="center">|</td>
+<td align="center">匹配|前后任意字符</td>
+</tr>
+<tr>
+<td align="center">\</td>
+<td align="center">转义</td>
+</tr>
+<tr>
+<td align="center">*</td>
+<td align="center">只匹配0次及以上*前的字符</td>
+</tr>
+<tr>
+<td align="center">+</td>
+<td align="center">只匹配1次及以上*前的字符</td>
+</tr>
+</tbody></table>
+<p><strong>修饰语</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">修饰语</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">i</td>
+<td align="center">忽略大小写</td>
+</tr>
+<tr>
+<td align="center">g</td>
+<td align="center">全局搜索</td>
+</tr>
+<tr>
+<td align="center">m</td>
+<td align="center">多行</td>
+</tr>
+</tbody></table>
+<p><strong>字符简写</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">简写</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">\w</td>
+<td align="center">匹配字母数字或下划线</td>
+</tr>
+<tr>
+<td align="center">\W</td>
+<td align="center">和👆相反</td>
+</tr>
+<tr>
+<td align="center">\s</td>
+<td align="center">匹配任意的字符</td>
+</tr>
+<tr>
+<td align="center">\d</td>
+<td align="center">匹配数字</td>
+</tr>
+<tr>
+<td align="center">\b</td>
+<td align="center">匹配单词的开始或结束</td>
+</tr>
+</tbody></table>
+<h2 id="垃圾回收机制"><a href="#垃圾回收机制" class="headerlink" title="垃圾回收机制"></a>垃圾回收机制</h2><p><strong>WHAT</strong></p>
+<p>不再用到的内存没有及时释放，就叫做内存泄漏。如果这种情况越来越多，会导致内存不够用而系统崩溃。很多编程语言需要手动释放内存，但也有一部分编程语言提供自动内存管理，这被称为垃圾回收机制。</p>
+<p><strong>WHY</strong></p>
+<p>避免出现内存泄漏</p>
+<p><strong>HOW</strong></p>
+<p>V8下的垃圾回收机制：</p>
+<p>V8实现了准确式GC，GC算法采用了分代式垃圾回收机制，因此V8将内存（堆）分为<strong>新生代</strong>和<strong>老生代</strong>两部分</p>
+<ul>
+<li><p>新生代算法</p>
+<p>新生代中的对象一般存活时间较短，使用 scavenge GC 算法</p>
+<p>在新生代空间中，内存空间分为两部分，分别为<strong>from空间</strong>和<strong>to空间</strong>。在这两个空间中，必定有一个空间时使用的，另一个空间是空闲的。新分配的对象会被放入from空间中。当from空间被占满时，新生代GC就会启动了。算法会检查from空间中存活的对象并复制到to空间中，如果有失活的对象就会销毁。当复制完成后将from空间和to空间互换，这样GC就结束了</p>
+</li>
+<li><p>老生代算法</p>
+<p>老生代中的对象一般存活事件较常切数量也多，使用了两个算法，分别是标记清除算法和标记压缩算法</p>
+<p>以下情况对象会出现在老生代空间中</p>
+<ul>
+<li>新生代中的对象已经历过一次scavenge算法</li>
+<li>to空间中的对象占比大小超过25%，在这种情况下，为了不影响到内存分配，会将对象从新生代空间移到老生代空间中</li>
+</ul>
+<p>在老生代中，以下情况会启动标记清楚算法</p>
+<ul>
+<li>某一空间没有分块的时候</li>
+<li>空间不能保证新生代中的对象移动到老生代中</li>
+</ul>
+<p>在这个阶段中，会遍历堆中所有的对象，然后标记活的对象，在标记完成后，销毁所有没有被标记的对象。在标记大型堆内存时，可能需要几百毫秒才能完成一次标记，这就会导致一些性能上的问题。为了解决这个问题，2011年V8从stop-the-world标记切换到增量标记</p>
+<p>清楚对象后会造成堆内存出现碎片的情况，当碎片超过一定先之后会启动压缩算法，在压缩过程中将蝴蝶对象向一端移动，直到所有对象都移动完成后清理掉不需要的内存</p>
+</li>
+</ul>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><ol>
+<li><p>经典继承（构造函数）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Father</span>(<span class="params">colors</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.colors = colors</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Son</span>(<span class="params">colors</span>) </span>&#123;</span><br><span class="line">  Father.call(<span class="keyword">this</span>, colors)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s = <span class="keyword">new</span> Son([<span class="string">"red"</span>, <span class="string">"green"</span>, <span class="string">"blue"</span>])</span><br><span class="line"><span class="built_in">console</span>.log(s.colors);</span><br></pre></td></tr></table></figure>
+
+<p>优点：</p>
+<p>​    可以传递构造参数</p>
+<p>缺点：</p>
+<ul>
+<li>继承的方法都在构造函数中定义，构造函数不能够复用了</li>
+<li>父类中定义的方法对于子类而言是不可见的</li>
+</ul>
+</li>
+<li><p>原型继承</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">object</span>(<span class="params">o</span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">  F.prototype = o</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> F()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> person = &#123;</span><br><span class="line">  name: <span class="string">"tom"</span>,</span><br><span class="line">  friends: [<span class="string">"jack"</span>, <span class="string">"linda"</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> p1 = object(person)</span><br><span class="line">p1.name = <span class="string">"p1"</span></span><br><span class="line">p1.friends.push(<span class="string">"bob"</span>)</span><br><span class="line"><span class="keyword">let</span> p2 = <span class="built_in">Object</span>.create(person)</span><br><span class="line">p2.name = <span class="string">"p2"</span></span><br><span class="line">p2.friends.push(<span class="string">"lili"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person.friends);</span><br></pre></td></tr></table></figure>
+
+<p>在<code>object</code>函数内部，先创建了一个临时性的构造函数，然后将传入的对象作为这个构造函数的原型，最后返回了这个临时类型的一个实例。从本质上讲，<code>object()</code>将传入其中的对象执行了一次<strong>浅复制</strong></p>
+<p>原型继承适用于只想让一个对象与另一个对象保持类似的情况</p>
+</li>
+<li><p>组合继承 👍</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Father</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">  <span class="keyword">this</span>.colors = [<span class="string">"red"</span>, <span class="string">"green"</span>, <span class="string">"blue"</span>]</span><br><span class="line">&#125;</span><br><span class="line">Father.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Son</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 继承父类属性，第一次调用Father() </span></span><br><span class="line">  Father.call(<span class="keyword">this</span>, name)</span><br><span class="line">  <span class="keyword">this</span>.age = age</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 继承父类方法，第二次调用Father()</span></span><br><span class="line">Son.prototype = <span class="keyword">new</span> Father()</span><br><span class="line">Son.prototype.sayAge = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.age)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> s1 = <span class="keyword">new</span> Son(<span class="string">"tom"</span>, <span class="number">21</span>)</span><br><span class="line">s1.colors.push(<span class="string">"black"</span>)</span><br><span class="line"><span class="built_in">console</span>.log(s1.colors)</span><br><span class="line">s1.sayAge()</span><br><span class="line">s1.sayName()</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> s2 = <span class="keyword">new</span> Son(<span class="string">"jack"</span>, <span class="number">22</span>)</span><br><span class="line"><span class="built_in">console</span>.log(s2.colors)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>寄生式继承</p>
+<p>寄生式继承是与原型链继承紧密相关的一种思路。寄生式继承的思路与寄生构造函数和工厂模式类似，即创建一个仅用于封装继承过程的函数，该函数在内部以某种方式来增强对象，最后再像真的是它做了所有工作一样返回对象。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createAnother</span>(<span class="params">original</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// object(): 任何能返回新对象的函数</span></span><br><span class="line">    <span class="keyword">const</span> clone = object(original)</span><br><span class="line">    clone.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        conosle.log(<span class="string">"hi"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> clone                </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>寄生组合式继承 👍👍</p>
+<p>组合继承的最大问题在于无论什么情况下都会调用两次父类型构造函数</p>
+<p>寄生组合式继承即<strong>通过借用构造函数来继承属性，通过原型链的混成形式来继承方法</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inheritPrototype</span>(<span class="params">subType, superType</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> prototype = <span class="built_in">Object</span>.create(superType.prototype)</span><br><span class="line">  prototype.constructor = subType</span><br><span class="line">  subType.prototype = prototype</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperType</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">  <span class="keyword">this</span>.colors = [<span class="string">"red"</span>, <span class="string">"green"</span>, <span class="string">"blue"</span>]</span><br><span class="line">&#125;</span><br><span class="line">SuperType.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubType</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">  SuperType.call(<span class="keyword">this</span>, name)</span><br><span class="line">  <span class="keyword">this</span>.age = age</span><br><span class="line">&#125;</span><br><span class="line">inheritPrototype(SubType, SuperType)</span><br><span class="line">SubType.prototype.sayAge = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.age)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> sub1 = <span class="keyword">new</span> SubType(<span class="string">"sub1"</span>, <span class="number">21</span>)</span><br><span class="line">sub1.sayAge()</span><br><span class="line">sub1.sayName()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/02/14/JavaScript相关-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2020/02/14/JavaScript相关-3/" class="post-title-link" itemprop="url">JavaScript相关-3</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-14 23:22:46 / 修改时间：23:23:32" itemprop="dateCreated datePublished" datetime="2020-02-14T23:22:46+08:00">2020-02-14</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="执行上下文"><a href="#执行上下文" class="headerlink" title="执行上下文"></a>执行上下文</h2><p>当执行JavaScript代码时，会产生三种执行上下文：</p>
+<ul>
+<li>全局执行上下文</li>
+<li>函数执行上下文</li>
+<li><code>eval</code>执行上下文</li>
+</ul>
+<p>每个执行上下文中都有三种重要的属性：</p>
+<ul>
+<li>变量对象（VO），包含变量、函数声明和函数的形参，该属性只能在全局执行上下文中访问（函数执行上下文中尉AO）</li>
+<li>作用域链（Scope），JavaScript采用词法作用域，也就是说变量的作用域实在定义的时候就决定了，包含自身变量对象和上级变量对象的列表，通过<code>[[Scope]]</code>属性查找上级变量</li>
+<li><code>this</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">10</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> b = <span class="number">20</span></span><br><span class="line">&#125;</span><br><span class="line">foo()</span><br><span class="line"></span><br><span class="line">stack = [</span><br><span class="line">    globalContext,</span><br><span class="line">    fooContext</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">globalContext.VO === global</span><br><span class="line">globalContext.VO = &#123;</span><br><span class="line">    a: <span class="literal">undefined</span>,</span><br><span class="line">    foo: &lt;Function&gt;</span><br><span class="line">&#125;</span><br><span class="line">fooContext.AO === foo.AO</span><br><span class="line">fooContext.AO = &#123;</span><br><span class="line">    i: undefined,</span><br><span class="line">    b: undefined,</span><br><span class="line">    arguments: &lt;&gt;</span><br><span class="line">&#125;</span><br><span class="line">// arguments 是函数独有的对象（箭头函数没有）</span><br><span class="line">// 该对象时一个伪数组</span><br><span class="line"></span><br><span class="line">fooContext.[[Scope]] = &#123;</span><br><span class="line">    globalContext.VO</span><br><span class="line">&#125;</span><br><span class="line">fooContext.Scope = fooContext.[[Scope]] + fooContext.VO</span><br><span class="line">fooContext.Scope = [</span><br><span class="line">    fooContext.VO,</span><br><span class="line">    globalContext.VO</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h2 id="变量提升"><a href="#变量提升" class="headerlink" title="变量提升"></a>变量提升</h2><p>通俗解释：</p>
+<p>将声明的代码移动到了顶部</p>
+<p>准确解释：👍</p>
+<p>在生成执行上下文时，会有两个阶段</p>
+<ol>
+<li>创建的阶段（具体步骤是创建VO），JavaScript解释器会找出需要提升的变量和函数，并且给它们提前在内存中开辟好空间，函数的话会将整个函数存入内存，变量之生命并且赋值为<code>undefined</code></li>
+<li>代码执行阶段（可以直接使用变量/函数）</li>
+</ol>
+<h2 id="防抖"><a href="#防抖" class="headerlink" title="防抖"></a>防抖</h2><p>在一定时间多次触发但内只调用一次</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span> (<span class="params">func, wait = <span class="number">50</span>, immediate = true</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> timer, context, args;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> later = <span class="function"><span class="params">()</span> =&gt;</span> setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    timer = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">if</span> (!immediate) &#123;</span><br><span class="line">      func.apply(context, args)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, wait)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">...params</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (timer) &#123;</span><br><span class="line">      clearTimeout(timer)</span><br><span class="line">      timer = later()</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      timer = later()</span><br><span class="line">      <span class="keyword">if</span> (immediate) &#123;</span><br><span class="line">        func.apply(<span class="keyword">this</span>, params)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        context = <span class="keyword">this</span></span><br><span class="line">        args = params</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/02/12/JavaScript相关-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1675,217 +2046,11 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/10/19/设计模式-模板方法模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2019/10/19/设计模式-模板方法模式/" class="post-title-link" itemprop="url">设计模式-模板方法模式</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-19 14:32:49 / 修改时间：15:59:14" itemprop="dateCreated datePublished" datetime="2019-10-19T14:32:49+08:00">2019-10-19</time>
-            </span>
-          
-            
-
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="WHAT"><a href="#WHAT" class="headerlink" title="WHAT"></a>WHAT</h1><p>模板方法是一种只需要使用继承就可以实现的较为简单的模式。</p>
-<p>模板方法模式由两部分结构组成，第一部分是抽象父类，第二部分是具体的实现子类。通常在抽象父类中封装了子类的算法框架，包括实现一些公共方法及封装<strong>子类中所有方法的执行顺序</strong>。子类通过继承这个抽象类，也继承了整个算法结构，并且可以选择重写父类的方法。</p>
-<p>符合 OCP 原则</p>
-<h1 id="WHY"><a href="#WHY" class="headerlink" title="WHY"></a>WHY</h1><p>模板方法模式是一种典型的通过封装变化提高系统扩展性的设计模式。在传统的面向对象语 言中，一个运用了模板方法模式的程序中，子类的方法种类和执行顺序都是不变的，所以我们把 这部分逻辑抽象到父类的模板方法里面。而子类的方法具体怎么实现则是可变的，于是我们把这 部分变化的逻辑封装到子类中。通过增加新的子类，我们便能给系统增加新的功能，并不需要改 动抽象父类以及其他子类，这也是符合开放-封闭原则的</p>
-<h1 id="HOW"><a href="#HOW" class="headerlink" title="HOW"></a>HOW</h1><ul>
-<li>分离共同点</li>
-<li>写父类(子类的共同点)，<strong>保证子类一定会实现(使用抛异常、抽象类/抽象方法、构造函数等来约束)</strong></li>
-<li>写子类，继承父类，实现父类的方法</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 抛异常约束版</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line">  boilWater() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"把水煮沸"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  brew() &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"子类应该实现brew方法"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  pourInCup() &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"子类应该实现pourInCup方法"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  addCondiments() &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"子类应该实现addCondiments方法"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/* template method */</span></span><br><span class="line">  init() &#123;</span><br><span class="line">    <span class="keyword">this</span>.boilWater();</span><br><span class="line">    <span class="keyword">this</span>.brew();</span><br><span class="line">    <span class="keyword">this</span>.pourInCup();</span><br><span class="line">    <span class="keyword">this</span>.addCondiments();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Coffee</span> <span class="keyword">extends</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line">  brew() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"用沸水冲泡咖啡"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  pourInCup() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"把咖啡倒进杯子"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  addCondiments() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"加糖和牛奶"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> coffee = <span class="keyword">new</span> Coffee();</span><br><span class="line">coffee.init();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"--------------------------"</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tea</span> <span class="keyword">extends</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line">  brew() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"用沸水浸泡茶叶"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  pourInCup() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"把茶倒进杯子"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  addCondiments() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"加柠檬"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> tea = <span class="keyword">new</span> Tea();</span><br><span class="line">tea.init();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 高阶函数/构造函数约束版</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(brew, pourInCup, addCondiments) &#123;</span><br><span class="line">    <span class="keyword">this</span>.brew = brew;</span><br><span class="line">    <span class="keyword">this</span>.pourInCup = pourInCup;</span><br><span class="line">    <span class="keyword">this</span>.addCondiments = addCondiments;</span><br><span class="line">  &#125;</span><br><span class="line">  boilWater() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"把水煮沸"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  init() &#123;</span><br><span class="line">    <span class="keyword">this</span>.boilWater();</span><br><span class="line">    <span class="keyword">this</span>.brew();</span><br><span class="line">    <span class="keyword">this</span>.pourInCup();</span><br><span class="line">    <span class="keyword">this</span>.addCondiments();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Coffee</span> <span class="keyword">extends</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">super</span>(</span><br><span class="line">      () =&gt; <span class="built_in">console</span>.log(<span class="string">"用沸水冲泡咖啡"</span>),</span><br><span class="line">      () =&gt; <span class="built_in">console</span>.log(<span class="string">"把咖啡倒进杯子"</span>),</span><br><span class="line">      () =&gt; <span class="built_in">console</span>.log(<span class="string">"加糖和牛奶"</span>)</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> coffee = <span class="keyword">new</span> Coffee();</span><br><span class="line">coffee.init();</span><br></pre></td></tr></table></figure>
-
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/10/17/设计模式-OCP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2019/10/17/设计模式-OCP/" class="post-title-link" itemprop="url">设计模式-OCP</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-10-17 18:12:29" itemprop="dateCreated datePublished" datetime="2019-10-17T18:12:29+08:00">2019-10-17</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-19 14:33:05" itemprop="dateModified" datetime="2019-10-19T14:33:05+08:00">2019-10-19</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="开放封闭原则"><a href="#开放封闭原则" class="headerlink" title="开放封闭原则"></a>开放封闭原则</h2><p>对扩展开放，对修改封闭</p>
-<p>假设我们是一个大型 Web 项目的维护人员，在接手这个项目时，发现它已经拥有 10 万行以上的 JavaScript 代码和数百个 JS 文件。 不久后接到了一个新的需求，即在 window.onload 函数中打印出页面中的所有节点数量</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 普通版</span></span><br><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">//原有代码</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">document</span>.getElementByName(<span class="string">"*"</span>).length);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// OCP版 ---- AOP(面向切面编程)</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.after = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> _self = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> ret = _self.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    fn &amp;&amp; fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Function</span>.prototype.before = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> _self = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    fn &amp;&amp; fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">return</span> _self.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">window</span>.onload = (<span class="built_in">window</span>.onload || <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;).after(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">document</span>.getElementByName(<span class="string">"*"</span>).length);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="编写符合-OCP-的代码"><a href="#编写符合-OCP-的代码" class="headerlink" title="编写符合 OCP 的代码"></a>编写符合 OCP 的代码</h2><p>开放-封闭原则是一个看起来比较虚幻的原则，并没有实际的模板教导我们怎样亦步亦趋地 实现它。但还是能找到一些让程序尽量遵守开放-封闭原则的规律，明显的就是找出程序中将要发生变化的地方，然后把变化封装起来。过多的条件语句是造成程序违反开放封闭原则的一个常见原因。</p>
-<h3 id="运用-AOP"><a href="#运用-AOP" class="headerlink" title="运用 AOP"></a>运用 AOP</h3><h3 id="利用多态的思想"><a href="#利用多态的思想" class="headerlink" title="利用多态的思想"></a>利用多态的思想</h3><h3 id="放置-hook"><a href="#放置-hook" class="headerlink" title="放置 hook"></a>放置 hook</h3><p>我们在程序有可能变化的地方放置一个 hook，hook 的返回结果决定了程序的下一步走向，这样一来原本的代码执行路径上就出现了一个分岔路口，程序未来的执行方向被预埋下多种可能性</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line">  boilWater() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"把水煮沸"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  brew() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"子类必须重写brew方法"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  pourInCup() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"子类必须重写pourInCup方法"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  addCondiments() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"子类必须重写addCondiments方法"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// hook</span></span><br><span class="line">  customWantsCondiments() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  init() &#123;</span><br><span class="line">    <span class="keyword">this</span>.boilWater();</span><br><span class="line">    <span class="keyword">this</span>.brew();</span><br><span class="line">    <span class="keyword">this</span>.pourInCup();</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.customWantsCondiments()) <span class="keyword">this</span>.addCondiments();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CoffeeWithHook</span> <span class="keyword">extends</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line">  brew() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"用沸水冲泡咖啡"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  pourInCup() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"把咖啡倒进杯"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  addCondiments() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"加糖和牛奶"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// hook</span></span><br><span class="line">  customWantsCondiments() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">window</span>.confirm(<span class="string">"请问需要饮料吗?"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> CoffeeWithHook().init();</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用回调函数"><a href="#使用回调函数" class="headerlink" title="使用回调函数"></a>使用回调函数</h3><p>回调函数是一种特殊的挂钩。我们可以把一部分易于变化的逻辑封装在回调函数里，然后把 回调函数当作参数传入一个稳定和封闭的函数中。当回调函数被执行的时候，程序就可以因为回 调函数的内部逻辑不同，而产生不同的结果。</p>
-<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> strategies = &#123;</span><br><span class="line">  ADD: <span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> paramA + paramB;</span><br><span class="line">  &#125;,</span><br><span class="line">  SUB: <span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> paramA - paramB;</span><br><span class="line">  &#125;,</span><br><span class="line">  MULTI: <span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> paramA * paramB;</span><br><span class="line">  &#125;,</span><br><span class="line">  DIV: <span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> paramA / paramB;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> calc = <span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB, type</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> strategies[type](paramA, paramB);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(calc(<span class="number">1</span>, <span class="number">2</span>, <span class="string">"ADD"</span>));</span><br><span class="line"><span class="built_in">console</span>.log(calc(<span class="number">1</span>, <span class="number">2</span>, <span class="string">"SUB"</span>));</span><br></pre></td></tr></table></figure>
-
-<h3 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> calc_ = R.curry(<span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB, fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> fn(paramA, paramB);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(calc_(<span class="number">2</span>, <span class="number">3</span>)(R.add));</span><br><span class="line"><span class="built_in">console</span>.log(calc_(<span class="number">2</span>, <span class="number">3</span>, R.add));</span><br></pre></td></tr></table></figure>
-
-<h3 id="发布-订阅模式"><a href="#发布-订阅模式" class="headerlink" title="发布-订阅模式"></a>发布-订阅模式</h3><h3 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a>模板方法模式</h3><h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><h3 id="职责链模式"><a href="#职责链模式" class="headerlink" title="职责链模式"></a>职责链模式</h3>
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1933,7 +2098,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1959,7 +2124,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>

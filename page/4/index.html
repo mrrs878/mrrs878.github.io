@@ -234,6 +234,212 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/10/19/设计模式-模板方法模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2019/10/19/设计模式-模板方法模式/" class="post-title-link" itemprop="url">设计模式-模板方法模式</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-19 14:32:49 / 修改时间：15:59:14" itemprop="dateCreated datePublished" datetime="2019-10-19T14:32:49+08:00">2019-10-19</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="WHAT"><a href="#WHAT" class="headerlink" title="WHAT"></a>WHAT</h1><p>模板方法是一种只需要使用继承就可以实现的较为简单的模式。</p>
+<p>模板方法模式由两部分结构组成，第一部分是抽象父类，第二部分是具体的实现子类。通常在抽象父类中封装了子类的算法框架，包括实现一些公共方法及封装<strong>子类中所有方法的执行顺序</strong>。子类通过继承这个抽象类，也继承了整个算法结构，并且可以选择重写父类的方法。</p>
+<p>符合 OCP 原则</p>
+<h1 id="WHY"><a href="#WHY" class="headerlink" title="WHY"></a>WHY</h1><p>模板方法模式是一种典型的通过封装变化提高系统扩展性的设计模式。在传统的面向对象语 言中，一个运用了模板方法模式的程序中，子类的方法种类和执行顺序都是不变的，所以我们把 这部分逻辑抽象到父类的模板方法里面。而子类的方法具体怎么实现则是可变的，于是我们把这 部分变化的逻辑封装到子类中。通过增加新的子类，我们便能给系统增加新的功能，并不需要改 动抽象父类以及其他子类，这也是符合开放-封闭原则的</p>
+<h1 id="HOW"><a href="#HOW" class="headerlink" title="HOW"></a>HOW</h1><ul>
+<li>分离共同点</li>
+<li>写父类(子类的共同点)，<strong>保证子类一定会实现(使用抛异常、抽象类/抽象方法、构造函数等来约束)</strong></li>
+<li>写子类，继承父类，实现父类的方法</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 抛异常约束版</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line">  boilWater() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"把水煮沸"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  brew() &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"子类应该实现brew方法"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  pourInCup() &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"子类应该实现pourInCup方法"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  addCondiments() &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"子类应该实现addCondiments方法"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/* template method */</span></span><br><span class="line">  init() &#123;</span><br><span class="line">    <span class="keyword">this</span>.boilWater();</span><br><span class="line">    <span class="keyword">this</span>.brew();</span><br><span class="line">    <span class="keyword">this</span>.pourInCup();</span><br><span class="line">    <span class="keyword">this</span>.addCondiments();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Coffee</span> <span class="keyword">extends</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line">  brew() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"用沸水冲泡咖啡"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  pourInCup() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"把咖啡倒进杯子"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  addCondiments() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"加糖和牛奶"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> coffee = <span class="keyword">new</span> Coffee();</span><br><span class="line">coffee.init();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"--------------------------"</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tea</span> <span class="keyword">extends</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line">  brew() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"用沸水浸泡茶叶"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  pourInCup() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"把茶倒进杯子"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  addCondiments() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"加柠檬"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> tea = <span class="keyword">new</span> Tea();</span><br><span class="line">tea.init();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 高阶函数/构造函数约束版</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(brew, pourInCup, addCondiments) &#123;</span><br><span class="line">    <span class="keyword">this</span>.brew = brew;</span><br><span class="line">    <span class="keyword">this</span>.pourInCup = pourInCup;</span><br><span class="line">    <span class="keyword">this</span>.addCondiments = addCondiments;</span><br><span class="line">  &#125;</span><br><span class="line">  boilWater() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"把水煮沸"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  init() &#123;</span><br><span class="line">    <span class="keyword">this</span>.boilWater();</span><br><span class="line">    <span class="keyword">this</span>.brew();</span><br><span class="line">    <span class="keyword">this</span>.pourInCup();</span><br><span class="line">    <span class="keyword">this</span>.addCondiments();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Coffee</span> <span class="keyword">extends</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">super</span>(</span><br><span class="line">      () =&gt; <span class="built_in">console</span>.log(<span class="string">"用沸水冲泡咖啡"</span>),</span><br><span class="line">      () =&gt; <span class="built_in">console</span>.log(<span class="string">"把咖啡倒进杯子"</span>),</span><br><span class="line">      () =&gt; <span class="built_in">console</span>.log(<span class="string">"加糖和牛奶"</span>)</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> coffee = <span class="keyword">new</span> Coffee();</span><br><span class="line">coffee.init();</span><br></pre></td></tr></table></figure>
+
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/10/17/设计模式-OCP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2019/10/17/设计模式-OCP/" class="post-title-link" itemprop="url">设计模式-OCP</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-17 18:12:29" itemprop="dateCreated datePublished" datetime="2019-10-17T18:12:29+08:00">2019-10-17</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-19 14:33:05" itemprop="dateModified" datetime="2019-10-19T14:33:05+08:00">2019-10-19</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="开放封闭原则"><a href="#开放封闭原则" class="headerlink" title="开放封闭原则"></a>开放封闭原则</h2><p>对扩展开放，对修改封闭</p>
+<p>假设我们是一个大型 Web 项目的维护人员，在接手这个项目时，发现它已经拥有 10 万行以上的 JavaScript 代码和数百个 JS 文件。 不久后接到了一个新的需求，即在 window.onload 函数中打印出页面中的所有节点数量</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 普通版</span></span><br><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">//原有代码</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">document</span>.getElementByName(<span class="string">"*"</span>).length);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// OCP版 ---- AOP(面向切面编程)</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.after = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> _self = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> ret = _self.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    fn &amp;&amp; fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Function</span>.prototype.before = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> _self = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    fn &amp;&amp; fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">return</span> _self.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">window</span>.onload = (<span class="built_in">window</span>.onload || <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;).after(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">document</span>.getElementByName(<span class="string">"*"</span>).length);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写符合-OCP-的代码"><a href="#编写符合-OCP-的代码" class="headerlink" title="编写符合 OCP 的代码"></a>编写符合 OCP 的代码</h2><p>开放-封闭原则是一个看起来比较虚幻的原则，并没有实际的模板教导我们怎样亦步亦趋地 实现它。但还是能找到一些让程序尽量遵守开放-封闭原则的规律，明显的就是找出程序中将要发生变化的地方，然后把变化封装起来。过多的条件语句是造成程序违反开放封闭原则的一个常见原因。</p>
+<h3 id="运用-AOP"><a href="#运用-AOP" class="headerlink" title="运用 AOP"></a>运用 AOP</h3><h3 id="利用多态的思想"><a href="#利用多态的思想" class="headerlink" title="利用多态的思想"></a>利用多态的思想</h3><h3 id="放置-hook"><a href="#放置-hook" class="headerlink" title="放置 hook"></a>放置 hook</h3><p>我们在程序有可能变化的地方放置一个 hook，hook 的返回结果决定了程序的下一步走向，这样一来原本的代码执行路径上就出现了一个分岔路口，程序未来的执行方向被预埋下多种可能性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line">  boilWater() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"把水煮沸"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  brew() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"子类必须重写brew方法"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  pourInCup() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"子类必须重写pourInCup方法"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  addCondiments() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"子类必须重写addCondiments方法"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// hook</span></span><br><span class="line">  customWantsCondiments() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  init() &#123;</span><br><span class="line">    <span class="keyword">this</span>.boilWater();</span><br><span class="line">    <span class="keyword">this</span>.brew();</span><br><span class="line">    <span class="keyword">this</span>.pourInCup();</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.customWantsCondiments()) <span class="keyword">this</span>.addCondiments();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CoffeeWithHook</span> <span class="keyword">extends</span> <span class="title">Beverage</span> </span>&#123;</span><br><span class="line">  brew() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"用沸水冲泡咖啡"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  pourInCup() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"把咖啡倒进杯"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  addCondiments() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"加糖和牛奶"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// hook</span></span><br><span class="line">  customWantsCondiments() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">window</span>.confirm(<span class="string">"请问需要饮料吗?"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> CoffeeWithHook().init();</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用回调函数"><a href="#使用回调函数" class="headerlink" title="使用回调函数"></a>使用回调函数</h3><p>回调函数是一种特殊的挂钩。我们可以把一部分易于变化的逻辑封装在回调函数里，然后把 回调函数当作参数传入一个稳定和封闭的函数中。当回调函数被执行的时候，程序就可以因为回 调函数的内部逻辑不同，而产生不同的结果。</p>
+<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> strategies = &#123;</span><br><span class="line">  ADD: <span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> paramA + paramB;</span><br><span class="line">  &#125;,</span><br><span class="line">  SUB: <span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> paramA - paramB;</span><br><span class="line">  &#125;,</span><br><span class="line">  MULTI: <span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> paramA * paramB;</span><br><span class="line">  &#125;,</span><br><span class="line">  DIV: <span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> paramA / paramB;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> calc = <span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB, type</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> strategies[type](paramA, paramB);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(calc(<span class="number">1</span>, <span class="number">2</span>, <span class="string">"ADD"</span>));</span><br><span class="line"><span class="built_in">console</span>.log(calc(<span class="number">1</span>, <span class="number">2</span>, <span class="string">"SUB"</span>));</span><br></pre></td></tr></table></figure>
+
+<h3 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> calc_ = R.curry(<span class="function"><span class="keyword">function</span>(<span class="params">paramA, paramB, fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> fn(paramA, paramB);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(calc_(<span class="number">2</span>, <span class="number">3</span>)(R.add));</span><br><span class="line"><span class="built_in">console</span>.log(calc_(<span class="number">2</span>, <span class="number">3</span>, R.add));</span><br></pre></td></tr></table></figure>
+
+<h3 id="发布-订阅模式"><a href="#发布-订阅模式" class="headerlink" title="发布-订阅模式"></a>发布-订阅模式</h3><h3 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a>模板方法模式</h3><h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><h3 id="职责链模式"><a href="#职责链模式" class="headerlink" title="职责链模式"></a>职责链模式</h3>
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/10/16/柯里化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1235,315 +1441,11 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/06/30/JavaScript-执行机制/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2019/06/30/JavaScript-执行机制/" class="post-title-link" itemprop="url">JavaScript-执行机制</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-06-30 11:15:28" itemprop="dateCreated datePublished" datetime="2019-06-30T11:15:28+08:00">2019-06-30</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-15 10:03:38" itemprop="dateModified" datetime="2019-10-15T10:03:38+08:00">2019-10-15</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="JavaScript-执行与运行"><a href="#JavaScript-执行与运行" class="headerlink" title="JavaScript 执行与运行"></a><strong>JavaScript 执行与运行</strong></h1><p>执行和运行不太相同，在不同环境下，比如 Node、浏览器下，JavaScript 的执行结果是不一样的；而运行大多指的是基于 JavaScript 引擎，如 V8，结果是一致的</p>
-<h1 id="关于-JavaScript"><a href="#关于-JavaScript" class="headerlink" title="关于 JavaScript"></a><strong>关于 JavaScript</strong></h1><p>众所周知，JavaScript 是一门<strong>单线程</strong>、<strong>异步执行</strong>的语言，虽然在 HTML5 中提出了 <strong>web workers</strong>(可以理解为<strong>浏览器</strong>为 JavaScript 开的“外挂”，下一篇会谈)，但 JavaScript 是单线程运行的这一核心仍未改变，所有<strong>多线程</strong>都是通过单线程模拟出来的，都是“纸老虎”</p>
-<h1 id="JavaScript-中的异步–event-loop"><a href="#JavaScript-中的异步–event-loop" class="headerlink" title="JavaScript 中的异步–event loop"></a>JavaScript 中的异步–event loop</h1><p>JavaScript 中的异步主要通过 event loop 进行模拟，那么什么是 event loop 呢？当我们执行 JS 代码的时候其实就是往执行栈中放入函数，那么遇到异步代码的时候该怎么办？其实当遇到异步的代码时，会被挂起并在需要执行的时候加入到 Task（有多种 Task） 队列中。一旦执行栈为空，Event Loop 就会从 Task 队列中拿出需要执行的代码并放入执行栈中执行，所以本质上来说 JS 中的异步还是同步行为。</p>
-<h2 id="浏览器中的-event-loop"><a href="#浏览器中的-event-loop" class="headerlink" title="浏览器中的 event loop"></a>浏览器中的 event loop</h2><p><img src="/../imgs/browser_event_loop.png" alt="浏览器中的event loop"><br><img src="/../imgs/browser_event_loop2.png" alt="浏览器中的event loop"><br>不同的任务源会被分配到不同的 Task 队列中，任务源可以分为 微任务（microtask） 和 宏任务（macrotask）。在 ES6 规范中，microtask 称为 jobs，macrotask 称为 task。<br>微任务包括 process.nextTick ，promise ，MutationObserver。<br>宏任务包括 script ，setTimeout ，setInterval ，setImmediate ，I/O ，UI rendering。</p>
-<p><strong>宏任务中包括了 script ，浏览器会先执行一个宏任务，接下来有异步代码的话才会先执行微任务。</strong></p>
-<p>Event Loop 执行顺序如下所示：</p>
-<ul>
-<li>首先执行同步代码，这属于宏任务</li>
-<li>当执行完所有同步代码后，执行栈为空，查询是否有异步代码需要执行</li>
-<li>执行所有微任务</li>
-<li>当执行完所有微任务后，如有必要会渲染页面</li>
-<li>然后开始下一轮 Event Loop，执行宏任务中的异步代码，也就是 setTimeout(宏任务) 中的回调函数</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">  <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">4</span>);</span><br><span class="line">  resolve(<span class="number">5</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">6</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">7</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行结果：1 4 7 5 2 3 6</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Node-js-中的-event-loop"><a href="#Node-js-中的-event-loop" class="headerlink" title="Node.js 中的 event loop"></a>Node.js 中的 event loop</h2><p>Node 的 Event Loop 分为 6 个阶段，它们会按照顺序反复运行。每当进入某一个阶段的时候，都会从对应的回调队列中取出函数去执行。当<strong>队列为空</strong>或者<strong>执行的回调函数数量到达系统设定的阈值</strong>，就会进入下一阶段。<br><img src="/../imgs/node_event_loop.png" alt="Node.js中的event loop"></p>
-<ul>
-<li>timer<br>timers 阶段会执行 setTimeout 和 setInterval 回调，并且是由 <strong>poll</strong> 阶段控制的。<br>同样，在 Node 中定时器指定的时间也不是准确时间，只能是尽快执行。</li>
-<li>I/O<br>I/O 阶段会处理一些上一轮循环中的少数未执行的 I/O 回调</li>
-<li>idle, prepare<br>idle, prepare 阶段内部实现，这里就忽略不讲了。</li>
-<li>poll<br>poll 是一个至关重要的阶段，这一阶段中，系统会做两件事情<ul>
-<li>回到 timer 阶段执行回调</li>
-<li>执行 I/O 回调<br>并且在进入该阶段时如果没有设定了 timer 的话，会发生以下两件事情</li>
-<li>如果 poll 队列不为空，会遍历回调队列并同步执行，直到队列为空或者达到系统限制</li>
-<li>如果 poll 队列为空时，会有两件事发生<ul>
-<li>如果有 setImmediate 回调需要执行，poll 阶段会停止并且进入到 check 阶段执行回调</li>
-<li>如果没有 setImmediate 回调需要执行，会等待回调被加入到队列中并立即执行回调，这里同样会有个超时时间设置防止一直等待下去<br>当然设定了 timer 的话且 poll 队列为空，则会判断是否有 timer 超时，如果有的话会回到 timer 阶段执行回调。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>check<br>check 阶段执行 setImmediate</li>
-<li>close callbacks<br>close callbacks 阶段执行 close 事件<br>对于 microtask 来说，它会在以上每个阶段完成前清空 microtask 队列，下图中的 Tick 就代表了 microtask<br><img src="/../imgs/node_event_loop2.png" alt="Node中的event loop"></li>
-</ul>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2018/12/03/Java-IO/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2018/12/03/Java-IO/" class="post-title-link" itemprop="url">Java-IO</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2018-12-03 21:03:45" itemprop="dateCreated datePublished" datetime="2018-12-03T21:03:45+08:00">2018-12-03</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-16 19:58:22" itemprop="dateModified" datetime="2019-10-16T19:58:22+08:00">2019-10-16</time>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Java-流"><a href="#Java-流" class="headerlink" title="Java-流"></a>Java-流</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a><strong>概念</strong></h2><p>流：程序与文件|数组|网络连接|数据库等进行交互的通道，以程序为中心</p>
-<h3 id="IO-流分类"><a href="#IO-流分类" class="headerlink" title="IO 流分类"></a><strong>IO 流分类</strong></h3><h4 id="流向"><a href="#流向" class="headerlink" title="流向"></a><strong>流向</strong></h4><ul>
-<li>输入流</li>
-<li>输出流</li>
-</ul>
-<h4 id="数据"><a href="#数据" class="headerlink" title="数据"></a><strong>数据</strong></h4><ul>
-<li>字节流—-二进制，可以包含一切文件</li>
-<li>字符流—-文本文件，只能处理纯文本</li>
-</ul>
-<h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a><strong>功能</strong></h4><ul>
-<li>节点流—-包裹源头</li>
-<li>处理流—-增强功能，提高性能</li>
-</ul>
-<h3 id="字符流与字节流"><a href="#字符流与字节流" class="headerlink" title="字符流与字节流"></a><strong>字符流与字节流</strong></h3><h4 id="字节流"><a href="#字节流" class="headerlink" title="字节流"></a><strong>字节流</strong></h4><ul>
-<li>输入流：InputStream/FileInputStream</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">read(<span class="keyword">byte</span>[] b);</span><br><span class="line"> 	read(<span class="keyword">byte</span>[] b, <span class="keyword">int</span> off, <span class="keyword">int</span> len);</span><br><span class="line"> 	close();</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>输出流：OutputStream/FileOutputStream</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">write(<span class="keyword">byte</span>[] b);</span><br><span class="line"> 	write(<span class="keyword">byte</span>[] b, <span class="keyword">int</span> off, <span class="keyword">int</span> len);</span><br><span class="line"> 	flush();</span><br><span class="line"> 	close();</span><br></pre></td></tr></table></figure>
-
-<h4 id="字符流"><a href="#字符流" class="headerlink" title="字符流"></a><strong>字符流</strong></h4><ul>
-<li>输入流：Reader/FileReader</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">read(<span class="keyword">char</span>[] cbuf);</span><br><span class="line">read(<span class="keyword">char</span>[] cbuf, <span class="keyword">int</span> off, <span class="keyword">int</span> len);</span><br><span class="line">close();</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>输出流：Writer/FileWriter</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">write(<span class="keyword">char</span>[] cbuf);</span><br><span class="line">write(<span class="keyword">char</span>[] cbuf, <span class="keyword">int</span> off, <span class="keyword">int</span> len);</span><br><span class="line">append(<span class="keyword">char</span> c);</span><br><span class="line">flush();</span><br><span class="line">close();</span><br></pre></td></tr></table></figure>
-
-<h3 id="经典步骤"><a href="#经典步骤" class="headerlink" title="经典步骤"></a><strong>经典步骤</strong></h3><ul>
-<li>建立联系</li>
-<li>选择流</li>
-<li>操作</li>
-<li>释放资源</li>
-</ul>
-<h1 id="字节流–Input-OutputStream、FileInputOutputStream"><a href="#字节流–Input-OutputStream、FileInputOutputStream" class="headerlink" title="字节流–Input/OutputStream、FileInputOutputStream"></a><strong>字节流–Input/OutputStream、FileInputOutputStream</strong></h1><p>字节流可以处理伊西起文件，包括二进制文件/音频/视频等</p>
-<h2 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a><strong>读取文件</strong></h2><ul>
-<li>建立联系–&gt;File 对象–源头</li>
-<li>选择流–&gt;文件输入流–InputStream/FileInputStream</li>
-<li>操作–&gt;read + 输出</li>
-<li>释放资源–&gt;close</li>
-</ul>
-<h2 id="写入文件"><a href="#写入文件" class="headerlink" title="写入文件"></a><strong>写入文件</strong></h2><ul>
-<li>建立联系–&gt;File 对象–源头、目的地</li>
-<li>选择流–&gt;文件输出流–OutputStream/FileOutputStream</li>
-<li>操作–&gt;write + flush</li>
-<li>释放资源–&gt;close</li>
-</ul>
-<h2 id="文件复制"><a href="#文件复制" class="headerlink" title="文件复制"></a><strong>文件复制</strong></h2><ul>
-<li>建立联系–&gt;File 对象–源头、目的地</li>
-<li>选择流–&gt;Input/OutputStream、FileInputOutputStream</li>
-<li>操作</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span>[] flush = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line"><span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span>((len = 输入流.read(<span class="keyword">byte</span>)) != -<span class="number">1</span>)</span><br><span class="line">	输出流.write(flush, <span class="number">0</span>, len);</span><br><span class="line">输出流.flush;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>释放资源</li>
-</ul>
-<h2 id="文件夹复制"><a href="#文件夹复制" class="headerlink" title="文件夹复制"></a><strong>文件夹复制</strong></h2><ul>
-<li>递归查找子孙文件/文件夹</li>
-<li>文件复制(IO 流复制)、文件夹创建</li>
-</ul>
-<h1 id="字符流–Reader-Writer、FileReader-FileWriter"><a href="#字符流–Reader-Writer、FileReader-FileWriter" class="headerlink" title="字符流–Reader/Writer、FileReader/FileWriter"></a><strong>字符流–Reader/Writer、FileReader/FileWriter</strong></h1><p>只能操作纯文本数据</p>
-<h2 id="纯文本读取"><a href="#纯文本读取" class="headerlink" title="纯文本读取"></a><strong>纯文本读取</strong></h2><ul>
-<li>建立联系–&gt;File 对象–源头</li>
-<li>选择流–&gt;字符输出流–Reader/FileReader</li>
-<li>操作–&gt;读取</li>
-<li>释放资源–&gt;close</li>
-</ul>
-<h2 id="纯文本写入"><a href="#纯文本写入" class="headerlink" title="纯文本写入"></a><strong>纯文本写入</strong></h2><ul>
-<li>建立联系–&gt;File 对象–目的地</li>
-<li>选择流–&gt;字符输入流–Writer/FileReader</li>
-<li>操作–&gt;write + flush</li>
-<li>关闭–&gt;close</li>
-</ul>
-<h1 id="处理流"><a href="#处理流" class="headerlink" title="处理流"></a><strong>处理流</strong></h1><p>用来增强功能、提高性能，处于节点流之上</p>
-<h2 id="缓冲流"><a href="#缓冲流" class="headerlink" title="缓冲流"></a><strong>缓冲流</strong></h2><ul>
-<li>字节缓冲流–BufferedInputStream/BufferedOutputStream</li>
-<li>字符缓冲流–BufferedReader/BufferedWriter</li>
-</ul>
-<h2 id="转换流"><a href="#转换流" class="headerlink" title="转换流"></a><strong>转换流</strong></h2><p>字节流转换为字符流，处理乱码</p>
-<h3 id="编码与解码"><a href="#编码与解码" class="headerlink" title="编码与解码"></a><strong>编码与解码</strong></h3><ul>
-<li>编码：字符–编码字符集–&gt;二进制</li>
-<li>解码：二进制–解码字符集–&gt;字符</li>
-</ul>
-<h3 id="乱码"><a href="#乱码" class="headerlink" title="乱码"></a><strong>乱码</strong></h3><ul>
-<li>编码与解码的字符集不一致</li>
-<li>字节缺少，长度丢失</li>
-<li>解决办法：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InputStreamReader(字节输入流, <span class="string">"解码集"</span>);</span><br><span class="line">OutputStreamWriter(字符输出流, <span class="string">"编码集"</span>);</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-12-3/44267583.jpg" alt><br><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-12-3/88652044.jpg" alt></p>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1591,7 +1493,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1617,7 +1519,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
