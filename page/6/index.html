@@ -234,6 +234,181 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2018/11/13/python-urllib库的使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2018/11/13/python-urllib库的使用/" class="post-title-link" itemprop="url">python-urllib库的使用</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-11-13 12:14:43" itemprop="dateCreated datePublished" datetime="2018-11-13T12:14:43+08:00">2018-11-13</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-15 10:03:38" itemprop="dateModified" datetime="2019-10-15T10:03:38+08:00">2019-10-15</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python-lib/" itemprop="url" rel="index">
+                    <span itemprop="name">Python lib</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Python-urllib库的介绍及使用"><a href="#Python-urllib库的介绍及使用" class="headerlink" title="Python urllib库的介绍及使用"></a>Python urllib库的介绍及使用</h1><p>@(python)[urllib]</p>
+<p><strong>urllib</strong>库，是 Python 内置的 HTTP 请求库 ，也就是说不需要额外安装即可使用。它包含如下 4 个模块：</p>
+<ul>
+<li><strong>request</strong> ：最基本的 HTTP 请求模块，可以用来模拟发送请求 。 就像在浏览器里输入网址然后回车一样，只需要给库方法传入 URL 以及额外的参数，就可以模拟实现这个过程；</li>
+<li><strong>error</strong> ：异常处理模块，如果出现请求错误 ， 我们可以捕获这些异常，然后进行重试或其他操作以保证程序不会意外终止；</li>
+<li><strong>parse</strong> ：一个工具模块，提供了许多 URL 处理方法，比如拆分、解析 、 合并等。</li>
+<li><strong>robotparse</strong>：主要是用来识别网站的 robots.txt 文件，然后判断哪些网站可以爬，哪些网站不可以爬，它其实用得比较少；</li>
+</ul>
+<p>接下来主要介绍前三个模块：<strong>request</strong>/<strong>error</strong>/<strong>parse</strong></p>
+<hr>
+<p>[TOC]</p>
+<h2 id="request–基本请求模块"><a href="#request–基本请求模块" class="headerlink" title="request–基本请求模块"></a>request–基本请求模块</h2><p>使用 urllib 的 request 模块 ，我们可以方便地实现请求的发送并得到响应 。 本节就来看下它的具用法。 </p>
+<h3 id="1-urlopen"><a href="#1-urlopen" class="headerlink" title="1. urlopen"></a>1. urlopen</h3><h4 id="urlopen-API"><a href="#urlopen-API" class="headerlink" title="urlopen API"></a>urlopen API</h4><p>urllib.request.urlopen(url, data=None, [timeout, ]*, cafile=None, capath=None, cadefault=False, context=None)</p>
+<h5 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h5><ul>
+<li>url: 具体请求的url</li>
+<li>data：data参数是可选的。如果要添加该参数，并且如果它是字节流编码格式的内容，即bytes类型，则需要通过bytes()方法转化。另外，如果传递了这个参数，则它的请求方式就不再是GET方式，而POST方式。</li>
+<li>timeout：timeout参数用于设置超时时间，单位为秒，如果请求超出了设置的这个时间，还没有得到响应，就会抛出异常。如果不指定该参数，就会使用全局默认时间。它支持HTTP/HTTPS/FTP请求。可以通过设置这个超时时间来控制一个网页如果长时间未响应，就跳过它的抓取 (利用 try - except 语句来实现 )</li>
+<li>cafile：指定CA证书</li>
+<li>capath：指定CA证书路径</li>
+<li>cadefault：弃用，默认为false</li>
+<li>context：必须是ssl.SSLContext类型，用来指定SSL设置</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># urlon测试代码</span></span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line">response = urllib.request.urlopen(<span class="string">'http://www.baidu.com'</span>)</span><br><span class="line">print(response.read().decode(<span class="string">'utf8'</span>))</span><br><span class="line">print(response.status) <span class="comment"># 输出响应状态</span></span><br><span class="line">print(response.getheaders()) <span class="comment"># 输出响应头信息</span></span><br><span class="line">print(response.getheader(<span class="string">'Server'</span>)) <span class="comment"># 输出某响应头一个具体信息，如Server</span></span><br><span class="line"><span class="comment"># data参数测试</span></span><br><span class="line">data = bytes(urllib.parse.urlencode(&#123;<span class="string">'word'</span>: <span class="string">'hello'</span>&#125;), encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">response = urllib.request.urlopen(<span class="string">'http://httpbin.org/post'</span>, data = data)</span><br><span class="line">print(response.read().decode(<span class="string">'utf-8'</span>))</span><br><span class="line"><span class="comment"># timeout参数测试</span></span><br><span class="line">response = urllib.request.urlopen(<span class="string">'http://www.baidu.com'</span>, timeout=<span class="number">0.01</span>)</span><br><span class="line">print(response.read().decode(<span class="string">'utf8'</span>))</span><br><span class="line"><span class="keyword">import</span> urllib.error</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    response = urllib.request.urlopen(<span class="string">'http://www.baidu.com'</span>, timeout=<span class="number">0.01</span>)</span><br><span class="line"><span class="keyword">except</span> urllib.error.URLError <span class="keyword">as</span> e:</span><br><span class="line">    <span class="keyword">if</span> isinstance(e.reason, socket.timeout):</span><br><span class="line">        print(<span class="string">'timeout'</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出：</strong><br><strong>获取网页源码/响应状态</strong><br><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-13/34725331.jpg" alt="enter image description here"><br><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-13/72483819.jpg" alt="enter image description here"><br><strong>data参数测试</strong><br><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-13/23750983.jpg" alt="enter image description here"><br><strong>timeout参数测试</strong><br><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-13/85235094.jpg" alt="enter image description here"><br><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-13/67726795.jpg" alt="enter image description here"></p>
+<h3 id="2-Requset"><a href="#2-Requset" class="headerlink" title="2.Requset"></a>2.Requset</h3><p>我们知道利用 urlopen()方法可以实现最基本请求的发起，但这几个简单的参数并不足以构建一个完整的请求 。 如果请求中需要加入 Headers 等信息，就可以利用更强大的 Request 类来构建</p>
+<h4 id="Request-API"><a href="#Request-API" class="headerlink" title="Request API"></a>Request API</h4><ul>
+<li>urllib. request. Request (ur1, data=None, headers={}, origin_req_host=None,unverifiable=False, method=None)<h4 id="参数说明："><a href="#参数说明：" class="headerlink" title="参数说明："></a>参数说明：</h4></li>
+<li><strong>url</strong>：待请求的url</li>
+<li><strong>data</strong>：data参数是可选的。如果要添加该参数，并且如果它是字节流编码格式的内容，即bytes类型，则需要通过bytes()方法转化。另外，如果传递了这个参数，则它的请求方式就不再是GET方式，而POST方式。</li>
+<li><strong>headers</strong>：一个字典，它就是请求头，我们可以在构造请求时通过headers参数直接构造，也可通过调用请求实例的add_header()法添加。添加请求头最常用的用法就是通过修改User-Agent来伪装浏览器，默认的User-Agent是Python-urllib，我们可通过修改它来伪装浏览器 。比如要伪装火狐浏览器，可以把它设置为：Mozilla/s.o (X11; U; Linux i686)  Gecko/20071127 Firefox/2.0.0.11</li>
+<li><strong>origin_req_host:</strong> 指请求方的 host 名称或者 IP 地址。</li>
+<li><strong>unversiable</strong>：表示这个请求是否是无法验证的，默认是 False ，意思就是说用户没有足够权限来选择接收这个请求的结果。 例如，我们请求一个 HTML 文档中的图片，但是我们没有向动抓取图像的权限，这时 unverifiable 的值就是 True 。</li>
+<li><strong>method</strong>：指示请求使用的方法，比如 GET 、 POST 和 PUT 等。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Requset测试代码</span></span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"></span><br><span class="line">url = <span class="string">'http://httpbin.org/post'</span></span><br><span class="line">headers = &#123;<span class="string">'User-Agent'</span>: <span class="string">'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'</span>,</span><br><span class="line">           <span class="string">'Host'</span>: <span class="string">'httpbin.org'</span>&#125;</span><br><span class="line">dict = &#123;<span class="string">'name'</span>: <span class="string">'Germey'</span>&#125;</span><br><span class="line">data = bytes(urllib.parse.urlencode(dict), encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">req = urllib.request.Request(url = url, data = data, headers = headers, method = <span class="string">'POST'</span>)</span><br><span class="line">response = urllib.request.urlopen(req)</span><br><span class="line">print(response.read().decode(<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>Request测试</strong><br><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-13/20751370.jpg" alt="enter image description here"></p>
+<h3 id="3-高级用法"><a href="#3-高级用法" class="headerlink" title="3.高级用法"></a>3.高级用法</h3><p>在上面的过程中，我们虽然可以构造请求，但是对于一些更高级的操作（比如 Cookies 处理 、 代理设置等），我们该怎么办呢？接下来，就需要更强大的工具 Handler 登场了 。 简而言之，我们可以把它理解为各种处理器，有专门处理登录验证的，有处理 Cookies 的，有处理代理设置的 。利用它们，我们几乎可以做到 HTTP请求中所有的事情。<br>首先，介绍一下 urllib.request模块里的 BaseHandler 类，它是所有其他 Handler 的父类，它提<br>供了最基本的方法，例如 default_open()、 protocol_request ()等<br>接下来，就有各种 Ha ndler 子类继承这个 BaseHandler 类，举例如下：</p>
+<ul>
+<li><strong>HTTPDefaultErrorHandler</strong>：用于处理HTTP响应错误，错误都会抛出 HTTP Error 类型的异常 </li>
+<li><strong>HTTPRedirectHandler</strong> ： 用于处理重定向 </li>
+<li><strong>HTTPCookieProcessor</strong> ：用于处理 Cookies </li>
+<li><strong>ProxyHandler</strong> ：用于设置代理 ， 默认代理为空 </li>
+<li><strong>HTTPPasswordMgr</strong> ：用于管理密码，它维护了用户名和密码的表 </li>
+<li><strong>HTTPBasicAuthHandler</strong> ：用于管理认证，如果一个链接打开时需要认证，那么可以用它来解决认证问题</li>
+</ul>
+<p>另一个比较重要的类就是 <strong>OpenerDirector</strong> ，我们可以称为 <strong>Opener</strong> 。 我们之前用过 urlopen()个方法，实际上它就是 urllib 为我们提供的一个 Opener。之前使用的 Request 和 urlopen()相当于类库为你封装好了极其常用的请求方法，利用它们可以完成基本的请求，但是现在不一样了，我们需要实现更高级的功能，所以需要深入一层进行配置，使用更底层的实例来完成操作，所以这里就用到了 Opener 。Opener 可以使用 open()法，返回的类型和 urlopen()如出一辙 。 那么，它和 Handler 有什么关系呢？简而言之，就是<strong>利用 Handler 来构建 Opener</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 高级用法测试代码</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证测试</span></span><br><span class="line"><span class="keyword">from</span> urllib.request <span class="keyword">import</span> HTTPPasswordMgrWithDefaultRealm, HTTPBasicAuthHandler, build_opener</span><br><span class="line"><span class="keyword">from</span> urllib.error <span class="keyword">import</span> URLError</span><br><span class="line"></span><br><span class="line">username = <span class="string">'username'</span></span><br><span class="line">password = <span class="string">'password'</span></span><br><span class="line">url = <span class="string">'http://localhost:5000/'</span></span><br><span class="line">p = HTTPPasswordMgrWithDefaultRealm()</span><br><span class="line">p.add_password(<span class="literal">None</span>, url, username, password)</span><br><span class="line">auth_handler = HTTPBasicAuthHandler(p)</span><br><span class="line">opener = build_opener(auth_handler)</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    result = opener.open(url)</span><br><span class="line">    html = result.read().decode(<span class="string">'utf-8'</span>)</span><br><span class="line">    print(html)</span><br><span class="line"><span class="keyword">except</span> URLError <span class="keyword">as</span> e:</span><br><span class="line">    print(e.reason)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 代理测试</span></span><br><span class="line"><span class="keyword">from</span> urllib.request <span class="keyword">import</span> ProxyHandler, build_opener</span><br><span class="line"></span><br><span class="line">proxy_handler = ProxyHandler(&#123;<span class="string">'http'</span>: <span class="string">'http://127.0.0.1:9743'</span>,</span><br><span class="line">                              <span class="string">'https'</span>: <span class="string">'https://127.0.0.1:9743'</span>&#125;)</span><br><span class="line">opener = build_opener(proxy_handler)</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    response = opener.open(<span class="string">'https://www.baidu.com'</span>)</span><br><span class="line">    print(response.read().decode(<span class="string">'utf8'</span>))</span><br><span class="line"><span class="keyword">except</span> URLError <span class="keyword">as</span> e:</span><br><span class="line">    print(e.reason)</span><br><span class="line"></span><br><span class="line"><span class="comment"># cookies测试</span></span><br><span class="line"><span class="keyword">import</span> http.cookiejar, urllib.request</span><br><span class="line"></span><br><span class="line">cookie = http.cookiejar.CookieJar()</span><br><span class="line">handler = urllib.request.HTTPCookieProcessor(cookie)</span><br><span class="line">opener = urllib.request.build_opener(handler)</span><br><span class="line">response = opener.open(<span class="string">'http://www.baidu.com'</span>)</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> cookie:</span><br><span class="line">    print(item.name + <span class="string">'='</span> + item.value)</span><br></pre></td></tr></table></figure>
+
+<h2 id="error–异常处理"><a href="#error–异常处理" class="headerlink" title="error–异常处理"></a>error–异常处理</h2><p>urllib 的 error 模块定义了由 req u est 模块产生的异常，如果出现了问题， request 模块便会抛出error 模块中定义的异常</p>
+<ul>
+<li>URLError<br>URLError类来自 urllib 库的 error 模块，它继承自 OS Error 类，是 error 异常模块的基类，由request模块生的异常都可以通过捕获这个类来处理。它具有一个reason属性，即返回错误的原因。</li>
+<li>HTTPError<br>它是URLError的子类，专门用来处理HTTP请求错误，比如请求失败等。它具有以下三个属性：<br>code：返回HTTP状态码-404/200等<br>reason：返回错误信息<br>headers：返回请求头<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># URLError测试代码</span></span><br><span class="line">print(<span class="string">'URLError test:'</span>)</span><br><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> request, error</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    response = request.urlopen(<span class="string">'http://hellomrrs.top:8086'</span>)</span><br><span class="line">    print(response.status)</span><br><span class="line"><span class="keyword">except</span> error.URLError <span class="keyword">as</span> e:</span><br><span class="line">    print(e.reason)</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    response = request.urlopen(<span class="string">'http://hellomrrs.top:8086/111.html'</span>)</span><br><span class="line">    print(response.status)</span><br><span class="line"><span class="keyword">except</span> error.URLError <span class="keyword">as</span> e:</span><br><span class="line">    print(e.reason)</span><br><span class="line"></span><br><span class="line"><span class="comment"># HTTPError测试代码</span></span><br><span class="line">print(<span class="string">'HTTPError test:'</span>)</span><br><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> request, error</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    response = request.urlopen(<span class="string">'http://hellomrrs.top:8086/111.html'</span>)</span><br><span class="line"><span class="keyword">except</span> error.HTTPError <span class="keyword">as</span> e:</span><br><span class="line">    print(e.reason, e.code, e.headers, sep=<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 较好的异常处理机制</span></span><br><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> request, error</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    response = request.urlopen(<span class="string">'http:hellomrrs.top:8086/111.html'</span>)</span><br><span class="line"><span class="keyword">except</span> error.HTTPError <span class="keyword">as</span> e:</span><br><span class="line">    print(e.reason, e.code, e.headers, sep=<span class="string">'\n'</span>)</span><br><span class="line"><span class="keyword">except</span> error.URLError <span class="keyword">as</span> e:</span><br><span class="line">    print(e.reason)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-13/26601279.jpg" alt="enter image description here"></p>
+<h2 id="parse–解析链接"><a href="#parse–解析链接" class="headerlink" title="parse–解析链接"></a>parse–解析链接</h2><p>urllib库里还提供了parse模块，它定义了处理URL的标准接口，例如实现URL各部分的抽取、合并以及链接转换。它支持如下协议的 URL 处理：file、ftp、 gopher、hdl、http、 https、imap 等。下面简单介绍一下常用的接口。</p>
+<p>观察以下URL: <a href="http://www.baidu.com/index/html;user?id=5#comment，urlparse可将其划分为6个部分：*://--*/--*;--*?--*#--*，即http://--www.baidu.com--index.html--user--id=5--comment，这六个部分分别称为：**scheme(协议)**--**netaloc(域名)**--**path(访问路径)**--**params(参数)**--**query(查询条件)**--**fragment(锚点-用来直接定位页面内部的下拉位置)**。所以，可以得出一个标准的链接格式：" target="_blank" rel="noopener">http://www.baidu.com/index/html;user?id=5#comment，urlparse可将其划分为6个部分：*://--*/--*;--*?--*#--*，即http://--www.baidu.com--index.html--user--id=5--comment，这六个部分分别称为：**scheme(协议)**--**netaloc(域名)**--**path(访问路径)**--**params(参数)**--**query(查询条件)**--**fragment(锚点-用来直接定位页面内部的下拉位置)**。所以，可以得出一个标准的链接格式：</a><br><strong>scheme://netaloc/path;params?query#fragment</strong></p>
+<ul>
+<li>urlparse(urlstring, scheme=”, allow_fragments=True)：该方法可以实现URL的识别和分段<ul>
+<li><strong>urlstring</strong>：待解析的URL</li>
+<li><strong>scheme</strong>：URL的协议类型，只有在urlstring中没有包含协议类型时才起作用</li>
+<li><strong>allow_fragments</strong>：是否忽略fragme，如果它被设置为False，fragment 部分就会被忽略，它会被解析为 path 、 parameters 或者 query 的一部分，而 fragment 部分为空。</li>
+</ul>
+</li>
+<li>urlunparse(parts)：它接受的是参数是一个可迭代对象，但它的长度必须是6</li>
+<li>urlsplit(urlstring, scheme=’’, allow_fragments=True)：该方法和urlparse方法十分相似，只不过它不再单独解析params这一部分，只返回5个结果。</li>
+<li>urlunsplit(parts)：与 urlunparse类似，它也是将链接各个部分组合成完整链接的方法，传入的参数也是一个可迭代对象，例如列表 、 元组等，唯一的区别是长度必须为 5。</li>
+<li>urljoin(base, url, allow_fragments=True)：base_url提供了三项内容scheme 、 netloc 和 path 。 如果这 3 项在新的链接里不存在，就予以补充；如果新的链接存在，就使用新的链接的部分。而 base_url中的params、query和fragment是不起作用的，最后返回结果 。</li>
+<li>urlencode(query, doseq=False, safe=’’, encoding=None, errors=None, quote_via=quote_plus)：在构造GET请求参数时非常有用</li>
+<li>parse_qs(qs, keep_blank_values=False, strict_parsing=False)：反序列化，将一串GET参数转回字典</li>
+<li>parse_qsl(qs, keep_blank_values=False, strict_parsing=False)：将参数转化为元组组成的列表</li>
+<li>quote(str)：将内容转化为URL编码的格式。URL 中带有中文参数时，有时可能会导致乱码的问题，此时用这个方法可以将巾文字符转化为 URL 编码。</li>
+<li>unquote(str)：对URL进行解码<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'urlparse测试'</span>)</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urlparse</span><br><span class="line"></span><br><span class="line">response = urlparse(<span class="string">'http://www.baidu.com/index.html;user?id=5#comment'</span>)</span><br><span class="line">print(type(response), response, sep=<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">'\nurlunparse测试'</span>)</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urlunparse</span><br><span class="line"></span><br><span class="line">data = [<span class="string">'http'</span>, <span class="string">'www.baidu.com'</span>, <span class="string">'index.html'</span>, <span class="string">'user'</span>, <span class="string">'a=6'</span>, <span class="string">'comment'</span>]</span><br><span class="line">print(urlunparse(data))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">'\nurlsplit测试'</span>)</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urlsplit</span><br><span class="line"></span><br><span class="line">response = urlsplit(<span class="string">'http://www.baidu.com/index.html;user?id=5#comment'</span>)</span><br><span class="line">print(response)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">'\nurlunsplit测试'</span>)</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urlunsplit</span><br><span class="line"></span><br><span class="line">data = [<span class="string">'http'</span>, <span class="string">'www.baidu.com'</span>, <span class="string">'index.html'</span>, <span class="string">'a=6'</span>, <span class="string">'comment'</span>]</span><br><span class="line">print(urlunsplit(data))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">'\nurljoin测试'</span>)</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urljoin</span><br><span class="line"></span><br><span class="line">print(urljoin(<span class="string">'http://www.baidu.com'</span>, <span class="string">'FAQ.html'</span>))</span><br><span class="line">print(urljoin(<span class="string">'http:'</span><span class="string">'www.baidu.com'</span>, <span class="string">'http://hellomrrs.top:8086/index.html'</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">'\nurlencode测试'</span>)</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urlencode</span><br><span class="line"></span><br><span class="line">params = &#123;<span class="string">'name'</span>: <span class="string">'germey'</span>, <span class="string">'age'</span>: <span class="number">22</span>&#125;</span><br><span class="line">base_url = <span class="string">'http://www.baidu.com?'</span></span><br><span class="line">url = base_url + urlencode(params)</span><br><span class="line">print(url)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">'\nparse_qs测试'</span>)</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> parse_qs</span><br><span class="line"></span><br><span class="line">query = <span class="string">'name=germey&amp;age=22'</span></span><br><span class="line">print(parse_qs(query))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">'\nparse_qsl测试'</span>)</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> parse_qsl</span><br><span class="line"></span><br><span class="line">query = <span class="string">'name=germey&amp;age=22'</span></span><br><span class="line">print(parse_qsl(query))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">'\nquote测试'</span>)</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> quote</span><br><span class="line"></span><br><span class="line">keyword = <span class="string">'壁纸'</span></span><br><span class="line">url = <span class="string">'http://www.baidu.com/s?wd='</span> + quote(keyword)</span><br><span class="line">print(url)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(<span class="string">'\nunquote测试'</span>)</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> unquote</span><br><span class="line"></span><br><span class="line">print(unquote(<span class="string">'http://www.baidu.com/s?wd=%E5%A3%81%E7%BA%B8'</span>))</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-13/32306346.jpg" alt="enter image description here"><br><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-11-13/78219128.jpg" alt="enter image description here"></p>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2018/11/12/MySQL高级-函数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -619,7 +794,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">54</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -645,7 +820,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-count">50</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>

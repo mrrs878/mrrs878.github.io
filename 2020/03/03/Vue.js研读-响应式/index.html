@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/avatar.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="响应式原理 Data通过Observer转换成了getter/setter的形式类追踪变化 当外界通过Watcher读取数据（Compile时会根据{}、v-*来创建Watcher）时会触发getter从而将Watcher添加到依赖中 当数据发生变化时，会触发setter，从而向Dep中的依赖（Watcher）发送通知 Wacher接收到通知后，会向外界发送通知，变化通知到外界后可能会触发视图更新">
+<meta name="keywords" content="Vue.js研读 响应式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue.js研读-1">
+<meta property="og:url" content="https://mrrs878.github.io/2020/03/03/Vue.js研读-响应式/index.html">
+<meta property="og:site_name" content="Mr.RS">
+<meta property="og:description" content="响应式原理 Data通过Observer转换成了getter/setter的形式类追踪变化 当外界通过Watcher读取数据（Compile时会根据{}、v-*来创建Watcher）时会触发getter从而将Watcher添加到依赖中 当数据发生变化时，会触发setter，从而向Dep中的依赖（Watcher）发送通知 Wacher接收到通知后，会向外界发送通知，变化通知到外界后可能会触发视图更新">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/vue-1.png">
+<meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/computed-0.png">
+<meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/computed-1.png">
+<meta property="og:updated_time" content="2020-04-18T13:12:09.009Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue.js研读-1">
+<meta name="twitter:description" content="响应式原理 Data通过Observer转换成了getter/setter的形式类追踪变化 当外界通过Watcher读取数据（Compile时会根据{}、v-*来创建Watcher）时会触发getter从而将Watcher添加到依赖中 当数据发生变化时，会触发setter，从而向Dep中的依赖（Watcher）发送通知 Wacher接收到通知后，会向外界发送通知，变化通知到外界后可能会触发视图更新">
+<meta name="twitter:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/vue-1.png">
+  <link rel="canonical" href="https://mrrs878.github.io/2020/03/03/Vue.js研读-响应式/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Vue.js研读-1 | Mr.RS</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.RS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Read The Fucking Source Code!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/03/Vue.js研读-响应式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            Vue.js研读-1
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-03 23:15:13" itemprop="dateCreated datePublished" datetime="2020-03-03T23:15:13+08:00">2020-03-03</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-18 21:12:09" itemprop="dateModified" datetime="2020-04-18T21:12:09+08:00">2020-04-18</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="响应式原理"><a href="#响应式原理" class="headerlink" title="响应式原理"></a>响应式原理</h2><p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/vue-1.png" alt="响应式管理"></p>
+<p>Data通过<code>Observer</code>转换成了<strong>getter/setter</strong>的形式类追踪变化</p>
+<p>当外界通过<code>Watcher</code>读取数据（Compile时会根据<strong>{}</strong>、<strong>v-*</strong>来创建Watcher）时会触发getter从而将Watcher添加到依赖中</p>
+<p>当数据发生变化时，会触发setter，从而向<code>Dep</code>中的依赖（Watcher）发送通知</p>
+<p>Wacher接收到通知后，会向外界发送通知，变化通知到外界后可能会触发视图更新，也有可能触发用户的某个回调函数</p>
+<h2 id="简易版响应式（Proxy-Observer-Watcher-Dep）"><a href="#简易版响应式（Proxy-Observer-Watcher-Dep）" class="headerlink" title="简易版响应式（Proxy + Observer/Watcher/Dep）"></a>简易版响应式（Proxy + Observer/Watcher/Dep）</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> uid = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parsePath</span>(<span class="params">obj, path</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (path === <span class="string">""</span>) <span class="keyword">return</span> obj</span><br><span class="line">    <span class="keyword">return</span> path.split(<span class="string">"."</span>).reduce(<span class="function">(<span class="params">data, current</span>) =&gt;</span> data[current], obj)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">defineReactive</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> data !== <span class="string">"object"</span>) <span class="keyword">return</span> data</span><br><span class="line">    <span class="keyword">let</span> dep = <span class="keyword">new</span> Dep()</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Proxy</span>(data, &#123;</span><br><span class="line">        <span class="keyword">set</span>: (target, prop, value, receiver) =&gt; &#123;</span><br><span class="line">            <span class="keyword">const</span> oldVal = target[prop]</span><br><span class="line">            <span class="keyword">const</span> res = <span class="built_in">Reflect</span>.set(target, prop, defineReactive(value), receiver)</span><br><span class="line">            <span class="keyword">if</span> (oldVal !== value) dep.notify()</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="keyword">get</span>: (target, prop, receiver) =&gt; &#123;</span><br><span class="line">            dep.depend()</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Reflect</span>.get(target, prop, receiver)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span> (vm) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> vm !== <span class="string">"object"</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">"vm must be an object"</span>)</span><br><span class="line">        <span class="keyword">this</span>.walk(vm)</span><br><span class="line">        <span class="keyword">return</span> defineReactive(vm)</span><br><span class="line">    &#125;</span><br><span class="line">    walk (vm) &#123;</span><br><span class="line">        <span class="built_in">Object</span>.keys(vm).forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">typeof</span> vm[item] === <span class="string">"object"</span>) <span class="keyword">this</span>.walk(vm[item])</span><br><span class="line">            vm[item] = defineReactive(vm[item])</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dep</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span> () &#123;</span><br><span class="line">        <span class="keyword">this</span>.id = uid++</span><br><span class="line">        <span class="keyword">this</span>.subs = []</span><br><span class="line">    &#125;</span><br><span class="line">    addSub (sub) &#123;</span><br><span class="line">        <span class="keyword">this</span>.subs.push(sub)</span><br><span class="line">    &#125;</span><br><span class="line">    depend () &#123;</span><br><span class="line">        Dep.target &amp;&amp; Dep.target.addDep(<span class="keyword">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    notify () &#123;</span><br><span class="line">        <span class="keyword">this</span>.subs.slice().forEach(<span class="function"><span class="params">item</span> =&gt;</span> item.update())</span><br><span class="line">    &#125;</span><br><span class="line">    removeSub (sub) &#123;</span><br><span class="line">        <span class="keyword">const</span> index = <span class="keyword">this</span>.subs.indexOf(sub)</span><br><span class="line">        index &gt; <span class="number">-1</span> &amp;&amp; <span class="keyword">this</span>.subs.splice(index, <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Watcher</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span> (vm, exp, cb) &#123;</span><br><span class="line">        <span class="keyword">this</span>.vm = vm</span><br><span class="line">        <span class="keyword">this</span>.exp = exp</span><br><span class="line">        <span class="keyword">this</span>.cb = cb</span><br><span class="line">        <span class="keyword">this</span>.deps = []</span><br><span class="line">        <span class="keyword">this</span>.depIds = <span class="keyword">new</span> <span class="built_in">Set</span>()</span><br><span class="line">        <span class="keyword">this</span>.value = <span class="keyword">this</span>.get() </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">get</span> () &#123;</span><br><span class="line">        Dep.target = <span class="keyword">this</span></span><br><span class="line">        <span class="keyword">let</span> value = parsePath(<span class="keyword">this</span>.vm, <span class="keyword">this</span>.exp)</span><br><span class="line">        Dep.target = <span class="literal">undefined</span></span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line">    &#125;</span><br><span class="line">    update () &#123;</span><br><span class="line">        <span class="keyword">const</span> oldValue = <span class="keyword">this</span>.value</span><br><span class="line">        <span class="keyword">this</span>.value = <span class="keyword">this</span>.get()</span><br><span class="line">        <span class="keyword">this</span>.cb.call(<span class="keyword">this</span>.vm, <span class="keyword">this</span>.value, oldValue)</span><br><span class="line">    &#125;</span><br><span class="line">    addDep (dep) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.depIds.has(dep.id)) <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">this</span>.depIds.add(dep.id)</span><br><span class="line">        <span class="keyword">this</span>.deps.push(dep)</span><br><span class="line">        dep.addSub(<span class="keyword">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    teardown () &#123;</span><br><span class="line">        <span class="keyword">this</span>.deps.forEach(<span class="function"><span class="params">item</span> =&gt;</span> item.removeSub(<span class="keyword">this</span>))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">watch</span>(<span class="params">vm, exp, cb, options = &#123;&#125;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> watcher = <span class="keyword">new</span> Watcher(vm, exp, cb)</span><br><span class="line">    <span class="keyword">if</span> (options.immediate) cb.call(vm, watcher.value)</span><br><span class="line">    <span class="keyword">return</span> watcher.teardown.bind(watcher)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123; Observer, watch &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./mvvm.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> data = <span class="keyword">new</span> Observer(&#123;</span></span><br><span class="line">        student: &#123;</span><br><span class="line"><span class="javascript">            name: <span class="string">"tom"</span>,</span></span><br><span class="line">            age: 23</span><br><span class="line">        &#125;,</span><br><span class="line">        address: &#123;</span><br><span class="line">            province: &#123;</span><br><span class="line">                id: 41,</span><br><span class="line"><span class="javascript">                view: <span class="string">"河南"</span></span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line"><span class="javascript">        friends: [ <span class="string">"zhangsan"</span>, <span class="string">"lisi"</span>, <span class="string">"wangwu"</span> ],</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="keyword">new</span> Watcher(data, <span class="string">"student"</span>, val =&gt; &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'update student'</span>, val)</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="keyword">new</span> Watcher(data, <span class="string">"student.name"</span>, val =&gt; &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'update student.name'</span>, val)</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="keyword">new</span> Watcher(data, <span class="string">"student.age"</span>, val =&gt; &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'update student.age'</span>, val)</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="keyword">new</span> Watcher(data, <span class="string">"address.province.id"</span>, val =&gt; &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"update address.province.id"</span>, val);</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="keyword">new</span> Watcher(data, <span class="string">"friends.length"</span>, val =&gt; &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'update student.friends'</span>, data.friends[val - <span class="number">1</span>]);</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> unwatch = watch(data, <span class="string">"address.province.view"</span>, val =&gt; &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">'address.province.view'</span>, val);</span></span><br><span class="line">    &#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="vm-watch-expOrFn-callback-options"><a href="#vm-watch-expOrFn-callback-options" class="headerlink" title="$vm.watch(expOrFn, callback, [options])"></a>$vm.watch(expOrFn, callback, [options])</h2><p>用于观察一个表达式或computed函数在Vue.js实例上的变化。回调函数调用时，会从参数中得到oldValue和newValue</p>
+<p>vm.$watch其实是对Watcher的一种封装，没有缓存性，通过Watcher完全可以实现vm.$watch的功能</p>
+<ol>
+<li>先执行new Watcher来实现vm.$watch的基本功能</li>
+<li>判断用户是否使用immediate参数，如果使用了则立即执行一次cb</li>
+<li>判断用户是否使用deep参数，如果使用除了要触发当前这个被监听数据的依赖收集的逻辑之外，还要把当前监听的这个值在内的所有子值都要触发一遍依赖收集逻辑</li>
+<li>返回一个函数unwatchFn，用于取消观察数据</li>
+</ol>
+<h2 id="vm-computed"><a href="#vm-computed" class="headerlink" title="$vm.computed"></a>$vm.computed</h2><p><code>computed</code>是定义在<code>vm</code>上的一个特殊的<code>getter</code>方法。之所以说特殊是因为在vm上定义<code>getter</code>方法时，<code>get</code>并不是由用户提供的函数，而是Vue.js内部的一个代理函数。在代理函数中可以结合<code>Watcher</code>实现缓存与收集依赖等功能。在模板中使用一个数据渲染视图时，如果这个数据恰好是计算属性，那么读取数据这个操作其实会触发计算属性的<code>getter</code>方法。</p>
+<p>当这个getter方法被触发时会做两件事：</p>
+<ol>
+<li>计算当前属性的值，此时会使用Watcher去观察计算属性中用到的所有其他数据的变化。同时将计算属性的Watcher的dirty属性设置为false，这样再次读取计算属性时将不再重新计算，除非计算属性所依赖的值发生了变化</li>
+<li>当计算属性中用到的树发生变化时，将得到通知从而进行重新渲染操作</li>
+</ol>
+<p>我们知道计算属性的结果会被缓存，且只有在计算属性所依赖的响应式属性或者计算属性的返回值发生变化时才会重新计算。这是结合<code>Watcher</code>的<code>dirty</code>属性来分辨的：当<code>dirty===true</code>时，说明需要重新计算“计算属性”的返回值；当计算属性中的内容发生变化后，计算属性的<code>Watcher</code>与组件的<code>Watcher</code>都会得到通知。计算属性的<code>Watcher</code>会将自己的<code>dirty</code>属性设置为true，当下一次读取计算属性时就会重新计算一次值。与此同时组件的<code>Watcher</code>也会得到通知，从而执行render函数进行重新渲染的操作。由于要重新执行<code>render</code>函数，所以会重新读取计算属性的值，这时候计算属性的Watcher已经把自己的<code>dirty</code>置为<code>true</code>，所以会重新计算一次计算属性的值用于本次渲染</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/computed-0.png" alt="computed原理0"></p>
+<p>这种方式实现的computed有一个弊端：只是观察它所用到的数据是否发生了变化，并<strong>没有真正去校验它自身的返回值是否有变化</strong>，所以当它所使用的数据发生变化后，组件<strong>总会重新走一遍渲染流程</strong>。</p>
+<p>为解决这个问题，新版计算属性做了一些改动：组件的Watcher不再观察计算属性用到的数据的变化，而是让计算属性的Watcher得到通知后计算一次计算属性的值，如果发现这一次计算属性的值与上一次计算出来的值不一样，再去主动通知组件的Watcher进行重新渲染操作。</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/computed-1.png" alt="computed原理1"></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Vue-js研读-响应式/" rel="tag"># Vue.js研读 响应式</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/03/02/Vue.js研读-基础/" rel="next" title="Vue.js研读-0">
+                  <i class="fa fa-chevron-left"></i> Vue.js研读-0
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/03/04/Vue.js研读-虚拟DOM/" rel="prev" title="Vue.js研读-2">
+                  Vue.js研读-2 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#响应式原理"><span class="nav-number">1.</span> <span class="nav-text">响应式原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简易版响应式（Proxy-Observer-Watcher-Dep）"><span class="nav-number">2.</span> <span class="nav-text">简易版响应式（Proxy + Observer/Watcher/Dep）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vm-watch-expOrFn-callback-options"><span class="nav-number">3.</span> <span class="nav-text">$vm.watch(expOrFn, callback, [options])</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vm-computed"><span class="nav-number">4.</span> <span class="nav-text">$vm.computed</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/imgs/avatar.png"
+      alt="Mr.RS">
+  <p class="site-author-name" itemprop="name">Mr.RS</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

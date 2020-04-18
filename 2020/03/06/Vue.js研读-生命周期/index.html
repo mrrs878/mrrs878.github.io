@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/avatar.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="生命周期概览 生命周期函数 beforeCreate new Vue()之后触发的第一个钩子，在当前阶段data、methods、computed以及watch上的数据和方法均不能被访问  created 在实例创建完成之后触发，当前阶段已完成了数据观测，也就是可以使用数据，更改数据，在这个更改数据不会触发updated函数。可以做一些初始数据的获取，在当前阶段无法获取DOM（可使用vm.$nex">
+<meta name="keywords" content="Vue.js研读 生命周期">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue.js研读-4">
+<meta property="og:url" content="https://mrrs878.github.io/2020/03/06/Vue.js研读-生命周期/index.html">
+<meta property="og:site_name" content="Mr.RS">
+<meta property="og:description" content="生命周期概览 生命周期函数 beforeCreate new Vue()之后触发的第一个钩子，在当前阶段data、methods、computed以及watch上的数据和方法均不能被访问  created 在实例创建完成之后触发，当前阶段已完成了数据观测，也就是可以使用数据，更改数据，在这个更改数据不会触发updated函数。可以做一些初始数据的获取，在当前阶段无法获取DOM（可使用vm.$nex">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/lifecycle.png">
+<meta property="og:updated_time" content="2020-03-11T06:26:35.903Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue.js研读-4">
+<meta name="twitter:description" content="生命周期概览 生命周期函数 beforeCreate new Vue()之后触发的第一个钩子，在当前阶段data、methods、computed以及watch上的数据和方法均不能被访问  created 在实例创建完成之后触发，当前阶段已完成了数据观测，也就是可以使用数据，更改数据，在这个更改数据不会触发updated函数。可以做一些初始数据的获取，在当前阶段无法获取DOM（可使用vm.$nex">
+<meta name="twitter:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/lifecycle.png">
+  <link rel="canonical" href="https://mrrs878.github.io/2020/03/06/Vue.js研读-生命周期/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Vue.js研读-4 | Mr.RS</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.RS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Read The Fucking Source Code!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/06/Vue.js研读-生命周期/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            Vue.js研读-4
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-06 23:29:53" itemprop="dateCreated datePublished" datetime="2020-03-06T23:29:53+08:00">2020-03-06</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-11 14:26:35" itemprop="dateModified" datetime="2020-03-11T14:26:35+08:00">2020-03-11</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="生命周期概览"><a href="#生命周期概览" class="headerlink" title="生命周期概览"></a>生命周期概览</h2><p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/lifecycle.png" alt="生命周期"></p>
+<h2 id="生命周期函数"><a href="#生命周期函数" class="headerlink" title="生命周期函数"></a>生命周期函数</h2><ul>
+<li><p>beforeCreate</p>
+<p><code>new Vue()</code>之后触发的第一个钩子，在当前阶段<code>data</code>、methods、<code>computed</code>以及watch上的数据和方法均不能被访问</p>
+</li>
+<li><p>created</p>
+<p>在实例创建完成之后触发，当前阶段已完成了数据观测，也就是可以使用数据，更改数据，在这个更改数据不会触发<code>updated</code>函数。可以做一些<strong>初始数据的获取</strong>，在当前阶段无法获取DOM（可使用vm.$nextTick）</p>
+</li>
+<li><p>beforeMounte</p>
+<p>发生在挂载之前，在这之前template模板已导入渲染函数编译。而当前阶段虚拟DOM已创建完成，即将开始渲染。在此时也可以对数据进行更改，不会触发<code>updated</code></p>
+</li>
+<li><p>mounted</p>
+<p>在挂载之后被触发。在当前阶段，真实的DOM被挂载完毕，数据完成双向绑定，可以访问到DOM阶段，使用$ref属性对DOM进行操作</p>
+</li>
+<li><p>beforeUpdate</p>
+<p>在界面发生更新之前被触发。也就是响应式数据发生改变之前、虚拟DOM重新渲染之前被触发，可以在此阶段进行更改数据，不会造成重渲染</p>
+</li>
+<li><p>updated</p>
+<p>在发生更新之后被触发。当前阶段DOM已完成更新。要注意的是避免在此期间更改数据，因为这可能会导致无限循环的更新</p>
+</li>
+<li><p>beforeDestory</p>
+<p>在实例被销毁之前触发。在当前阶段实例完全可以被使用，可以在此阶段做些善后工作，如清除定时器</p>
+</li>
+<li><p>destoryed</p>
+<p>在实例被销毁之后触发。这个时候只剩下DOM，组件已被拆解，数据绑定被卸载、监听被移除、子实例也统统被销毁</p>
+</li>
+</ul>
+<h2 id="组件的生命周期函数调用顺序"><a href="#组件的生命周期函数调用顺序" class="headerlink" title="组件的生命周期函数调用顺序"></a>组件的生命周期函数调用顺序</h2><ul>
+<li><p>加载渲染顺序</p>
+<p>父beforeCreate👉父created👉父beforeMmount👉子beforeCreate👉子created👉子beforeMount👉子mounted👉父mounted</p>
+</li>
+<li><p>更新顺序</p>
+<p>父beforeUpdate👉子beforeUpdate👉子updated👉父updated</p>
+</li>
+<li><p>销毁顺序</p>
+<p>父beforeDestory👉子beforeDestory👉子destoryed👉父destoryed</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Vue-js研读-生命周期/" rel="tag"># Vue.js研读 生命周期</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/03/05/Vue.js研读-模板编译/" rel="next" title="Vue.js研读-3">
+                  <i class="fa fa-chevron-left"></i> Vue.js研读-3
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/03/09/vue-router剖析/" rel="prev" title="vue-router剖析">
+                  vue-router剖析 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期概览"><span class="nav-number">1.</span> <span class="nav-text">生命周期概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期函数"><span class="nav-number">2.</span> <span class="nav-text">生命周期函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件的生命周期函数调用顺序"><span class="nav-number">3.</span> <span class="nav-text">组件的生命周期函数调用顺序</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/imgs/avatar.png"
+      alt="Mr.RS">
+  <p class="site-author-name" itemprop="name">Mr.RS</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
