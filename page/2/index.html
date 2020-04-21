@@ -234,6 +234,245 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/02/浏览器相关-存储/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2020/04/02/浏览器相关-存储/" class="post-title-link" itemprop="url">浏览器相关-存储</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-02 22:49:39" itemprop="dateCreated datePublished" datetime="2020-04-02T22:49:39+08:00">2020-04-02</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-08 23:18:46" itemprop="dateModified" datetime="2020-04-08T23:18:46+08:00">2020-04-08</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/浏览器/" itemprop="url" rel="index">
+                    <span itemprop="name">浏览器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>关于存储的问题都会涉及到三个问题:</p>
+<ol>
+<li>存储场所</li>
+<li>存储空间</li>
+<li>存储时间</li>
+</ol>
+<p>(在哪儿存储，多少数据，到什么时候)这些特性决定了不同方案的用途</p>
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><ul>
+<li><p>WHAT</p>
+<p><strong>Cookie指某些网站为了辨别用户身份而储存在用户本地终端上的数据(通常经过加密)。 cookie是服务端生成，客户端进行维护和存储</strong>。通过cookie,可以让服务器知道请求是来源哪个客户端，就可以进行客户端状态的维护，比如登陆后刷新，请求头就会携带登陆时response header中的set-cookie,Web服务器接到请求时也能读出cookie的值，根据cookie值的内容就可以判断和恢复一些用户的信息状态。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/3/21/1699f22b7029ca14?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="cookie的原理"></p>
+</li>
+<li><p>WHY</p>
+<p>cookie的本职工作并非进行本地存储，而是<strong>维持状态</strong>。因为HTTP协议是无状态的，HTTP协议自身不对请求和响应之间的通信状态进行保存，通俗来说，服务器不知道用户上一次做了什么，这严重阻碍了<strong>交互式Web程序</strong>的实现，于是就诞生了cookie。他就是用来绕开HTTP的无状态性的“额外手段”之一。服务器可以设置或读取cookie中包含信息，借此维护用户跟服务器会话的状态</p>
+<p>cookie的缺陷：</p>
+<ul>
+<li>cookie不够大，各浏览器的cookie每一个<code>name=value</code>的value值大概在4k，所以4k并不是一个域名下所有的cookie共享的,而是一个name的大小。</li>
+<li>过多的 Cookie 会带来巨大的性能浪费，每次请求都会携带cookie</li>
+<li>安全性较差，由于在HTTP请求中的Cookie是明文传递的，所以安全性成问题，除非用HTTPS</li>
+</ul>
+</li>
+<li><p>HOW</p>
+<p>第一次访问网站的时候，浏览器发出请求，服务器响应请求后，会在响应头里面添加一个Set-Cookie选项，将cookie放入到响应请求中，在浏览器第二次发请求的时候，会通过Cookie请求头部将Cookie信息发送给服务器，服务端会辨别用户身份，另外，Cookie的过期时间、域、路径、有效期、适用站点都可以根据需要来指定。</p>
+<p>cookie的生成方式主要有两种：</p>
+<ol>
+<li><p><code>http response header</code>中的<code>set-cookie</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Set</span>-Cookie: id=a3fWa; Expires=Wed, <span class="number">21</span> Oct <span class="number">2019</span> <span class="number">22</span>:<span class="number">28</span>:<span class="number">00</span> GMT;<span class="comment">//可以指定一个特定的过期时间（Expires）或有效期（Max-Age）</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>js中通过<code>document.cookie</code>可以读写cookie，以键值对的形式展示</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.cookie = <span class="string">"userName=mrrs878"</span></span><br><span class="line"><span class="built_in">document</span>.cookie = <span class="string">"age=23"</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>常用后缀及其含义：</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>value</td>
+<td>如果用于保存用户登录态，应该将值加密，不能使用明文的用户标识</td>
+</tr>
+<tr>
+<td>http-only</td>
+<td>不能通过JS访问cookie，减少XSS攻击</td>
+</tr>
+<tr>
+<td>secure</td>
+<td>只能在协议为HTTPS的请求中携带</td>
+</tr>
+<tr>
+<td>same-site</td>
+<td>规定浏览器不能再跨域请求中携带cookie，减少CSRF攻击</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h2 id="WebStorage"><a href="#WebStorage" class="headerlink" title="WebStorage"></a>WebStorage</h2><p>为了弥补 Cookie 的局限性，让“专业的人做专业的事情”，Web Storage 出现了。<strong>HTML5中新增了本地存储的解决方案—-Web Storage，它分成两类：sessionStorage和localStorage</strong>。这样有了WebStorage后，cookie能只做它应该做的事情了——作为客户端与服务器交互的通道，保持客户端状态。</p>
+<h3 id="LocalStorage"><a href="#LocalStorage" class="headerlink" title="LocalStorage"></a>LocalStorage</h3><p>特点：</p>
+<ul>
+<li>持久化存储</li>
+<li>数据大小限制提升到5M</li>
+<li>仅在客户端使用，不与服务器通信</li>
+</ul>
+<p>使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置数据</span></span><br><span class="line">localStorage.setItem(<span class="string">"key"</span>,<span class="string">"value"</span>);</span><br><span class="line"><span class="comment">// 读取数据</span></span><br><span class="line">localStorage.getItem(<span class="string">"key"</span>)；</span><br></pre></td></tr></table></figure>
+
+<p>使用场景：</p>
+<p>存储一些稳定的资源，如图片转为base64存储在本地加快访问</p>
+<h3 id="sessionStorage"><a href="#sessionStorage" class="headerlink" title="sessionStorage"></a>sessionStorage</h3><p>特点：</p>
+<ul>
+<li>会话级别的存储（包括父页面生成的新标签页）</li>
+<li>数据大小限制提升到5M</li>
+<li>仅在客户端使用，不与服务器通信</li>
+</ul>
+<p>使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sessionStorage.setItem(<span class="string">'key'</span>, <span class="string">'value'</span>)</span><br><span class="line">sessionStorage.getItem(<span class="string">'key'</span>, <span class="string">'value'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>使用场景：</p>
+<p>对表单信息进行维护，比如刷新时，表单信息不丢失</p>
+<h2 id="cookie、localstorage、sessionstorage的区别"><a href="#cookie、localstorage、sessionstorage的区别" class="headerlink" title="cookie、localstorage、sessionstorage的区别"></a>cookie、localstorage、sessionstorage的区别</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>cookie</th>
+<th>localStorage</th>
+<th>sessionStorage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>由谁初始化</td>
+<td>客户端或服务器，服务器可以使用Set-Cookie请求头</td>
+<td>客户端</td>
+<td>客户端</td>
+</tr>
+<tr>
+<td>存储位置</td>
+<td>客户端</td>
+<td>客户端</td>
+<td>客户端</td>
+</tr>
+<tr>
+<td>过期时间</td>
+<td>手动设置</td>
+<td>无</td>
+<td>当前会话</td>
+</tr>
+<tr>
+<td>在当前会话中保持不变</td>
+<td>取决过期时间</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>是否随着请求发送给服务器</td>
+<td>是</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>容量</td>
+<td>4Kb(单个name)</td>
+<td>5Mb(单个域名)</td>
+<td>5Mb(单个域名)</td>
+</tr>
+<tr>
+<td>访问权限</td>
+<td>任意窗口</td>
+<td>任意窗口</td>
+<td>当前窗口</td>
+</tr>
+</tbody></table>
+<h2 id="IndexedDB"><a href="#IndexedDB" class="headerlink" title="IndexedDB"></a>IndexedDB</h2><p>IndexedDB 是一种低级API，<strong>用于客户端存储大量结构化数据(包括文件和blobs)</strong>。该API使用索引来实现对该数据的高性能搜索。IndexedDB 是一个运行在浏览器上的非关系型数据库。</p>
+<p>特点：</p>
+<ul>
+<li>键值对储存</li>
+<li>异步</li>
+<li>事务</li>
+<li>同源限制</li>
+<li>支持二进制存储</li>
+</ul>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/01/HTML相关-0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -918,7 +1157,7 @@
         <h1 class="post-title" itemprop="name headline">
           
             
-            <a href="/2020/03/06/Vue.js研读-生命周期/" class="post-title-link" itemprop="url">Vue.js研读-4</a>
+            <a href="/2020/03/06/Vue.js研读-生命周期/" class="post-title-link" itemprop="url">Vue.js研读-生命周期</a>
           
         </h1>
 
@@ -944,7 +1183,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-11 14:26:35" itemprop="dateModified" datetime="2020-03-11T14:26:35+08:00">2020-03-11</time>
+                <time title="修改时间：2020-04-21 22:35:17" itemprop="dateModified" datetime="2020-04-21T22:35:17+08:00">2020-04-21</time>
               </span>
             
           
@@ -1051,7 +1290,7 @@
         <h1 class="post-title" itemprop="name headline">
           
             
-            <a href="/2020/03/05/Vue.js研读-模板编译/" class="post-title-link" itemprop="url">Vue.js研读-3</a>
+            <a href="/2020/03/05/Vue.js研读-模板编译/" class="post-title-link" itemprop="url">Vue.js研读-模板编译</a>
           
         </h1>
 
@@ -1077,7 +1316,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-11 11:17:01" itemprop="dateModified" datetime="2020-03-11T11:17:01+08:00">2020-03-11</time>
+                <time title="修改时间：2020-04-21 22:35:22" itemprop="dateModified" datetime="2020-04-21T22:35:22+08:00">2020-04-21</time>
               </span>
             
           
@@ -1178,7 +1417,7 @@
         <h1 class="post-title" itemprop="name headline">
           
             
-            <a href="/2020/03/04/Vue.js研读-虚拟DOM/" class="post-title-link" itemprop="url">Vue.js研读-2</a>
+            <a href="/2020/03/04/Vue.js研读-虚拟DOM/" class="post-title-link" itemprop="url">Vue.js研读-虚拟DOM</a>
           
         </h1>
 
@@ -1204,7 +1443,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-11 16:23:19" itemprop="dateModified" datetime="2020-03-11T16:23:19+08:00">2020-03-11</time>
+                <time title="修改时间：2020-04-21 22:35:07" itemprop="dateModified" datetime="2020-04-21T22:35:07+08:00">2020-04-21</time>
               </span>
             
           
@@ -1301,7 +1540,7 @@
         <h1 class="post-title" itemprop="name headline">
           
             
-            <a href="/2020/03/03/Vue.js研读-响应式/" class="post-title-link" itemprop="url">Vue.js研读-1</a>
+            <a href="/2020/03/03/Vue.js研读-响应式/" class="post-title-link" itemprop="url">Vue.js研读-响应式</a>
           
         </h1>
 
@@ -1327,7 +1566,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-18 21:12:09" itemprop="dateModified" datetime="2020-04-18T21:12:09+08:00">2020-04-18</time>
+                <time title="修改时间：2020-04-21 22:35:13" itemprop="dateModified" datetime="2020-04-21T22:35:13+08:00">2020-04-21</time>
               </span>
             
           
@@ -1405,116 +1644,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/02/Vue.js研读-基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2020/03/02/Vue.js研读-基础/" class="post-title-link" itemprop="url">Vue.js研读-0</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-02 23:21:38" itemprop="dateCreated datePublished" datetime="2020-03-02T23:21:38+08:00">2020-03-02</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-11 17:40:10" itemprop="dateModified" datetime="2020-03-11T17:40:10+08:00">2020-03-11</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue.js</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Document-createDocumentFragment"><a href="#Document-createDocumentFragment" class="headerlink" title="Document.createDocumentFragment()"></a>Document.createDocumentFragment()</h2><p><code>DocumentFragments</code> 是DOM节点。它们不是主DOM树的一部分。通常的用例是创建文档片段，将元素附加到文档片段，然后将文档片段附加到DOM树。在DOM树中，文档片段被其所有的子元素所代替。</p>
-<p>因为文档片段存在于<strong>内存中</strong>，并不在DOM树中，所以将子元素插入到文档片段时不会引起页面<a href="https://developer.mozilla.org/zh-CN/docs/Glossary/Reflow" target="_blank" rel="noopener">回流</a>（对元素位置和几何上的计算）。因此，使用文档片段通常会带来更好的性能。</p>
-<h2 id="node-nodeType"><a href="#node-nodeType" class="headerlink" title="node.nodeType"></a>node.nodeType</h2><p>1 元素</p>
-<p>2 属性</p>
-<p>3 文本</p>
-<p>8 注释</p>
-<p>9 document</p>
-<h2 id="node-textContext、node-innerText"><a href="#node-textContext、node-innerText" class="headerlink" title="node.textContext、node.innerText"></a>node.textContext、node.innerText</h2><p><code>textContent</code>会获取所有元素的内容，包括<code>script</code>和<code>style</code>元素。然而<code>innerText</code>只展示给人看的元素</p>
-<p><code>textContext</code>会返回节点中的每一个元素，相反，<code>innerText</code>受<code>CSS</code>样式的影响，不会返回隐藏元素的文本，并且会触发<a href="https://developer.mozilla.org/zh-CN/docs/Glossary/Reflow" target="_blank" rel="noopener">回流</a>去确保是最新的计算样式</p>
-<p>与<code>textContext</code>不同的是，在IE11以及下版本中，对<code>innerText</code>进行修改，不仅会移除当前元素的子节点，而且会永久性的破坏所有后代文本节点，在之后不可能再次将节点到任何其他元素或同同一元素</p>
-<h2 id="通过字符串路径获取对象属性的简单方法（暂不支持-）"><a href="#通过字符串路径获取对象属性的简单方法（暂不支持-）" class="headerlink" title="通过字符串路径获取对象属性的简单方法（暂不支持[]）"></a>通过字符串路径获取对象属性的简单方法（暂不支持[]）</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parsePath</span> (<span class="params">obj, path</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> path.split(<span class="string">"."</span>).reduce(<span class="function">(<span class="params">data, current</span>) =&gt;</span> data[current], obj)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj1 = &#123;</span><br><span class="line">    tom: &#123;</span><br><span class="line">        name: <span class="string">"tom"</span>,</span><br><span class="line">        age: <span class="number">23</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> res = parsePath(obj1, <span class="string">"tom.name"</span>)</span><br><span class="line"><span class="built_in">console</span>.log(res);</span><br><span class="line"><span class="comment">// tom</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="e-target和e-currentTarget"><a href="#e-target和e-currentTarget" class="headerlink" title="e.target和e.currentTarget"></a>e.target和e.currentTarget</h2><p>e.target指向触发事件的对象</p>
-<p>e.currentTarget指向添加监听事件的对象</p>
-<h2 id="Vue-js整体流程"><a href="#Vue-js整体流程" class="headerlink" title="Vue.js整体流程"></a>Vue.js整体流程</h2><p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/vue-4.png" alt="Vue.js整体流程"></p>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1567,7 +1696,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1580,7 +1709,7 @@
             <a href="/categories/">
           
         
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>

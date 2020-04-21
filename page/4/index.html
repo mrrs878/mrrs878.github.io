@@ -234,6 +234,205 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/01/14/go-基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2020/01/14/go-基础/" class="post-title-link" itemprop="url">go-极速入门</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-01-14 13:43:45" itemprop="dateCreated datePublished" datetime="2020-01-14T13:43:45+08:00">2020-01-14</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-06 17:25:31" itemprop="dateModified" datetime="2020-02-06T17:25:31+08:00">2020-02-06</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/go/" itemprop="url" rel="index">
+                    <span itemprop="name">go</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="依赖包管理工具"><a href="#依赖包管理工具" class="headerlink" title="依赖包管理工具"></a>依赖包管理工具</h1><ul>
+<li><p>dep<br>未完待续…</p>
+</li>
+<li><p>go vendor<br>未完待续…</p>
+</li>
+<li><p>glide<br>未完待续…</p>
+</li>
+<li><p><strong>go modules</strong></p>
+<p>伴随Go 1.11出现，<strong>官方推荐</strong></p>
+</li>
+</ul>
+<h1 id="go-mod-命令"><a href="#go-mod-命令" class="headerlink" title="go mod 命令"></a>go mod 命令</h1><ul>
+<li><p><code>go mod tidy</code></p>
+<p>拉取缺少的模块，移除不用的模块</p>
+</li>
+<li><p><code>go mod vandor</code></p>
+<p>将依赖复制到vendor下</p>
+</li>
+<li><p><code>go mod download</code></p>
+<p>下载依赖包</p>
+</li>
+<li><p><code>go mod verify</code></p>
+<p>检测依赖</p>
+</li>
+<li><p><code>go mod graph</code></p>
+<p>打印模块依赖图</p>
+</li>
+</ul>
+<h1 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h1><h2 id="切片就像数组的引用"><a href="#切片就像数组的引用" class="headerlink" title="切片就像数组的引用"></a>切片就像数组的引用</h2><h2 id="切片拥有-长度-和-容量"><a href="#切片拥有-长度-和-容量" class="headerlink" title="切片拥有 长度 和 容量"></a>切片拥有 <em>长度</em> 和 <em>容量</em></h2><ul>
+<li>切片的长度就是它所包含的元素个数。</li>
+<li>切片的容量是从它的第一个元素开始数，到其底层数组元素末尾的个数。</li>
+<li>切片 s 的长度和容量可通过表达式 <code>len(s)</code> 和 <code>cap(s)</code> 来获取。</li>
+</ul>
+<h2 id="切片可以用内建函数-make-来创建，这也是创建动态数组的方式。make-函数会分配一个元素为零值的数组并返回一个引用了它的切片："><a href="#切片可以用内建函数-make-来创建，这也是创建动态数组的方式。make-函数会分配一个元素为零值的数组并返回一个引用了它的切片：" class="headerlink" title="切片可以用内建函数 make 来创建，这也是创建动态数组的方式。make 函数会分配一个元素为零值的数组并返回一个引用了它的切片："></a>切片可以用内建函数 <code>make</code> 来创建，这也是创建动态数组的方式。<code>make</code> 函数会分配一个元素为零值的数组并返回一个引用了它的切片：</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">5</span>)  <span class="comment">// len(a)=5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 要指定它的容量，需向 make 传入第三个参数：</span></span><br><span class="line">b := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">0</span>, <span class="number">5</span>) <span class="comment">// len(b)=0, cap(b)=5</span></span><br><span class="line">b = b[:<span class="built_in">cap</span>(b)] <span class="comment">// len(b)=5, cap(b)=5</span></span><br><span class="line">b = b[<span class="number">1</span>:]      <span class="comment">// len(b)=4, cap(b)=4</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="向切片追加元素"><a href="#向切片追加元素" class="headerlink" title="向切片追加元素"></a>向切片追加元素</h2><p>append 的第一个参数 s 是一个元素类型为 T 的切片，其余类型为 T 的值将会追加到该切片的末尾。append 的结果是一个包含原切片所有元素加上新添加元素的切片。当 s 的底层数组太小，不足以容纳所有给定的值时，它就会分配一个(<strong>cap值翻倍</strong>)更大的数组。返回的切片会指向这个新分配的数组。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> s []<span class="keyword">int</span></span><br><span class="line">    printSlice(s)</span><br><span class="line">    <span class="comment">// len=0 cap=0 []</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// cap不够用——&gt;cap翻倍——&gt;cap=2</span></span><br><span class="line">	s = <span class="built_in">append</span>(s, <span class="number">0</span>)</span><br><span class="line">    printSlice(s)</span><br><span class="line">    <span class="comment">// len=1 cap=2 [0]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// cap够用——&gt;保持不变——&gt;cap=2</span></span><br><span class="line">	s = <span class="built_in">append</span>(s, <span class="number">1</span>)</span><br><span class="line">    printSlice(s)</span><br><span class="line">    <span class="comment">// len=2 cap=2 [0 1]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// cap不够用——&gt;cap翻倍——&gt;cap=8</span></span><br><span class="line">	s = <span class="built_in">append</span>(s, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">    printSlice(s)</span><br><span class="line">    <span class="comment">// len=5 cap=8 [0 1 2 3 4]</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// cap够用——&gt;cap保持不变——&gt;cap=8</span></span><br><span class="line">    s = <span class="built_in">append</span>(s, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>)</span><br><span class="line">    printSlice(s)</span><br><span class="line">    <span class="comment">// len=8 cap=8 [0 1 2 3 4 5 6 7]</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">printSlice</span><span class="params">(s []<span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	fmt.Printf(<span class="string">"len=%d cap=%d %v\n"</span>, <span class="built_in">len</span>(s), <span class="built_in">cap</span>(s), s)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="map-无序的-key-value-数据结构"><a href="#map-无序的-key-value-数据结构" class="headerlink" title="map-无序的 key-value 数据结构"></a><code>map</code>-无序的 <code>key-value</code> 数据结构</h1><p>map集合中的 <code>key/value</code> 可以是任意类型，但所有<code>key</code>必须同属于一种数据类型，所有的<code>value</code>必须同属于一种数据类型。<code>key</code> 和 <code>value</code> 的数据类型可以不相同</p>
+<h1 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a><code>for</code>循环</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">person := [<span class="number">3</span>]<span class="keyword">string</span> &#123; <span class="string">"tom"</span>, <span class="string">"john"</span>, <span class="string">"jerry"</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k, v := <span class="keyword">range</span> person &#123;</span><br><span class="line">  fmt.Printf(<span class="string">"person[%d]: %s\n"</span>, k, v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="go关键字"><a href="#go关键字" class="headerlink" title="go关键字"></a><code>go</code>关键字</h1><p>在go关键字后面加一个函数，就可以创建一个线程，函数可以为已经写好的函数，也可以是匿名函数</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  fmt.Printf(<span class="string">"main start"</span>)</span><br><span class="line">  <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">    fmt.Println(<span class="string">"goroutine"</span>)</span><br><span class="line">  &#125;()</span><br><span class="line">  time.sleep(<span class="number">1</span> * time.Second)</span><br><span class="line">  fmt.Printf(<span class="string">"main end"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="chan-类似于队列，遵循先进先出的规则"><a href="#chan-类似于队列，遵循先进先出的规则" class="headerlink" title="chan-类似于队列，遵循先进先出的规则"></a><code>chan</code>-类似于队列，遵循先进先出的规则</h1><h2 id="声明chan"><a href="#声明chan" class="headerlink" title="声明chan"></a>声明<code>chan</code></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 声明不带缓冲的通道</span></span><br><span class="line">ch1 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明带10个缓冲的通道</span></span><br><span class="line">ch2 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明只读通道</span></span><br><span class="line">ch3 := <span class="built_in">make</span>(&lt;-<span class="keyword">chan</span> <span class="keyword">string</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明只写通道</span></span><br><span class="line">ch4 := <span class="built_in">make</span>(<span class="keyword">chan</span>&lt;- <span class="keyword">string</span>)</span><br></pre></td></tr></table></figure>
+
+<p>不带缓冲的通道，进何处都会阻塞<br>带缓冲的通道，进一次长度+1，出一次长度-1，如果长度等于缓冲区长度时，再进就会阻塞</p>
+<h2 id="写入chan"><a href="#写入chan" class="headerlink" title="写入chan"></a>写入<code>chan</code></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ch1 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">10</span>)</span><br><span class="line">ch1 &lt;- <span class="string">"a"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="读取chan"><a href="#读取chan" class="headerlink" title="读取chan"></a>读取<code>chan</code></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val, ok := &lt;- ch1</span><br><span class="line">val := &lt;- ch1</span><br></pre></td></tr></table></figure>
+
+<h2 id="关闭chan"><a href="#关闭chan" class="headerlink" title="关闭chan"></a>关闭<code>chan</code></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">close</span>(<span class="keyword">chan</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">productor</span><span class="params">(ch <span class="keyword">chan</span> <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">  fmt.Println(<span class="string">"producer start"</span>)</span><br><span class="line">  ch &lt;- <span class="string">"a"</span></span><br><span class="line">  ch &lt;- <span class="string">"b"</span></span><br><span class="line">  ch &lt;- <span class="string">"c"</span></span><br><span class="line">  ch &lt;- <span class="string">"d"</span></span><br><span class="line">  fmt.Println(<span class="string">"producer end"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  fmt.Println(<span class="string">"main start"</span>)</span><br><span class="line">  ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">3</span>)</span><br><span class="line">  <span class="keyword">go</span> producer(ch)</span><br><span class="line"></span><br><span class="line">  time.Sleep(<span class="number">1</span> * time.Second)</span><br><span class="line">  fmt.Println(<span class="string">"main end"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main start</span></span><br><span class="line"><span class="comment">// producer start  发生阻塞</span></span><br><span class="line"><span class="comment">// main end</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="defer"><a href="#defer" class="headerlink" title="defer"></a><code>defer</code></h1><p>主要应用场景有异常处理、记录日志、清理数据、释放资源 等等。</p>
+<ul>
+<li><code>defer</code>在声明时不会立刻去执行，而是在函数 <code>return</code> 后去执行的。</li>
+<li><code>defer</code>函数定义的顺序与实际执行的顺序是相反的，也就是最先声明的最后才执行</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="keyword">defer</span> fmt.Println(<span class="string">"a"</span>)</span><br><span class="line">  <span class="keyword">defer</span> fmt.Println(<span class="string">"b"</span>)</span><br><span class="line">  <span class="keyword">defer</span> fmt.Println(<span class="string">"c"</span>)</span><br><span class="line">  <span class="keyword">defer</span> fmt.Println(<span class="string">"d"</span>)</span><br><span class="line"></span><br><span class="line">  fmt.Println(<span class="string">"main"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main</span></span><br><span class="line"><span class="comment">// d</span></span><br><span class="line"><span class="comment">// c</span></span><br><span class="line"><span class="comment">// b</span></span><br><span class="line"><span class="comment">// a</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">calc</span><span class="params">(index <span class="keyword">string</span>, a, b <span class="keyword">int</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	ret := a + b</span><br><span class="line">	fmt.Println(index, a, b, ret)</span><br><span class="line">	<span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	x := <span class="number">1</span></span><br><span class="line">	y := <span class="number">2</span></span><br><span class="line">	<span class="keyword">defer</span> calc(<span class="string">"A"</span>, x, calc(<span class="string">"B"</span>, x, y))</span><br><span class="line">	x = <span class="number">3</span></span><br><span class="line">	<span class="keyword">defer</span> calc(<span class="string">"C"</span>, x, calc(<span class="string">"D"</span>, x, y))</span><br><span class="line">	y = <span class="number">4</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// B 1 2 3</span></span><br><span class="line"><span class="comment">// D 3 2 5</span></span><br><span class="line"><span class="comment">// C 3 5 8</span></span><br><span class="line"><span class="comment">// A 1 3 4</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="interface"><a href="#interface" class="headerlink" title="interface"></a><code>interface</code></h1><h2 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h2><ul>
+<li>一种<strong>抽象</strong>类型</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Sayer <span class="keyword">interface</span> &#123;</span><br><span class="line">	say()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Cat <span class="keyword">struct</span> &#123;</span><br><span class="line">	Sayer</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Dog <span class="keyword">struct</span> &#123;</span><br><span class="line">	Sayer</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(cat *Cat)</span> <span class="title">say</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">"miao miao miao~"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(dog *Dog)</span> <span class="title">say</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">"wang wang wang~"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> dog Dog</span><br><span class="line">	dog.say()</span><br><span class="line">	<span class="keyword">var</span> cat Cat</span><br><span class="line">	cat.say()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="空接口的应用"><a href="#空接口的应用" class="headerlink" title="空接口的应用"></a>空接口的应用</h2><ul>
+<li>空接口作为函数的参数</li>
+<li>空接口作为<code>map</code>的值</li>
+<li>类型断言<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> x <span class="keyword">interface</span>&#123;&#125;</span><br><span class="line">	x = <span class="string">"hello world"</span></span><br><span class="line">	v, ok := x.(<span class="keyword">string</span>)</span><br><span class="line">	<span class="keyword">if</span> ok &#123;</span><br><span class="line">		fmt.Println(v)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"类型断言失败"</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h1><p>Go语言中的测试依赖<code>go test</code>命令。编写测试代码和编写普通的<code>Go</code>代码过程是类似的。</p>
+<p><code>go test</code>命令是一个按照一定约定和组织的测试代码的驱动程序。在包目录内，所有以<code>_test.go</code>为后缀名的源代码文件都是<code>go test</code>测试的一部分，不会被<code>go build</code>编译到最终的可执行文件中。</p>
+<p>在<code>*_test.go</code>文件中有三种类型的函数，单元测试函数、基准测试函数和示例函数。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th align="left">格式</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>测试函数</td>
+<td align="left">函数名前缀为<code>Test</code></td>
+<td>测试程序的一些逻辑行为是否正确</td>
+</tr>
+<tr>
+<td>基准函数</td>
+<td align="left">函数名前缀为<code>Benchmark</code></td>
+<td>测试函数的性能</td>
+</tr>
+<tr>
+<td>示例函数</td>
+<td align="left">函数名前缀为<code>Example</code></td>
+<td>为文档提供示例文档</td>
+</tr>
+</tbody></table>
+<p>测试函数实例</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestName</span><span class="params">(t *testing.T)</span></span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/10/21/设计模式-职责链模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1195,168 +1394,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/06/30/浏览器相关-缓存/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2019/06/30/浏览器相关-缓存/" class="post-title-link" itemprop="url">浏览器相关-缓存</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-06-30 15:29:59" itemprop="dateCreated datePublished" datetime="2019-06-30T15:29:59+08:00">2019-06-30</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-09 23:26:53" itemprop="dateModified" datetime="2020-04-09T23:26:53+08:00">2020-04-09</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/浏览器/" itemprop="url" rel="index">
-                    <span itemprop="name">浏览器</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>对于一个数据请求来说，可以分为发起网络请求、后端处理、浏览器响应三个步骤。浏览器缓存可以帮助我们在第一和第三步骤中优化性能。比如说直接使用缓存而不发起请求，或者发起了请求但后端存储的数据和前端一致，那么就没有必要再将数据回传回来，这样就减少了响应数据</p>
-<p>缓存的意义就在于减少请求，更多地使用本地的资源，给用户更好的体验的同时，也减轻服务器压力。所以，最佳实践，就应该是尽可能命中强缓存，同时，能在更新版本的时候让客户端的缓存失效。</p>
-<h2 id="缓存位置"><a href="#缓存位置" class="headerlink" title="缓存位置"></a>缓存位置</h2><ul>
-<li><p>Service Worker</p>
-<p>Service Worker 的缓存与浏览器其他内建的缓存机制不同，它可以让我们自由控制缓存哪些文件、如何匹配缓存、如何读取缓存，并且缓存是持续性的。</p>
-<p>当 Service Worker 没有命中缓存的时候，我们需要去调用 fetch 函数获取数据。也就是说，如果我们没有在 Service Worker 命中缓存的话，会根据缓存查找优先级去查找数据。但是不管我们是从 Memory Cache 中还是从网络请求中获取的数据，浏览器都会显示我们是从 Service Worker 中获取的内容。</p>
-</li>
-<li><p>Memory Cache</p>
-<p>Memory Cache 也就是内存中的缓存，读取内存中的数据肯定比磁盘快。但是内存缓存虽然读取高效，可是缓存持续性很短，会随着进程的释放而释放。 一旦我们关闭 Tab 页面，内存中的缓存也就被释放了。</p>
-<p>当访问过页面以后，再次刷新页面，可 以发现很多数据都来自于内存缓存</p>
-</li>
-<li><p>Disk Cache</p>
-<p>Disk Cache 也就是存储在硬盘中的缓存，读取速度慢点，但是什么都能存储到磁盘中，比之 Memory Cache 胜在容量和存储时效性上。</p>
-<p>在所有浏览器缓存中，Disk Cache 覆盖面基本是最大的。它会根据 HTTP Herder 中的字段判断哪些资源需要缓存，哪些资源可以不请求直接使用，哪些资源已经过期需要重新请求。<strong>并且即使在跨站点的情况下，相同地址的资源一旦被硬盘缓存下来，就不会再次去请求数据。</strong></p>
-</li>
-<li><p>Push Cache</p>
-<p>Push Cache 是 HTTP/2 中的内容，当以上三种缓存都没有命中时，它才会被使用。并且缓存时间也很短暂，只在会话（Session）中存在，一旦会话结束就被释放。</p>
-</li>
-</ul>
-<h2 id="缓存策略"><a href="#缓存策略" class="headerlink" title="缓存策略"></a>缓存策略</h2><p>通常浏览器缓存策略分为两种：强缓存和协商缓存，并且缓存策略都是通过设置 HTTP Header 来实现的。</p>
-<ol>
-<li>浏览器每次发起请求，都会先在浏览器缓存中查找该请求的结果及缓存标识</li>
-<li>浏览器每次拿到返回的请求结果都会将该结果和缓存标识存入浏览器缓存中</li>
-</ol>
-<ul>
-<li>浏览器在加载资源时，先根据这个资源的一些http  header判断它是否命中强缓存，强缓存如果命中，浏览器会直接从自己的缓存中读取资源，不会发送请求到浏览器</li>
-<li>当强缓存没有命中的时候，浏览器一定会发送一个请求到服务器，通过服务器依据资源的另外一些http      header验证这个资源是否命中协商缓存，如果协商缓存命中，服务器会将这个请求返回，但是不会返回这个资源的数据，而是告诉客户端直接从缓存中加载这个资源，于是浏览器就又会从自己的缓存中去加载这个资源</li>
-<li>强缓存与协商缓存的共同点时：如果命中都是从客户端缓存中加载资源，而不是从服务器加载资源数据，区别是：强缓存不发送请求到服务器，协商缓存会发送请求到服务器</li>
-<li>当协商缓存也没有命中的时候，浏览器直接从服务器加载资源数据</li>
-</ul>
-<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/cache_0.png" alt="cache流程"></p>
-<h3 id="强缓存"><a href="#强缓存" class="headerlink" title="强缓存"></a><strong>强缓存</strong></h3><p>强缓存可以通过设置两种 HTTP Header 实现：<strong>Expires</strong> <strong>和</strong> <strong>Cache-Control</strong> 。强缓存表示在缓存期间不需要请求，state code 为 200</p>
-<ul>
-<li><p>Expires</p>
-<p>Expires: Wed, 22 Oct 2018 08:41:00 GMT</p>
-<p>Expires 是 HTTP/1 的产物，表示资源会在 Wed, 22 Oct 2018 08:41:00 GMT 后过期，需要再次请求。并且 Expires 受限于本地时间，如果修改了本地时间，可能会造成缓存失效。</p>
-</li>
-<li><p>Cache-control</p>
-<p>Cache-control: max-age=30</p>
-<p>Cache-Control 出现于 HTTP/1.1，优先级高于 Expires 。该属性值表示资源会在 30 秒后过期，需要再次请求。</p>
-<p>Cache-Control 可以在请求头或者响应头中设置，并且可以组合使用多种指令</p>
-<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/cache_1.png" alt="cache header字段"></p>
-</li>
-</ul>
-<h3 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a><strong>协商缓存</strong></h3><p>强缓存判断是否缓存的依据来自于是否超出某个时间或者某个时间段而不关心服务端文件是否已经更新，这可能会导致加载文件不是服务器端最新的内容，那么此时就需要协商缓存来确定服务端内容是否发生更新。</p>
-<p>协商缓存就是在强缓存失效后，浏览器携带标识向服务器发起请求，由服务器根据缓存不碍事决定是否使用缓存的过过程。协商缓存可通过设置两种 HTTP Header 实现：Last-Modified 和 ETag 。</p>
-<ul>
-<li><p>Last-Modified 和 If-Modified-Since</p>
-<p>Last-Modified 会随着第一次访问资源时返回（该资源在浏览器上最后的修改日期）。浏览器再次请求该资源时，If-Modified-Since 会将 Last-Modified 的值发送给服务器，询问服务器在该日期后资源是否有更新，有更新的话就会将新的资源发送回来，否则返回 304 状态码-即命中缓存</p>
-<p>弊端：</p>
-<ol>
-<li>如果本地打开缓存文件，即使没有对文件进行修改，但还是会造成 Last-Modified 被修改，服务端不能命中缓存导致发送相同的资源</li>
-<li>因为 Last-Modified 只能以秒计时，如果在不可感知的时间内修改完成文件，那么服务端会认为资源还是命中了，不会返回正确的资源</li>
-</ol>
-</li>
-<li><p>ETag 和 If-None-Match</p>
-<p>ETag 类似于文件指纹，，会随着第一次访问资源时返回（浏览器生成）。浏览器再次请求该资源时，If-None-Match 会将当前 ETag 发送给服务器，询问该资源 ETag 是否变动，有变动的话就将新的资源发送回来。并且 ETag 优先级比 Last-Modified 高</p>
-</li>
-</ul>
-<h2 id="实际使用场景"><a href="#实际使用场景" class="headerlink" title="实际使用场景"></a>实际使用场景</h2><ul>
-<li><p>频繁变动的资源</p>
-<p>对于频繁变动的资源，首先需要使用 Cache-Control: no-cache 使浏览器每次都请求服务器，然后配合 ETag 或者 Last-Modified 来验证资源是否有效。这样的做法虽然不能节省请求数量，但是能显著减少响应数据大小。</p>
-</li>
-<li><p>代码文件</p>
-<p>一般来说，现在都会使用工具来打包代码，那么我们就可以对文件名进行哈希处理，只有当代码修改后才会生成新的文件名。基于此，我们就可以给代码文件设置缓存有效期一年 Cache-Control: max-age=31536000，这样只有当 HTML 文件中引入的文件名发生了改变才会去下载最新的代码文件，否则就一直使用缓存。</p>
-</li>
-</ul>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1409,7 +1446,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1422,7 +1459,7 @@
             <a href="/categories/">
           
         
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
