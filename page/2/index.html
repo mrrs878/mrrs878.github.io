@@ -1443,7 +1443,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-21 22:35:07" itemprop="dateModified" datetime="2020-04-21T22:35:07+08:00">2020-04-21</time>
+                <time title="修改时间：2020-04-22 22:02:33" itemprop="dateModified" datetime="2020-04-22T22:02:33+08:00">2020-04-22</time>
               </span>
             
           
@@ -1504,6 +1504,15 @@
 <p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-3.png" alt="更新节点"></p>
 </li>
 </ul>
+<h2 id="DOM-Diff过程"><a href="#DOM-Diff过程" class="headerlink" title="DOM Diff过程"></a>DOM Diff过程</h2><p>简单来说，diff有以下过程：</p>
+<ol>
+<li>同级比较，再比较子节点</li>
+<li>先判断一方有子节点而另一方没有子节点的情况</li>
+<li>比较都有子节点的情况（核心diff算法）</li>
+<li>递归比较子节点</li>
+</ol>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/diff-0.png" alt="diff过程"></p>
+<h2 id="核心DIFF算法"><a href="#核心DIFF算法" class="headerlink" title="核心DIFF算法"></a>核心DIFF算法</h2><p>Vue2.0采用了<strong>双端比较</strong>的算法：同时从新旧children的两端开始进行比较，借助key值可以找到可复用的节点，再进行相关操作。<br><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/diff-1.png" alt="diff-1"></p>
 
         
       
