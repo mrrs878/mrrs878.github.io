@@ -30,7 +30,7 @@
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
@@ -55,18 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="执行上下文当执行JavaScript代码时，会产生三种执行上下文：  全局执行上下文 函数执行上下文 eval执行上下文  每个执行上下文中都有三种重要的属性：  变量对象（VO），包含变量、函数声明和函数的形参，该属性只能在全局执行上下文中访问（函数执行上下文中尉AO） 作用域链（Scope），JavaScript采用词法作用域，也就是说变量的作用域实在定义的时候就决定了，包含自身变量对象和上级">
+  <meta name="description" content="执行上下文什么是执行上下文执行上下文就是当前JavaScript代码被解析和执行时所在环境的抽象概念。JavaScript中任何的代码都是在执行上下文中运行。 执行上下文创建过程中，需要做以下几件事：  创建变量对象：首先初始化函数的参数arguments，提升变量声明和函数声明 创建作用域链（scope chain）：在执行上下文的创建阶段，作用域链是在变量对象之后创建的 确定this的值，即r">
 <meta name="keywords" content="Javascript 进阶">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript相关-3">
 <meta property="og:url" content="https://mrrs878.github.io/2020/02/14/JavaScript相关-3/index.html">
 <meta property="og:site_name" content="Mr.RS">
-<meta property="og:description" content="执行上下文当执行JavaScript代码时，会产生三种执行上下文：  全局执行上下文 函数执行上下文 eval执行上下文  每个执行上下文中都有三种重要的属性：  变量对象（VO），包含变量、函数声明和函数的形参，该属性只能在全局执行上下文中访问（函数执行上下文中尉AO） 作用域链（Scope），JavaScript采用词法作用域，也就是说变量的作用域实在定义的时候就决定了，包含自身变量对象和上级">
+<meta property="og:description" content="执行上下文什么是执行上下文执行上下文就是当前JavaScript代码被解析和执行时所在环境的抽象概念。JavaScript中任何的代码都是在执行上下文中运行。 执行上下文创建过程中，需要做以下几件事：  创建变量对象：首先初始化函数的参数arguments，提升变量声明和函数声明 创建作用域链（scope chain）：在执行上下文的创建阶段，作用域链是在变量对象之后创建的 确定this的值，即r">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-02-14T15:23:32.205Z">
+<meta property="og:updated_time" content="2020-04-25T15:04:23.837Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript相关-3">
-<meta name="twitter:description" content="执行上下文当执行JavaScript代码时，会产生三种执行上下文：  全局执行上下文 函数执行上下文 eval执行上下文  每个执行上下文中都有三种重要的属性：  变量对象（VO），包含变量、函数声明和函数的形参，该属性只能在全局执行上下文中访问（函数执行上下文中尉AO） 作用域链（Scope），JavaScript采用词法作用域，也就是说变量的作用域实在定义的时候就决定了，包含自身变量对象和上级">
+<meta name="twitter:description" content="执行上下文什么是执行上下文执行上下文就是当前JavaScript代码被解析和执行时所在环境的抽象概念。JavaScript中任何的代码都是在执行上下文中运行。 执行上下文创建过程中，需要做以下几件事：  创建变量对象：首先初始化函数的参数arguments，提升变量声明和函数声明 创建作用域链（scope chain）：在执行上下文的创建阶段，作用域链是在变量对象之后创建的 确定this的值，即r">
   <link rel="canonical" href="https://mrrs878.github.io/2020/02/14/JavaScript相关-3/">
 
 
@@ -270,11 +270,19 @@
                 
               
 
-              <time title="创建时间：2020-02-14 23:22:46 / 修改时间：23:23:32" itemprop="dateCreated datePublished" datetime="2020-02-14T23:22:46+08:00">2020-02-14</time>
+              <time title="创建时间：2020-02-14 23:22:46" itemprop="dateCreated datePublished" datetime="2020-02-14T23:22:46+08:00">2020-02-14</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-25 23:04:23" itemprop="dateModified" datetime="2020-04-25T23:04:23+08:00">2020-04-25</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -306,20 +314,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="执行上下文"><a href="#执行上下文" class="headerlink" title="执行上下文"></a>执行上下文</h2><p>当执行JavaScript代码时，会产生三种执行上下文：</p>
-<ul>
-<li>全局执行上下文</li>
-<li>函数执行上下文</li>
-<li><code>eval</code>执行上下文</li>
-</ul>
+        <h2 id="执行上下文"><a href="#执行上下文" class="headerlink" title="执行上下文"></a>执行上下文</h2><h3 id="什么是执行上下文"><a href="#什么是执行上下文" class="headerlink" title="什么是执行上下文"></a>什么是执行上下文</h3><p>执行上下文就是当前JavaScript代码被解析和执行时所在环境的抽象概念。JavaScript中任何的代码都是在执行上下文中运行。</p>
+<p>执行上下文创建过程中，需要做以下几件事：</p>
+<ol>
+<li>创建变量对象：首先初始化函数的参数<code>arguments</code>，提升变量声明和函数声明</li>
+<li>创建作用域链（<code>scope chain</code>）：在执行上下文的创建阶段，作用域链是在变量对象之后创建的</li>
+<li>确定<code>this</code>的值，即<code>resolve thisbinding</code></li>
+</ol>
 <p>每个执行上下文中都有三种重要的属性：</p>
 <ul>
-<li>变量对象（VO），包含变量、函数声明和函数的形参，该属性只能在全局执行上下文中访问（函数执行上下文中尉AO）</li>
-<li>作用域链（Scope），JavaScript采用词法作用域，也就是说变量的作用域实在定义的时候就决定了，包含自身变量对象和上级变量对象的列表，通过<code>[[Scope]]</code>属性查找上级变量</li>
+<li>变量对象（VO），包含变量、函数声明和函数的形参，该属性只能在全局执行上下文中访问（函数执行上下文中为AO）</li>
+<li>作用域链（<code>scope chain</code>），JavaScript采用词法作用域，也就是说变量的作用域实在定义的时候就决定了，包含自身变量对象和上级变量对象的列表，通过<code>[[Scope]]</code>属性查找上级变量</li>
 <li><code>this</code></li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">10</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">i</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> b = <span class="number">20</span></span><br><span class="line">&#125;</span><br><span class="line">foo()</span><br><span class="line"></span><br><span class="line">stack = [</span><br><span class="line">    globalContext,</span><br><span class="line">    fooContext</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">globalContext.VO === global</span><br><span class="line">globalContext.VO = &#123;</span><br><span class="line">    a: <span class="literal">undefined</span>,</span><br><span class="line">    foo: <span class="xml"><span class="tag">&lt;<span class="name">Function</span>&gt;</span></span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml">fooContext.AO === foo.AO</span></span><br><span class="line"><span class="xml">fooContext.AO = &#123;</span></span><br><span class="line"><span class="xml">    i: undefined,</span></span><br><span class="line"><span class="xml">    b: undefined,</span></span><br><span class="line"><span class="xml">    arguments: <span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml">// arguments 是函数独有的对象（箭头函数没有）</span></span><br><span class="line"><span class="xml">// 该对象时一个伪数组</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">fooContext.[[Scope]] = &#123;</span></span><br><span class="line"><span class="xml">    globalContext.VO</span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml">fooContext.Scope = fooContext.[[Scope]] + fooContext.VO</span></span><br><span class="line"><span class="xml">fooContext.Scope = [</span></span><br><span class="line"><span class="xml">    fooContext.VO,</span></span><br><span class="line"><span class="xml">    globalContext.VO</span></span><br><span class="line"><span class="xml">]</span></span><br></pre></td></tr></table></figure>
-
+<h3 id="执行上下文的分类"><a href="#执行上下文的分类" class="headerlink" title="执行上下文的分类"></a>执行上下文的分类</h3><ul>
+<li>全局执行上下文</li>
+<li>函数执行上下文</li>
+</ul>
+<h2 id="执行上下文栈"><a href="#执行上下文栈" class="headerlink" title="执行上下文栈"></a>执行上下文栈</h2><p>执行栈，也叫做调用栈，具有LIFO结构，用于存储在代码执行期间创建的所有执行上下文</p>
+<p>有如下规则：</p>
+<ul>
+<li>首次运行JavaScript代码的时候会创建一个全局执行的上下文并push到当前的执行栈中，每当发生函数调用，引擎都会为该函数创建一个新的函数执行上下文并push当前执行栈的栈顶</li>
+<li>当栈顶的函数运行完成后，其对应的函数执行上下文将会从执行栈中pop，上下文的控制权移动到当前执行栈的下一个执行上下文</li>
+</ul>
+<h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><p>作用域负责收集和维护由所有声明的标识符（变量）组成的一系列查询，并实施一套非常严格的规则，确定当前执行的代码对这些标识符的访问权限</p>
+<p>作用域有两种工作模型：** 词法作用域<strong>和</strong>动态作用域<strong>。JavaScript采用的时</strong>词法作用域**，词法作用域意味着作用域是由书写代码时变量和函数声明的位置决定的。</p>
+<h3 id="作用域的分类"><a href="#作用域的分类" class="headerlink" title="作用域的分类"></a>作用域的分类</h3><ul>
+<li>全局作用域</li>
+<li>函数作用域</li>
+<li>块级作用域</li>
+</ul>
+<h3 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h3><p>作用域链就是从当前作用域开始一层一层向上寻找某个变量，直到全局作用域链</p>
 <h2 id="变量提升"><a href="#变量提升" class="headerlink" title="变量提升"></a>变量提升</h2><p>通俗解释：</p>
 <p>将声明的代码移动到了顶部</p>
 <p>准确解释：👍</p>
@@ -414,7 +439,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#执行上下文"><span class="nav-number">1.</span> <span class="nav-text">执行上下文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量提升"><span class="nav-number">2.</span> <span class="nav-text">变量提升</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#防抖"><span class="nav-number">3.</span> <span class="nav-text">防抖</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#执行上下文"><span class="nav-number">1.</span> <span class="nav-text">执行上下文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是执行上下文"><span class="nav-number">1.1.</span> <span class="nav-text">什么是执行上下文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行上下文的分类"><span class="nav-number">1.2.</span> <span class="nav-text">执行上下文的分类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行上下文栈"><span class="nav-number">2.</span> <span class="nav-text">执行上下文栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作用域"><span class="nav-number">3.</span> <span class="nav-text">作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用域的分类"><span class="nav-number">3.1.</span> <span class="nav-text">作用域的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作用域链"><span class="nav-number">3.2.</span> <span class="nav-text">作用域链</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量提升"><span class="nav-number">4.</span> <span class="nav-text">变量提升</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#防抖"><span class="nav-number">5.</span> <span class="nav-text">防抖</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -433,7 +458,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -459,7 +484,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -482,7 +507,11 @@
     <footer class="footer">
       <div class="footer-inner">
         
-
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共62.2k字</span>
+</div>
 <div class="copyright">
   &copy; 
   <span itemprop="copyrightYear">2020</span>
@@ -490,7 +519,14 @@
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+  <br/>
+  <div class="powered-by">
+    <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+      本站访客数:<span id="busuanzi_value_site_uv"></span>
+    </span>
+  </div>
 </div>
+<!--
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
   </div>
   <span class="post-meta-divider">|</span>
@@ -498,6 +534,7 @@
       
     主题 – <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.1
   </div>
+-->
 
         
 

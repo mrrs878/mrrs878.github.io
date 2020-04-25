@@ -30,7 +30,7 @@
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
@@ -230,6 +230,161 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/13/webpack学习-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2020/04/13/webpack学习-1/" class="post-title-link" itemprop="url">webpack相关-1</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-13 23:19:33" itemprop="dateCreated datePublished" datetime="2020-04-13T23:19:33+08:00">2020-04-13</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-15 22:46:12" itemprop="dateModified" datetime="2020-04-15T22:46:12+08:00">2020-04-15</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webpack/" itemprop="url" rel="index">
+                    <span itemprop="name">webpack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="模块解析"><a href="#模块解析" class="headerlink" title="模块解析"></a>模块解析</h1><h2 id="解析规则"><a href="#解析规则" class="headerlink" title="解析规则"></a>解析规则</h2><ul>
+<li>解析相对路径<ol>
+<li>查找相对当前模块的路径下是否有对应文件或文件夹</li>
+<li>是文件则直接加载</li>
+<li>是文件夹则继续查找文件夹下的 <code>package.json</code> 文件</li>
+<li>有 package.json 文件则按照文件中 <code>main</code> 字段的文件名来查找文件</li>
+<li>无 package.json 或者无 <code>main</code> 字段则查找 <code>index.js</code> 文件</li>
+</ol>
+</li>
+<li>解析模块名<br>查找当前文件目录下，父级目录及以上目录下的 <code>node_modules</code> 文件夹，看是否有对应名称的模块</li>
+<li>解析绝对路径（不建议使用）<br>直接查找对应路径的文件</li>
+</ul>
+<p>在 webpack 配置中，和模块路径解析相关的配置都在 <code>resolve</code> 字段下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  resolve: &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="常用配置"><a href="#常用配置" class="headerlink" title="常用配置"></a>常用配置</h2><ul>
+<li><p><code>resolve.alias</code>， 配置别名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    resolve: &#123;</span><br><span class="line">        alias: &#123;</span><br><span class="line">            utils$: path.resolve(__dirname, <span class="string">'src/utils'</span>) <span class="comment">// 只会匹配 import 'utils'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>resolve.extensions</code>，文件扩展名简写</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    resolve: &#123;</span><br><span class="line">        extensions: &#123;</span><br><span class="line">            extensions: [<span class="string">'.wasm'</span>, <span class="string">'.mjs'</span>, <span class="string">'.js'</span>, <span class="string">'.json'</span>, <span class="string">'.jsx'</span>],</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>resolve.modules</code>，配置直接声明依赖名的模块的解析路径</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    resolve: &#123;</span><br><span class="line">      modules: [</span><br><span class="line">        path.resolve(__dirname, <span class="string">'node_modules'</span>), <span class="comment">// 指定当前目录下的 node_modules 优先查找</span></span><br><span class="line">        <span class="string">'node_modules'</span>, <span class="comment">// 如果有一些类库是放在一些奇怪的地方的，你可以添加自定义的路径或者目录</span></span><br><span class="line">      ],</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>resolve.mainFields</code>，有<code>package.json</code>文件入口文件的配置</p>
+</li>
+<li><p><code>resolve.mainFiles</code>，没有<code>package.json</code>文件时入口文件的配置</p>
+</li>
+</ul>
+<h1 id="loader"><a href="#loader" class="headerlink" title="loader"></a>loader</h1><p>webpack 的 <code>loader</code> 相关配置都在 <code>module.rules</code> 字段下，我们需要通过 <code>test</code>、<code>include</code>、<code>exclude</code> 等配置好应用 <code>loader</code> 的条件规则，然后使用 <code>use</code> 来指定需要用到的 <code>loader</code>，配置应用的 <code>loader</code> 时还需要注意一下 <code>loader</code> 的执行顺序。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    modules: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="comment">//,</span></span><br><span class="line">                include: [],</span><br><span class="line">        		use: xxx</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="规则条件配置"><a href="#规则条件配置" class="headerlink" title="规则条件配置"></a>规则条件配置</h2><ul>
+<li><code>{ test: ... }</code> 匹配特定条件</li>
+<li><code>{ include: ... }</code> 匹配特定路径</li>
+<li><code>{ exclude: ... }</code> 排除特定路径</li>
+<li><code>{ and: [...] }</code>必须匹配数组中所有条件</li>
+<li><code>{ or: [...] }</code> 匹配数组中任意一个条件</li>
+<li><code>{ not: [...] }</code> 排除匹配数组中所有条件</li>
+</ul>
+<h2 id="module-type"><a href="#module-type" class="headerlink" title="module type"></a>module type</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  test: <span class="regexp">/\.js?$/</span>,</span><br><span class="line">  include: [</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">"src"</span>)</span><br><span class="line">  ],</span><br><span class="line">  type: <span class="string">"javascript/esm"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现阶段webpack支持以下几种模块类型：</p>
+<ul>
+<li><code>javascript/auto</code>，默认类型，支持所有JS代码模块类型：CommonJS、AMD、ESM</li>
+<li><code>javascript/esm</code>，ECMAScript Modules</li>
+<li><code>javascript/dynamic</code>，CommonJS和AMD</li>
+<li><code>javascript/json</code>，JSON格式数据，<code>require</code>和<code>import</code>都可以引入，是<code>.json</code>文件的默认类型</li>
+<li><code>javascript/experimental</code>，WebAeesmbly Modules，是<code>.wasm</code>文件的默认类型</li>
+</ul>
+<h2 id="loader应用顺序"><a href="#loader应用顺序" class="headerlink" title="loader应用顺序"></a>loader应用顺序</h2><ul>
+<li><p>同一个rule下，<strong>从右往左执行</strong></p>
+</li>
+<li><p>多个rule匹配同一个模块文件：</p>
+<p>webpack 在 <code>rules</code> 中提供了一个 <code>enforce</code> 的字段来配置当前 rule 的 loader 类型，没配置的话是普通类型，可以配置 <code>pre</code> 或 <code>post</code>，分别对应前置类型或后置类型的 loader。</p>
+<p>执行顺序：<strong>前置 -&gt; 行内 -&gt; 普通 -&gt; 后置</strong></p>
+</li>
+</ul>
+<h2 id="使用noParse"><a href="#使用noParse" class="headerlink" title="使用noParse"></a>使用noParse</h2><p>除了<code>module.rules</code>字段用于配置loader之外，还有一个<code>module.noParse</code>字段可以用于配置哪些模块文件的内容不需要进行解析。对于一些不需要解析依赖（即无依赖，没有使用<code>import</code>、<code>require</code>、<code>define</code>等导入机制）的第三方大型类库可以通过这个字段配置以提高整体的构建速度</p>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
         
   
   
@@ -1585,133 +1740,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/05/Vue.js研读-模板编译/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2020/03/05/Vue.js研读-模板编译/" class="post-title-link" itemprop="url">Vue.js研读-模板编译</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-05 22:54:17" itemprop="dateCreated datePublished" datetime="2020-03-05T22:54:17+08:00">2020-03-05</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-21 22:35:22" itemprop="dateModified" datetime="2020-04-21T22:35:22+08:00">2020-04-21</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue.js</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="模板编译"><a href="#模板编译" class="headerlink" title="模板编译"></a>模板编译</h2><p>模板编译的主要目标是<strong>生成渲染函数</strong>。而渲染函数的作用是每次执行它，它就会使用当前最新的状态生成一份新的vnode，然后使用这份vnode进行渲染。</p>
-<h2 id="将模板编译成渲染函数"><a href="#将模板编译成渲染函数" class="headerlink" title="将模板编译成渲染函数"></a>将模板编译成渲染函数</h2><ul>
-<li><p>将模板编译成AST（解析器）</p>
-</li>
-<li><p>遍历AST标记静态节点（优化器）</p>
-</li>
-<li><p>使用AST生成渲染函数（代码生成器）</p>
-<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E6%A8%A1%E6%9D%BF%E7%BC%96%E8%AF%91-0.png" alt="模板编译整体流程"></p>
-</li>
-</ul>
-<h2 id="解析器"><a href="#解析器" class="headerlink" title="解析器"></a>解析器</h2><p>将模板编译成AST</p>
-<p>在解析器内部，分成了很多小解析器，其中包括过滤解析器、文本解析器和HTML解析器。然后再通过一条主线将这些解析器组装在一起。</p>
-<p>HTML解析器是解析器中最核心的模块，它的作用是解析HTML模板，每当解析到HTML标签的开始位置、结束位置、文本或注释时，都会<strong>触发钩子函数</strong>，然后将相关信息通过参数传递出来。在解析期间，使用栈来记录层级关系（触发start钩子函数时入栈，触发end钩子函数时出栈）。</p>
-<p>事实上，解析HTML模板的过程就是循环的过程，简单来说就是用HTML模板字符串来循环，每轮循环都从HTML模板中截取一小段字符串，然后重复上述过程👆，直到HTML模板被截成一个空字符串时结束。</p>
-<p>文本解析器的主要作用是对HTML解析器解析出来的文本进行二次加工，处理<strong>带变量</strong>的文本。HTML解析器在解析文本时并不会区分文本是否是带有变量的文本，如果是纯文本，不需要进行任何处理；但如果是带变量的文本那个需要使用文本解析器进一步解析。</p>
-<h2 id="优化器"><a href="#优化器" class="headerlink" title="优化器"></a>优化器</h2><p>优化器的目标是遍历AST，检测出所有静态子树（永远不会变化的DOM节点）并给其打标记</p>
-<p>标记静态子树有两点好处：</p>
-<ul>
-<li>每次重新渲染时，不需要为静态子树创建新节点</li>
-<li>在虚拟DOM中打补丁的过程中可以跳过</li>
-</ul>
-<p>优化器内部实现主要有以下两个步骤：</p>
-<ol>
-<li><p>在AST中找出所有静态节点并打上标记（<code>static === true</code>）</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>我是一个静态节点<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在AST中供找出所有静态根节点并打上标记（<code>staticRoot === true</code>）</p>
-<p>如果一个节点下边的所有<strong>子节点都是静态节点</strong>，并且它的<strong>父级是动态节点</strong>，那么它就是静态根节点</p>
-</li>
-</ol>
-<h2 id="代码生成器"><a href="#代码生成器" class="headerlink" title="代码生成器"></a>代码生成器</h2><p>代码生成器是模板编译的最后一步，它的作用是将AST转换成渲染函数中的内容，这个内容称为<strong>代码字符串</strong>。之后交由渲染函数导出到外界。</p>
-<p>代码生成器其实就是字符串拼接的过程。通过递归AST来生成字符串，最先生成根节点，然后在子节点字符串生成后，将其拼接在根节点的参数中，子节点的子节点拼接在子节点的参数中，这样一层一层地拼接，直到最后拼接成完整的字符串。</p>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1764,7 +1792,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1790,7 +1818,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -1813,7 +1841,11 @@
     <footer class="footer">
       <div class="footer-inner">
         
-
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共62.2k字</span>
+</div>
 <div class="copyright">
   &copy; 
   <span itemprop="copyrightYear">2020</span>
@@ -1821,7 +1853,14 @@
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+  <br/>
+  <div class="powered-by">
+    <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+      本站访客数:<span id="busuanzi_value_site_uv"></span>
+    </span>
+  </div>
 </div>
+<!--
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
   </div>
   <span class="post-meta-divider">|</span>
@@ -1829,6 +1868,7 @@
       
     主题 – <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.1
   </div>
+-->
 
         
 
