@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/avatar.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="生命周期钩子函数 beforeCreate 获取不到props/data  created 可以获取到props/data，组件未挂载  beforeMount 开始创建VDOM  mounted 将VDOM渲染为真实DOM并渲染数据，组件中如果有子组件的话会递归挂载子组件，只有当所有子组件全部挂载完毕才会执行跟组件的挂载钩子  beforeUpdate/updated 分别在数据更新前/更新时调">
+<meta name="keywords" content="Vue.js基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue.js学习-基础">
+<meta property="og:url" content="https://mrrs878.github.io/2020/04/18/Vue.js学习-基础/index.html">
+<meta property="og:site_name" content="Mr.RS">
+<meta property="og:description" content="生命周期钩子函数 beforeCreate 获取不到props/data  created 可以获取到props/data，组件未挂载  beforeMount 开始创建VDOM  mounted 将VDOM渲染为真实DOM并渲染数据，组件中如果有子组件的话会递归挂载子组件，只有当所有子组件全部挂载完毕才会执行跟组件的挂载钩子  beforeUpdate/updated 分别在数据更新前/更新时调">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-04-21T15:26:06.507Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue.js学习-基础">
+<meta name="twitter:description" content="生命周期钩子函数 beforeCreate 获取不到props/data  created 可以获取到props/data，组件未挂载  beforeMount 开始创建VDOM  mounted 将VDOM渲染为真实DOM并渲染数据，组件中如果有子组件的话会递归挂载子组件，只有当所有子组件全部挂载完毕才会执行跟组件的挂载钩子  beforeUpdate/updated 分别在数据更新前/更新时调">
+  <link rel="canonical" href="https://mrrs878.github.io/2020/04/18/Vue.js学习-基础/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Vue.js学习-基础 | Mr.RS</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.RS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Read The Fucking Source Code!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/18/Vue.js学习-基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            Vue.js学习-基础
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-18 21:04:39" itemprop="dateCreated datePublished" datetime="2020-04-18T21:04:39+08:00">2020-04-18</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-21 23:26:06" itemprop="dateModified" datetime="2020-04-21T23:26:06+08:00">2020-04-21</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="生命周期钩子函数"><a href="#生命周期钩子函数" class="headerlink" title="生命周期钩子函数"></a>生命周期钩子函数</h1><ul>
+<li><p>beforeCreate</p>
+<p>获取不到props/data</p>
+</li>
+<li><p>created</p>
+<p>可以获取到props/data，组件未挂载</p>
+</li>
+<li><p>beforeMount</p>
+<p>开始创建VDOM</p>
+</li>
+<li><p>mounted</p>
+<p>将VDOM渲染为真实DOM并渲染数据，组件中如果有子组件的话会递归挂载子组件，只有当所有子组件全部挂载完毕才会执行跟组件的挂载钩子</p>
+</li>
+<li><p>beforeUpdate/updated</p>
+<p>分别在数据更新前/更新时调用。不能在updated里做更新，会造成死循环</p>
+</li>
+<li><p>beforeDestory</p>
+<p>适合移移除事件、定时器等</p>
+</li>
+<li><p>destoryed</p>
+<p>所有子组件都销毁完毕后会执行根组件的destoryed</p>
+</li>
+</ul>
+<h1 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h1><ul>
+<li><p><code>props/$emit</code><br>通过props将数据自伤而下传递；通过$emit/v-on来向上传递消息</p>
+</li>
+<li><p>eventbus<br>通过eventbus进行消息的发布订阅</p>
+</li>
+<li><p>vuex<br>全局数据管理库，可通过vuex管理全局的数据流</p>
+</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$attrs/$listeners</span><br></pre></td></tr></table></figure>
+
+<p>可以进行跨级的组件通信</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 父组件</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line">	&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"home"</span>&gt;</span><br><span class="line">		&lt;m-input type=<span class="string">"text"</span> title=<span class="string">"姓名"</span> v-model=<span class="string">"name"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">m-input</span>&gt;</span></span></span><br><span class="line">	&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">import</span> MInput <span class="keyword">from</span> <span class="string">"@/components/MInput.vue"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">	name: <span class="string">"home"</span>,</span><br><span class="line">	data() &#123;</span><br><span class="line">		<span class="keyword">return</span> &#123;</span><br><span class="line">			name: <span class="string">"zhangsan"</span></span><br><span class="line">		&#125;;</span><br><span class="line">	&#125;,</span><br><span class="line">	components: &#123;</span><br><span class="line">		MInput</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 子组件</span></span><br><span class="line"><span class="regexp">&lt;template&gt;</span></span><br><span class="line"><span class="regexp">	&lt;div class v-bind="$attrs"&gt;</span></span><br><span class="line"><span class="regexp">		&lt;input v-bind="$attrs" @input="$emit('input',$event.target.value)" :value="value" /</span>&gt;</span><br><span class="line">	&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">	inheritAttrs: <span class="literal">false</span>,</span><br><span class="line">	props: &#123;</span><br><span class="line">		value: <span class="built_in">String</span>,</span><br><span class="line">		<span class="keyword">default</span>: <span class="string">""</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>proveded/inject<br>允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次有多深，并且在其上下游关系成立的时间内始终有效</p>
+</li>
+</ul>
+<h1 id="mixin和mixins的区别"><a href="#mixin和mixins的区别" class="headerlink" title="mixin和mixins的区别"></a>mixin和mixins的区别</h1><ul>
+<li>mixin用于全局混入，会影响到每个组件实例（vuex、vue-router等插件实现核心机制）</li>
+<li>mixins常用来扩展组件</li>
+</ul>
+<h1 id="computed和watch的区别"><a href="#computed和watch的区别" class="headerlink" title="computed和watch的区别"></a>computed和watch的区别</h1><ul>
+<li>computed是计算属性，依赖其他属性计算值，并且computed的值有缓存，只有当计算值发生变化才返回内容</li>
+<li>watch监听到值的变化就会执行回调，在回调中可以进行一些逻辑操作</li>
+</ul>
+<p>一般来说需要依赖别的属性来动态获得值得时候可以使用computed，对于监听到值的变化需要做一些<strong>复杂业务逻辑</strong>的情况可以使用watch</p>
+<p><a href="https://www.jianguoyun.com/static/stackedit/[http://blog.p18c.top/2020/03/03/Vue.js研读-1/](http://blog.p18c.top/2020/03/03/Vue.js研读-1/)" target="_blank" rel="noopener">实现原理</a></p>
+<h2 id="computed如何知道依赖"><a href="#computed如何知道依赖" class="headerlink" title="computed如何知道依赖"></a>computed如何知道依赖</h2><ol>
+<li>Vue.js实例初始化过程中，将所有计算属性包装为lazy watcher</li>
+<li>首次访问计算属性时，watcher为dirty，此时开始计算watcher的值</li>
+<li>计算开始之前，此watcher将被设置为依赖目标，开始收集依赖</li>
+<li>计算watcher值的过程中，被访问到属性的getter中会检查是否存在依赖目标，若存在依赖目标就会创建依赖关系</li>
+<li>watcher的值计算完成后，新的依赖被设置，旧的依赖会被删除，依赖收集完成</li>
+<li>当依赖属性更新时，会通知自身的依赖目标，watcher被设置为dirty</li>
+<li>再次访问该计算属性，重复计算及依赖收集步骤（3-6）</li>
+</ol>
+<h1 id="keep-alive有什么作用"><a href="#keep-alive有什么作用" class="headerlink" title="keep-alive有什么作用"></a>keep-alive有什么作用</h1><p>如果需要在组件切换的时候<strong>保存一些组件的状态防止多次渲染</strong>，就可以使用<code>keep-alive</code>组件包裹需要保存的组件。对于<code>keep-alive</code>组件来说，它有两个独有的声明周期钩子函数，分别为<code>activated</code>、和<code>deactivated</code>。用<code>keep-alive</code>包裹的组件在切换时不会进行销毁，而是缓存到内存中并执行<code>deactivated</code>钩子函数，命中缓存渲染后会执行<code>activated</code>钩子函数。</p>
+<h1 id="v-show和v-if的区别"><a href="#v-show和v-if的区别" class="headerlink" title="v-show和v-if的区别"></a>v-show和v-if的区别</h1><ul>
+<li><code>v-show</code>只是在<code>display:none</code>和<code>display:block</code>之间切换，无论初始条件是什么DOM都会被创建，后面只需切换CSS。所以总的来说<code>v-show</code>在初始渲染时有着更高的开销，但切换开销很小，适合频繁切换的场景。</li>
+<li><code>v-if</code>的话关于到Vue底层的编译。当初始属性为<code>false</code>时，组件就不会被渲染，直到条件为<code>true</code>。并且切换条件时会触发销毁/挂载组件及回流。所以总的来说在<strong>创建时开销较小，切换时开销大，适合不经常切换的场景</strong>，并且基于<code>v-if</code>这种惰性渲染机制，可以在必要的时候才去渲染组件，<strong>减少整个页面的初始渲染开销</strong></li>
+</ul>
+<h1 id="data为什么使用函数"><a href="#data为什么使用函数" class="headerlink" title="data为什么使用函数"></a>data为什么使用函数</h1><p><strong>组件复用时所有组件实例都会共享data</strong>，如果data是对象的话，就会造成一个组件修改data后影响其他组件，所以有必要将data写成函数，每次用到就调用一次函数获得新的数据</p>
+<p>当使用<code>new Vue()</code>的方式时，无论我们将data设置为对象函数函数都是可以的，因为<code>new Vue()</code>的方式是生成一个根组件，该组件不会被复用也就不会存在共享data的情况了</p>
+<h1 id="Vue-js响应式原理"><a href="#Vue-js响应式原理" class="headerlink" title="Vue.js响应式原理"></a>Vue.js响应式原理</h1><p>对于Object，基于发布订阅模式，使用<code>Object.defineProperty</code>，在<code>getter</code>中收集依赖，在<code>setter</code>中通知依赖。当一个vue组件实例创建的时候，vue会遍历<code>data</code>选项的属性，用<code>Object.defineProperty</code>将它们转换为<code>getter/setter</code>并且在内部追踪相关依赖，在属性被访问和修改时通知变化。每个组件实例都有相应的<code>watcher</code>实例，它会在组件渲染的过程中把属性记录为依赖，只有当依赖项的<code>setter</code>被调用时，会通知<code>watcher</code>重新计算从而使它管理的组件得以更新</p>
+<p>对于Array，基于函数劫持，改写数组原型方法，并遍历数组，对于是对象的项使用👆的方法进行观测</p>
+<h1 id="Vue-js的特点"><a href="#Vue-js的特点" class="headerlink" title="Vue.js的特点"></a>Vue.js的特点</h1><ul>
+<li>简洁</li>
+<li>数据驱动，自动计算属性和追踪依赖的模板表达式</li>
+<li>组件化，高科服用、解耦的组件来构建页面</li>
+<li>快速，精确有效批量DOM更新</li>
+<li>模板友好</li>
+</ul>
+<h1 id="nextTick"><a href="#nextTick" class="headerlink" title="$nextTick"></a><code>$nextTick</code></h1><p>Vue.js实现响应式并不是在数据发生变化后dom立即变化，而是按照一定的策略来进行dom更新。nextTick是在下次dom更新循环结束之后执行延迟回调，在修改数据之后使用<em>n*</em>e<strong>x</strong>t<strong>T</strong>i<strong>c</strong>k<em>是在下次</em>d<strong>o</strong>m*更新循环结束之后执行延迟回调，在修改数据之后使用nextTick，则可以在回调中获取更新后的dom</p>
+<p>渲染节流</p>
+<h1 id="v-for中key的作用"><a href="#v-for中key的作用" class="headerlink" title="v-for中key的作用"></a><code>v-for</code>中<code>key</code>的作用</h1><p>当vue更新通过v-for渲染的元素时，它默认使用<strong>就地复用</strong>的策略，如果数据项的顺序被改变，vue将不是移动dom元素来匹配数据项的改变，而是简单复用此处每个元素，并且确保它在特定的索引下显示已经被渲染过的每个元素。为了给vue一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序所有元素，需要给vue提供一个唯一key属性</p>
+<p>key <strong>主要用在vue的虚拟dom算法</strong>，在新旧node对比时辨识vnodes。如果不使用key，vue会使用一种最大限度减少动态元素并且尽可能的尝试修复/再利用相同类型元素的算法，使用key，它会基于key的变化重新排列元素顺序，并且会移除key不存在的元素</p>
+<h1 id="router和-route"><a href="#router和-route" class="headerlink" title="$router和$route"></a><code>$router</code>和<code>$route</code></h1><ul>
+<li><code>$router</code>是路由信息对象，包括<code>path、params、hash、query、fullPath、matched、name</code>等路由信息参数</li>
+<li><code>$route</code>是路由实例，包括了路由跳转方法、钩子函数等</li>
+</ul>
+<h1 id="click-native中native的作用"><a href="#click-native中native的作用" class="headerlink" title="@click.native中native的作用"></a><code>@click.native</code>中<code>native</code>的作用</h1><p>对于普通标签，<code>@click</code>会监听点击事件，而对于写在组件上的<code>@click</code>，如果不加<code>native</code>，则代表坚挺的是组件的点击事件，而不是组件内的点击事件，因此，在组件内写的<code>click handler</code>不会被执行</p>
+<h1 id="v-model"><a href="#v-model" class="headerlink" title="v-model"></a><code>v-model</code></h1><p><code>v-model</code>常用于表单元素上进行数据的双向绑定，比如``。除了原生的元素，它还能在自定义组件中使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v-model`是一个语法糖，可以拆解为`props: value`和`events:input`。就是说组件必须提供一个名为`value`的`prop`以及名为`input`的自定义事件，满足这两个条件就能在自定义组件上使用`v-model</span><br></pre></td></tr></table></figure>
+
+<h1 id="作用域插槽"><a href="#作用域插槽" class="headerlink" title="作用域插槽"></a>作用域插槽</h1><p>一种带有数据的插槽</p>
+<p>普通插槽 = 父组件设置的样式 + 父组件通过props传递的数据</p>
+<p>作用域插槽 = 父组件设置的样式 + <strong>自身的数据</strong>（该数据父组件也可以访问得到）</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Vue-js基础/" rel="tag"># Vue.js基础</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/04/16/网络相关-udp/" rel="next" title="网络相关-udp">
+                  <i class="fa fa-chevron-left"></i> 网络相关-udp
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/04/21/前端架构&软实力-移动端适配/" rel="prev" title="前端架构/软实力-移动端适配">
+                  前端架构/软实力-移动端适配 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#生命周期钩子函数"><span class="nav-number">1.</span> <span class="nav-text">生命周期钩子函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组件通信"><span class="nav-number">2.</span> <span class="nav-text">组件通信</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mixin和mixins的区别"><span class="nav-number">3.</span> <span class="nav-text">mixin和mixins的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#computed和watch的区别"><span class="nav-number">4.</span> <span class="nav-text">computed和watch的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#computed如何知道依赖"><span class="nav-number">4.1.</span> <span class="nav-text">computed如何知道依赖</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#keep-alive有什么作用"><span class="nav-number">5.</span> <span class="nav-text">keep-alive有什么作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#v-show和v-if的区别"><span class="nav-number">6.</span> <span class="nav-text">v-show和v-if的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#data为什么使用函数"><span class="nav-number">7.</span> <span class="nav-text">data为什么使用函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue-js响应式原理"><span class="nav-number">8.</span> <span class="nav-text">Vue.js响应式原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue-js的特点"><span class="nav-number">9.</span> <span class="nav-text">Vue.js的特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nextTick"><span class="nav-number">10.</span> <span class="nav-text">$nextTick</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#v-for中key的作用"><span class="nav-number">11.</span> <span class="nav-text">v-for中key的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#router和-route"><span class="nav-number">12.</span> <span class="nav-text">$router和$route</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#click-native中native的作用"><span class="nav-number">13.</span> <span class="nav-text">@click.native中native的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#v-model"><span class="nav-number">14.</span> <span class="nav-text">v-model</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#作用域插槽"><span class="nav-number">15.</span> <span class="nav-text">作用域插槽</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/imgs/avatar.png"
+      alt="Mr.RS">
+  <p class="site-author-name" itemprop="name">Mr.RS</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共62.2k字</span>
+</div>
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+  <br/>
+  <div class="powered-by">
+    <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+      本站访客数:<span id="busuanzi_value_site_uv"></span>
+    </span>
+  </div>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.1
+  </div>
+-->
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

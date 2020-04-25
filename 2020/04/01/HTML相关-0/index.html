@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/avatar.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="cookie、sessionStorage、localStorage的区别    cookie localStorage sessionStorage    由谁初始化 客户端或服务器，服务器可以使用Set-Cookie请求头 客户端 客户端   存储位置 客户端 客户端 客户端   过期时间 手动设置 无 当前会话   在当前会话中保持不变 取决过期时间 是 否   是否随着请求发送给服务器 是">
+<meta name="keywords" content="HTML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML相关问题">
+<meta property="og:url" content="https://mrrs878.github.io/2020/04/01/HTML相关-0/index.html">
+<meta property="og:site_name" content="Mr.RS">
+<meta property="og:description" content="cookie、sessionStorage、localStorage的区别    cookie localStorage sessionStorage    由谁初始化 客户端或服务器，服务器可以使用Set-Cookie请求头 客户端 客户端   存储位置 客户端 客户端 客户端   过期时间 手动设置 无 当前会话   在当前会话中保持不变 取决过期时间 是 否   是否随着请求发送给服务器 是">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-04-01T15:01:55.889Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTML相关问题">
+<meta name="twitter:description" content="cookie、sessionStorage、localStorage的区别    cookie localStorage sessionStorage    由谁初始化 客户端或服务器，服务器可以使用Set-Cookie请求头 客户端 客户端   存储位置 客户端 客户端 客户端   过期时间 手动设置 无 当前会话   在当前会话中保持不变 取决过期时间 是 否   是否随着请求发送给服务器 是">
+  <link rel="canonical" href="https://mrrs878.github.io/2020/04/01/HTML相关-0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>HTML相关问题 | Mr.RS</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.RS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Read The Fucking Source Code!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/01/HTML相关-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            HTML相关问题
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-01 23:00:40 / 修改时间：23:01:55" itemprop="dateCreated datePublished" datetime="2020-04-01T23:00:40+08:00">2020-04-01</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTML/" itemprop="url" rel="index">
+                    <span itemprop="name">HTML</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="cookie、sessionStorage、localStorage的区别"><a href="#cookie、sessionStorage、localStorage的区别" class="headerlink" title="cookie、sessionStorage、localStorage的区别"></a>cookie、sessionStorage、localStorage的区别</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>cookie</th>
+<th>localStorage</th>
+<th>sessionStorage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>由谁初始化</td>
+<td>客户端或服务器，服务器可以使用Set-Cookie请求头</td>
+<td>客户端</td>
+<td>客户端</td>
+</tr>
+<tr>
+<td>存储位置</td>
+<td>客户端</td>
+<td>客户端</td>
+<td>客户端</td>
+</tr>
+<tr>
+<td>过期时间</td>
+<td>手动设置</td>
+<td>无</td>
+<td>当前会话</td>
+</tr>
+<tr>
+<td>在当前会话中保持不变</td>
+<td>取决过期时间</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>是否随着请求发送给服务器</td>
+<td>是</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>容量（每个域名）</td>
+<td>4Kb</td>
+<td>5MB</td>
+<td>5MB</td>
+</tr>
+<tr>
+<td>访问权限</td>
+<td>任意窗口</td>
+<td>任意窗口</td>
+<td>当前窗口</td>
+</tr>
+</tbody></table>
+<h2 id="lt-script-gt-、-lt-script-async-gt-、-lt-script-defer-gt-区别"><a href="#lt-script-gt-、-lt-script-async-gt-、-lt-script-defer-gt-区别" class="headerlink" title="&lt;script&gt; 、&lt;script async&gt;、 &lt;script defer&gt; 区别"></a><code>&lt;script&gt;</code> 、<code>&lt;script async&gt;</code>、 <code>&lt;script defer&gt;</code> 区别</h2><p>当遇到这些标签时，会发生以下几种情况：</p>
+<ul>
+<li><code>script</code>，HTML解析中断，脚本被提取并立即执行，执行结束后，<code>HTML</code>解析继续</li>
+<li><code>script async</code>，脚本的提取、执行的过程与<code>HTML</code>解析过程并行，脚本执行完毕可能在<code>HTML</code>解析完毕前。当脚本与页面上其他脚本独立时，可以使用<code>async</code>来加快页面渲染（比如用作页面统计分析）</li>
+<li><code>script defer</code>，脚本的提取过程与<code>HTML</code>解析过程并行，脚本的执行将在<code>HTML</code>解析完毕后进行。如果有多个含<code>defer</code>的脚本，脚本的执行顺序按照在<code>document</code>中出现的位置，从上到下顺序执行。</li>
+</ul>
+<p>👀：没有<code>src</code>的脚本，<code>async</code>和<code>defer</code>属性会被忽略</p>
+<h2 id="lt-link-gt-与-lt-script-gt-的放置位置"><a href="#lt-link-gt-与-lt-script-gt-的放置位置" class="headerlink" title="&lt;link&gt;与&lt;script&gt;的放置位置"></a><code>&lt;link&gt;</code>与<code>&lt;script&gt;</code>的放置位置</h2><ul>
+<li><p>把<code>&lt;link&gt;</code>放在<code>&lt;head&gt;</code>中</p>
+<p>把<code>link</code>标签放在<code>&lt;head&gt;&lt;/head&gt;</code>之间是规范要求的内容。此外，这种做法可以让页面逐步呈现，提高了用户体验。将样式表放在文档底部附近，会使许多浏览器（包括 Internet Explorer）不能逐步呈现页面。一些浏览器会阻止渲染，以避免在页面样式发生变化时，重新绘制页面中的元素。这种做法可以防止呈现给用户空白的页面或没有样式的内容。</p>
+</li>
+<li><p>把<code>&lt;script&gt;</code>放在<code>&lt;body&gt;</code>底部</p>
+<p>脚本在下载和执行期间会阻止 HTML 解析。把``标签放在底部，保证 HTML 首先完成解析，将页面尽早呈现给用户。</p>
+<p>在底部，意味着浏览器不能开始下载脚本，直到整个文档（document）被解析。也许，对此比较好的做法是，<code>&lt;</code>script<code>&gt;</code>使用<code>defer</code>属性，放在<code>&lt;head&gt;</code>中。</p>
+</li>
+</ul>
+<h2 id="lt-img-gt-的title和alt属性"><a href="#lt-img-gt-的title和alt属性" class="headerlink" title="&lt;img&gt;的title和alt属性"></a><code>&lt;img&gt;</code>的<code>title</code>和<code>alt</code>属性</h2><ul>
+<li><p><code>alt</code></p>
+<p><code>alt</code>属性包含一条对图像的文本描述，这不是强制性的，但对可访问性而言，它<strong>难以置信地有用</strong>——屏幕阅读器会将这些描述读给需要使用阅读器的使用者听，让他们知道图像的含义。如果由于某种原因无法加载图像，普通浏览器也会在页面上显示<code>alt</code> 属性中的备用文本：例如，网络错误、内容被屏蔽或链接过期时。</p>
+</li>
+<li><p><code>title</code></p>
+<p><code>title</code> 属性不是 <code>alt</code> 属性可接受的替代品。并且，避免将 <code>alt</code> 属性的值直接复制到同一幅图片的<code>title</code> 属性上。这样可能会让一些屏幕阅读器把同一段描述读两遍，造成一定程度上的困扰。</p>
+<p><code>title</code> 属性也不该被用作一幅图片在 <code>alt</code> 之外的补充说明信息。如果一幅图片需要小标题，使用 <code>figure</code> 或 <code>figcaption</code> 元素。</p>
+<p><code>title</code>元素的值一般作为提示条(<code>tooltip</code>)呈现给用户，在光标于图片上停下后显示出来。尽管这<em>确实</em>能给用户提供更多的信息，您不该假定用户真的能看到：用户可能只有键盘或触摸屏。如果要把特别重要的信息提供给用户，选择上面提供的一种方法将其内联显示，而不是使用 <code>title</code></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/HTML/" rel="tag"># HTML</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/03/24/CSS相关-0/" rel="next" title="CSS-0">
+                  <i class="fa fa-chevron-left"></i> CSS-0
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/04/02/浏览器相关-存储/" rel="prev" title="浏览器相关-存储">
+                  浏览器相关-存储 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie、sessionStorage、localStorage的区别"><span class="nav-number">1.</span> <span class="nav-text">cookie、sessionStorage、localStorage的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lt-script-gt-、-lt-script-async-gt-、-lt-script-defer-gt-区别"><span class="nav-number">2.</span> <span class="nav-text">&lt;script&gt; 、&lt;script async&gt;、 &lt;script defer&gt; 区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lt-link-gt-与-lt-script-gt-的放置位置"><span class="nav-number">3.</span> <span class="nav-text">&lt;link&gt;与&lt;script&gt;的放置位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lt-img-gt-的title和alt属性"><span class="nav-number">4.</span> <span class="nav-text">&lt;img&gt;的title和alt属性</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/imgs/avatar.png"
+      alt="Mr.RS">
+  <p class="site-author-name" itemprop="name">Mr.RS</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共62.2k字</span>
+</div>
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+  <br/>
+  <div class="powered-by">
+    <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+      本站访客数:<span id="busuanzi_value_site_uv"></span>
+    </span>
+  </div>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.1
+  </div>
+-->
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

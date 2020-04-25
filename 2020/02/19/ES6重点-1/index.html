@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/avatar.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="字符串新增方法 padStart 用于字符串长度补全，如果某个字符串长度不够指定长度会在头部或尾部补全 123456789console.log(&apos;xxx&apos;.padStart(4, &apos;ab&apos;));console.log(&apos;x&apos;.padStart(4, &apos;ab&apos;)); //补全位数，有需要会重复或截取console.log(&apos;x&apos;.padStart(4)); // 不传第二个参数默认使用空格补全co">
+<meta name="keywords" content="ES6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6重点-1">
+<meta property="og:url" content="https://mrrs878.github.io/2020/02/19/ES6重点-1/index.html">
+<meta property="og:site_name" content="Mr.RS">
+<meta property="og:description" content="字符串新增方法 padStart 用于字符串长度补全，如果某个字符串长度不够指定长度会在头部或尾部补全 123456789console.log(&apos;xxx&apos;.padStart(4, &apos;ab&apos;));console.log(&apos;x&apos;.padStart(4, &apos;ab&apos;)); //补全位数，有需要会重复或截取console.log(&apos;x&apos;.padStart(4)); // 不传第二个参数默认使用空格补全co">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-29T15:01:30.821Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES6重点-1">
+<meta name="twitter:description" content="字符串新增方法 padStart 用于字符串长度补全，如果某个字符串长度不够指定长度会在头部或尾部补全 123456789console.log(&apos;xxx&apos;.padStart(4, &apos;ab&apos;));console.log(&apos;x&apos;.padStart(4, &apos;ab&apos;)); //补全位数，有需要会重复或截取console.log(&apos;x&apos;.padStart(4)); // 不传第二个参数默认使用空格补全co">
+  <link rel="canonical" href="https://mrrs878.github.io/2020/02/19/ES6重点-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>ES6重点-1 | Mr.RS</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.RS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Read The Fucking Source Code!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/02/19/ES6重点-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            ES6重点-1
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-19 23:01:48" itemprop="dateCreated datePublished" datetime="2020-02-19T23:01:48+08:00">2020-02-19</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-29 23:01:30" itemprop="dateModified" datetime="2020-02-29T23:01:30+08:00">2020-02-29</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="字符串新增方法"><a href="#字符串新增方法" class="headerlink" title="字符串新增方法"></a>字符串新增方法</h2><ul>
+<li><p><code>padStart</code></p>
+<p>用于字符串长度补全，如果某个字符串长度不够指定长度会在头部或尾部补全</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'xxx'</span>.padStart(<span class="number">4</span>, <span class="string">'ab'</span>));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'x'</span>.padStart(<span class="number">4</span>, <span class="string">'ab'</span>)); <span class="comment">//补全位数，有需要会重复或截取</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'x'</span>.padStart(<span class="number">4</span>)); <span class="comment">// 不传第二个参数默认使用空格补全</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'xxx'</span>.padStart(<span class="number">2</span>)); <span class="comment">// 补全后的长度小于源字符串长度则不做任何改变</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// abax</span></span><br><span class="line"><span class="comment">// axxx</span></span><br><span class="line"><span class="comment">//    x</span></span><br><span class="line"><span class="comment">// xxx</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>padEnd</code></p>
+<p>和<code>padStart</code>效果相反，从尾部开始补全</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'x'</span>.padEnd(<span class="number">5</span>, <span class="string">'abc'</span>));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'x'</span>.padEnd(<span class="number">4</span>));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'xxx'</span>.padEnd(<span class="number">2</span>));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'xxx'</span>.padEnd(<span class="number">4</span>, <span class="string">'ab'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// xabca</span></span><br><span class="line"><span class="comment">// x   </span></span><br><span class="line"><span class="comment">// xxx</span></span><br><span class="line"><span class="comment">// xxxa</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="对象新增扩展"><a href="#对象新增扩展" class="headerlink" title="对象新增扩展"></a>对象新增扩展</h2><ul>
+<li><p>链判断运算符</p>
+<p>在ES5中，取对象属性时，往往需要判断以下该对象是否存在。如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> name = (store </span><br><span class="line">    &amp;&amp; store.state </span><br><span class="line">    &amp;&amp; store.state.user </span><br><span class="line">    &amp;&amp; store.state.user.name) || <span class="string">"tom"</span></span><br></pre></td></tr></table></figure>
+
+<p>这种层层判断过于麻烦，因此ES2020引入链判断运算符<code>?.</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> name = store?.state?.user?.name</span><br></pre></td></tr></table></figure>
+
+<p>如果左侧的对象为<code>null</code>或<code>undefined</code>则直接返回<code>undefined</code>，不再往下运算</p>
+</li>
+<li><p><code>null</code>判断运算符</p>
+<p>独去对象属性时，如果某个属性的值时<code>null</code>或<code>undefined</code>，有时需要为它们指定默认值。常见做法是通过<code>||</code>运算符指定默认值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> name = user.name || <span class="string">"tom"</span></span><br><span class="line"><span class="keyword">const</span> age = user.age || <span class="number">20</span></span><br></pre></td></tr></table></figure>
+
+<p>原意是属性值为<code>null</code>或<code>undefined</code>时默认值就生效，但当<code>user.name</code>为空串或<code>user.age</code>为0时默认值也会生效</p>
+<p>为此ES2020引入新的<code>null</code>判断运算符<code>??</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> name = user.name ?? <span class="string">"tom"</span></span><br><span class="line"><span class="keyword">const</span> age = user.age ?? <span class="number">20</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="对象新增方法"><a href="#对象新增方法" class="headerlink" title="对象新增方法"></a>对象新增方法</h2><ul>
+<li><p><code>Object.is</code></p>
+<p>用来替代 <code>==</code>和<code>===</code></p>
+<p><code>==</code> 会进行自动类型转换，<code>===</code> 在比较+0和-0时返回<code>true</code>，<code>NaN</code>不等于自身</p>
+</li>
+<li><p><code>Object.assign</code></p>
+<p>用于对象合并</p>
+<ul>
+<li>只拷贝源对象的<strong>自身、可枚举属性（含Symbol）</strong></li>
+<li>浅拷贝</li>
+<li>同名属性会被覆盖</li>
+<li>除首参数外（<code>null</code>、<code>undefined</code>会报错），非对象会被转换为对象</li>
+</ul>
+</li>
+<li><p><code>Object.keys</code></p>
+<p>返回对象<strong>自身的</strong>、<strong>可遍历的</strong>属性的键名<strong>数组</strong></p>
+</li>
+<li><p><code>Object.fromEntries/Object.entries</code></p>
+<p><code>Object.fromEntries</code>将一个键值对数组转换为一个对象，适合将<code>Map</code>转换为<code>Object</code></p>
+<p><code>Object.entries</code>逆操作，用于将<code>Object</code>转换为键值对数组</p>
+</li>
+</ul>
+<h2 id="Array扩展"><a href="#Array扩展" class="headerlink" title="Array扩展"></a>Array扩展</h2><ul>
+<li><p><code>Array.of</code></p>
+<p>弥补数组构造函数<code>Array()</code>的不足。因为参数个数的不同，会导致<code>Array()</code>的行为有差异</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>() <span class="comment">//[]</span></span><br><span class="line"><span class="built_in">Array</span>(<span class="number">3</span>) <span class="comment">//[ , , ]</span></span><br><span class="line"><span class="built_in">Array</span>(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>) <span class="comment">//[3, 4, 5]</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">Array</span>.of() <span class="comment">// []</span></span><br><span class="line"><span class="built_in">Array</span>.of(<span class="number">3</span>) <span class="comment">//[3]</span></span><br><span class="line"><span class="built_in">Array</span>.of(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>) <span class="comment">//[3, 4, 5]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>Array.prototype.copyWithin()</code></p>
+<p>在当前数组内部，将指定位置的成员复制到其他位置（会覆盖原有成员）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.prototype.copyWithin(target, start = <span class="number">0</span>, end = <span class="keyword">this</span>.length)</span><br><span class="line"></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>].copyWithin(<span class="number">0</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment">// [4, 5, 3, 4, 5]</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>].copyWithin(<span class="number">0</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"><span class="comment">// [4, 2, 3, 4, 5]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>Array.prototype.flat() &amp;&amp; Array.prototype.flatMap()</code></p>
+<p><code>flat()</code>用于将数据降维，参数为降低的维数（默认为1）,如果不管有多少层维，都要转为一维数组，可使用<code>Infinity</code>关键字作为参数</p>
+<p>如果原数组有空位<code>flat()</code>会跳过</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">2</span>, [<span class="number">1</span>, <span class="number">2</span>]].flat()</span><br><span class="line"><span class="comment">// [1, 2, 1, 2]</span></span><br><span class="line"></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, [<span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, [<span class="number">2</span>]]].flat()</span><br><span class="line"><span class="comment">// [1, 2, 1, 2, 1, [2]]</span></span><br><span class="line"></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, [<span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, [<span class="number">2</span>]]].flat(<span class="number">2</span>)</span><br><span class="line"><span class="comment">// [1, 2, 1, 2, 1, 2]</span></span><br><span class="line"></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, [<span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, [<span class="number">2</span>]]].flat(<span class="literal">Infinity</span>)</span><br><span class="line"><span class="comment">// [1, 2, 1, 2, 1, 2]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>flatMap()</code>相当于<code>Array.prorotype.Map</code> + <code>Array.prorotype.flat</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].flatMap(<span class="function"><span class="params">x</span> =&gt;</span> [x, x * <span class="number">2</span>])</span><br><span class="line"><span class="comment">// [1, 2, 2, 4, 3, 6]</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].flatMap(<span class="function"><span class="params">x</span> =&gt;</span> x * <span class="number">2</span>)</span><br><span class="line"><span class="comment">// [2, 4, 6]</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="iterator"><a href="#iterator" class="headerlink" title="iterator"></a>iterator</h2><p><strong>WHAT</strong></p>
+<p>遍历器（<code>iterator</code>）就是这样一种机制。它是一种接口，为各种不同的数据结构提供统一的访问机制。任何数据结构只要部署了<code>iterator</code>接口，就可以完成<strong>遍历</strong>操作</p>
+<p><strong>WHY</strong></p>
+<p>JavaScript原有的表示集合的数据结构主要是数组（Array）和对象（Object），ES6又添加了<code>Map</code>、<code>Set</code>。这样就有了四种数据集合，用户可以组合使用它们，定义自己的数据结构，比如数组的成员是<code>Map</code>，<code>Map</code>的成员是对象。这样需要一种统一的接口机制来处理不同的数据结构</p>
+<p>主要作用</p>
+<ul>
+<li><p>为各种数据结构提供一个统一的、简便的访问接口</p>
+</li>
+<li><p>使得数据结构的成员能够按某种次序排列</p>
+</li>
+<li><p>为<code>for...of</code>所使用</p>
+<p>适合遍历Array，既有<code>forEach</code>的简洁又有<code>for</code>的<code>break</code>、<code>return</code>、<code>continue</code></p>
+</li>
+</ul>
+<p><strong>HOW</strong></p>
+<p><code>iterator</code>的遍历过程</p>
+<ol>
+<li>创建一个指针对象，指向当前的数据结构的起始位置。也就是说遍历器对象本质上就是一个指针对象</li>
+<li>第一次调用指针对象的<code>next</code>方法，可以将指针指向数据结构的第一个成员</li>
+<li>第二次调用指针对象的<code>next</code>方法，指针就指向数据结构的第二个成员</li>
+<li>不断调用指针对象的<code>next</code>方法，直到它指向数据结构的结束位置</li>
+</ol>
+<p>每一次调用<code>next</code>方法，都会返回数据结构的当前成员的信息。具体来说，就是返回一个包含<code>value</code>和<code>done</code>两个属性的对象，其中<code>value</code>属性是当前成员的值，<code>done</code>属性是一个布尔值，表示是否遍历结束</p>
+<p>ES6规定，默认的<code>iterator</code>接口部署在数据结构的<code>Symbol.iterator</code>属性，或者说，一个数据结构只要具有<code>Symbol.iterator</code>属性，就可以认为是可遍历的（<code>iterable</code>）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">    data: [<span class="string">'hello'</span>, <span class="string">'world'</span>],</span><br><span class="line">    [<span class="built_in">Symbol</span>.iterator](): &#123;</span><br><span class="line">    	<span class="keyword">const</span> self = <span class="keyword">this</span></span><br><span class="line">    	<span class="keyword">let</span> index = <span class="number">0</span></span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            next() &#123;</span><br><span class="line">                <span class="keyword">if</span> (index &lt; self.data.length) &#123;</span><br><span class="line">                    <span class="keyword">return</span> &#123;</span><br><span class="line">                        value: self.data[index++]</span><br><span class="line">                    	done: <span class="literal">false</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> &#123;</span><br><span class="line">                    value: <span class="literal">undefined</span>,</span><br><span class="line">                    done: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>原生具备iterator接口的数据结构：<code>Map、Array、Set、String、TypedArray、arguments、NodeList对象</code></p>
+<h2 id="let-VS-const"><a href="#let-VS-const" class="headerlink" title="let VS const"></a>let VS const</h2><p>在let和const之间，建议优先使用const，尤其是在全局环境。const优于let的几个原因：</p>
+<ul>
+<li>const可以提醒阅读程序的人，这个变量不应该改变</li>
+<li>const比较符合函数式编程思想，运算不改变值，只是新建值，而且这样也有利于将来的分布式计算</li>
+<li>JavaScript编译器会对const进行优化</li>
+<li>长远来看，JavaScript可能会有多线程的实现，这时let表示的变量只应出现在单线程运行的代码中，不是多线程共享的，这样有利于线程安全</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>, b = <span class="number">2</span>, c = <span class="number">3</span></span><br><span class="line"><span class="comment">// good</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">const</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> c = <span class="number">3</span>;</span><br><span class="line"><span class="comment">// best</span></span><br><span class="line"><span class="keyword">const</span> [a, b, c] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="generator"><a href="#generator" class="headerlink" title="generator"></a>generator</h2><p>ES6提供的一种异步编程解决方案</p>
+<p>形式上，<code>generator</code>函数是一个状态机，封装了多个内部状态。执行<code>generator</code>函数会返回一个<strong>遍历器对象</strong>。</p>
+<p>语法上，<code>generator</code>函数是一个普通函数。<code>function</code>关键字与函数名之间有一个<code>*</code>；函数体内部使用<code>yield</code>表达式定义不同的内部状态</p>
+<p>与普通函数不同，generator函数被调用后并不执行，返回的是一个指向内部状态的指针对象，也就是<strong>遍历器对象</strong>。下一步，必须调用遍历器对象的<code>next</code>方法使得指针移向下一个状态。也就是说每次调用<code>next</code>方法，内部指针就从函数头部或上一次停下来的地方开始执行，直到遇到下一个<code>yield</code>表达式（或<code>return</code>语句）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">gen</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> str1 = <span class="keyword">yield</span> <span class="string">"hello"</span></span><br><span class="line">  <span class="comment">// str1 = 222</span></span><br><span class="line">  <span class="keyword">const</span> str2 = <span class="keyword">yield</span> <span class="string">"world"</span></span><br><span class="line">  <span class="comment">// str2 = 333</span></span><br><span class="line">  <span class="keyword">return</span> str2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> iter = gen()</span><br><span class="line"><span class="built_in">console</span>.log(iter.next())</span><br><span class="line"><span class="built_in">console</span>.log(iter.next(<span class="number">222</span>))</span><br><span class="line"><span class="built_in">console</span>.log(iter.next(<span class="number">333</span>))</span><br></pre></td></tr></table></figure>
+
+<p>第一次调用，<code>generator</code>函数开始执行，直到遇到第一个<code>yield</code>表达式为止。<code>next</code>方法返回一个对象，它的<code>value</code>值就是当前<code>yield</code>表达式的值，done的值为<code>false</code></p>
+<p>第二次调用，<code>generator</code>从上次yield表达式停下来的地方一直执行到下一个<code>yield</code>表达式 👆 ……</p>
+<p>第三次调用，<code>generator</code>函数从上次<code>yield</code>表达式停下来的地方一直执行到<code>return</code>语句，next返回的<code>value</code>值就是<code>return</code>后面表达式的值，<code>done</code>为true（如果是<code>yield</code>则为<code>false</code>）</p>
+<p><code>yield</code>表达式本身没有返回值（或者说总是返回undefined）。<code>next</code>方法可以带一个参数，该参数会被当作<strong>上一个</strong><code>yield</code>表达式的返回值</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/ES6/" rel="tag"># ES6</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/02/18/ES6重点-0/" rel="next" title="ES6重点-0">
+                  <i class="fa fa-chevron-left"></i> ES6重点-0
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/03/02/Vue.js研读-基础/" rel="prev" title="Vue.js研读-基础">
+                  Vue.js研读-基础 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串新增方法"><span class="nav-number">1.</span> <span class="nav-text">字符串新增方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象新增扩展"><span class="nav-number">2.</span> <span class="nav-text">对象新增扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象新增方法"><span class="nav-number">3.</span> <span class="nav-text">对象新增方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array扩展"><span class="nav-number">4.</span> <span class="nav-text">Array扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iterator"><span class="nav-number">5.</span> <span class="nav-text">iterator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#let-VS-const"><span class="nav-number">6.</span> <span class="nav-text">let VS const</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#generator"><span class="nav-number">7.</span> <span class="nav-text">generator</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/imgs/avatar.png"
+      alt="Mr.RS">
+  <p class="site-author-name" itemprop="name">Mr.RS</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共62.2k字</span>
+</div>
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+  <br/>
+  <div class="powered-by">
+    <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+      本站访客数:<span id="busuanzi_value_site_uv"></span>
+    </span>
+  </div>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.1
+  </div>
+-->
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

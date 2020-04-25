@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/avatar.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="移动端适配具体含义为了在移动端让页面获得更好的显示效果，我们必须让布局视口、视觉视口都尽可能等于理想视口，但这并不能保证它们显示完全一致，我们需要一种方案（rem + vw适配）来让设计稿得到更完美的适配。 三个视口 布局视口 布局视口(layout viewport)：当我们以百分比来指定一个元素的大小时，它的计算值是由这个元素的包含块计算而来的。当这个元素是最顶级的元素时，它就是基于布局视口来">
+<meta name="keywords" content="移动端适配">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端架构&#x2F;软实力-移动端适配">
+<meta property="og:url" content="https://mrrs878.github.io/2020/04/21/前端架构&软实力-移动端适配/index.html">
+<meta property="og:site_name" content="Mr.RS">
+<meta property="og:description" content="移动端适配具体含义为了在移动端让页面获得更好的显示效果，我们必须让布局视口、视觉视口都尽可能等于理想视口，但这并不能保证它们显示完全一致，我们需要一种方案（rem + vw适配）来让设计稿得到更完美的适配。 三个视口 布局视口 布局视口(layout viewport)：当我们以百分比来指定一个元素的大小时，它的计算值是由这个元素的包含块计算而来的。当这个元素是最顶级的元素时，它就是基于布局视口来">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/5/17/16ac3a666e96ff01?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/5/17/16ac3a66924ef751?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:updated_time" content="2020-04-21T14:34:22.824Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端架构&#x2F;软实力-移动端适配">
+<meta name="twitter:description" content="移动端适配具体含义为了在移动端让页面获得更好的显示效果，我们必须让布局视口、视觉视口都尽可能等于理想视口，但这并不能保证它们显示完全一致，我们需要一种方案（rem + vw适配）来让设计稿得到更完美的适配。 三个视口 布局视口 布局视口(layout viewport)：当我们以百分比来指定一个元素的大小时，它的计算值是由这个元素的包含块计算而来的。当这个元素是最顶级的元素时，它就是基于布局视口来">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/5/17/16ac3a666e96ff01?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+  <link rel="canonical" href="https://mrrs878.github.io/2020/04/21/前端架构&软实力-移动端适配/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>前端架构/软实力-移动端适配 | Mr.RS</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.RS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Read The Fucking Source Code!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/21/前端架构&软实力-移动端适配/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            前端架构/软实力-移动端适配
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-21 22:33:00 / 修改时间：22:34:22" itemprop="dateCreated datePublished" datetime="2020-04-21T22:33:00+08:00">2020-04-21</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端架构-软实力/" itemprop="url" rel="index">
+                    <span itemprop="name">前端架构/软实力</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="移动端适配具体含义"><a href="#移动端适配具体含义" class="headerlink" title="移动端适配具体含义"></a>移动端适配具体含义</h1><p>为了在移动端让页面获得更好的显示效果，我们必须让<strong>布局视口、视觉视口都尽可能等于理想视口</strong>，但这并不能保证它们显示完全一致，我们需要一种方案（rem + vw适配）来让设计稿得到更完美的适配。</p>
+<h1 id="三个视口"><a href="#三个视口" class="headerlink" title="三个视口"></a>三个视口</h1><ol>
+<li><p>布局视口</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/5/17/16ac3a666e96ff01?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="布局视口"><br>布局视口(<code>layout viewport</code>)：当我们以百分比来指定一个元素的大小时，它的计算值是由这个元素的包含块计算而来的。当这个元素是最顶级的元素时，它就是基于布局视口来计算的。</p>
+<p>所以，布局视口是网页布局的基准窗口，在<code>PC</code>浏览器上，布局视口就等于当前浏览器的窗口大小（不包括<code>borders</code> 、<code>margins</code>、滚动条）。</p>
+<p>在移动端，布局视口被赋予一个默认值，大部分为<code>980px</code>，这保证<code>PC</code>的网页可以在手机浏览器上呈现，但是非常小，用户可以手动对网页进行放大。</p>
+<p>我们可以通过调用<code>document.documentElement.clientWidth / clientHeight</code>来获取布局视口大小。</p>
+</li>
+<li><p>视觉视口</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/5/17/16ac3a66924ef751?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="视觉视口"><br>视觉视口(<code>visual viewport</code>)：用户通过屏幕真实看到的区域。</p>
+<p>视觉视口默认等于当前浏览器的窗口大小（包括滚动条宽度）。</p>
+<p>当用户对浏览器进行缩放时，不会改变布局视口的大小，所以页面布局是不变的，但是<strong>缩放会改变视觉视口</strong>的大小。</p>
+<p>例如：用户将浏览器窗口放大了<code>200%</code>，这时浏览器窗口中的<code>CSS像素</code>会随着视觉视口的放大而放大，这时一个<code>CSS</code>像素会跨越更多的物理像素。</p>
+<p>所以，布局视口会限制你的<code>CSS</code>布局，而视觉视口决定用户具体能看到什么。</p>
+<p>我们可以通过调用<code>window.innerWidth / innerHeight</code>来获取视觉视口大小。</p>
+</li>
+<li><p>理想视口</p>
+<p>布局视口在移动端展示的效果并不是一个理想的效果，所以理想视口(<code>ideal viewport</code>)就诞生了：网站页面在移动端展示的理想大小 === 设备独立像素</p>
+<p>当页面缩放比例为<code>100%</code>时，<code>CSS像素 = 设备独立像素</code>，<code>理想视口 = 视觉视口</code>。</p>
+<p>我们可以通过调用<code>screen.width / height</code>来获取理想视口大小。</p>
+</li>
+</ol>
+<h1 id="Meta-viewport"><a href="#Meta-viewport" class="headerlink" title="Meta viewport"></a>Meta viewport</h1><meta> 元素表示那些不能由其它HTML元相关元素之一表示的任何元数据信息，它可以告诉浏览器如何解析页面
+
+<p>我们可以借助``元素的<code>viewport</code>来帮助我们设置视口、缩放等，从而让移动端得到更好的展示效果。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span>  <span class="attr">name</span>=<span class="string">"viewport"</span>  <span class="attr">content</span>=<span class="string">"width=device-width; initial-scale=1; maximum-scale=1; minimum-scale=1; user-scalable=no;"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>device-width</code>就等于理想视口的宽度，所以设置<code>width=device-width</code>就相当于让布局视口等于理想视口。</p>
+<p>由于<code>initial-scale = 理想视口宽度 / 视觉视口宽度</code>，所以我们设置<code>initial-scale=1;</code>就相当于让视觉视口等于理想视口。</p>
+<p>这时，1个<code>CSS</code>像素就等于1个设备独立像素，而且我们也是基于理想视口来进行布局的，所以呈现出来的页面布局在各种设备上都能大致相似。</p>
+<h1 id="rem-vw适配"><a href="#rem-vw适配" class="headerlink" title="rem + vw适配"></a>rem + vw适配</h1><ul>
+<li><p>rem是相对于根元素的字体大小的单位，也就是html的font-size大小，浏览器默认的字体大小是16px，所以默认的1rem=16px，我们可以根据设备宽度动态设置根元素的font-size，使得以rem为单位的元素在不同终端上以相对一致的视觉效果呈现。</p>
+</li>
+<li><p><code>vh、vw</code>分别对应于视觉视口宽度 <code>window.innerHeight</code>和视觉视口高度 <code>window.innerWidth</code></p>
+<p><code>100vh === window.innerHeight</code>，<code>100vw === window.innerWidth</code></p>
+</li>
+</ul>
+<ol>
+<li><p>设置meta标签</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span>  <span class="attr">name</span>=<span class="string">"viewport"</span>  <span class="attr">content</span>=<span class="string">"width=device-width; initial-scale=1; maximum-scale=1; minimum-scale=1; user-scalable=no;"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置根<code>font-size</code>（对应于750px设计稿）</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">html</span> &#123;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">13.3333vw</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">750px = 100vw</span></span><br><span class="line"><span class="comment">1px = 0.13333vw</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">假定1rem = 100px</span></span><br><span class="line"><span class="comment">则1rem = 13.333vw</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/移动端适配/" rel="tag"># 移动端适配</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/04/18/Vue.js学习-基础/" rel="next" title="Vue.js学习-基础">
+                  <i class="fa fa-chevron-left"></i> Vue.js学习-基础
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/04/24/前端架构&软实力-预加载&懒加载/" rel="prev" title="前端架构&软实力-预加载&懒加载">
+                  前端架构&软实力-预加载&懒加载 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#移动端适配具体含义"><span class="nav-number">1.</span> <span class="nav-text">移动端适配具体含义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三个视口"><span class="nav-number">2.</span> <span class="nav-text">三个视口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Meta-viewport"><span class="nav-number">3.</span> <span class="nav-text">Meta viewport</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rem-vw适配"><span class="nav-number">4.</span> <span class="nav-text">rem + vw适配</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/imgs/avatar.png"
+      alt="Mr.RS">
+  <p class="site-author-name" itemprop="name">Mr.RS</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共62.2k字</span>
+</div>
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+  <br/>
+  <div class="powered-by">
+    <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+      本站访客数:<span id="busuanzi_value_site_uv"></span>
+    </span>
+  </div>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.1
+  </div>
+-->
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

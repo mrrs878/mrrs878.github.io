@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/avatar.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Mr.RS">
+<meta property="og:url" content="https://mrrs878.github.io/page/5/index.html">
+<meta property="og:site_name" content="Mr.RS">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mr.RS">
+  <link rel="canonical" href="https://mrrs878.github.io/page/5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: true,
+    isPost: false,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Mr.RS</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.RS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Read The Fucking Source Code!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/10/15/函数式编程-柯里化-组合/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2019/10/15/函数式编程-柯里化-组合/" class="post-title-link" itemprop="url">函数式编程-柯里化/组合</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-15 15:24:40 / 修改时间：20:41:42" itemprop="dateCreated datePublished" datetime="2019-10-15T15:24:40+08:00">2019-10-15</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/函数式编程/" itemprop="url" rel="index">
+                    <span itemprop="name">函数式编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="柯里化-curry"><a href="#柯里化-curry" class="headerlink" title="柯里化(curry)"></a>柯里化(curry)</h1><p>只传递给函数一个参数，让它返回一个函数去处理剩下的参数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">"ramda"</span>);</span><br><span class="line"><span class="keyword">const</span> accounting = <span class="built_in">require</span>(<span class="string">"accounting"</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">match</span>(<span class="params">reg, str</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> str.match(reg);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> match_ = _.curry(<span class="function">(<span class="params">reg, str</span>) =&gt;</span> str.match(reg));</span><br><span class="line"><span class="keyword">let</span> replace = _.curry(<span class="function">(<span class="params">reg, replacement, str</span>) =&gt;</span> str.replace(reg, replacement));</span><br><span class="line"><span class="keyword">let</span> filter = _.curry(<span class="function">(<span class="params">f, any</span>) =&gt;</span> any.filter(f));</span><br><span class="line"><span class="keyword">let</span> map = _.curry(<span class="function">(<span class="params">f, any</span>) =&gt;</span> any.map(f));</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"no curry"</span>, match(<span class="regexp">/\s+/g</span>, <span class="string">"hello world"</span>));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"width curry:"</span>, match_(<span class="regexp">/\s+/g</span>)(<span class="string">"hello world"</span>)); <span class="comment">// width curry: [ ' ' ]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> hasSpace = match_(<span class="regexp">/\s+/g</span>);</span><br><span class="line"><span class="built_in">console</span>.log(hasSpace(<span class="string">"hello world"</span>)); <span class="comment">// [ ' ' ]</span></span><br><span class="line"><span class="built_in">console</span>.log(match_(<span class="regexp">/\s+/g</span>)(<span class="string">"spaceless"</span>)); <span class="comment">// null</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> findSpace = filter(hasSpace);</span><br><span class="line"><span class="built_in">console</span>.log(findSpace([<span class="string">"hello world"</span>, <span class="string">"spaceless"</span>])); <span class="comment">// [ 'hello world' ]</span></span><br><span class="line"><span class="built_in">console</span>.log(filter(match_(<span class="regexp">/\s+/g</span>))([<span class="string">"hello world"</span>, <span class="string">"spaceless"</span>])); <span class="comment">// [ 'hello world' ]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> noVowels = replace(<span class="regexp">/[aeiou]/gi</span>);</span><br><span class="line"><span class="keyword">let</span> censored = noVowels(<span class="string">"*"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(censored(<span class="string">"hello world"</span>)); <span class="comment">// h*ll* w*rld</span></span><br><span class="line"><span class="built_in">console</span>.log(replace(<span class="regexp">/[aeiou]/gi</span>)(<span class="string">"*"</span>)(<span class="string">"hello world"</span>)); <span class="comment">// h*ll* w*rld</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="组合-compose"><a href="#组合-compose" class="headerlink" title="组合(compose)"></a>组合(compose)</h1><p>将多个函数结合产生另一个函数</p>
+<ul>
+<li>多个函数执行的过程中(<strong>由右致左</strong>)</li>
+<li>上一个函数的执行结果是下一个函数的参数</li>
+<li>compose 的分组满足结合律, compose(f, g, h) === compose(compose(f, g), h) === compose(f, compose(g, h))</li>
+</ul>
+<p>((y → z), (x → y), …, (o → p), ((a, b, …, n) → o)) → ((a, b, …, n) → z)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> CARS = [</span><br><span class="line">  &#123; <span class="attr">name</span>: <span class="string">"Ferrari FF"</span>, <span class="attr">horsepower</span>: <span class="number">660</span>, <span class="attr">dollar_value</span>: <span class="number">700000</span>, <span class="attr">in_stock</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">"Spyker C12 Zagato"</span>,</span><br><span class="line">    horsepower: <span class="number">650</span>,</span><br><span class="line">    dollar_value: <span class="number">648000</span>,</span><br><span class="line">    in_stock: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">"Jaguar XKR-S"</span>,</span><br><span class="line">    horsepower: <span class="number">550</span>,</span><br><span class="line">    dollar_value: <span class="number">132000</span>,</span><br><span class="line">    in_stock: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123; <span class="attr">name</span>: <span class="string">"Audi R8"</span>, <span class="attr">horsepower</span>: <span class="number">525</span>, <span class="attr">dollar_value</span>: <span class="number">114200</span>, <span class="attr">in_stock</span>: <span class="literal">false</span> &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">"Aston Martin One-77"</span>,</span><br><span class="line">    horsepower: <span class="number">750</span>,</span><br><span class="line">    dollar_value: <span class="number">1850000</span>,</span><br><span class="line">    in_stock: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    name: <span class="string">"Pagani Huayra"</span>,</span><br><span class="line">    horsepower: <span class="number">700</span>,</span><br><span class="line">    dollar_value: <span class="number">1300000</span>,</span><br><span class="line">    in_stock: <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> isLastInStock = _.compose(</span><br><span class="line">  _.prop(<span class="string">"in_stock"</span>),</span><br><span class="line">  _.last</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(isLastInStock(CARS));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> firstName = _.compose(</span><br><span class="line">  _.prop(<span class="string">"name"</span>),</span><br><span class="line">  _.head</span><br><span class="line">);</span><br><span class="line"><span class="built_in">console</span>.log(firstName(CARS));</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_average</span>(<span class="params">xs</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> _.reduce(_.add, <span class="number">0</span>, xs) / xs.length;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> averageDollarValue = <span class="function"><span class="keyword">function</span>(<span class="params">cars</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> dollar_values = _.map(<span class="function"><span class="keyword">function</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> c.dollar_value;</span><br><span class="line">  &#125;, cars);</span><br><span class="line">  <span class="keyword">return</span> _average(dollar_values);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> averageDollarValue_ = _.compose(</span><br><span class="line">  _average,</span><br><span class="line">  _.map(<span class="function"><span class="params">item</span> =&gt;</span> item.dollar_value)</span><br><span class="line">);</span><br><span class="line"><span class="built_in">console</span>.log(averageDollarValue_(CARS));</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_underscore</span>(<span class="params">word</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(word);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> sanitizeNames = _.compose(</span><br><span class="line">  _.map(<span class="function"><span class="params">item</span> =&gt;</span></span><br><span class="line">    _.compose(</span><br><span class="line">      _.toLower,</span><br><span class="line">      _.replace(<span class="regexp">/\W+/g</span>, <span class="string">"_"</span>),</span><br><span class="line">      _.prop(<span class="string">"name"</span>)</span><br><span class="line">    )(item)</span><br><span class="line">  )</span><br><span class="line">);</span><br><span class="line"><span class="built_in">console</span>.log(sanitizeNames(CARS));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> availablePrices = <span class="function"><span class="keyword">function</span>(<span class="params">cars</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> available_cars = _.filter(_.prop(<span class="string">"in_stock"</span>), cars);</span><br><span class="line">  <span class="keyword">return</span> available_cars</span><br><span class="line">    .map(<span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> accounting.formatMoney(x.dollar_value);</span><br><span class="line">    &#125;)</span><br><span class="line">    .join(<span class="string">", "</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(availablePrices(CARS));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> availablePrices_ = _.compose(</span><br><span class="line">  _.join(<span class="string">", "</span>),</span><br><span class="line">  _.map(<span class="function"><span class="params">item</span> =&gt;</span> accounting.formatMoney(item.dollar_value)),</span><br><span class="line">  _.filter(_.prop(<span class="string">"in_stock"</span>))</span><br><span class="line">);</span><br><span class="line"><span class="built_in">console</span>.log(availablePrices_(CARS));</span><br></pre></td></tr></table></figure>
+
+<h1 id="pointfree"><a href="#pointfree" class="headerlink" title="pointfree"></a>pointfree</h1><p>pointfree 模式指的是函数无须提及将要操作的数据是什么样的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 非pointfree ---&gt; 提到了数据word</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">snakeCase</span>(<span class="params">word</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> word.toLowerCase().replace(<span class="regexp">/\s+/gi</span>, <span class="string">"_"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// pointfree</span></span><br><span class="line"><span class="keyword">const</span> snakeCase = compose(</span><br><span class="line">  replace(<span class="regexp">/\s+/gi</span>, <span class="string">"_"</span>),</span><br><span class="line">  toLowerCase</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h1 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h1><p>如果在 debug 组合的时候遇到了困难，那么可以使用下面这个实用的，但是不纯的 trace 函数来追踪代码的执行情况</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> trace = curry(<span class="function"><span class="keyword">function</span>(<span class="params">tag, x</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(tag, x);</span><br><span class="line">  <span class="keyword">return</span> x;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dasherize = compose(</span><br><span class="line">  join(<span class="string">"-"</span>),</span><br><span class="line">  toLower,</span><br><span class="line">  trace(<span class="string">"**after split**"</span>),</span><br><span class="line">  split(<span class="string">" "</span>),</span><br><span class="line">  replace(<span class="regexp">/\s&#123;2,&#125;/gi</span>, <span class="string">" "</span>)</span><br><span class="line">);</span><br><span class="line"><span class="comment">// **after split** [ 'The', 'world', 'is', 'a', 'vampire' ]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dasherize = compose(</span><br><span class="line">  join(<span class="string">"-"</span>),</span><br><span class="line">  map(toLower),</span><br><span class="line">  split(<span class="string">" "</span>),</span><br><span class="line">  replace(<span class="regexp">/\s&#123;2,&#125;/gi</span>, <span class="string">" "</span>)</span><br><span class="line">);</span><br><span class="line">dasherize(<span class="string">"The world is a vampire"</span>);</span><br><span class="line"><span class="comment">// 'the-world-is-a-vampire'</span></span><br></pre></td></tr></table></figure>
+
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/10/15/函数式编程-纯函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2019/10/15/函数式编程-纯函数/" class="post-title-link" itemprop="url">函数式编程-纯函数</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-15 13:43:45 / 修改时间：15:18:31" itemprop="dateCreated datePublished" datetime="2019-10-15T13:43:45+08:00">2019-10-15</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/函数式编程/" itemprop="url" rel="index">
+                    <span itemprop="name">函数式编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="纯函数的基本概念"><a href="#纯函数的基本概念" class="headerlink" title="纯函数的基本概念"></a>纯函数的基本概念</h1><p>纯函数是这样一种函数，相同的输入永远会得到相同的输出，而且没有任何可观察的副作用。</p>
+<p>可能会导致不纯的情况：</p>
+<ul>
+<li><p>修改调用/传入的参数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> array = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 纯的</span></span><br><span class="line">array.slice(<span class="number">0</span>, <span class="number">3</span>); <span class="comment">//[1, 2, 3]</span></span><br><span class="line">array.slice(<span class="number">0</span>, <span class="number">3</span>); <span class="comment">//[1, 2, 3]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 不纯的 --&gt; 会修改array</span></span><br><span class="line">array.splice(<span class="number">0</span>, <span class="number">3</span>); <span class="comment">//[1, 2, 3]</span></span><br><span class="line">array.splice(<span class="number">0</span>, <span class="number">3</span>); <span class="comment">//[4, 5]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>依赖外部环境</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 纯的</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkAge</span>(<span class="params">minmun, age</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> age &gt; minmun;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不纯的 --&gt; 引入了外部的环境，从而增加了认知负荷(cognitive load)</span></span><br><span class="line"><span class="keyword">let</span> minmum = <span class="number">21</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkAge</span>(<span class="params">age</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> age &gt; minmun;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="副作用"><a href="#副作用" class="headerlink" title="副作用"></a>副作用</h1><p>副作用是在计算结果的过程中，系统状态的一种变化，或者与外部世界进行的可观察的交互。</p>
+<p>副作用可能包括：</p>
+<ul>
+<li>更改文件系统</li>
+<li>往数据库插入记录</li>
+<li>发送一个 http 请求</li>
+<li>修改传入的数据</li>
+<li>打印/log</li>
+<li>获取用户输入</li>
+<li>DOM 查询</li>
+<li>访问系统状态</li>
+<li>……</li>
+</ul>
+<h1 id="追求纯的理由"><a href="#追求纯的理由" class="headerlink" title="追求纯的理由"></a>追求纯的理由</h1><ul>
+<li><p>可缓存性(cacheable)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">memoize</span>(<span class="params">f</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> cache = &#123;&#125;;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> arg_str = <span class="built_in">JSON</span>.stringify(<span class="built_in">arguments</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(cache[arg_str]);</span><br><span class="line">    cache[arg_str] = cache[arg_str] || f.apply(f, <span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">return</span> cache[arg_str];</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> squareNumber = memoize(<span class="function"><span class="params">x</span> =&gt;</span> x * x);</span><br><span class="line"></span><br><span class="line">squareNumber(<span class="number">3</span>);</span><br><span class="line">squareNumber(<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可移植性/自文档化(portable/self-documenting)</p>
+</li>
+<li><p>可测试性(testable)</p>
+</li>
+<li><p>合理性(reasonable)</p>
+<p>使用纯函数的最大好处是<a href="https://en.wikipedia.org/wiki/Referential_transparency" target="_blank" rel="noopener">引用透明性(referential transparency)</a>。</p>
+<p>如果一段代码可以替换成它执行所得的结果，而且是在不改变整个程序行为的前提下替换的，那么就认为这段代码是引用透明的。由于纯函数总是能够根据相同的输入返回相同的输出，所以它们就能够保证总是返回同一个结果，这也就保证了引用透明性。对于引用透明的代码，可以使用”等式推导”(equational reasoning)的技术来分析代码，所谓”等式推导”就是”一对一”替换，有点像在不考虑程序行执行的怪异行为(quirks of programmatic evaluation)的情况下手动执行相关代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> Immutable = <span class="built_in">require</span>(<span class="string">"immutable"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// decrementHP是纯函数！！！因为player的来源是immutable.Map，set方法不会使map改变，而是返回一个新的map对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">decrementHP</span>(<span class="params">player</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> player.set(<span class="string">"hp"</span>, player.hp - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isSameTeam</span>(<span class="params">player1, player2</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> player1.team === player2.team;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">punch</span>(<span class="params">player, target</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (isSameTeam(player, target)) &#123;</span><br><span class="line">    <span class="keyword">return</span> target;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> decrementHP(target);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> jobe = Immutable.Map(&#123; <span class="attr">name</span>: <span class="string">"Jobe"</span>, <span class="attr">hp</span>: <span class="number">20</span>, <span class="attr">team</span>: <span class="string">"red"</span> &#125;);</span><br><span class="line"><span class="keyword">let</span> michael = Immutable.Map(&#123; <span class="attr">name</span>: <span class="string">"Michael"</span>, <span class="attr">hp</span>: <span class="number">20</span>, <span class="attr">team</span>: <span class="string">"green"</span> &#125;);</span><br><span class="line"></span><br><span class="line">punch(jobe, michael);</span><br><span class="line"><span class="comment">//=&gt; Immutable.Map(&#123;name:"Michael", hp:19, team: "green"&#125;)</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/MostlyAdequate/mostly-adequate-guide/issues/244" target="_blank" rel="noopener">关于 decrementHP 是不是纯函数的讨论</a></p>
+</li>
+<li><p>并行代码</p>
+<p>可以并行运行任意纯函数，因为纯函数根本不需要访问共享内存，而且根据其定义，纯函数也不会因副作用而进入<a href="https://en.wikipedia.org/wiki/Race_condition" target="_blank" rel="noopener">竞态(race condition)</a></p>
+</li>
+</ul>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/10/15/函数式编程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2019/10/15/函数式编程/" class="post-title-link" itemprop="url">函数式编程</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-15 10:10:17 / 修改时间：11:46:33" itemprop="dateCreated datePublished" datetime="2019-10-15T10:10:17+08:00">2019-10-15</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/函数式编程/" itemprop="url" rel="index">
+                    <span itemprop="name">函数式编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="WHAT"><a href="#WHAT" class="headerlink" title="WHAT"></a>WHAT</h1><ul>
+<li><p>本质上，函数式编程只是<strong>范畴论的运算方法</strong>，跟数理逻辑、微积分、行列式是同一类痛惜，都是数学方法，只是碰巧它能用来写程序</p>
+</li>
+<li><p>FP 的目的是使用函数来抽象作用在数据之上的控制力和操作，从而在系统中消除副作用并减少对状态的改变</p>
+</li>
+<li><p>OOP 通过封装使得代码更易理解，FP 通过最小化变化使得代码更易理解</p>
+<p>ps: 为什么函数式编程要求函数必须是纯的，不能有副作用？因为它是一种数学运算，原始目的就是求值，不做其他事情，否则就无法满足函数运算法则了</p>
+</li>
+</ul>
+<h1 id="WHY"><a href="#WHY" class="headerlink" title="WHY"></a>WHY</h1><ul>
+<li>使用纯函数的代码绝不会更改或破环全局状态，有助于提高代码的可测性和可维护性</li>
+<li>FP 采用声明式的风格，易于推理，蹄盖代码的可读性</li>
+<li>函数式编程将函数视为积木，通过高阶函数来提高代码的模块化和可重用性</li>
+<li>可以利用响应式编程组合各个函数来降低事件驱动程序的复杂性</li>
+</ul>
+<h1 id="HOW"><a href="#HOW" class="headerlink" title="HOW"></a>HOW</h1><ul>
+<li>纯函数(pure function)<br>相同的输入总是得到相同的输出，不依赖外部环境，完全做到”自给自足”</li>
+<li>合成(compose)<br>如果一个值要经过多个函数才能编程另外一个值，就可以把所用中间步骤合并成一个函数，这叫做<strong>函数的合成(compose)</strong></li>
+<li>柯里化(curry)<br>在 compose 时，如果函数有多个参数 compose 将会变得非常麻烦，所谓柯里化就是把一个多参数的函数转化为单参数的函数</li>
+<li>函字(functor)<br>FP 里基本的运算单位和功能单位，可以将一个容器转换为另一个容器。任何具有 map 方法的数据结构都可当作函子的实现</li>
+</ul>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/06/30/浏览器相关-缓存/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2019/06/30/浏览器相关-缓存/" class="post-title-link" itemprop="url">浏览器相关-缓存</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-30 15:29:59" itemprop="dateCreated datePublished" datetime="2019-06-30T15:29:59+08:00">2019-06-30</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-09 23:26:53" itemprop="dateModified" datetime="2020-04-09T23:26:53+08:00">2020-04-09</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/浏览器/" itemprop="url" rel="index">
+                    <span itemprop="name">浏览器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>对于一个数据请求来说，可以分为发起网络请求、后端处理、浏览器响应三个步骤。浏览器缓存可以帮助我们在第一和第三步骤中优化性能。比如说直接使用缓存而不发起请求，或者发起了请求但后端存储的数据和前端一致，那么就没有必要再将数据回传回来，这样就减少了响应数据</p>
+<p>缓存的意义就在于减少请求，更多地使用本地的资源，给用户更好的体验的同时，也减轻服务器压力。所以，最佳实践，就应该是尽可能命中强缓存，同时，能在更新版本的时候让客户端的缓存失效。</p>
+<h2 id="缓存位置"><a href="#缓存位置" class="headerlink" title="缓存位置"></a>缓存位置</h2><ul>
+<li><p>Service Worker</p>
+<p>Service Worker 的缓存与浏览器其他内建的缓存机制不同，它可以让我们自由控制缓存哪些文件、如何匹配缓存、如何读取缓存，并且缓存是持续性的。</p>
+<p>当 Service Worker 没有命中缓存的时候，我们需要去调用 fetch 函数获取数据。也就是说，如果我们没有在 Service Worker 命中缓存的话，会根据缓存查找优先级去查找数据。但是不管我们是从 Memory Cache 中还是从网络请求中获取的数据，浏览器都会显示我们是从 Service Worker 中获取的内容。</p>
+</li>
+<li><p>Memory Cache</p>
+<p>Memory Cache 也就是内存中的缓存，读取内存中的数据肯定比磁盘快。但是内存缓存虽然读取高效，可是缓存持续性很短，会随着进程的释放而释放。 一旦我们关闭 Tab 页面，内存中的缓存也就被释放了。</p>
+<p>当访问过页面以后，再次刷新页面，可 以发现很多数据都来自于内存缓存</p>
+</li>
+<li><p>Disk Cache</p>
+<p>Disk Cache 也就是存储在硬盘中的缓存，读取速度慢点，但是什么都能存储到磁盘中，比之 Memory Cache 胜在容量和存储时效性上。</p>
+<p>在所有浏览器缓存中，Disk Cache 覆盖面基本是最大的。它会根据 HTTP Herder 中的字段判断哪些资源需要缓存，哪些资源可以不请求直接使用，哪些资源已经过期需要重新请求。<strong>并且即使在跨站点的情况下，相同地址的资源一旦被硬盘缓存下来，就不会再次去请求数据。</strong></p>
+</li>
+<li><p>Push Cache</p>
+<p>Push Cache 是 HTTP/2 中的内容，当以上三种缓存都没有命中时，它才会被使用。并且缓存时间也很短暂，只在会话（Session）中存在，一旦会话结束就被释放。</p>
+</li>
+</ul>
+<h2 id="缓存策略"><a href="#缓存策略" class="headerlink" title="缓存策略"></a>缓存策略</h2><p>通常浏览器缓存策略分为两种：强缓存和协商缓存，并且缓存策略都是通过设置 HTTP Header 来实现的。</p>
+<ol>
+<li>浏览器每次发起请求，都会先在浏览器缓存中查找该请求的结果及缓存标识</li>
+<li>浏览器每次拿到返回的请求结果都会将该结果和缓存标识存入浏览器缓存中</li>
+</ol>
+<ul>
+<li>浏览器在加载资源时，先根据这个资源的一些http  header判断它是否命中强缓存，强缓存如果命中，浏览器会直接从自己的缓存中读取资源，不会发送请求到浏览器</li>
+<li>当强缓存没有命中的时候，浏览器一定会发送一个请求到服务器，通过服务器依据资源的另外一些http      header验证这个资源是否命中协商缓存，如果协商缓存命中，服务器会将这个请求返回，但是不会返回这个资源的数据，而是告诉客户端直接从缓存中加载这个资源，于是浏览器就又会从自己的缓存中去加载这个资源</li>
+<li>强缓存与协商缓存的共同点时：如果命中都是从客户端缓存中加载资源，而不是从服务器加载资源数据，区别是：强缓存不发送请求到服务器，协商缓存会发送请求到服务器</li>
+<li>当协商缓存也没有命中的时候，浏览器直接从服务器加载资源数据</li>
+</ul>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/cache_0.png" alt="cache流程"></p>
+<h3 id="强缓存"><a href="#强缓存" class="headerlink" title="强缓存"></a><strong>强缓存</strong></h3><p>强缓存可以通过设置两种 HTTP Header 实现：<strong>Expires</strong> <strong>和</strong> <strong>Cache-Control</strong> 。强缓存表示在缓存期间不需要请求，state code 为 200</p>
+<ul>
+<li><p>Expires</p>
+<p>Expires: Wed, 22 Oct 2018 08:41:00 GMT</p>
+<p>Expires 是 HTTP/1 的产物，表示资源会在 Wed, 22 Oct 2018 08:41:00 GMT 后过期，需要再次请求。并且 Expires 受限于本地时间，如果修改了本地时间，可能会造成缓存失效。</p>
+</li>
+<li><p>Cache-control</p>
+<p>Cache-control: max-age=30</p>
+<p>Cache-Control 出现于 HTTP/1.1，优先级高于 Expires 。该属性值表示资源会在 30 秒后过期，需要再次请求。</p>
+<p>Cache-Control 可以在请求头或者响应头中设置，并且可以组合使用多种指令</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/cache_1.png" alt="cache header字段"></p>
+</li>
+</ul>
+<h3 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a><strong>协商缓存</strong></h3><p>强缓存判断是否缓存的依据来自于是否超出某个时间或者某个时间段而不关心服务端文件是否已经更新，这可能会导致加载文件不是服务器端最新的内容，那么此时就需要协商缓存来确定服务端内容是否发生更新。</p>
+<p>协商缓存就是在强缓存失效后，浏览器携带标识向服务器发起请求，由服务器根据缓存不碍事决定是否使用缓存的过过程。协商缓存可通过设置两种 HTTP Header 实现：Last-Modified 和 ETag 。</p>
+<ul>
+<li><p>Last-Modified 和 If-Modified-Since</p>
+<p>Last-Modified 会随着第一次访问资源时返回（该资源在浏览器上最后的修改日期）。浏览器再次请求该资源时，If-Modified-Since 会将 Last-Modified 的值发送给服务器，询问服务器在该日期后资源是否有更新，有更新的话就会将新的资源发送回来，否则返回 304 状态码-即命中缓存</p>
+<p>弊端：</p>
+<ol>
+<li>如果本地打开缓存文件，即使没有对文件进行修改，但还是会造成 Last-Modified 被修改，服务端不能命中缓存导致发送相同的资源</li>
+<li>因为 Last-Modified 只能以秒计时，如果在不可感知的时间内修改完成文件，那么服务端会认为资源还是命中了，不会返回正确的资源</li>
+</ol>
+</li>
+<li><p>ETag 和 If-None-Match</p>
+<p>ETag 类似于文件指纹，，会随着第一次访问资源时返回（浏览器生成）。浏览器再次请求该资源时，If-None-Match 会将当前 ETag 发送给服务器，询问该资源 ETag 是否变动，有变动的话就将新的资源发送回来。并且 ETag 优先级比 Last-Modified 高</p>
+</li>
+</ul>
+<h2 id="实际使用场景"><a href="#实际使用场景" class="headerlink" title="实际使用场景"></a>实际使用场景</h2><ul>
+<li><p>频繁变动的资源</p>
+<p>对于频繁变动的资源，首先需要使用 Cache-Control: no-cache 使浏览器每次都请求服务器，然后配合 ETag 或者 Last-Modified 来验证资源是否有效。这样的做法虽然不能节省请求数量，但是能显著减少响应数据大小。</p>
+</li>
+<li><p>代码文件</p>
+<p>一般来说，现在都会使用工具来打包代码，那么我们就可以对文件名进行哈希处理，只有当代码修改后才会生成新的文件名。基于此，我们就可以给代码文件设置缓存有效期一年 Cache-Control: max-age=31536000，这样只有当 HTML 文件中引入的文件名发生了改变才会去下载最新的代码文件，否则就一直使用缓存。</p>
+</li>
+</ul>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/06/30/浏览器相关-渲染/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2019/06/30/浏览器相关-渲染/" class="post-title-link" itemprop="url">浏览器相关-渲染</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-30 15:10:22" itemprop="dateCreated datePublished" datetime="2019-06-30T15:10:22+08:00">2019-06-30</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-09 23:27:12" itemprop="dateModified" datetime="2020-04-09T23:27:12+08:00">2020-04-09</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/浏览器/" itemprop="url" rel="index">
+                    <span itemprop="name">浏览器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="渲染流程图示"><a href="#渲染流程图示" class="headerlink" title="渲染流程图示"></a>渲染流程图示</h2><p><img src="../imgs/browser_render_0.png" alt="浏览器渲染过程"></p>
+<h3 id="解析-HTML-文件"><a href="#解析-HTML-文件" class="headerlink" title="解析 HTML 文件"></a>解析 HTML 文件</h3><p><img src="../imgs/browser_render_2.png" alt="解析HTML文件"><br>token：标记，本质上还是字符串，是构成代码的最小单位，这一过程会将代码分为一块块，并在这些内容打上标记，便于理解这些最小单位的代码是什么意思<br><img src="../imgs/browser_render_3.png" alt="token"></p>
+<h3 id="解析-CSS-文件"><a href="#解析-CSS-文件" class="headerlink" title="解析 CSS 文件"></a>解析 CSS 文件</h3><p><img src="/../imgs/browser_render_4.png" alt="解析CSS文件"></p>
+<h3 id="生成渲染树"><a href="#生成渲染树" class="headerlink" title="生成渲染树"></a>生成渲染树</h3><p><img src="/../imgs/browser_render_1.png" alt="生成渲染树"><br>渲染树只会包含需要显示的节点和这些节点的样式信息，如果这个节点是 display: none，那么就不会在渲染树上显示<br>当浏览器生成渲染树以后就会根据渲染树来进行布局（回流），然后调用 GPU 绘制，合成图层，显示在屏幕上</p>
+<h2 id="操作-DOM-慢的原因"><a href="#操作-DOM-慢的原因" class="headerlink" title="操作 DOM 慢的原因"></a>操作 DOM 慢的原因</h2><p>DOM 属于渲染引擎中的东西，JS 又是 JS 引擎中的东西，当通过 JS 操作 DOM 的时候，其实这个操作涉及到了<strong>两个线程之间的通信</strong>，那么势必会带来一些性能上的损耗，操作 DOM 次数一多，也就等同于一直在进行线程之间的通信，并且操作 DOM 可能还会带来<strong>重绘回流</strong>的情况，所以就导致了性能上的问题</p>
+<h2 id="什么情况阻塞渲染"><a href="#什么情况阻塞渲染" class="headerlink" title="什么情况阻塞渲染"></a>什么情况阻塞渲染</h2><p>渲染的前提是生成渲染树，所以 HTML 和 CSS 肯定会阻塞渲染，如果想渲染的越快，就越应该降低一开始需要渲染的文件大小，并且扁平层级，优化选择器<br>然后当浏览器解析到 script 标签时，会暂停构建 DOM，完成后才会从暂停的地方重新开始，也就是说，如果你想首屏渲染的越快，就越不应该在首屏就加载 JS 文件，这也是都建议将 script 标签放在 body 标签底部的原因。<br>当然在当下，并不是说 script 标签必须放在底部，因为你可以给 script 标签添加 defer 或者 async 属性。<br>当 script 标签加上 defer 属性以后，表示该 JS 文件会并行下载，但是会放到 HTML 解析完成后顺序执行，所以对于这种情况你可以把 script 标签放在任意位置。<br>对于没有任何依赖的 JS 文件可以加上 async 属性，表示 JS 文件下载和解析不会阻塞渲染。</p>
+<h2 id="重绘和回流"><a href="#重绘和回流" class="headerlink" title="重绘和回流"></a>重绘和回流</h2><p>重绘会在设置节点样式时频繁出现，同时也会很大程度上影响性能</p>
+<ul>
+<li>重绘是当节点需要更改外观而不会影响布局的时候发生，比如改变 color 就叫重绘</li>
+<li>回流是布局或者几何属性需要改变就称为回流</li>
+</ul>
+<p>回流必然会引起重绘，重绘不一定为引发回流</p>
+<h2 id="减少重绘和回流"><a href="#减少重绘和回流" class="headerlink" title="减少重绘和回流"></a>减少重绘和回流</h2><ul>
+<li>使用 transform 代替 top</li>
+<li>使用 visiblity 代替 display: none（前者引起重绘，后者引起回流）</li>
+<li>不要把节点的属性值放在一个循环里当循环的变量</li>
+<li>不要使用 table 布局</li>
+<li>动画的选择</li>
+<li>CSS 选择符从右到左匹配查找，避免节点层级过多</li>
+</ul>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/06/30/浏览器相关-模型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2019/06/30/浏览器相关-模型/" class="post-title-link" itemprop="url">浏览器相关-进程与线程</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-30 14:01:50" itemprop="dateCreated datePublished" datetime="2019-06-30T14:01:50+08:00">2019-06-30</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-09 23:27:07" itemprop="dateModified" datetime="2020-04-09T23:27:07+08:00">2020-04-09</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/浏览器/" itemprop="url" rel="index">
+                    <span itemprop="name">浏览器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="浏览器是多进程的"><a href="#浏览器是多进程的" class="headerlink" title="浏览器是多进程的"></a>浏览器是多进程的</h1><h2 id="浏览器包含的进程"><a href="#浏览器包含的进程" class="headerlink" title="浏览器包含的进程"></a>浏览器包含的进程</h2><ul>
+<li>browser 进程–浏览器的主进程，负责协调，主控，有且只有一个<ul>
+<li>负责浏览器界面的显示，与用户交互（前进，后退等）</li>
+<li>负责各个页面的管理，创建和销毁其他进程</li>
+<li>将 render 进程得到的内存中的 bitmap 绘制到用户界面上</li>
+<li>网络资源的下载与管理等</li>
+</ul>
+</li>
+<li>第三方插件进程–每种类型的插件对用一个进程，仅当使用该插件时创建</li>
+<li>GUI 进程–最多只有一个，用于 3D 图形的绘制</li>
+<li>render 进程（浏览器内核），默认为一个 tab 页一个进程，互不影响<ul>
+<li>页面渲染，脚本执行，事件处理等</li>
+</ul>
+</li>
+</ul>
+<h2 id="浏览器使用多进程的优势"><a href="#浏览器使用多进程的优势" class="headerlink" title="浏览器使用多进程的优势"></a>浏览器使用多进程的优势</h2><ul>
+<li>避免单个 page crash 后影响到整个浏览器</li>
+<li>避免第三方插件 crash 后影响整个浏览器</li>
+<li>多进程充分利用多核优势</li>
+<li>方便使用沙盒模型隔离插件等进程，提高浏览器稳定性</li>
+</ul>
+<h2 id="render-进程"><a href="#render-进程" class="headerlink" title="render 进程"></a>render 进程</h2><p>常驻线程</p>
+<ul>
+<li>GUI 渲染线程<ul>
+<li>负责渲染浏览器界面，解析 HTML，CSS，构建 DOM 树和 RenderObject 树，布局和绘制等</li>
+<li>当界面需要重绘（repaint）或由于某种操作引发回流（reflow）时，该线程就会执行</li>
+<li>GUI 线程与 JS 引擎线程是互斥的，当 JS 引擎执行时 GUI 线程就会被挂起，GUI 更新会被保存在一个队列中等到 JS 引擎空闲时立即执行</li>
+</ul>
+</li>
+<li>JS 引擎线程<ul>
+<li>也称为 JS 内核，负责处理 JavaScript 脚本程序（例如 V8 引擎）</li>
+<li>JS 引擎线程负责解析 JavaScript 脚本，运行代码</li>
+<li>JS 引擎一直等待着任务队列中任务的到来，然后加以处理，一个 tab 页（render 进程）中无论何时只有一个 js 线程在运行 js 程序</li>
+<li>GUI 线程与 js 引擎线程时互斥的，如果 js 执行时间过长，这样就会造成页面渲染不连贯，导致页面渲染加载阻塞</li>
+</ul>
+</li>
+<li>事件触发线程<ul>
+<li>归属于浏览器而不是 JS 引擎，用来<strong>控制事件循环</strong></li>
+<li>当 js 引擎执行代码块如 setimeout 时（也可来自浏览器内核的其他线程，如鼠标点击、Ajax 异步请求等），会将对应任务添加到事件线程中</li>
+<li>当对应的事件符合触发条件时该线程会把事件添加到待处理队列的队尾，等待 JS 引擎的处理</li>
+</ul>
+</li>
+<li>定时器触发线程<ul>
+<li>传说中的 setInterval 与 setTimeout 所在线程</li>
+<li>浏览器定时计数器并不是由 JavaScript 引擎计数的,（因为 JavaScript 引擎是单线程的, 如果处于阻塞线程状态就会影响记计时的准确）</li>
+<li>因此通过单独线程来计时并触发定时（计时完毕后，添加到事件队列中，等待 JS 引擎空闲后执行）</li>
+<li>注意，W3C 在 HTML 标准中规定，规定要求 setTimeout 中低于 4ms 的时间间隔算为 4ms。</li>
+</ul>
+</li>
+<li>异步 http 线程<ul>
+<li>在 XMLHttpRequest 在连接后是通过浏览器新开一个线程请求</li>
+<li>将检测到状态变更时，如果设置有回调函数，异步线程就产生状态变更事件，将这个回调再放入事件队列中。再由 JavaScript 引擎执行。</li>
+</ul>
+</li>
+</ul>
+<h2 id="browser-进程与-render-进程之间的通信"><a href="#browser-进程与-render-进程之间的通信" class="headerlink" title="browser 进程与 render 进程之间的通信"></a>browser 进程与 render 进程之间的通信</h2><ul>
+<li>Browser 进程收到用户请求，首先需要获取页面内容（譬如通过网络下载资源），随后将该任务通过 RendererHost 接口传递给 Render 进程</li>
+<li>Renderer 进程的 Renderer 接口收到消息，简单解释后，交给渲染线程，然后开始渲染</li>
+<li>渲染线程接收请求，加载网页并渲染网页，这其中可能需要 Browser 进程获取资源和需要 GPU 进程来帮助渲染</li>
+<li>当然可能会有 JS 线程操作 DOM（这样可能会造成回流并重绘）</li>
+<li>最后 Render 进程将结果传递给 Browser 进程</li>
+<li>Browser 进程接收到结果并将结果绘制出来</li>
+</ul>
+<h1 id="浏览器内核（render-进程）中线程的关系"><a href="#浏览器内核（render-进程）中线程的关系" class="headerlink" title="浏览器内核（render 进程）中线程的关系"></a>浏览器内核（render 进程）中线程的关系</h1><h2 id="GUI-渲染线程与-JS-引擎线程互斥"><a href="#GUI-渲染线程与-JS-引擎线程互斥" class="headerlink" title="GUI 渲染线程与 JS 引擎线程互斥"></a>GUI 渲染线程与 JS 引擎线程互斥</h2><p>由于 JavaScript 是可操纵 DOM 的，如果在修改这些元素属性同时渲染界面（即 JS 线程和 UI 线程同时运行），那么渲染线程前后获得的元素数据就可能不一致了。<br>因此为防止渲染出现不可预期的结果，浏览器设置 GUI 渲染线程与 JS 引擎为互斥，当 JS 引擎执行时 GUI 线程会被挂起。<br>GUI 更新则会被保存在一个队列中等到 JS 引擎线程空闲时立即被执行。</p>
+<h2 id="JS-引擎阻塞"><a href="#JS-引擎阻塞" class="headerlink" title="JS 引擎阻塞"></a>JS 引擎阻塞</h2><h2 id="web-worker-线程"><a href="#web-worker-线程" class="headerlink" title="web worker 线程"></a>web worker 线程</h2><p>为解决上一个问题而提出</p>
+<ul>
+<li>创建 worker 时，JS 引擎会向浏览器申请开一个子线程</li>
+<li>JS 引擎线程与 worker 线程间通过特定的方式通信（postMessage API），需要通过序列化对象来与线程交互特定的数据<br>所以，如果有非常耗时的操作，可以单独打开一个 worker 线程，这样不管如何天翻地覆都不会影响 JS 引擎主线程，只待计算出结果后，将结果通信给 JS 主线程即可</li>
+</ul>
+<h2 id="shared-worker-线程"><a href="#shared-worker-线程" class="headerlink" title="shared worker 线程"></a>shared worker 线程</h2><p>web worker 与 shared worker 的区别</p>
+<ul>
+<li>web worker 只属于某个页面，不会和其他页面的 render 进程共享</li>
+<li>shared worker 是浏览器所有页面共享的，不能采用与 worker 同样的方式实现，不属于某个 render 进程</li>
+<li>web worker 相当于“线程”，shared worker 相当于“进程”</li>
+</ul>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2019/06/30/JavaScript-执行机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2019/06/30/JavaScript-执行机制/" class="post-title-link" itemprop="url">JavaScript-执行机制</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-30 11:15:28" itemprop="dateCreated datePublished" datetime="2019-06-30T11:15:28+08:00">2019-06-30</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-15 10:03:38" itemprop="dateModified" datetime="2019-10-15T10:03:38+08:00">2019-10-15</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="JavaScript-执行与运行"><a href="#JavaScript-执行与运行" class="headerlink" title="JavaScript 执行与运行"></a><strong>JavaScript 执行与运行</strong></h1><p>执行和运行不太相同，在不同环境下，比如 Node、浏览器下，JavaScript 的执行结果是不一样的；而运行大多指的是基于 JavaScript 引擎，如 V8，结果是一致的</p>
+<h1 id="关于-JavaScript"><a href="#关于-JavaScript" class="headerlink" title="关于 JavaScript"></a><strong>关于 JavaScript</strong></h1><p>众所周知，JavaScript 是一门<strong>单线程</strong>、<strong>异步执行</strong>的语言，虽然在 HTML5 中提出了 <strong>web workers</strong>(可以理解为<strong>浏览器</strong>为 JavaScript 开的“外挂”，下一篇会谈)，但 JavaScript 是单线程运行的这一核心仍未改变，所有<strong>多线程</strong>都是通过单线程模拟出来的，都是“纸老虎”</p>
+<h1 id="JavaScript-中的异步–event-loop"><a href="#JavaScript-中的异步–event-loop" class="headerlink" title="JavaScript 中的异步–event loop"></a>JavaScript 中的异步–event loop</h1><p>JavaScript 中的异步主要通过 event loop 进行模拟，那么什么是 event loop 呢？当我们执行 JS 代码的时候其实就是往执行栈中放入函数，那么遇到异步代码的时候该怎么办？其实当遇到异步的代码时，会被挂起并在需要执行的时候加入到 Task（有多种 Task） 队列中。一旦执行栈为空，Event Loop 就会从 Task 队列中拿出需要执行的代码并放入执行栈中执行，所以本质上来说 JS 中的异步还是同步行为。</p>
+<h2 id="浏览器中的-event-loop"><a href="#浏览器中的-event-loop" class="headerlink" title="浏览器中的 event loop"></a>浏览器中的 event loop</h2><p><img src="/../imgs/browser_event_loop.png" alt="浏览器中的event loop"><br><img src="/../imgs/browser_event_loop2.png" alt="浏览器中的event loop"><br>不同的任务源会被分配到不同的 Task 队列中，任务源可以分为 微任务（microtask） 和 宏任务（macrotask）。在 ES6 规范中，microtask 称为 jobs，macrotask 称为 task。<br>微任务包括 process.nextTick ，promise ，MutationObserver。<br>宏任务包括 script ，setTimeout ，setInterval ，setImmediate ，I/O ，UI rendering。</p>
+<p><strong>宏任务中包括了 script ，浏览器会先执行一个宏任务，接下来有异步代码的话才会先执行微任务。</strong></p>
+<p>Event Loop 执行顺序如下所示：</p>
+<ul>
+<li>首先执行同步代码，这属于宏任务</li>
+<li>当执行完所有同步代码后，执行栈为空，查询是否有异步代码需要执行</li>
+<li>执行所有微任务</li>
+<li>当执行完所有微任务后，如有必要会渲染页面</li>
+<li>然后开始下一轮 Event Loop，执行宏任务中的异步代码，也就是 setTimeout(宏任务) 中的回调函数</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">  <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">4</span>);</span><br><span class="line">  resolve(<span class="number">5</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">6</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">7</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 执行结果：1 4 7 5 2 3 6</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Node-js-中的-event-loop"><a href="#Node-js-中的-event-loop" class="headerlink" title="Node.js 中的 event loop"></a>Node.js 中的 event loop</h2><p>Node 的 Event Loop 分为 6 个阶段，它们会按照顺序反复运行。每当进入某一个阶段的时候，都会从对应的回调队列中取出函数去执行。当<strong>队列为空</strong>或者<strong>执行的回调函数数量到达系统设定的阈值</strong>，就会进入下一阶段。<br><img src="/../imgs/node_event_loop.png" alt="Node.js中的event loop"></p>
+<ul>
+<li>timer<br>timers 阶段会执行 setTimeout 和 setInterval 回调，并且是由 <strong>poll</strong> 阶段控制的。<br>同样，在 Node 中定时器指定的时间也不是准确时间，只能是尽快执行。</li>
+<li>I/O<br>I/O 阶段会处理一些上一轮循环中的少数未执行的 I/O 回调</li>
+<li>idle, prepare<br>idle, prepare 阶段内部实现，这里就忽略不讲了。</li>
+<li>poll<br>poll 是一个至关重要的阶段，这一阶段中，系统会做两件事情<ul>
+<li>回到 timer 阶段执行回调</li>
+<li>执行 I/O 回调<br>并且在进入该阶段时如果没有设定了 timer 的话，会发生以下两件事情</li>
+<li>如果 poll 队列不为空，会遍历回调队列并同步执行，直到队列为空或者达到系统限制</li>
+<li>如果 poll 队列为空时，会有两件事发生<ul>
+<li>如果有 setImmediate 回调需要执行，poll 阶段会停止并且进入到 check 阶段执行回调</li>
+<li>如果没有 setImmediate 回调需要执行，会等待回调被加入到队列中并立即执行回调，这里同样会有个超时时间设置防止一直等待下去<br>当然设定了 timer 的话且 poll 队列为空，则会判断是否有 timer 超时，如果有的话会回到 timer 阶段执行回调。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>check<br>check 阶段执行 setImmediate</li>
+<li>close callbacks<br>close callbacks 阶段执行 close 事件<br>对于 microtask 来说，它会在以上每个阶段完成前清空 microtask 队列，下图中的 Tick 就代表了 microtask<br><img src="/../imgs/node_event_loop2.png" alt="Node中的event loop"></li>
+</ul>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2018/12/03/Java-IO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2018/12/03/Java-IO/" class="post-title-link" itemprop="url">Java-IO</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-03 21:03:45" itemprop="dateCreated datePublished" datetime="2018-12-03T21:03:45+08:00">2018-12-03</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-16 19:58:22" itemprop="dateModified" datetime="2019-10-16T19:58:22+08:00">2019-10-16</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Java-流"><a href="#Java-流" class="headerlink" title="Java-流"></a>Java-流</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a><strong>概念</strong></h2><p>流：程序与文件|数组|网络连接|数据库等进行交互的通道，以程序为中心</p>
+<h3 id="IO-流分类"><a href="#IO-流分类" class="headerlink" title="IO 流分类"></a><strong>IO 流分类</strong></h3><h4 id="流向"><a href="#流向" class="headerlink" title="流向"></a><strong>流向</strong></h4><ul>
+<li>输入流</li>
+<li>输出流</li>
+</ul>
+<h4 id="数据"><a href="#数据" class="headerlink" title="数据"></a><strong>数据</strong></h4><ul>
+<li>字节流—-二进制，可以包含一切文件</li>
+<li>字符流—-文本文件，只能处理纯文本</li>
+</ul>
+<h4 id="功能"><a href="#功能" class="headerlink" title="功能"></a><strong>功能</strong></h4><ul>
+<li>节点流—-包裹源头</li>
+<li>处理流—-增强功能，提高性能</li>
+</ul>
+<h3 id="字符流与字节流"><a href="#字符流与字节流" class="headerlink" title="字符流与字节流"></a><strong>字符流与字节流</strong></h3><h4 id="字节流"><a href="#字节流" class="headerlink" title="字节流"></a><strong>字节流</strong></h4><ul>
+<li>输入流：InputStream/FileInputStream</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">read(<span class="keyword">byte</span>[] b);</span><br><span class="line"> 	read(<span class="keyword">byte</span>[] b, <span class="keyword">int</span> off, <span class="keyword">int</span> len);</span><br><span class="line"> 	close();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输出流：OutputStream/FileOutputStream</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">write(<span class="keyword">byte</span>[] b);</span><br><span class="line"> 	write(<span class="keyword">byte</span>[] b, <span class="keyword">int</span> off, <span class="keyword">int</span> len);</span><br><span class="line"> 	flush();</span><br><span class="line"> 	close();</span><br></pre></td></tr></table></figure>
+
+<h4 id="字符流"><a href="#字符流" class="headerlink" title="字符流"></a><strong>字符流</strong></h4><ul>
+<li>输入流：Reader/FileReader</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">read(<span class="keyword">char</span>[] cbuf);</span><br><span class="line">read(<span class="keyword">char</span>[] cbuf, <span class="keyword">int</span> off, <span class="keyword">int</span> len);</span><br><span class="line">close();</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输出流：Writer/FileWriter</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">write(<span class="keyword">char</span>[] cbuf);</span><br><span class="line">write(<span class="keyword">char</span>[] cbuf, <span class="keyword">int</span> off, <span class="keyword">int</span> len);</span><br><span class="line">append(<span class="keyword">char</span> c);</span><br><span class="line">flush();</span><br><span class="line">close();</span><br></pre></td></tr></table></figure>
+
+<h3 id="经典步骤"><a href="#经典步骤" class="headerlink" title="经典步骤"></a><strong>经典步骤</strong></h3><ul>
+<li>建立联系</li>
+<li>选择流</li>
+<li>操作</li>
+<li>释放资源</li>
+</ul>
+<h1 id="字节流–Input-OutputStream、FileInputOutputStream"><a href="#字节流–Input-OutputStream、FileInputOutputStream" class="headerlink" title="字节流–Input/OutputStream、FileInputOutputStream"></a><strong>字节流–Input/OutputStream、FileInputOutputStream</strong></h1><p>字节流可以处理伊西起文件，包括二进制文件/音频/视频等</p>
+<h2 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a><strong>读取文件</strong></h2><ul>
+<li>建立联系–&gt;File 对象–源头</li>
+<li>选择流–&gt;文件输入流–InputStream/FileInputStream</li>
+<li>操作–&gt;read + 输出</li>
+<li>释放资源–&gt;close</li>
+</ul>
+<h2 id="写入文件"><a href="#写入文件" class="headerlink" title="写入文件"></a><strong>写入文件</strong></h2><ul>
+<li>建立联系–&gt;File 对象–源头、目的地</li>
+<li>选择流–&gt;文件输出流–OutputStream/FileOutputStream</li>
+<li>操作–&gt;write + flush</li>
+<li>释放资源–&gt;close</li>
+</ul>
+<h2 id="文件复制"><a href="#文件复制" class="headerlink" title="文件复制"></a><strong>文件复制</strong></h2><ul>
+<li>建立联系–&gt;File 对象–源头、目的地</li>
+<li>选择流–&gt;Input/OutputStream、FileInputOutputStream</li>
+<li>操作</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span>[] flush = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line"><span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span>((len = 输入流.read(<span class="keyword">byte</span>)) != -<span class="number">1</span>)</span><br><span class="line">	输出流.write(flush, <span class="number">0</span>, len);</span><br><span class="line">输出流.flush;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>释放资源</li>
+</ul>
+<h2 id="文件夹复制"><a href="#文件夹复制" class="headerlink" title="文件夹复制"></a><strong>文件夹复制</strong></h2><ul>
+<li>递归查找子孙文件/文件夹</li>
+<li>文件复制(IO 流复制)、文件夹创建</li>
+</ul>
+<h1 id="字符流–Reader-Writer、FileReader-FileWriter"><a href="#字符流–Reader-Writer、FileReader-FileWriter" class="headerlink" title="字符流–Reader/Writer、FileReader/FileWriter"></a><strong>字符流–Reader/Writer、FileReader/FileWriter</strong></h1><p>只能操作纯文本数据</p>
+<h2 id="纯文本读取"><a href="#纯文本读取" class="headerlink" title="纯文本读取"></a><strong>纯文本读取</strong></h2><ul>
+<li>建立联系–&gt;File 对象–源头</li>
+<li>选择流–&gt;字符输出流–Reader/FileReader</li>
+<li>操作–&gt;读取</li>
+<li>释放资源–&gt;close</li>
+</ul>
+<h2 id="纯文本写入"><a href="#纯文本写入" class="headerlink" title="纯文本写入"></a><strong>纯文本写入</strong></h2><ul>
+<li>建立联系–&gt;File 对象–目的地</li>
+<li>选择流–&gt;字符输入流–Writer/FileReader</li>
+<li>操作–&gt;write + flush</li>
+<li>关闭–&gt;close</li>
+</ul>
+<h1 id="处理流"><a href="#处理流" class="headerlink" title="处理流"></a><strong>处理流</strong></h1><p>用来增强功能、提高性能，处于节点流之上</p>
+<h2 id="缓冲流"><a href="#缓冲流" class="headerlink" title="缓冲流"></a><strong>缓冲流</strong></h2><ul>
+<li>字节缓冲流–BufferedInputStream/BufferedOutputStream</li>
+<li>字符缓冲流–BufferedReader/BufferedWriter</li>
+</ul>
+<h2 id="转换流"><a href="#转换流" class="headerlink" title="转换流"></a><strong>转换流</strong></h2><p>字节流转换为字符流，处理乱码</p>
+<h3 id="编码与解码"><a href="#编码与解码" class="headerlink" title="编码与解码"></a><strong>编码与解码</strong></h3><ul>
+<li>编码：字符–编码字符集–&gt;二进制</li>
+<li>解码：二进制–解码字符集–&gt;字符</li>
+</ul>
+<h3 id="乱码"><a href="#乱码" class="headerlink" title="乱码"></a><strong>乱码</strong></h3><ul>
+<li>编码与解码的字符集不一致</li>
+<li>字节缺少，长度丢失</li>
+<li>解决办法：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InputStreamReader(字节输入流, <span class="string">"解码集"</span>);</span><br><span class="line">OutputStreamWriter(字符输出流, <span class="string">"编码集"</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-12-3/44267583.jpg" alt><br><img src="http://hellomrrs-imgs.oss-cn-shanghai.aliyuncs.com/18-12-3/88652044.jpg" alt></p>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2018/11/16/Python-BeautifulSoup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2018/11/16/Python-BeautifulSoup/" class="post-title-link" itemprop="url">Python-BeautifulSoup</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-11-16 14:50:41" itemprop="dateCreated datePublished" datetime="2018-11-16T14:50:41+08:00">2018-11-16</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-15 10:03:38" itemprop="dateModified" datetime="2019-10-15T10:03:38+08:00">2019-10-15</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python-lib/" itemprop="url" rel="index">
+                    <span itemprop="name">Python lib</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Python-BeautifulSoup的使用"><a href="#Python-BeautifulSoup的使用" class="headerlink" title="Python-BeautifulSoup的使用"></a>Python-BeautifulSoup的使用</h1><p>BeautiSoup，是借助网页的结构和属性等特性来解析网页的工具，有了它我们不用再去写一些复杂的正则，只需要简单的几条语句就可以完成网页中某个元素的提取。</p>
+<h2 id="BeautifulSoup简介"><a href="#BeautifulSoup简介" class="headerlink" title="BeautifulSoup简介"></a>BeautifulSoup简介</h2><p>官方解释如下：<br>BeautifulSoup提供一些简单的、Python式的函数用来处理导航、搜索、修改分析树等功能。它是一个工具箱，通过解析文档为用户提供需要抓取的数据，因为简单，所以不需要多少代码就可以写出一个完整的应用程序。 BeautifulSoup 自动将输入文档转换为 Unicode 编码，输出文档转换为 utf-8 编码。你不需要考虑编码方式，除非文档没有指定一个编码方式，这时你仅仅需要说明一下原始编码方式就可以了。 BeautifulSoup 已成为和 lxml、html6lib 一样出色的 Python 解释器，为用户灵活地提供不同的解析策略或强劲的速度。</p>
+<h2 id="解析器"><a href="#解析器" class="headerlink" title="解析器"></a>解析器</h2><p>BeautifulSoup 在解析的时候实际上是依赖于解析器的，它除了支持 Python 标准库中的 HTML 解析器，还支持一些第三方的解析器比如 LXML，下面我们对 BeautifulSoup 支持的解析器及它们的一些优缺点做一个简单的对比。<br><img src="https://t1.picb.cc/uploads/2018/11/16/JXuhZc.png" alt="enter image description here"></p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line">html = <span class="string">'''</span></span><br><span class="line"><span class="string">&lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">&lt;p class="title" name="dromouse"&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="string">&lt;p class="story"&gt;Once upon a time there were three little sisters; and their names were</span></span><br><span class="line"><span class="string">&lt;a href="http://example.com/elsie" class="sister" id="link1"&gt;&lt;!-- Elsie --&gt;&lt;/a&gt;,</span></span><br><span class="line"><span class="string">&lt;a href="http://example.com/lacie" class="sister" id="link2"&gt;Lacie&lt;/a&gt; and</span></span><br><span class="line"><span class="string">&lt;a href="http://example.com/tillie" class="sister" id="link3"&gt;Tillie&lt;/a&gt;;</span></span><br><span class="line"><span class="string">and they lived at the bottom of a well.&lt;/p&gt;</span></span><br><span class="line"><span class="string">&lt;p class="story"&gt;...&lt;/p&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line">soup = BeautifulSoup(html, <span class="string">'lxml'</span>) </span><br><span class="line">print(soup.prettify())  <span class="comment"># 把要解析的字符串以标准的缩进格式输出(自动更正格式)</span></span><br><span class="line">print(soup.title.string)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">&lt;html&gt;</span><br><span class="line"> &lt;head&gt;</span><br><span class="line">  &lt;title&gt;</span><br><span class="line">   The Dormouse<span class="string">'s story</span></span><br><span class="line"><span class="string">  &lt;/title&gt;</span></span><br><span class="line"><span class="string"> &lt;/head&gt;</span></span><br><span class="line"><span class="string"> &lt;body&gt;</span></span><br><span class="line"><span class="string">  &lt;p class="title" name="dromouse"&gt;</span></span><br><span class="line"><span class="string">   &lt;b&gt;</span></span><br><span class="line"><span class="string">    The Dormouse'</span>s story</span><br><span class="line">   &lt;/b&gt;</span><br><span class="line">  &lt;/p&gt;</span><br><span class="line">  &lt;p class="story"&gt;</span><br><span class="line">   Once upon a time there were three little sisters; <span class="keyword">and</span> their names were</span><br><span class="line">   &lt;a class="sister" href="http://example.com/elsie" id="link1"&gt;</span><br><span class="line">    &lt;!-- Elsie --&gt;</span><br><span class="line">   &lt;/a&gt;</span><br><span class="line">   ,</span><br><span class="line">   &lt;a class="sister" href="http://example.com/lacie" id="link2"&gt;</span><br><span class="line">    Lacie</span><br><span class="line">   &lt;/a&gt;</span><br><span class="line">   <span class="keyword">and</span></span><br><span class="line">   &lt;a class="sister" href="http://example.com/tillie" id="link3"&gt;</span><br><span class="line">    Tillie</span><br><span class="line">   &lt;/a&gt;</span><br><span class="line">   ;</span><br><span class="line"><span class="keyword">and</span> they lived at the bottom of a well.</span><br><span class="line">  &lt;/p&gt;</span><br><span class="line">  &lt;p class="story"&gt;</span><br><span class="line">   ...</span><br><span class="line">  &lt;/p&gt;</span><br><span class="line"> &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">The Dormouse<span class="string">'s story</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="节点选择器"><a href="#节点选择器" class="headerlink" title="节点选择器"></a>节点选择器</h2><h3 id="选择元素"><a href="#选择元素" class="headerlink" title="选择元素"></a>选择元素</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</span><br><span class="line">print(soup.title)</span><br><span class="line">print(type(soup.title.string))</span><br><span class="line">print(soup.title.string)</span><br><span class="line">print(soup.head)</span><br><span class="line">print(soup.p)  <span class="comment"># 只选择第一个出现的p标签</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">&lt;title&gt;The Dormouse<span class="string">'s story&lt;/title&gt;</span></span><br><span class="line"><span class="string">&lt;class '</span>bs4.element.NavigableString<span class="string">'&gt;</span></span><br><span class="line"><span class="string">The Dormouse'</span>s story</span><br><span class="line">&lt;head&gt;&lt;title&gt;The Dormouse<span class="string">'s story&lt;/title&gt;&lt;/head&gt;</span></span><br><span class="line">&lt;p class="title" name="dromouse"&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="提取信息"><a href="#提取信息" class="headerlink" title="提取信息"></a>提取信息</h2><h4 id="获取名称"><a href="#获取名称" class="headerlink" title="获取名称"></a>获取名称</h4><p>可以利用 name 属性来获取节点的名称。还是以上面的文本为例，我们选取 title 节点，然后调用 name 属性就可以得到节点名称。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(soup.title.name)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">title</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h4><p>每个节点可能有多个属性，比如 id，class 等等，我们选择到这个节点元素之后，可以调用 attrs 获取所有属性。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">print(soup.p.attrs)</span><br><span class="line">print(soup.p.attrs[<span class="string">'name'</span>])</span><br><span class="line"><span class="comment">#更加简便的写法</span></span><br><span class="line">print(soup.p[<span class="string">'name'</span>])</span><br><span class="line">print(soup.p[<span class="string">'class'</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">&#123;<span class="string">'class'</span>: [<span class="string">'title'</span>], <span class="string">'name'</span>: <span class="string">'dromouse'</span>&#125;</span><br><span class="line">dromouse</span><br><span class="line">dromouse</span><br><span class="line">[<span class="string">'title'</span>]</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取内容"><a href="#获取内容" class="headerlink" title="获取内容"></a>获取内容</h4><p>可以利用 string 属性获取节点元素包含的文本内容。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(soup.p.string)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">The Dormouse<span class="string">'s story</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="嵌套选择"><a href="#嵌套选择" class="headerlink" title="嵌套选择"></a>嵌套选择</h3><p>在上面的例子中我们知道每一个返回结果都是 bs4.element.Tag 类型，它同样可以继续调用节点进行下一步的选择，比如我们获取了 head 节点元素，我们可以继续调用 head 来选取其内部的 head 节点元素。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">html = <span class="string">"""</span></span><br><span class="line"><span class="string">&lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line">soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</span><br><span class="line">print(soup.head.title)</span><br><span class="line">print(type(soup.head.title))</span><br><span class="line">print(soup.head.title.string)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">&lt;title&gt;The Dormouse<span class="string">'s story&lt;/title&gt;</span></span><br><span class="line"><span class="string">&lt;class '</span>bs4.element.Tag<span class="string">'&gt;</span></span><br><span class="line"><span class="string">The Dormouse'</span>s story</span><br></pre></td></tr></table></figure>
+
+<h3 id="关联选择"><a href="#关联选择" class="headerlink" title="关联选择"></a>关联选择</h3><p>我们在做选择的时候有时候不能做到一步就可以选择到想要的节点元素，有时候在选择的时候需要先选中某一个节点元素，然后以它为基准再选择它的子节点、父节点、兄弟节点等等。</p>
+<h4 id="子节点和子孙节点"><a href="#子节点和子孙节点" class="headerlink" title="子节点和子孙节点"></a>子节点和子孙节点</h4><p>选取到了一个节点元素之后，如果想要获取它的<strong>直接子节点</strong>可以调用 contents 属性。 contents 返回的是列表类型， children 返回的是生成器类型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">print(soup.p.contents)</span><br><span class="line">print(soup.p.children)</span><br><span class="line">print(soup.p.contents)</span><br><span class="line"></span><br><span class="line">print(soup.p.children)</span><br><span class="line"><span class="keyword">for</span> i, child <span class="keyword">in</span> enumerate(soup.p.children):</span><br><span class="line">    print(i, child)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">['Once upon a time there were three little sisters; and their names were\n', &lt;a class="sister" href="http://example.com/elsie" id="link1"&gt;&lt;!-- Elsie --&gt;&lt;/a&gt;, ',\n', &lt;a class="sister" href="http://example.com/lacie" id="link2"&gt;Lacie&lt;/a&gt;, ' and\n', &lt;a class="sister" href="http://example.com/tillie" id="link3"&gt;Tillie&lt;/a&gt;, ';\nand they lived at the bottom of a well.']</span><br><span class="line"></span><br><span class="line"><span class="number">0</span> Once upon a time there were three little sisters; <span class="keyword">and</span> their names were</span><br><span class="line"></span><br><span class="line">1 &lt;a class="sister" href="http://example.com/elsie" id="link1"&gt;&lt;!-- Elsie --&gt;&lt;/a&gt;</span><br><span class="line"><span class="number">2</span> ,</span><br><span class="line"></span><br><span class="line">3 &lt;a class="sister" href="http://example.com/lacie" id="link2"&gt;Lacie&lt;/a&gt;</span><br><span class="line"><span class="number">4</span>  <span class="keyword">and</span></span><br><span class="line"></span><br><span class="line">5 &lt;a class="sister" href="http://example.com/tillie" id="link3"&gt;Tillie&lt;/a&gt;</span><br><span class="line"><span class="number">6</span> ;</span><br><span class="line"><span class="keyword">and</span> they lived at the bottom of a well.</span><br></pre></td></tr></table></figure>
+
+<h4 id="父节点和祖先节点"><a href="#父节点和祖先节点" class="headerlink" title="父节点和祖先节点"></a>父节点和祖先节点</h4><p>如果要获取某个节点元素的直接父节点，可以调用 parent 属性，要想获取所有的祖先节点，可以调用 parents 。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">print(soup.a.parent)</span><br><span class="line">print(soup.a.parents)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">&lt;p class="story"&gt;Once upon a time there were three little sisters; and their names were</span><br><span class="line">&lt;a class="sister" href="http://example.com/elsie" id="link1"&gt;&lt;!-- Elsie --&gt;&lt;/a&gt;,</span><br><span class="line">&lt;a class="sister" href="http://example.com/lacie" id="link2"&gt;Lacie&lt;/a&gt; and</span><br><span class="line">&lt;a class="sister" href="http://example.com/tillie" id="link3"&gt;Tillie&lt;/a&gt;;</span><br><span class="line">and they lived at the bottom of a well.&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">[(0, &lt;p class="story"&gt;Once upon a time there were three little sisters; and their names were</span><br><span class="line">&lt;a class="sister" href="http://example.com/elsie" id="link1"&gt;&lt;!-- Elsie --&gt;&lt;/a&gt;,</span><br><span class="line">&lt;a class="sister" href="http://example.com/lacie" id="link2"&gt;Lacie&lt;/a&gt; and</span><br><span class="line">&lt;a class="sister" href="http://example.com/tillie" id="link3"&gt;Tillie&lt;/a&gt;;</span><br><span class="line">and they lived at the bottom of a well.&lt;/p&gt;), (1, &lt;body&gt;</span><br><span class="line">&lt;p class="story"&gt;Once upon a time there were three little sisters; and their names were</span><br><span class="line">&lt;a class="sister" href="http://example.com/elsie" id="link1"&gt;&lt;!-- Elsie --&gt;&lt;/a&gt;,</span><br><span class="line">&lt;a class="sister" href="http://example.com/lacie" id="link2"&gt;Lacie&lt;/a&gt; and</span><br><span class="line">&lt;a class="sister" href="http://example.com/tillie" id="link3"&gt;Tillie&lt;/a&gt;;</span><br><span class="line">and they lived at the bottom of a well.&lt;/p&gt;</span><br><span class="line">&lt;p class="story"&gt;...&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;), (2, &lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;p class="story"&gt;Once upon a time there were three little sisters; and their names were</span><br><span class="line">&lt;a class="sister" href="http://example.com/elsie" id="link1"&gt;&lt;!-- Elsie --&gt;&lt;/a&gt;,</span><br><span class="line">&lt;a class="sister" href="http://example.com/lacie" id="link2"&gt;Lacie&lt;/a&gt; and</span><br><span class="line">&lt;a class="sister" href="http://example.com/tillie" id="link3"&gt;Tillie&lt;/a&gt;;</span><br><span class="line">and they lived at the bottom of a well.&lt;/p&gt;</span><br><span class="line">&lt;p class="story"&gt;...&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;&lt;/html&gt;), (3, &lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;p class="story"&gt;Once upon a time there were three little sisters; and their names were</span><br><span class="line">&lt;a class="sister" href="http://example.com/elsie" id="link1"&gt;&lt;!-- Elsie --&gt;&lt;/a&gt;,</span><br><span class="line">&lt;a class="sister" href="http://example.com/lacie" id="link2"&gt;Lacie&lt;/a&gt; and</span><br><span class="line">&lt;a class="sister" href="http://example.com/tillie" id="link3"&gt;Tillie&lt;/a&gt;;</span><br><span class="line">and they lived at the bottom of a well.&lt;/p&gt;</span><br><span class="line">&lt;p class="story"&gt;...&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;&lt;/html&gt;)]</span><br></pre></td></tr></table></figure>
+
+<h4 id="兄弟节点"><a href="#兄弟节点" class="headerlink" title="兄弟节点"></a>兄弟节点</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line">html = <span class="string">"""</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">    &lt;body&gt;</span></span><br><span class="line"><span class="string">        &lt;p class="story"&gt;</span></span><br><span class="line"><span class="string">            Once upon a time there were three little sisters; and their names were</span></span><br><span class="line"><span class="string">            &lt;a href="http://example.com/elsie" class="sister" id="link1"&gt;</span></span><br><span class="line"><span class="string">                &lt;span&gt;Elsie&lt;/span&gt;</span></span><br><span class="line"><span class="string">            &lt;/a&gt;</span></span><br><span class="line"><span class="string">            Hello</span></span><br><span class="line"><span class="string">            &lt;a href="http://example.com/lacie" class="sister" id="link2"&gt;Lacie&lt;/a&gt; </span></span><br><span class="line"><span class="string">            and</span></span><br><span class="line"><span class="string">            &lt;a href="http://example.com/tillie" class="sister" id="link3"&gt;Tillie&lt;/a&gt;</span></span><br><span class="line"><span class="string">            and they lived at the bottom of a well.</span></span><br><span class="line"><span class="string">        &lt;/p&gt;</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</span><br><span class="line">print(<span class="string">'next_sibling'</span>, soup.a.next_sibling)</span><br><span class="line">print(<span class="string">'prev_sibling'</span>, soup.a.previous_sibling)</span><br><span class="line">print(<span class="string">'next_siblings'</span>, list(enumerate(soup.a.next_sibling)))</span><br><span class="line">print(<span class="string">'prev_siblings'</span>, list(enumerate(soup.a.previous_sibling)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">next_sibling </span><br><span class="line">            Hello</span><br><span class="line">            </span><br><span class="line">prev_sibling </span><br><span class="line">            Once upon a time there were three little sisters; <span class="keyword">and</span> their names were</span><br><span class="line">            </span><br><span class="line">next_siblings [(0, '\n            Hello\n            '), (1, &lt;a class="sister" href="http://example.com/lacie" id="link2"&gt;Lacie&lt;/a&gt;), (2, ' \n            and\n            '), (3, &lt;a class="sister" href="http://example.com/tillie" id="link3"&gt;Tillie&lt;/a&gt;), (4, '\n            and they lived at the bottom of a well.\n        ')]</span><br><span class="line">prev_siblings [(<span class="number">0</span>, <span class="string">'\n            Once upon a time there were three little sisters; and their names were\n            '</span>)]</span><br></pre></td></tr></table></figure>
+
+<h2 id="方法选择器"><a href="#方法选择器" class="headerlink" title="方法选择器"></a>方法选择器</h2><p>前面讲的选择方法都是通过属性来选择元素的，这种选择方法非常快，但是如果要进行比较复杂的选择的话则会比较繁琐，不够灵活。所以 BeautifulSoup 还提供了一些查询的方法，比如 find_all()、find() 等方法，我们可以调用方法然后传入相应等参数就可以灵活地进行查询。</p>
+<h3 id="find-all–查找所有符合条件的元素"><a href="#find-all–查找所有符合条件的元素" class="headerlink" title="find_all–查找所有符合条件的元素"></a>find_all–查找所有符合条件的元素</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line">html=<span class="string">'''</span></span><br><span class="line"><span class="string">&lt;div class="panel"&gt;</span></span><br><span class="line"><span class="string">    &lt;div class="panel-heading"&gt;</span></span><br><span class="line"><span class="string">        &lt;h4&gt;Hello&lt;/h4&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;div class="panel-body"&gt;</span></span><br><span class="line"><span class="string">        &lt;ul class="list" id="list-1"&gt;</span></span><br><span class="line"><span class="string">            &lt;li class="element"&gt;Foo&lt;/li&gt;</span></span><br><span class="line"><span class="string">            &lt;li class="element"&gt;Bar&lt;/li&gt;</span></span><br><span class="line"><span class="string">            &lt;li class="element"&gt;Jay&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;/ul&gt;</span></span><br><span class="line"><span class="string">        &lt;ul class="list list-small" id="list-2"&gt;</span></span><br><span class="line"><span class="string">            &lt;li class="element"&gt;Foo&lt;/li&gt;</span></span><br><span class="line"><span class="string">            &lt;li class="element"&gt;Bar&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;/ul&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</span><br><span class="line">print(soup.find_all(name = <span class="string">'ul'</span>))</span><br><span class="line"><span class="keyword">for</span> ul <span class="keyword">in</span> soup.find_all(name = <span class="string">'ul'</span>):</span><br><span class="line">    print(ul.find_all(name = <span class="string">'li'</span>))</span><br><span class="line">    <span class="keyword">for</span> li <span class="keyword">in</span> ul.find_all(name = <span class="string">'li'</span>):</span><br><span class="line">        print(li.string)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">[&lt;ul class="list" id="list-1"&gt;</span><br><span class="line">&lt;li class="element"&gt;Foo&lt;/li&gt;</span><br><span class="line">&lt;li class="element"&gt;Bar&lt;/li&gt;</span><br><span class="line">&lt;li class="element"&gt;Jay&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;, &lt;ul class="list list-small" id="list-2"&gt;</span><br><span class="line">&lt;li class="element"&gt;Foo&lt;/li&gt;</span><br><span class="line">&lt;li class="element"&gt;Bar&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;]</span><br><span class="line">[&lt;li class="element"&gt;Foo&lt;/li&gt;, &lt;li class="element"&gt;Bar&lt;/li&gt;, &lt;li class="element"&gt;Jay&lt;/li&gt;]</span><br><span class="line">Foo</span><br><span class="line">Bar</span><br><span class="line">Jay</span><br><span class="line">[&lt;li class="element"&gt;Foo&lt;/li&gt;, &lt;li class="element"&gt;Bar&lt;/li&gt;]</span><br><span class="line">Foo</span><br><span class="line">Bar</span><br></pre></td></tr></table></figure>
+
+<h3 id="attrs"><a href="#attrs" class="headerlink" title="attrs"></a>attrs</h3><p>根据属性进行查询</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">print(soup.find_all(attrs = &#123;<span class="string">'id'</span>: <span class="string">'list-1'</span>&#125;))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">[&lt;ul class="list" id="list-1"&gt;</span><br><span class="line">&lt;li class="element"&gt;Foo&lt;/li&gt;</span><br><span class="line">&lt;li class="element"&gt;Bar&lt;/li&gt;</span><br><span class="line">&lt;li class="element"&gt;Jay&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="text"><a href="#text" class="headerlink" title="text"></a>text</h3><p>text 参数可以用来匹配节点的文本，传入的形式可以是字符串，可以是正则表达式对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">html=<span class="string">'''</span></span><br><span class="line"><span class="string">&lt;div class="panel"&gt;</span></span><br><span class="line"><span class="string">    &lt;div class="panel-body"&gt;</span></span><br><span class="line"><span class="string">        &lt;a&gt;Hello, this is a link&lt;/a&gt;</span></span><br><span class="line"><span class="string">        &lt;a&gt;Hello, this is a link, too&lt;/a&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line">soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</span><br><span class="line">print(soup.find_all(text=re.compile(<span class="string">'link'</span>)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">[<span class="string">'Hello, this is a link'</span>, <span class="string">'Hello, this is a link, too'</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="find"><a href="#find" class="headerlink" title="find()"></a>find()</h3><p>find方法和find_all类似，只是返回的是第一个匹配的元素</p>
+<h3 id="othres-API"><a href="#othres-API" class="headerlink" title="othres API"></a>othres API</h3><ul>
+<li><p>find_parents() find_parent()<br>find_parents() 返回所有祖先节点，find_parent() 返回直接父节点。</p>
+</li>
+<li><p>find_next_siblings() find_next_sibling()<br>find_next_siblings() 返回后面所有兄弟节点，find_next_sibling() 返回后面第一个兄弟节点。</p>
+</li>
+<li><p>find_previous_siblings() find_previous_sibling()<br>find_previous_siblings() 返回前面所有兄弟节点，find_previous_sibling() 返回前面第一个兄弟节点。</p>
+</li>
+<li><p>find_all_next() find_next()<br>find_all_next() 返回节点后所有符合条件的节点, find_next() 返回第一个符合条件的节点。</p>
+</li>
+<li><p>find_all_previous() 和 find_previous()<br>find_all_previous() 返回节点后所有符合条件的节点, find_previous() 返回第一个符合条件的节点</p>
+</li>
+</ul>
+<h2 id="CSS选择器"><a href="#CSS选择器" class="headerlink" title="CSS选择器"></a>CSS选择器</h2><p>BeautifulSoup 还提供了另外一种选择器，那就是 CSS 选择器。使用 CSS 选择器，只需要调用 select() 方法，传入相应的 CSS 选择器即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line">html=<span class="string">'''</span></span><br><span class="line"><span class="string">&lt;div class="panel"&gt;</span></span><br><span class="line"><span class="string">    &lt;div class="panel-heading"&gt;</span></span><br><span class="line"><span class="string">        &lt;h4&gt;Hello&lt;/h4&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;div class="panel-body"&gt;</span></span><br><span class="line"><span class="string">        &lt;ul class="list" id="list-1"&gt;</span></span><br><span class="line"><span class="string">            &lt;li class="element"&gt;Foo&lt;/li&gt;</span></span><br><span class="line"><span class="string">            &lt;li class="element"&gt;Bar&lt;/li&gt;</span></span><br><span class="line"><span class="string">            &lt;li class="element"&gt;Jay&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;/ul&gt;</span></span><br><span class="line"><span class="string">        &lt;ul class="list list-small" id="list-2"&gt;</span></span><br><span class="line"><span class="string">            &lt;li class="element"&gt;Foo&lt;/li&gt;</span></span><br><span class="line"><span class="string">            &lt;li class="element"&gt;Bar&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;/ul&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</span><br><span class="line">print(soup.select(<span class="string">'.panel .panel-heading'</span>))</span><br><span class="line">print(soup.select(<span class="string">'ul li'</span>))</span><br><span class="line">print(soup.select(<span class="string">'#list-2 .element'</span>))</span><br><span class="line">print(type(soup.select(<span class="string">'ul'</span>)[<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">[&lt;div class="panel-heading"&gt;</span><br><span class="line">&lt;h4&gt;Hello&lt;/h4&gt;</span><br><span class="line">&lt;/div&gt;]</span><br><span class="line">[&lt;li class="element"&gt;Foo&lt;/li&gt;, &lt;li class="element"&gt;Bar&lt;/li&gt;, &lt;li class="element"&gt;Jay&lt;/li&gt;, &lt;li class="element"&gt;Foo&lt;/li&gt;, &lt;li class="element"&gt;Bar&lt;/li&gt;]</span><br><span class="line">[&lt;li class="element"&gt;Foo&lt;/li&gt;, &lt;li class="element"&gt;Bar&lt;/li&gt;]</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">bs4</span>.<span class="title">element</span>.<span class="title">Tag</span>'&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="嵌套选择-1"><a href="#嵌套选择-1" class="headerlink" title="嵌套选择"></a>嵌套选择</h3><p>select() 方法同样支持嵌套选择，例如我们先选择所有 ul 节点，再遍历每个 ul 节点选择其 li 节点。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ul <span class="keyword">in</span> soup.select(<span class="string">'ul'</span>):</span><br><span class="line">    print(ul.select(<span class="string">'li'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">[&lt;li class="element"&gt;Foo&lt;/li&gt;, &lt;li class="element"&gt;Bar&lt;/li&gt;, &lt;li class="element"&gt;Jay&lt;/li&gt;]</span><br><span class="line">[&lt;li class="element"&gt;Foo&lt;/li&gt;, &lt;li class="element"&gt;Bar&lt;/li&gt;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取属性-1"><a href="#获取属性-1" class="headerlink" title="获取属性"></a>获取属性</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ul <span class="keyword">in</span> soup.select(<span class="string">'ul'</span>):</span><br><span class="line">    print(ul[<span class="string">'id'</span>])</span><br><span class="line">    print(ul.attrs[<span class="string">'id'</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">list<span class="number">-1</span></span><br><span class="line">list<span class="number">-1</span></span><br><span class="line">list<span class="number">-2</span></span><br><span class="line">list<span class="number">-2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="获取文本"><a href="#获取文本" class="headerlink" title="获取文本"></a>获取文本</h3><p>获取文本可以用前面所讲的 string 属性，还有一个方法那就是 get_text()。</p>
+<pre><code class="python"><span class="keyword">for</span> li <span class="keyword">in</span> soup.select(<span class="string">'li'</span>):
+    print(<span class="string">'Get Text:'</span>, li.get_text())
+    print(<span class="string">'String:'</span>, li.string)
+
+<span class="comment"># 输出</span>
+Get Text: Foo
+String: Foo
+Get Text: Bar
+String: Bar
+Get Text: Jay
+String: Jay
+Get Text: Foo
+String: Foo
+Get Text: Bar
+String: Bar</code></pre>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2018/11/15/Python-正则表达式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2018/11/15/Python-正则表达式/" class="post-title-link" itemprop="url">Python-正则表达式</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2018-11-15 19:55:58" itemprop="dateCreated datePublished" datetime="2018-11-15T19:55:58+08:00">2018-11-15</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-15 10:03:38" itemprop="dateModified" datetime="2019-10-15T10:03:38+08:00">2019-10-15</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python-reg/" itemprop="url" rel="index">
+                    <span itemprop="name">Python reg</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h1><ul>
+<li>正则表达式匹配，就是按照一定的规则将特定的文本提取出来。<br><img src="https://t1.picb.cc/uploads/2018/11/15/JXfxNi.jpg" alt="enter image description here"></li>
+</ul>
+<h2 id="match"><a href="#match" class="headerlink" title="match"></a>match</h2><ul>
+<li>match(0)法会尝试从字符串的<strong>起始位置</strong>匹配正则表达式，如果匹配，就返回匹配成功的结果；如果不匹配，就返回 false。</li>
+</ul>
+<h2 id="match-示例"><a href="#match-示例" class="headerlink" title="match 示例"></a>match 示例</h2><h3 id="匹配目标"><a href="#匹配目标" class="headerlink" title="匹配目标"></a>匹配目标</h3><ul>
+<li>可以使用”（）”将想提取的子字符串括起来，”（）”实际上标记了一个子表达式的开始和结束位置，被标记的每个子表达式会依次对应每一个分组，调用 group()法传入分组的索引即可获取提取的结果。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'Hello 123 4567 World_This is a Regex Demo'</span></span><br><span class="line">result0 = re.match(<span class="string">'^Hello\s\d\d\d\s\d&#123;4&#125;\s\w&#123;10&#125;'</span>, content)</span><br><span class="line">result1 = re.match(<span class="string">'^Hello\s(\d+)\s(\d+)\sWorld'</span>, content)</span><br><span class="line">print(result0)</span><br><span class="line">print(result1)</span><br><span class="line">print(result1.group(<span class="number">1</span>), result1.group(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">25</span>), match=<span class="string">'Hello 123 4567 World_This'</span>&gt;</span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">20</span>), match=<span class="string">'Hello 123 4567 World'</span>&gt;</span><br><span class="line"><span class="number">123</span> <span class="number">4567</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="通用匹配"><a href="#通用匹配" class="headerlink" title="通用匹配"></a>通用匹配</h3><ul>
+<li>”.*“可以匹配任意长度字符串(换行符除外)。</li>
+<li>”.“可以匹配任意字符(换行符除外)</li>
+<li>”*“代表匹配前面的字符无限次</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'Hello 123 4567 World_This is a Regex Demo'</span></span><br><span class="line">result = re.match(<span class="string">'^Hello\s(\d+)\s(\d+)\s(.*?)Demo$'</span>, content)</span><br><span class="line">print(result)</span><br><span class="line">print(result.group(<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">41</span>), match=<span class="string">'Hello 123 4567 World_This is a Regex Demo'</span>&gt;</span><br><span class="line">World_This <span class="keyword">is</span> a Regex</span><br></pre></td></tr></table></figure>
+
+<h3 id="贪婪匹配"><a href="#贪婪匹配" class="headerlink" title="贪婪匹配"></a>贪婪匹配</h3><p>使用”.*“通用匹配时，可能会得不到想要的结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'Hello 1234567 World_This is a Regex Demo'</span></span><br><span class="line"></span><br><span class="line">result = re.match(<span class="string">'^He.*(\d+).*Demo$'</span>, content)</span><br><span class="line">print(result.group(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line"><span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<p>想要的结果是 123，却输出了 7。这就涉及到贪婪与非贪婪匹配了。</p>
+<ul>
+<li>在贪婪匹配下， “._”会匹配尽可能多的字符。<br>所以在上面的正则表达式中，”._“直接匹配到了’Hello 123 456’，’\d’匹配到了’7’。</li>
+<li>在非贪婪匹配下， “.<em>“会匹配尽可能少的字符。非贪婪匹配的写法是”.</em>?”。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'Hello 123 4567 World_This is a Regex Demo'</span></span><br><span class="line">result = re.match(<span class="string">'^He.*?(\d+).*Demo$'</span>, content)</span><br><span class="line">print(result.group(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line"><span class="number">123</span></span><br></pre></td></tr></table></figure>
+
+<p>在做匹配的时候，字符串<strong>中间尽量使用非贪婪匹配</strong>，但需要注意，如果匹配的结果在字符串结尾，”.*?”就有可能匹配不到任何内容了。</p>
+<h3 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h3><p>正则表达式可以包含一些<strong>可选标志修饰符来控制匹配的模式</strong> 。<br><img src="https://t1.picb.cc/uploads/2018/11/15/JX62zc.png" alt="enter image description here"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'''Hello 123 4567 World_This</span></span><br><span class="line"><span class="string">          is a Regex Demo'''</span></span><br><span class="line">result_none = re.match(<span class="string">'^He.*?(\d+).*Demo$'</span>, content)</span><br><span class="line">print(result_none)</span><br><span class="line"></span><br><span class="line">result = re.match(<span class="string">'^He.*?(\d+).*Demo$'</span>, content, re.S)</span><br><span class="line">print(result)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line"><span class="literal">None</span></span><br><span class="line">&lt;re.Match object; span=(<span class="number">0</span>, <span class="number">52</span>), match=<span class="string">'Hello 123 4567 World_This \n          is a Regex &gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="转义匹配"><a href="#转义匹配" class="headerlink" title="转义匹配"></a>转义匹配</h3><p>当遇到用于正则匹配模式的特殊字符时，在前面加反斜线转义一下即可 。</p>
+<h2 id="search"><a href="#search" class="headerlink" title="search"></a>search</h2><p>search ()，它在匹配时会扫描整个字符串，然后返回第一个成功匹配的结果 。</p>
+<h3 id="search-示例"><a href="#search-示例" class="headerlink" title="search 示例"></a>search 示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">html = <span class="string">'''&lt;div id="songs-list"&gt;</span></span><br><span class="line"><span class="string">    &lt;h2 class="title"&gt;经典老歌&lt;/h2&gt;</span></span><br><span class="line"><span class="string">    &lt;p class="introduction"&gt;</span></span><br><span class="line"><span class="string">        经典老歌列表</span></span><br><span class="line"><span class="string">    &lt;/p&gt;</span></span><br><span class="line"><span class="string">    &lt;ul id="list" class="list-group"&gt;</span></span><br><span class="line"><span class="string">        &lt;li data-view="2"&gt;一路上有你&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;li data-view="7"&gt;</span></span><br><span class="line"><span class="string">            &lt;a href="/2.mp3" singer="任贤齐"&gt;沧海一声笑&lt;/a&gt;</span></span><br><span class="line"><span class="string">        &lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;li data-view="4" class="active"&gt;</span></span><br><span class="line"><span class="string">            &lt;a href="/3.mp3" singer="齐秦"&gt;往事随风&lt;/a&gt;</span></span><br><span class="line"><span class="string">        &lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;li data-view="6"&gt;&lt;a href="/4.mp3" singer="beyond"&gt;光辉岁月&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;li data-view="5"&gt;&lt;a href="/5.mp3" singer="陈慧琳"&gt;记事本&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">    &lt;/ul&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;'''</span></span><br><span class="line"></span><br><span class="line">result = re.search(<span class="string">'&lt;li.*?singer="(.*?)"&gt;(.*?)&lt;/a&gt;'</span>, html, re.S)</span><br><span class="line">print(result.group(<span class="number">1</span>), result.group(<span class="number">2</span>))</span><br><span class="line">result = re.search(<span class="string">'&lt;li.*?href="(.*?)"\ssinger="(.*?)"&gt;(.*?)&lt;/a&gt;'</span>, html, re.S)</span><br><span class="line"><span class="comment">#print(result)</span></span><br><span class="line">print(result.group(<span class="number">1</span>), result.group(<span class="number">2</span>), result.group(<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">任贤齐 沧海一声笑</span><br><span class="line">/<span class="number">2.</span>mp3 任贤齐 沧海一声笑</span><br></pre></td></tr></table></figure>
+
+<h2 id="findall"><a href="#findall" class="headerlink" title="findall"></a>findall</h2><p>findall()方法会搜索整个字符串然后返回匹配正则表达式的所有内容。</p>
+<h3 id="findall-示例"><a href="#findall-示例" class="headerlink" title="findall 示例"></a>findall 示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">...</span><br><span class="line">result = re.search(<span class="string">'&lt;li.*?singer="(.*?)"&gt;(.*?)&lt;/a&gt;'</span>, html, re.S)</span><br><span class="line">print(result.group(<span class="number">1</span>), result.group(<span class="number">2</span>))</span><br><span class="line">result = re.search(<span class="string">'&lt;li.*?href="(.*?)"\ssinger="(.*?)"&gt;(.*?)&lt;/a&gt;'</span>, html, re.S)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">任贤齐 沧海一声笑</span><br><span class="line">/<span class="number">2.</span>mp3 任贤齐 沧海一声笑</span><br><span class="line">/<span class="number">2.</span>mp3 任贤齐 沧海一声笑</span><br><span class="line">/<span class="number">3.</span>mp3 齐秦 往事随风</span><br><span class="line">/<span class="number">4.</span>mp3 beyond 光辉岁月</span><br><span class="line">/<span class="number">5.</span>mp3 陈慧琳 记事本</span><br></pre></td></tr></table></figure>
+
+<h2 id="sub"><a href="#sub" class="headerlink" title="sub"></a>sub</h2><p>用来修改/替换文本</p>
+<h3 id="sub-使用示例"><a href="#sub-使用示例" class="headerlink" title="sub 使用示例"></a>sub 使用示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content = <span class="string">'54ak54yr50ir54ix5L2g'</span></span><br><span class="line">content = re.sub(<span class="string">'\d'</span>, <span class="string">''</span>, content)</span><br><span class="line">print(content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">akyririxLg</span><br></pre></td></tr></table></figure>
+
+<h2 id="compile"><a href="#compile" class="headerlink" title="compile"></a>compile</h2><p>compile()可以将正则字符串编译成正则表达式对象，以便在以后的匹配中复用(也可以传入修饰符)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">content0 = <span class="string">'2016-12-15 12:00'</span></span><br><span class="line">content1 = <span class="string">'2016-12-17 12:55'</span></span><br><span class="line">content2 = <span class="string">'2016-12-22 13:21'</span></span><br><span class="line"></span><br><span class="line">pattern = re.compile(<span class="string">'\d&#123;2&#125;:\d&#123;2&#125;'</span>)</span><br><span class="line">result0 = re.sub(pattern, <span class="string">''</span>, content1)</span><br><span class="line">result1 = re.sub(pattern, <span class="string">''</span>, content1)</span><br><span class="line">result2 = re.sub(pattern, <span class="string">''</span>, content2)</span><br><span class="line"></span><br><span class="line">print(result0, result1, result2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line"><span class="number">2016</span><span class="number">-12</span><span class="number">-17</span>  <span class="number">2016</span><span class="number">-12</span><span class="number">-17</span>  <span class="number">2016</span><span class="number">-12</span><span class="number">-22</span></span><br></pre></td></tr></table></figure>
+
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+  </div>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/imgs/avatar.png"
+      alt="Mr.RS">
+  <p class="site-author-name" itemprop="name">Mr.RS</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共62.2k字</span>
+</div>
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+  <br/>
+  <div class="powered-by">
+    <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+      本站访客数:<span id="busuanzi_value_site_uv"></span>
+    </span>
+  </div>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.1
+  </div>
+-->
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

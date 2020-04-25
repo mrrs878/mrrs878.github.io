@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/avatar.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Vue.js为什么要引入虚拟DOM虚拟DOM是通过状态生成一个虚拟节点树，然后使用虚拟节点树进行渲染。在渲染之前，会使用新生成的虚拟节点树和上次生成的虚拟节点树进行对比，只渲染不同的部分 在Vue.js中，当状态发生变化时，它在一定程度上知道哪些节点使用了这个状态，从而对这些节点进行更新操作，根本不需要比对（Vue.js 1.0）。但这样做缺点很明显：因为粒度太细，每一个绑定都会有一个对应的wat">
+<meta name="keywords" content="虚拟DOM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue.js研读-虚拟DOM">
+<meta property="og:url" content="https://mrrs878.github.io/2020/03/04/Vue.js研读-虚拟DOM/index.html">
+<meta property="og:site_name" content="Mr.RS">
+<meta property="og:description" content="Vue.js为什么要引入虚拟DOM虚拟DOM是通过状态生成一个虚拟节点树，然后使用虚拟节点树进行渲染。在渲染之前，会使用新生成的虚拟节点树和上次生成的虚拟节点树进行对比，只渲染不同的部分 在Vue.js中，当状态发生变化时，它在一定程度上知道哪些节点使用了这个状态，从而对这些节点进行更新操作，根本不需要比对（Vue.js 1.0）。但这样做缺点很明显：因为粒度太细，每一个绑定都会有一个对应的wat">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-0.png">
+<meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-1.png">
+<meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/patch-0.png">
+<meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-2.png">
+<meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-3.png">
+<meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/diff-0.png">
+<meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/diff-1.png">
+<meta property="og:updated_time" content="2020-04-22T14:02:33.269Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue.js研读-虚拟DOM">
+<meta name="twitter:description" content="Vue.js为什么要引入虚拟DOM虚拟DOM是通过状态生成一个虚拟节点树，然后使用虚拟节点树进行渲染。在渲染之前，会使用新生成的虚拟节点树和上次生成的虚拟节点树进行对比，只渲染不同的部分 在Vue.js中，当状态发生变化时，它在一定程度上知道哪些节点使用了这个状态，从而对这些节点进行更新操作，根本不需要比对（Vue.js 1.0）。但这样做缺点很明显：因为粒度太细，每一个绑定都会有一个对应的wat">
+<meta name="twitter:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-0.png">
+  <link rel="canonical" href="https://mrrs878.github.io/2020/03/04/Vue.js研读-虚拟DOM/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Vue.js研读-虚拟DOM | Mr.RS</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.RS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Read The Fucking Source Code!</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/04/Vue.js研读-虚拟DOM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            Vue.js研读-虚拟DOM
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-04 23:18:13" itemprop="dateCreated datePublished" datetime="2020-03-04T23:18:13+08:00">2020-03-04</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-22 22:02:33" itemprop="dateModified" datetime="2020-04-22T22:02:33+08:00">2020-04-22</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Vue-js为什么要引入虚拟DOM"><a href="#Vue-js为什么要引入虚拟DOM" class="headerlink" title="Vue.js为什么要引入虚拟DOM"></a>Vue.js为什么要引入虚拟DOM</h2><p>虚拟DOM是通过状态生成一个虚拟节点树，然后使用虚拟节点树进行渲染。在渲染之前，会使用新生成的虚拟节点树和上次生成的虚拟节点树进行对比，只渲染不同的部分</p>
+<p>在Vue.js中，当状态发生变化时，它在一定程度上知道哪些节点使用了这个状态，从而对这些节点进行更新操作，根本不需要比对（Vue.js 1.0）。但这样做缺点很明显：因为粒度太细，每一个绑定都会有一个对应的watcher来观察状态的变化，这样就会有一些内存开销以及依赖追踪的开销。当状态被越来越多的节点使用时，开销就越大。</p>
+<p>因此Vue.js 2.0开始选择了一个中等粒度的解决方案，那就是引入虚拟DOM。组件级别是一个watcher实例。就是说即使一个组件内有10个节点使用了某个状态，但其实也只有一个watcher在观察这个状态的变化。所以当这个状态发生变化时，只能通知到组件，然后组件内部通过虚拟DOM去进行比对渲染，这是一个折中方案</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-0.png" alt="虚拟DOM"></p>
+<h2 id="VNode"><a href="#VNode" class="headerlink" title="VNode"></a>VNode</h2><p>vnode可以理解成节点描述对象，它描述了应该怎样去创建真实的DOM节点。渲染视图的过程是先创建vnode，然后再使用vnode去生成真实的DOM元素，最后再插入到页面渲染视图</p>
+<p>vnode的类型包括：注释节点(isComment=true)、文本节点、元素节点(具有tag属性)、组件节点、函数式组件、克隆节点</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-1.png" alt="虚拟DOM"></p>
+<h2 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h2><p>对比两个vnode之间的差异只是patch的一部分，这是手段，而不是目的。patch的目的是修改DOM节点，也可以理解为渲染视图。包括：创建新增的节点、删除已经废弃的节点、修改需要更新的节点</p>
+<p>path的核心算法diff是通过<strong>同层</strong>的树节点进行比较而非对树进行逐层遍历的方式，所以时间复杂度只有O(n)</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/patch-0.png" alt></p>
+<ul>
+<li><p>创建新节点</p>
+<p>事实上，只有三种类型的节点会被创建并插入到DOM中：元素节点、注释节点、文本节点</p>
+<ul>
+<li>oldVnode中不存在而vnode中存在</li>
+<li>oldVnode和vnode完全不是同一个节点</li>
+</ul>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-2.png" alt="创建节点"></p>
+</li>
+<li><p>删除节点</p>
+<p>某个节点只在oldVnode中存在</p>
+</li>
+<li><p>更新节点</p>
+<p>oldVnode和vnode相同（通过sameVnode判断）</p>
+<p>判断依据：key、tag、isComment、data、input的type均相同</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/%E8%99%9A%E6%8B%9FDOM-3.png" alt="更新节点"></p>
+</li>
+</ul>
+<h2 id="DOM-Diff过程"><a href="#DOM-Diff过程" class="headerlink" title="DOM Diff过程"></a>DOM Diff过程</h2><p>简单来说，diff有以下过程：</p>
+<ol>
+<li>同级比较，再比较子节点</li>
+<li>先判断一方有子节点而另一方没有子节点的情况</li>
+<li>比较都有子节点的情况（核心diff算法）</li>
+<li>递归比较子节点</li>
+</ol>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/diff-0.png" alt="diff过程"></p>
+<h2 id="核心DIFF算法"><a href="#核心DIFF算法" class="headerlink" title="核心DIFF算法"></a>核心DIFF算法</h2><p>Vue2.0采用了<strong>双端比较</strong>的算法：同时从新旧children的两端开始进行比较，借助key值可以找到可复用的节点，再进行相关操作。<br><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/diff-1.png" alt="diff-1"></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/虚拟DOM/" rel="tag"># 虚拟DOM</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/03/03/Vue.js研读-响应式/" rel="next" title="Vue.js研读-响应式">
+                  <i class="fa fa-chevron-left"></i> Vue.js研读-响应式
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/03/05/Vue.js研读-模板编译/" rel="prev" title="Vue.js研读-模板编译">
+                  Vue.js研读-模板编译 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-js为什么要引入虚拟DOM"><span class="nav-number">1.</span> <span class="nav-text">Vue.js为什么要引入虚拟DOM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VNode"><span class="nav-number">2.</span> <span class="nav-text">VNode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#patch"><span class="nav-number">3.</span> <span class="nav-text">patch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-Diff过程"><span class="nav-number">4.</span> <span class="nav-text">DOM Diff过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心DIFF算法"><span class="nav-number">5.</span> <span class="nav-text">核心DIFF算法</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/imgs/avatar.png"
+      alt="Mr.RS">
+  <p class="site-author-name" itemprop="name">Mr.RS</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共62.2k字</span>
+</div>
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Mr.RS</span>
+  <br/>
+  <div class="powered-by">
+    <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+      本站访客数:<span id="busuanzi_value_site_uv"></span>
+    </span>
+  </div>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">
+      
+    主题 – <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.1
+  </div>
+-->
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
