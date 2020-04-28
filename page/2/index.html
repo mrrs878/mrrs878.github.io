@@ -234,6 +234,248 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/15/网络相关-https/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2020/04/15/网络相关-https/" class="post-title-link" itemprop="url">网络相关-https</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-15 22:38:54" itemprop="dateCreated datePublished" datetime="2020-04-15T22:38:54+08:00">2020-04-15</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-16 20:59:28" itemprop="dateModified" datetime="2020-04-16T20:59:28+08:00">2020-04-16</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/网络/" itemprop="url" rel="index">
+                    <span itemprop="name">网络</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="HTTPS是什么"><a href="#HTTPS是什么" class="headerlink" title="HTTPS是什么"></a>HTTPS是什么</h1><p>HTTPS（hyper text transfer protocol over secure socket layer），是以安全为目标的HTTP通道，简单说就是HTTP的安全版。即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。</p>
+<h2 id="HTTPS和HTTP的区别"><a href="#HTTPS和HTTP的区别" class="headerlink" title="HTTPS和HTTP的区别"></a>HTTPS和HTTP的区别</h2><ul>
+<li>HTTP是明文传输，HTTPS通过SSL/TLS进行了加密</li>
+<li>HTTP的端口是80，HTTPS的端口是443</li>
+<li>HTTPS需要CA证书</li>
+</ul>
+<h1 id="为什么要有HTTPS"><a href="#为什么要有HTTPS" class="headerlink" title="为什么要有HTTPS"></a>为什么要有HTTPS</h1><ul>
+<li>建立一个信息安全通道，来保证数据传输的安全</li>
+<li>确认网站的真实性，防止钓鱼网站</li>
+</ul>
+<h1 id="HTTPS的原理"><a href="#HTTPS的原理" class="headerlink" title="HTTPS的原理"></a>HTTPS的原理</h1><p>整体上HTTP到HTTPS的历程是：<br>HTTP –&gt; 对称加密 –&gt; 非对称加密 –&gt; 对称加密+非对称加密 –&gt; 中间人攻击 –&gt; CA证书</p>
+<h2 id="对称加密"><a href="#对称加密" class="headerlink" title="对称加密"></a>对称加密</h2><p>HTTP的通信是明文的，就相当于在网络上裸奔，任何组织或个人都可以监听、窥探数据包。安全行较差，此时对称加密出现了：每次传输之前，发送方用一个加密算法加密，然后再发送；接收方使用加密算法对应的密钥进行解密。因为加密/解密都用的同一个密钥，因此称之为对称加密</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/https-0.png" alt="对称加密"></p>
+<h3 id="弊端"><a href="#弊端" class="headerlink" title="弊端"></a>弊端</h3><p><strong>密钥容易被截取</strong></p>
+<h2 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h2><p>使用非对称加密的双方都有一对密钥：私钥（保密），公钥（公开）。使用私钥加密的数据只有对应的公钥才能解密；用公钥加密的数据只有对应的私钥才能解密。</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/https-1.png" alt="非对称加密"></p>
+<h3 id="弊端-1"><a href="#弊端-1" class="headerlink" title="弊端"></a>弊端</h3><p><strong>速度较慢</strong>，相较于对称加密算法，非对称加密算法的速度要慢上百倍</p>
+<h2 id="对称加密-非对称加密"><a href="#对称加密-非对称加密" class="headerlink" title="对称加密+非对称加密"></a>对称加密+非对称加密</h2><p>使用非对称加密传输对称加密的密钥，之后使用对称加密通信</p>
+<h3 id="弊端-2"><a href="#弊端-2" class="headerlink" title="弊端"></a>弊端</h3><p>不能确保接收人的身份，容易受到中间人攻击</p>
+<h2 id="中间人攻击"><a href="#中间人攻击" class="headerlink" title="中间人攻击"></a>中间人攻击</h2><p>在浏览器发送公钥的时候，有个中间人截取了浏览器的公钥，然后把自己的公钥发送给服务器来冒充浏览器，然后使用自己的私钥解密对称加密使用的公钥来进行通信。（类似于代理）</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/https-2.png" alt="中间人攻击"></p>
+<h2 id="CA证书"><a href="#CA证书" class="headerlink" title="CA证书"></a>CA证书</h2><p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/https-3.png" alt="CA证书"></p>
+<p>👀：这些ＣＡ本身也有证书来证明自己的身份，并且ＣＡ的信用是像树一样分级的，高层的ＣＡ给底层的ＣＡ做信用背书，而操作系统／浏览器中会内置一些顶层的ＣＡ的证书，相当于你自动信任了他们。　这些顶层的ＣＡ证书一定得安全地放入操作系统／浏览器当中，否则世界大乱。</p>
+<h1 id="完整HTTPS流程"><a href="#完整HTTPS流程" class="headerlink" title="完整HTTPS流程"></a>完整HTTPS流程</h1><p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/https-4.png" alt="https完整流程图"></p>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/14/webpack学习-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2020/04/14/webpack学习-2/" class="post-title-link" itemprop="url">webpack学习-2</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-14 23:04:37 / 修改时间：23:05:31" itemprop="dateCreated datePublished" datetime="2020-04-14T23:04:37+08:00">2020-04-14</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webpack/" itemprop="url" rel="index">
+                    <span itemprop="name">webpack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h2 id="提取公共的js文件-splitChunks-cacheGroups-commons"><a href="#提取公共的js文件-splitChunks-cacheGroups-commons" class="headerlink" title="提取公共的js文件-splitChunks.cacheGroups.commons"></a>提取公共的js文件-splitChunks.cacheGroups.commons</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">"./src/app.js"</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">"dist"</span>),</span><br><span class="line">        filname: <span class="string">"bundle.[hash:6].js"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    optimization: &#123;</span><br><span class="line">        splitChunks: &#123;</span><br><span class="line">            cacheGroups: &#123;</span><br><span class="line">                commons: &#123;</span><br><span class="line">                    chunks: <span class="string">"initial"</span>,</span><br><span class="line">                    minChunks: <span class="number">2</span>,</span><br><span class="line">                    maxInitialRequests: <span class="number">5</span>,</span><br><span class="line">                    minSize: <span class="number">2</span>,</span><br><span class="line">                    name: <span class="string">"common.[hash:6]"</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="压缩图片-image-webpack-loader"><a href="#压缩图片-image-webpack-loader" class="headerlink" title="压缩图片-image-webpack-loader"></a>压缩图片-image-webpack-loader</h2><p><a href="https://www.webpackjs.com/loaders/url-loader/" target="_blank" rel="noopener">url-loader</a>来处理图片文件解析，可以再使用 <a href="https://github.com/tcoopman/image-webpack-loader" target="_blank" rel="noopener">image-webpack-loader</a>来压缩图片</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    enter: <span class="string">"./src/app.js"</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">"dist"</span>),</span><br><span class="line">        filename: <span class="string">"bundle.[hash:6].js"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    modules: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.*\.(gif|png|jpe?g|svg|webp)$/i</span>,</span><br><span class="line">                use: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        laoder: <span class="string">"url-loader"</span>,</span><br><span class="line">                        options: &#123;</span><br><span class="line">                            limit: <span class="number">8192</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    &#123;</span><br><span class="line">                        laoder: <span class="string">"image-webpack-loader"</span>,</span><br><span class="line">                        options: &#123;</span><br><span class="line">                            mozjpeg: &#123;</span><br><span class="line">                                progress: <span class="literal">true</span>,</span><br><span class="line">                                quality: <span class="number">65</span></span><br><span class="line">                            &#125;,</span><br><span class="line">                            optipng: &#123;</span><br><span class="line">                                enable: <span class="literal">false</span></span><br><span class="line">                            &#125;,</span><br><span class="line">                            pngquant: &#123;</span><br><span class="line">                                quality: <span class="string">'65-90'</span>,</span><br><span class="line">                                speed: <span class="number">4</span></span><br><span class="line">                            &#125;,</span><br><span class="line">                            gifsicle: &#123;</span><br><span class="line">                                interlaced: <span class="literal">false</span></span><br><span class="line">                            &#125;,</span><br><span class="line">                            webp: &#123; <span class="comment">// 开启webp会把jpg、png压缩为webp格式</span></span><br><span class="line">                                quality: <span class="number">65</span></span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="多线程打包-happypack"><a href="#多线程打包-happypack" class="headerlink" title="多线程打包-happypack"></a>多线程打包-happypack</h2><p>在webpack运行在node中打包时是单线程去一件一件事情做，<a href="https://github.com/amireh/happypack#readme" target="_blank" rel="noopener">happypack</a>可以开启多个子进程去并发执行，子进程处理完成之后把结果交给主进程</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">yarn add happypack -D</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"><span class="keyword">const</span> HappyPack = reruire(<span class="string">"happypack"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">"./src/app.js"</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.reaolve(__dirname, <span class="string">"dist"</span>),</span><br><span class="line">        filename: <span class="string">"bundle_[hash:6].js"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                text: <span class="regexp">/\.jsx?$/</span>,</span><br><span class="line">                exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">                use: <span class="string">"happypack/loader?id=babel"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> HappyPack(&#123;</span><br><span class="line">            id: <span class="string">"babel"</span>,</span><br><span class="line">            threads: <span class="number">4</span>,</span><br><span class="line">            loaders: [<span class="string">"babel-loader"</span>]</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="作用域提升-ModuleConcatenationPlugin"><a href="#作用域提升-ModuleConcatenationPlugin" class="headerlink" title="作用域提升-ModuleConcatenationPlugin"></a>作用域提升-ModuleConcatenationPlugin</h2><p>如果项目里使用的是ES6的语法，并且webpack3+，那么建议启用这一插件，把所有的模块放到一个函数里：</p>
+<ul>
+<li>减少了函数声明</li>
+<li>文件体积变小</li>
+<li>函数作用域变少</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">"./src/app.js"</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">"dist"</span>),</span><br><span class="line">        filename: <span class="string">"bundle_[hash:6].js"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> webpack.optimize.ModuleConcatenationPlugin()</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="提取第三方库-enter-vendor"><a href="#提取第三方库-enter-vendor" class="headerlink" title="提取第三方库-enter.vendor"></a>提取第三方库-enter.vendor</h2><p>方便长期缓存第三方的库，新建一个入口，将第三方库作为一个<code>chunk</code>，生成<code>vendor.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        main: <span class="string">"./src/app.js"</span>,</span><br><span class="line">        vendor: [<span class="string">'react'</span>, <span class="string">'react-dom'</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="DLL动态链接-webpack-DllPlugin"><a href="#DLL动态链接-webpack-DllPlugin" class="headerlink" title="DLL动态链接-webpack.DllPlugin"></a>DLL动态链接-webpack.DllPlugin</h2><p>如果第三方库不是经常更新，打包的时候希望分开打包来提升打包速度。打包dll需要新建一个webpack配置文件，在打包dll的时候，webpack做一个索引，现在manifest文件中。然后打包项目的时候只需要读取manifest文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.vendor.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        vendor: [<span class="string">"react"</span>, <span class="string">"react-dom"</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.reaolve(__dirname, <span class="string">"dist"</span>),</span><br><span class="line">        filename: <span class="string">"dll/[name]_dll.js"</span>,</span><br><span class="line">        library: <span class="string">"_dll_[name]"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> webpack.DllPlugin(&#123;</span><br><span class="line">            path: path.resolve(__dirname, <span class="string">"dist/sll"</span>, <span class="string">"manifest.json"</span>),</span><br><span class="line">            name: <span class="string">"_dll_[name]"</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> path = resolve(<span class="string">"path"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    enter: &#123;</span><br><span class="line">        main: <span class="string">"./src/app.js"</span>,</span><br><span class="line">        vendor: [<span class="string">"react"</span>, <span class="string">"react-dom"</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> webpack.DllReferencePlugin(&#123;</span><br><span class="line">            manifest: path.resolve(__dirname, <span class="string">"dist/dll"</span>, <span class="string">"manifest.json"</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="多环境配置"><a href="#多环境配置" class="headerlink" title="多环境配置"></a>多环境配置</h1><p>创建多个配置文件：</p>
+<ul>
+<li><code>webpack.base.js</code>，共同的个配置</li>
+<li><code>webpack.dev.js</code>，在开发环境下的配置</li>
+<li><code>webpack.prod.js</code>，在生产环境下的配置】</li>
+</ul>
+<h2 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h2><p>配置测试服务器相关、HMR</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.dev.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">"webpack"</span>)</span><br><span class="line"><span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">"webpack-merge"</span>)</span><br><span class="line"><span class="keyword">const</span> abse = <span class="built_in">require</span>(<span class="string">"./webpack.base.js"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dev = &#123;</span><br><span class="line">    devServer: &#123;</span><br><span class="line">        contentNase: path.resolve(__dirname, <span class="string">"dist"</span>),</span><br><span class="line">        port: <span class="number">8080</span>,</span><br><span class="line">        host: <span class="string">"localhost"</span>,</span><br><span class="line">        overlay: <span class="literal">true</span>,</span><br><span class="line">        compress: <span class="literal">true</span>,</span><br><span class="line">        open: <span class="literal">false</span>,</span><br><span class="line">        hot: <span class="literal">true</span>,</span><br><span class="line">        inline: <span class="literal">true</span>,</span><br><span class="line">        progress: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    devtool: <span class="string">"inline-source-map"</span>,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> webpack.HotModuleReplacementPlugin(),</span><br><span class="line">        <span class="keyword">new</span> webpack.NamedModulesPlugin()</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = merge(base, dev)</span><br></pre></td></tr></table></figure>
+
+<h2 id="生产环境"><a href="#生产环境" class="headerlink" title="生产环境"></a>生产环境</h2><p>生产环境最重要的是开启代码压缩、混淆</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//webpack.prod.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"><span class="keyword">const</span> merge = <span class="built_in">require</span>(<span class="string">"webpack-merge"</span>)</span><br><span class="line"><span class="keyword">const</span> WebpackParallUglifyPlugin = <span class="built_in">require</span>(<span class="string">"webpack-parallel-uglify-plugin"</span>)</span><br><span class="line"><span class="keyword">const</span> base = <span class="built_in">require</span>(<span class="string">"./webpack.base.js"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> prod = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> WebpackParallUglifyPlugin(&#123;</span><br><span class="line">            uglifyJS: &#123;</span><br><span class="line">                mangle: <span class="literal">true</span>,</span><br><span class="line">                output: &#123;</span><br><span class="line">                    beautify: <span class="literal">false</span>,</span><br><span class="line">                    comments: <span class="literal">false</span></span><br><span class="line">                &#125;,</span><br><span class="line">                compress: &#123;</span><br><span class="line">                    warnings: <span class="literal">false</span>,</span><br><span class="line">                    drop_console: <span class="literal">true</span>,</span><br><span class="line">                    collpase_vars: <span class="literal">true</span>,</span><br><span class="line">                    reduce_vars: <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = marge(base, prod)</span><br></pre></td></tr></table></figure>
+
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/13/webpack学习-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1137,11 +1379,19 @@
                 
               
 
-              <time title="创建时间：2020-03-24 23:29:35 / 修改时间：23:30:19" itemprop="dateCreated datePublished" datetime="2020-03-24T23:29:35+08:00">2020-03-24</time>
+              <time title="创建时间：2020-03-24 23:29:35" itemprop="dateCreated datePublished" datetime="2020-03-24T23:29:35+08:00">2020-03-24</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-28 21:23:26" itemprop="dateModified" datetime="2020-04-28T21:23:26+08:00">2020-04-28</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -1205,6 +1455,14 @@
 </li>
 </ol>
 <p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/z-index.png" alt="z-index"></p>
+<h2 id="link标签的rel属性"><a href="#link标签的rel属性" class="headerlink" title="link标签的rel属性"></a>link标签的rel属性</h2><ul>
+<li><p><code>preload</code></p>
+<p>让你在你的HTML页面中 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/head" target="_blank" rel="noopener">``</a>元素内部书写一些声明式的资源获取请求，可以指明哪些资源是在页面加载完成后即刻需要的。对于这种即刻需要的资源，你可能希望在页面加载的生命周期的早期阶段就开始获取，在浏览器的主渲染机制介入前就进行预加载。这一机制使得资源可以更早的得到加载并可用，且更不易阻塞页面的初步渲染，进而提升性能。</p>
+</li>
+<li><p><code>prefetch</code></p>
+<p>提示浏览器，用户未来的浏览有可能需要加载目标资源，所以浏览器有可能通过事先获取和缓存对应资源，优化用户体验。</p>
+</li>
+</ul>
 
         
       
@@ -1488,266 +1746,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/09/vue-router剖析/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2020/03/09/vue-router剖析/" class="post-title-link" itemprop="url">vue-router剖析</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-09 22:05:40 / 修改时间：23:30:51" itemprop="dateCreated datePublished" datetime="2020-03-09T22:05:40+08:00">2020-03-09</time>
-            </span>
-          
-            
-
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue.js</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="vue-router"><a href="#vue-router" class="headerlink" title="vue-router"></a>vue-router</h1><h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>路由最早由后端提出，用于根据不同的请求返回不同的页面。大致流程如下：</p>
-<ol>
-<li>浏览器发出请求</li>
-<li>服务器监听到端口有请求过来</li>
-<li>根据服务器的路由配置，返回相应信息（可以是html、json、图片等）</li>
-<li>浏览器根据数据包的<code>Context-Type</code>来决定如何解析</li>
-</ol>
-<h2 id="前端路由"><a href="#前端路由" class="headerlink" title="前端路由"></a>前端路由</h2><p>随着<code>ajax</code>的流行，异步数据请求交互在不刷新浏览器的情况下运行。而异步交互体验的高级版本就是SPA-单页应用。单页应用不仅仅是在页面交互是无刷新的，连页面跳转都是无刷新的，为了实现单页应用，所以就有了前端路由。类似于后端路由，前端路由就是匹配不同的url路径进行解析，然后动态渲染html内容。</p>
-<h3 id="hash模式"><a href="#hash模式" class="headerlink" title="hash模式"></a>hash模式</h3><p><code>https://www.xxx.com/#/hash</code></p>
-<p>这种<code>#</code>后面<code>hash</code>值得变化，并不会触发新的请求，因此也不会刷新页面。每次<code>hash</code>值的变化都会触发<code>hashchange</code>事件，通过这个事件就可以知道更新哪些页面内容</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onhashchange = <span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(e.oldURL, e.newURL)</span><br><span class="line">    <span class="keyword">const</span> hash = location.hash.slice(<span class="number">1</span>)</span><br><span class="line">    app.innerHTML = hash</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="history模式"><a href="#history模式" class="headerlink" title="history模式"></a>history模式</h3><p><code>https://www.xxx.com/login</code></p>
-<p>随着HTML5的发布，带来了两个新的API：<code>pushState</code>和<code>replaceState</code>，通过这两个API可以改变url地址且不会发送请求。同时还有<code>popstate</code>事件用来监听url的改变。使用history模式，url就不会出现丑陋的<code>#</code>，url也变得比较美观。</p>
-<p>通过history api去掉了丑陋的<code>#</code>，但也存在问题：不怕前进/后退，就怕<strong>刷新</strong>。因为刷新是去请求服务器的，在<code>hash</code>下，前端路由修改的是#之后的内容，在发送请求时是不会带上的，但在history下可以自由地修改路径、参数，当刷新时，如果服务器中没有相应的响应或资源，容易爆<code>404</code></p>
-<h2 id="vue-router核心原理"><a href="#vue-router核心原理" class="headerlink" title="vue-router核心原理"></a>vue-router核心原理</h2><ol>
-<li><p>通过<code>new VueRouter</code>中的<code>mode</code>参数来选择使用那种路由模式</p>
-</li>
-<li><p>在<code>router</code>中使用<code>current</code>保存当前url</p>
-</li>
-<li><p>作为一个插件，大部分功能都在<code>install</code>函数中完成</p>
-</li>
-<li><p>在<code>install</code>中使用<code>Vue.mixin</code>注入的<code>beforeCreate</code>来给组件添加全局唯一的<code>router</code>实例（挂载在根组件上，其余组件通过<code>$parent._routerRoot._router</code>挂载）</p>
-</li>
-<li><p>使用<code>popstate</code>或<code>hashchange</code>两个事件来监听url变化（针对于手动输入url）并设置<code>current</code></p>
-</li>
-<li><p>使用<code>Vue.util.defineReactive(this, &#39;_route&#39;, this._router.history.current)</code>来使<code>router</code>变为响应式</p>
-<p>current变化    👉    重新渲染<code>router-view</code>中的组件 </p>
-</li>
-<li><p>解析路由配置从而可以更加便利地找到url所对应的页面</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>&lt;&#123; <span class="attr">name</span>: component &#125;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>👇</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Map</span>&lt;&#123; <span class="attr">name</span>: component &#125;&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>实现<code>&lt;router-link&gt;&lt;/router-link&gt;</code>和<code>&lt;router-view / &gt;</code>两个组件</p>
-</li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>vue-router</code>以插件方式侵入<code>Vue</code>，从而支持一个额外的<code>router</code>属性，以提供监听并改变组件路由数据的能力，这样每次路由发生变化后，可以同步到数据，从而响应式地触发组件的更新</p>
-<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/vue-router.png" alt="vue-router"></p>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/06/Vue.js研读-生命周期/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2020/03/06/Vue.js研读-生命周期/" class="post-title-link" itemprop="url">Vue.js研读-生命周期</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-06 23:29:53" itemprop="dateCreated datePublished" datetime="2020-03-06T23:29:53+08:00">2020-03-06</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-21 22:35:17" itemprop="dateModified" datetime="2020-04-21T22:35:17+08:00">2020-04-21</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue.js</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="生命周期概览"><a href="#生命周期概览" class="headerlink" title="生命周期概览"></a>生命周期概览</h2><p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/lifecycle.png" alt="生命周期"></p>
-<h2 id="生命周期函数"><a href="#生命周期函数" class="headerlink" title="生命周期函数"></a>生命周期函数</h2><ul>
-<li><p>beforeCreate</p>
-<p><code>new Vue()</code>之后触发的第一个钩子，在当前阶段<code>data</code>、methods、<code>computed</code>以及watch上的数据和方法均不能被访问</p>
-</li>
-<li><p>created</p>
-<p>在实例创建完成之后触发，当前阶段已完成了数据观测，也就是可以使用数据，更改数据，在这个更改数据不会触发<code>updated</code>函数。可以做一些<strong>初始数据的获取</strong>，在当前阶段无法获取DOM（可使用vm.$nextTick）</p>
-</li>
-<li><p>beforeMounte</p>
-<p>发生在挂载之前，在这之前template模板已导入渲染函数编译。而当前阶段虚拟DOM已创建完成，即将开始渲染。在此时也可以对数据进行更改，不会触发<code>updated</code></p>
-</li>
-<li><p>mounted</p>
-<p>在挂载之后被触发。在当前阶段，真实的DOM被挂载完毕，数据完成双向绑定，可以访问到DOM阶段，使用$ref属性对DOM进行操作</p>
-</li>
-<li><p>beforeUpdate</p>
-<p>在界面发生更新之前被触发。也就是响应式数据发生改变之前、虚拟DOM重新渲染之前被触发，可以在此阶段进行更改数据，不会造成重渲染</p>
-</li>
-<li><p>updated</p>
-<p>在发生更新之后被触发。当前阶段DOM已完成更新。要注意的是避免在此期间更改数据，因为这可能会导致无限循环的更新</p>
-</li>
-<li><p>beforeDestory</p>
-<p>在实例被销毁之前触发。在当前阶段实例完全可以被使用，可以在此阶段做些善后工作，如清除定时器</p>
-</li>
-<li><p>destoryed</p>
-<p>在实例被销毁之后触发。这个时候只剩下DOM，组件已被拆解，数据绑定被卸载、监听被移除、子实例也统统被销毁</p>
-</li>
-</ul>
-<h2 id="组件的生命周期函数调用顺序"><a href="#组件的生命周期函数调用顺序" class="headerlink" title="组件的生命周期函数调用顺序"></a>组件的生命周期函数调用顺序</h2><ul>
-<li><p>加载渲染顺序</p>
-<p>父beforeCreate👉父created👉父beforeMmount👉子beforeCreate👉子created👉子beforeMount👉子mounted👉父mounted</p>
-</li>
-<li><p>更新顺序</p>
-<p>父beforeUpdate👉子beforeUpdate👉子updated👉父updated</p>
-</li>
-<li><p>销毁顺序</p>
-<p>父beforeDestory👉子beforeDestory👉子destoryed👉父destoryed</p>
-</li>
-</ul>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1800,7 +1798,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1826,7 +1824,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -1852,7 +1850,7 @@
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共62.2k字</span>
+  <span class="post-count">博客全站共63.5k字</span>
 </div>
 <div class="copyright">
   &copy; 
