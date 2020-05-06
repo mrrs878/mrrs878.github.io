@@ -64,7 +64,11 @@
 <meta property="og:description" content="设计思想Vue.js渐进式框架，采用自底向上增量开发的模式。 所谓渐进式就是把框架分层。 最核心的部分是视图层渲染，然后往外是组件系统，在这个基础上再加入路由机制，再加入状态管理，最外层是构建工具。  所谓分层，就是说既可以只用最核心的视图层渲染功能快速开发一些需求，也可以使用一整套全家桶来开发大型应用。Vue.js由足够的灵活性来适应不同的需求，所以开发者可以根据自己的需求选择不同的层级。 Re">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/vue-5.png">
-<meta property="og:updated_time" content="2020-04-29T15:36:09.697Z">
+<meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/reactSetData.png">
+<meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/reactDomDiff.png">
+<meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/reactLifeCycle.png">
+<meta property="og:image" content="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/reactLifeCycle-1.png">
+<meta property="og:updated_time" content="2020-05-06T13:21:19.361Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端架构&amp;软实力-React.js对比Vue.js">
 <meta name="twitter:description" content="设计思想Vue.js渐进式框架，采用自底向上增量开发的模式。 所谓渐进式就是把框架分层。 最核心的部分是视图层渲染，然后往外是组件系统，在这个基础上再加入路由机制，再加入状态管理，最外层是构建工具。  所谓分层，就是说既可以只用最核心的视图层渲染功能快速开发一些需求，也可以使用一整套全家桶来开发大型应用。Vue.js由足够的灵活性来适应不同的需求，所以开发者可以根据自己的需求选择不同的层级。 Re">
@@ -283,7 +287,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-29 23:36:09" itemprop="dateModified" datetime="2020-04-29T23:36:09+08:00">2020-04-29</time>
+                <time title="修改时间：2020-05-06 21:21:19" itemprop="dateModified" datetime="2020-05-06T21:21:19+08:00">2020-05-06</time>
               </span>
             
           
@@ -329,6 +333,48 @@
 <h3 id="React-js-2"><a href="#React-js-2" class="headerlink" title="React.js"></a>React.js</h3><p>React.js的<code>Context</code> 提供了一个无需为每层组件手动添加 <code>props</code>就能在组件树间进行数据传递的方法。在父组件创建一个<code>Context</code>对象，通过<code>Context.provider</code>的<code>value</code>属性向消费组件传值。</p>
 <h1 id="响应式原理"><a href="#响应式原理" class="headerlink" title="响应式原理"></a>响应式原理</h1><h2 id="Vue-js-3"><a href="#Vue-js-3" class="headerlink" title="Vue.js"></a>Vue.js</h2><p>Vue.js采用数据劫持&amp;发布-订阅模式来实现响应式，Vue.js在创建<code>vm</code>的时候，会将数据配置在实例当中，然后通过<code>Object.defineProperty</code>对数据进行操作，为数据动态添加了<code>getter</code>与<code>setter</code>方法，当获取数据的时候会触发对应的<code>getter</code>方法，当设置数据的时候会触发对应的<code>setter</code>方法，从而进一步触发<code>vm</code>的<code>watcher</code>方法，然后数据更改，<code>vm</code>则会进一步触发视图更新操作。</p>
 <h2 id="React-js-3"><a href="#React-js-3" class="headerlink" title="React.js"></a>React.js</h2><p>React.js中组件不允许通过<code>this.state</code>这种方式直接更改组件的状态。自身设置的状态，可以通过<code>setState</code>来进行更改。在<code>setState</code>中，传入一个对象，就会将组件的状态中键值对的部分更改，还可以传入一个函数，这个回调函数必须向上面方式一样的一个对象函数可以接受<code>prevState</code>和<code>props</code>。React.js在接收到用户状态改变通知后，会根据当前渲染树，结合最新的状态改变，通过Diff算法，计算出树中变化的部分，然后只更新变化的部分（DOM操作），从而避免整棵树重构，提高性能。</p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/reactSetData.png" alt="React更新过程"></p>
+<h1 id="Diff算法"><a href="#Diff算法" class="headerlink" title="Diff算法"></a>Diff算法</h1><h2 id="Vue-js-4"><a href="#Vue-js-4" class="headerlink" title="Vue.js"></a>Vue.js</h2><ol>
+<li>同级比较，再比较子节点</li>
+<li>先判断一方有子节点而另一方没有子节点的情况</li>
+<li>比较双方都有子节点的情况（<a href="https://www.jianguoyun.com/static/stackedit/[http://blog.p18c.top/2020/03/04/Vue.js研读-虚拟DOM/](http://blog.p18c.top/2020/03/04/Vue.js研读-虚拟DOM/)" target="_blank" rel="noopener">核心diff算法</a>）</li>
+<li>递归比较子节点</li>
+</ol>
+<h2 id="React-js（Diff详解）"><a href="#React-js（Diff详解）" class="headerlink" title="React.js（Diff详解）"></a>React.js（<a href="https://www.jianguoyun.com/static/stackedit/[https://zhuanlan.zhihu.com/p/20346379](https://zhuanlan.zhihu.com/p/20346379)" target="_blank" rel="noopener">Diff详解</a>）</h2><p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/reactDomDiff.png" alt="React.js DOM Diff"></p>
+<h1 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h1><h2 id="Vue-js-5"><a href="#Vue-js-5" class="headerlink" title="Vue.js"></a>Vue.js</h2><ol>
+<li>beforeCreate</li>
+</ol>
+<p><code>new Vue()</code>后触发的第一个钩子，在当前阶段<code>data</code>、<code>methods</code>、<code>computed</code>以及<code>watch</code>上的数据和方法均不能被访问</p>
+<ol>
+<li>created</li>
+</ol>
+<p>在实例创建完成之后触发，当前阶段已完成了数据观测，也就是可以使用数据，更改数据，这时更新不会触发<code>updated</code>钩子。可以<strong>做一些初始数据的获取</strong>，在当前阶段<strong>无法访问DOM</strong>（可使用vm.$nextTick）</p>
+<ol>
+<li>beforeMount</li>
+</ol>
+<p>发生在挂载之前，在这之前template已导入渲染函数编译，而且当前阶段虚拟DOM已创建完成，即将开始渲染。在此时也可以对数据进行更改，不会触发<code>updated</code></p>
+<ol>
+<li>mounted</li>
+</ol>
+<p>在挂载之后被触发。在当前阶段，真实的DOM被挂载完毕，数据完成双向绑定，可以访问到DOM，可以使用<code>$ref</code>属性对DOM进行操作</p>
+<ol>
+<li>beforeUpdate</li>
+</ol>
+<p>在界面发生更新之前被触发。也就是响应式数据发生改变之前、虚拟DOM重新渲染之前被触发，可以在此阶段对数据进行修改，不会造成重渲染</p>
+<ol>
+<li>updated</li>
+</ol>
+<p>早发生更新之前被触发。当前阶段DOM已完成更新。要注意的是避免在此期间更新数据，因为这样可能会造成无限循环的更新</p>
+<ol>
+<li>beforeDestory</li>
+</ol>
+<p>在实例销毁之前触发。在当前阶段实例完全可以被使用，可以在此阶段做些善后工作，如清除定时器</p>
+<ol>
+<li>destoryed</li>
+</ol>
+<p>在实例销毁之后触发。这时候只剩下DOM，组件已被拆解、数据绑定被卸载、监听被移除、子实例也统统被销毁</p>
+<h2 id="React-js（生命周期详解）"><a href="#React-js（生命周期详解）" class="headerlink" title="React.js（生命周期详解）"></a>React.js（<a href="https://www.jianguoyun.com/static/stackedit/[https://www.jianshu.com/p/b331d0e4b398](https://www.jianshu.com/p/b331d0e4b398)" target="_blank" rel="noopener">生命周期详解</a>）</h2><p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/reactLifeCycle.png" alt="React.js生命周期"></p>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/reactLifeCycle-1.png" alt="React.js生命周期1"></p>
 
     </div>
 
@@ -408,7 +454,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#设计思想"><span class="nav-number">1.</span> <span class="nav-text">设计思想</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-js"><span class="nav-number">1.1.</span> <span class="nav-text">Vue.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-js"><span class="nav-number">1.2.</span> <span class="nav-text">React.js</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组件间数据交互"><span class="nav-number">2.</span> <span class="nav-text">组件间数据交互</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#父子组件"><span class="nav-number">2.1.</span> <span class="nav-text">父子组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-js-1"><span class="nav-number">2.1.1.</span> <span class="nav-text">Vue.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-js-1"><span class="nav-number">2.1.2.</span> <span class="nav-text">React.js</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨级组件"><span class="nav-number">2.2.</span> <span class="nav-text">跨级组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-js-2"><span class="nav-number">2.2.1.</span> <span class="nav-text">Vue.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-js-2"><span class="nav-number">2.2.2.</span> <span class="nav-text">React.js</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#响应式原理"><span class="nav-number">3.</span> <span class="nav-text">响应式原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-js-3"><span class="nav-number">3.1.</span> <span class="nav-text">Vue.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-js-3"><span class="nav-number">3.2.</span> <span class="nav-text">React.js</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#设计思想"><span class="nav-number">1.</span> <span class="nav-text">设计思想</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-js"><span class="nav-number">1.1.</span> <span class="nav-text">Vue.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-js"><span class="nav-number">1.2.</span> <span class="nav-text">React.js</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组件间数据交互"><span class="nav-number">2.</span> <span class="nav-text">组件间数据交互</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#父子组件"><span class="nav-number">2.1.</span> <span class="nav-text">父子组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-js-1"><span class="nav-number">2.1.1.</span> <span class="nav-text">Vue.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-js-1"><span class="nav-number">2.1.2.</span> <span class="nav-text">React.js</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨级组件"><span class="nav-number">2.2.</span> <span class="nav-text">跨级组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-js-2"><span class="nav-number">2.2.1.</span> <span class="nav-text">Vue.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-js-2"><span class="nav-number">2.2.2.</span> <span class="nav-text">React.js</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#响应式原理"><span class="nav-number">3.</span> <span class="nav-text">响应式原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-js-3"><span class="nav-number">3.1.</span> <span class="nav-text">Vue.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-js-3"><span class="nav-number">3.2.</span> <span class="nav-text">React.js</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Diff算法"><span class="nav-number">4.</span> <span class="nav-text">Diff算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-js-4"><span class="nav-number">4.1.</span> <span class="nav-text">Vue.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-js（Diff详解）"><span class="nav-number">4.2.</span> <span class="nav-text">React.js（Diff详解）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#生命周期"><span class="nav-number">5.</span> <span class="nav-text">生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-js-5"><span class="nav-number">5.1.</span> <span class="nav-text">Vue.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-js（生命周期详解）"><span class="nav-number">5.2.</span> <span class="nav-text">React.js（生命周期详解）</span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -479,7 +525,7 @@
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共64k字</span>
+  <span class="post-count">博客全站共64.6k字</span>
 </div>
 <div class="copyright">
   &copy; 
