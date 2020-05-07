@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="Mr.RS">
 <meta property="og:description" content="TCP的特点 三次握手 四次挥手 可靠连接 面向字节流 提供拥塞控制 丢包重传  TCP如何保证可靠传输tcp在传输的过程中都有一个ack，接收方通过ack告诉发送方收到哪些包了。这样发送方就能知道丢包情况进而重传 TCP的三次握手 client发送SYN到server发起握手 server回复SYN+ACK给client client回复server一个ACK表示收到了server的SYN+AC">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-16T14:41:30.739Z">
+<meta property="og:updated_time" content="2020-05-07T14:06:34.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网络相关-tcp">
 <meta name="twitter:description" content="TCP的特点 三次握手 四次挥手 可靠连接 面向字节流 提供拥塞控制 丢包重传  TCP如何保证可靠传输tcp在传输的过程中都有一个ack，接收方通过ack告诉发送方收到哪些包了。这样发送方就能知道丢包情况进而重传 TCP的三次握手 client发送SYN到server发起握手 server回复SYN+ACK给client client回复server一个ACK表示收到了server的SYN+AC">
@@ -270,11 +270,19 @@
                 
               
 
-              <time title="创建时间：2020-04-16 21:00:43 / 修改时间：22:41:30" itemprop="dateCreated datePublished" datetime="2020-04-16T21:00:43+08:00">2020-04-16</time>
+              <time title="创建时间：2020-04-16 21:00:43" itemprop="dateCreated datePublished" datetime="2020-04-16T21:00:43+08:00">2020-04-16</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-07 22:06:34" itemprop="dateModified" datetime="2020-05-07T22:06:34+08:00">2020-05-07</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -329,6 +337,21 @@
 </ol>
 <h1 id="为什么要三次握手、四次挥手"><a href="#为什么要三次握手、四次挥手" class="headerlink" title="为什么要三次握手、四次挥手"></a>为什么要三次握手、四次挥手</h1><p>挥手的时候多一次主要是收到第一个FIN包后单独回复了一个ACK包，如果FIN+ACK和并发送那么四次挥手也变成三次了。关于为什么要分开，收到FIN后，知道对方要关闭了，然后OS通知应用层要关闭啥的，这里应用层可能需要做些准备工作，有一些延时，所以先回ACK，准备好了再发FIN。握手没有这个准备过程（服务端在LISTEN状态下）所以可以立即发送SYN+ACK</p>
 <h1 id="ACK"><a href="#ACK" class="headerlink" title="ACK"></a>ACK</h1><p><code>ACK = SEQ + LEN(包的大小)</code>，这样发送方可以明确知道对方收到哪些东西</p>
+<h1 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h1><p>拥塞控制主要作用于网络，防止过多的数据拥塞网络，避免出现网络负载过大的情况。拥塞处理包括以下算法：慢开始、拥塞避免、快速重传</p>
+<h2 id="慢开始"><a href="#慢开始" class="headerlink" title="慢开始"></a>慢开始</h2><p>在传输开始时将发送窗口慢慢指数级扩大，从而避免一开始就传输大量数据导致网络拥塞</p>
+<p>慢开始算法步骤具体如下：</p>
+<ol>
+<li>连接初始设置拥塞窗口（Congestion Window）为1MSS（一个分段的最大数据量）</li>
+<li>每过一个RTT（表示发送端发送数据到接收到对端数据所需的往返时间）就将窗口大小x2</li>
+<li>指数级增长肯定不能没有限制，所以有一个阈值限制，当窗口大小大于阈值时就会启动拥塞避免算法</li>
+</ol>
+<h2 id="拥塞避免算法"><a href="#拥塞避免算法" class="headerlink" title="拥塞避免算法"></a>拥塞避免算法</h2><p>拥塞避免算法相比简单点，每过一个RTT，拥塞窗口大小+1，这样能避免指数级增长导致网络拥塞，慢慢将大小调整到最佳值。在传输过程中可能会遇到定时器超时的情况，这时TCP就会认为网络拥塞了，会马上进行以下步骤：</p>
+<ol>
+<li>将阈值设为当前拥塞窗口的一半</li>
+<li>将拥塞窗口设为1MSS</li>
+<li>启动拥塞避免算法</li>
+</ol>
+<h2 id="快速重传"><a href="#快速重传" class="headerlink" title="快速重传"></a>快速重传</h2><p>一旦接收端收到的报文出现失序的情况，接收端指会回复最后一个顺序正确的报文序号（没有SACK的情况）。如果收到三个重复的ACK，无需等待定时器超时再重发而是启动快速重传。</p>
 
     </div>
 
@@ -412,7 +435,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP的特点"><span class="nav-number">1.</span> <span class="nav-text">TCP的特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP如何保证可靠传输"><span class="nav-number">2.</span> <span class="nav-text">TCP如何保证可靠传输</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP的三次握手"><span class="nav-number">3.</span> <span class="nav-text">TCP的三次握手</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP的四次挥手"><span class="nav-number">4.</span> <span class="nav-text">TCP的四次挥手</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要三次握手、四次挥手"><span class="nav-number">5.</span> <span class="nav-text">为什么要三次握手、四次挥手</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ACK"><span class="nav-number">6.</span> <span class="nav-text">ACK</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP的特点"><span class="nav-number">1.</span> <span class="nav-text">TCP的特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP如何保证可靠传输"><span class="nav-number">2.</span> <span class="nav-text">TCP如何保证可靠传输</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP的三次握手"><span class="nav-number">3.</span> <span class="nav-text">TCP的三次握手</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP的四次挥手"><span class="nav-number">4.</span> <span class="nav-text">TCP的四次挥手</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要三次握手、四次挥手"><span class="nav-number">5.</span> <span class="nav-text">为什么要三次握手、四次挥手</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ACK"><span class="nav-number">6.</span> <span class="nav-text">ACK</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拥塞控制"><span class="nav-number">7.</span> <span class="nav-text">拥塞控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#慢开始"><span class="nav-number">7.1.</span> <span class="nav-text">慢开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拥塞避免算法"><span class="nav-number">7.2.</span> <span class="nav-text">拥塞避免算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速重传"><span class="nav-number">7.3.</span> <span class="nav-text">快速重传</span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -431,7 +454,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-count">61</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -457,7 +480,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -483,7 +506,7 @@
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共64.6k字</span>
+  <span class="post-count">博客全站共65.9k字</span>
 </div>
 <div class="copyright">
   &copy; 
