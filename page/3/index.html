@@ -234,6 +234,141 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/24/CSS相关-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Mr.RS">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/imgs/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.RS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            
+            <a href="/2020/03/24/CSS相关-0/" class="post-title-link" itemprop="url">CSS-0</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-24 23:29:35" itemprop="dateCreated datePublished" datetime="2020-03-24T23:29:35+08:00">2020-03-24</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-28 21:23:26" itemprop="dateModified" datetime="2020-04-28T21:23:26+08:00">2020-04-28</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index">
+                    <span itemprop="name">CSS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="盒模型"><a href="#盒模型" class="headerlink" title="盒模型"></a>盒模型</h2><p>描述了元素如何显示，以及（在一定程度上）如何相互作用、相互影响。页面中的所有元素都被看作为一个矩形盒子，这个盒子包含元素的内容、内边距、边框、外边距。</p>
+<p>盒模型分为两种：</p>
+<ul>
+<li><p>标准盒模型（box-sizing = content-box）</p>
+<p>width = content-width</p>
+<p>height = content-height</p>
+</li>
+<li><p>IE盒模型（box-sizing = border-box）</p>
+<p>width = content-width + padding + border</p>
+<p>height = content-height + padding + border</p>
+</li>
+</ul>
+<h2 id="层叠上下文"><a href="#层叠上下文" class="headerlink" title="层叠上下文"></a>层叠上下文</h2><p>层叠上下文是<strong>包含一组图层的元素</strong>。 在一组层叠上下文中，其子元素的<strong>z-index值是相对于该父元素</strong>而不是 <code>document root</code> 设置的。每个层叠上下文完全独立于它的兄弟元素。如果元素 B 位于元素 A 之上，则即使元素 A 的子元素 C 具有比元素 B 更高的<code>z-index</code>值，元素 C 也永远不会在元素 B 之上.</p>
+<p>CSS 中的<code>z-index</code>属性控制重叠元素的垂直叠加顺序。<code>z-index</code>只能影响<code>position</code>值不是<code>static</code>的元素。</p>
+<p>产生层叠上下文：</p>
+<ol>
+<li><p>HTML中的根元素<code>&lt;html&gt;&lt;/html&gt;</code>本身就具有层叠上下文，称为<strong>根层叠上下文</strong>。</p>
+</li>
+<li><p>普通元素设置<code>position</code>属性为<strong>非</strong><code>static</code>值并设置<code>z-index</code>属性为具体数值，产生层叠上下文。</p>
+</li>
+<li><p>CSS3中的新属性也可以产生层叠上下文。</p>
+</li>
+<li><ul>
+<li>父元素的display属性值为<code>flex|inline-flex</code>，子元素<code>z-index</code>属性值不为<code>auto</code>的时候，子元素为层叠上下文元素；</li>
+<li>元素的<code>opacity</code>属性值不是1；</li>
+<li>元素的<code>transform</code>属性值不是<code>none</code>；</li>
+<li>元素<code>mix-blend-mode</code>属性值不是normal；</li>
+<li>元素的<code>filter</code>属性值不是<code>none</code>；</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://mrrsblog.oss-cn-shanghai.aliyuncs.com/z-index.png" alt="z-index"></p>
+<h2 id="link标签的rel属性"><a href="#link标签的rel属性" class="headerlink" title="link标签的rel属性"></a>link标签的rel属性</h2><ul>
+<li><p><code>preload</code></p>
+<p>让你在你的HTML页面中 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/head" target="_blank" rel="noopener">``</a>元素内部书写一些声明式的资源获取请求，可以指明哪些资源是在页面加载完成后即刻需要的。对于这种即刻需要的资源，你可能希望在页面加载的生命周期的早期阶段就开始获取，在浏览器的主渲染机制介入前就进行预加载。这一机制使得资源可以更早的得到加载并可用，且更不易阻塞页面的初步渲染，进而提升性能。</p>
+</li>
+<li><p><code>prefetch</code></p>
+<p>提示浏览器，用户未来的浏览有可能需要加载目标资源，所以浏览器有可能通过事先获取和缓存对应资源，优化用户体验。</p>
+</li>
+</ul>
+
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/03/12/webpack学习-0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1462,167 +1597,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/02/18/ES6重点-0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Mr.RS">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/imgs/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.RS">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            
-            <a href="/2020/02/18/ES6重点-0/" class="post-title-link" itemprop="url">ES6重点-0</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-02-18 23:43:05" itemprop="dateCreated datePublished" datetime="2020-02-18T23:43:05+08:00">2020-02-18</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-29 23:07:33" itemprop="dateModified" datetime="2020-02-29T23:07:33+08:00">2020-02-29</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy" target="_blank" rel="noopener">Proxy</a></h2><p><code>Proxy</code>用于<strong>修改某些操作的默认行为</strong>，等同于在语言层面做出修改，所以属于一种“元编程”（meta program），即对编程语言进行编程。<code>Proxy</code>可以理解成在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。</p>
-<h2 id="Reflect"><a href="#Reflect" class="headerlink" title="Reflect"></a><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect" target="_blank" rel="noopener">Reflect</a></h2><p>*<em>WHAT *</em>😳</p>
-<p>ES6为了<strong>操作对象</strong>而提供的新的API</p>
-<p><strong>WHY</strong>   🤔</p>
-<ol>
-<li>将<code>Object</code>对象的一些明显是语语言内部的方法（比如<code>Object.defineProperty</code>）放到<code>Reflect</code>对象上，现阶段，某些方法同时在<code>Object</code>和<code>Reflect</code>对象上部署，未来的新方法只部署在<code>Reflect</code>对象上。也就是说，从<code>Reflect</code>对象上可以拿到语言内部的方法</li>
-<li>修改某些<code>Object</code>方法的返回结果，让其变得更合理。比如<code>Object.defineProperty(obj, name, desc)</code>在无法定义属性时，会抛出一个错误，而<code>Reflect.defineProperty(obj, name, desc)</code>则会返回<code>false</code></li>
-<li>让<code>Object</code>操作都变成函数行为。某些<code>Object</code>操作是命令式，比如<code>name in obj</code>和<code>delete obj[name]</code>，而<code>Reflect.has(obj, name)</code>和<code>Reflect.deleteProperty(obj, name)</code>让它们变成了函数行为</li>
-<li><code>Reflect</code>对象的方法与<code>Proxy</code>对象的方法一一对应，这就让<code>Proxy</code>对象可以方便地调用对应的<code>Reflect</code>方法，完成默认行为</li>
-</ol>
-<p><strong>HOW</strong>  😮</p>
-<p><code>Reflect</code>对象一共有13个静态方法</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 适用于函数定义了自己的 apply 方法</span></span><br><span class="line"><span class="built_in">Reflect</span>.apply(target, thisArg, args)</span><br><span class="line"><span class="comment">// 等同于new target(...args) 这提供了一种不使用 new 来调用构造函数的方法</span></span><br><span class="line"><span class="built_in">Reflect</span>.construct(target, args)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Reflect</span>.get(target, name, receiver)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Reflect</span>.set(target, name, value, receiver)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Reflect</span>.defineProperty(target, name, desc)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Reflect</span>.deleteProperty(target, name)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Reflect</span>.has(target, name)</span><br><span class="line"><span class="comment">// 基本等同于Object.getOwnPropertyNames 与 Object.getOwnPropertySymbols 之和</span></span><br><span class="line"><span class="built_in">Reflect</span>.ownKeys(target)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Reflect</span>.isExtensible(target)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Reflect</span>.prevenExtensions(target)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Reflect</span>.getOwnPropertyDescriptor(target, name)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Reflect</span>.getPrototypeOf(target)</span><br><span class="line"></span><br><span class="line"><span class="built_in">Reflect</span>.setPrototypeOf(target, prototype)</span><br></pre></td></tr></table></figure>
-
-<p><code>Reflect</code> + <code>Proxy</code>实现观察者模式</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> observers = <span class="keyword">new</span> <span class="built_in">Set</span>()</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">observe</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  observers.add(fn)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">observable</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Proxy</span>(obj, &#123;</span><br><span class="line">    <span class="keyword">set</span>(target, key, value, receiver) &#123;</span><br><span class="line">      <span class="keyword">const</span> result = <span class="built_in">Reflect</span>.set(target, key, value, receiver)</span><br><span class="line">      observers.forEach(<span class="function"><span class="params">observer</span> =&gt;</span> observer())</span><br><span class="line">      <span class="keyword">return</span> result</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> person = observable(&#123;</span><br><span class="line">  name: <span class="string">"tom"</span>,</span><br><span class="line">  age: <span class="number">23</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123; person.name &#125;</span>, <span class="subst">$&#123; person.age &#125;</span>`</span>)</span><br><span class="line">&#125;</span><br><span class="line">observe(print)</span><br><span class="line">person.name = <span class="string">"tom1"</span></span><br></pre></td></tr></table></figure>
-
-<p>📣 在观察者模式中，观察者是知道被观察者的，被观察者一一直保持对观察者进行记录。然而，在发布订阅模式中，发布者和订阅者不知道对方的存在，它们只有通过消息代理进行通信。在发布订阅模式中，组件时松散耦合的，正和观察者模式相反。观察者模式大多时候是同步的，比如当事件触发，被观察者就会调用观察者的方法；而发布订阅模式大多时候是异步的（使用消息队列）</p>
-<h2 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol"></a><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Symbol" target="_blank" rel="noopener">Symbol</a></h2><p><strong>WHAT</strong> 😳</p>
-<p><code>ES6</code>引入的一种新的原始数据类型，表示<strong>独一无二</strong>的值。它是<code>JavaScript</code>语言的第七种数据类型，前六种是：<code>undefined</code>、<code>null</code>、<code>Boolean</code>、<code>String</code>、<code>Object</code>、<code>Number</code></p>
-<p>📣 不支持 <code>new Symbol()</code></p>
-<p><strong>WHY</strong>   🤔</p>
-<p>ES5的对象属性名都是字符串，这容易造成属性名的冲突。Symbol值可作为对象属性名</p>
-<p><strong>HOW</strong>   😮</p>
-<p>Symbol值通过<code>Symbol</code>函数生成</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> nameProperty = <span class="built_in">Symbol</span>(<span class="string">"name"</span>)</span><br><span class="line"><span class="keyword">let</span> a = &#123;</span><br><span class="line">  [nameProperty]: <span class="string">"a"</span>,</span><br><span class="line">  age: <span class="number">21</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyNames(a))</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> a) &#123;</span><br><span class="line">  <span class="keyword">if</span> (a.hasOwnProperty(key)) &#123;</span><br><span class="line">    <span class="keyword">const</span> element = a[key];</span><br><span class="line">    <span class="built_in">console</span>.log(key);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Reflect</span>.ownKeys(a));</span><br></pre></td></tr></table></figure>
-
-<p>API:</p>
-<ul>
-<li><p><code>Symbol.description</code></p>
-<p>创建<code>Symbol</code>的时候，可以添加一个描述，但读取这个描述需要将<code>Symbol</code>显式转为字符串。<code>Symbol.description</code>可以方便的读取<code>Symbol</code>对应的描述</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> nameProp = <span class="built_in">Symbol</span>(<span class="string">"name"</span>)</span><br><span class="line">nameProp.toString()</span><br><span class="line"><span class="built_in">console</span>.log(nameProp.description)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>Symbol.for</code></p>
-<p>重新使用同一个<code>Symbol</code>值。<code>Symbol.for</code>接受一个字符串作为参数，然后<strong>全局搜索</strong>有没有以该参数作为名称的Symbol值，若有，返回之；若没有，创建之</p>
-<p><code>Symbol.for(&quot;name&quot;)</code>和<code>Symbol(&quot;name&quot;)</code>的区别：两者都会生成<code>Symbol</code>值；前者会被登记在<strong>全局</strong>环境中供搜索，后者不会</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Symbol</span>(<span class="string">"name"</span>) === <span class="built_in">Symbol</span>(<span class="string">"name"</span>)</span><br><span class="line"><span class="comment">// false</span></span><br><span class="line"><span class="built_in">Symbol</span>.for(<span class="string">"name"</span>) === <span class="built_in">Symbol</span>.for(<span class="string">"name"</span>)</span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>Symbol.keyFor</code></p>
-<p>返回一个已<strong>登记</strong>的<code>Symbol</code>的<code>key</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Symbol</span>.keyFor(<span class="built_in">Symbol</span>(<span class="string">"name"</span>)));</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Symbol</span>.keyFor(<span class="built_in">Symbol</span>.for(<span class="string">"name"</span>)));</span><br><span class="line"><span class="comment">// undefined</span></span><br><span class="line"><span class="comment">// name</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><p><strong>WHAT</strong> 😳</p>
-<p>ES6提供的一种数据结构，类似于数组，但成员的值都是唯一的，没有重复的值</p>
-<p>Set使用一种类似于<code>===</code>的算法“Same-value-zero equality”来判断值是否相等</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// "5" 和 5 不相等</span></span><br><span class="line"><span class="comment">// NaN 和 NaN 相等</span></span><br><span class="line"><span class="comment">// 两个空对象不相等</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">set</span> = new Set()</span><br><span class="line"><span class="keyword">set</span>.add("5")</span><br><span class="line"><span class="keyword">set</span>.add(5)</span><br><span class="line"><span class="keyword">set</span>.add(NaN)</span><br><span class="line"><span class="keyword">set</span>.add(NaN)</span><br><span class="line"><span class="keyword">set</span>.add(&#123;&#125;)</span><br><span class="line"><span class="keyword">set</span>.add(&#123;&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">set</span>);</span><br><span class="line">// Set &#123; <span class="string">'5'</span>, <span class="number">5</span>, <span class="literal">NaN</span>, &#123;&#125;, &#123;&#125; &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>WHY</strong>   🤔</p>
-<ul>
-<li>可以用作数组去重<code>[...new Set([1, 1, 2, 2, 3])]</code></li>
-<li>去除字符串里面的重复字符<code>[...new Set(&#39;aaabbbc&#39;)].join(&quot;&quot;)</code></li>
-</ul>
-<p><strong>HOW</strong>   😮</p>
-<p><code>Set</code>函数可以接受一个数组（或<strong>具有interable接口</strong>的其他数据结构）作为参数，用来初始化</p>
-<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p><strong>WHAT</strong> 😳</p>
-<p>ES6提供的一种数据结构，类似于对象，也是键-值对的集合，但键的范围不限于字符串，各章类型的值（包括对象）都可以作为键</p>
-<p><strong>WHY</strong>   🤔</p>
-<p>传统上的Object只能用字符串（[Symbol](## Symbol)）作为键，这给它的使用带来了很大的限制</p>
-<p>Map的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键。这就解决了同名属性碰撞（clash）的问题，我们扩展别人的库的时候，如果使用对象作为键名，就不用担心自己的属性和原作者的属性同名</p>
-<p><strong>HOW</strong>   😮</p>
-<p>使用 <code>new Map</code> 来创建Map</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>([[<span class="number">2</span>, <span class="string">"2"</span>]])</span><br><span class="line">map.set(<span class="number">1</span>, <span class="string">"1"</span>)</span><br><span class="line"><span class="built_in">console</span>.log(map.get(<span class="number">2</span>));</span><br></pre></td></tr></table></figure>
-
-<p>事实上，不仅仅是数组，任何具有<code>iterator</code>接口、且每个成员都是一个双元素的数组的数据结构都可以作为<code>Map</code>构造函数的参数</p>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1675,7 +1649,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-count">63</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1701,7 +1675,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -1727,7 +1701,7 @@
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共66.1k字</span>
+  <span class="post-count">博客全站共67.2k字</span>
 </div>
 <div class="copyright">
   &copy; 
