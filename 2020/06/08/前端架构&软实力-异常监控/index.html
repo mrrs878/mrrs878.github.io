@@ -55,19 +55,19 @@
   };
 </script>
 
-  <meta name="description" content="预加载实现思路new一个新的Imgnode，给Imgnode的src赋值为真正的src；该Imgnode在加载完毕后相应的图片资源就会在本地缓存。 123456function  preLoad (...src) &amp;#123;	src.forEach(item  =&amp;gt; &amp;#123;		const  imgNode = new Image()		imgNode.src = realSrc	&amp;#">
-<meta name="keywords" content="预加载&amp;懒加载">
+  <meta name="description" content="JavaScript中的异常处理方式对于JavaScript而言，我们面对的仅仅只是异常，异常的出现并不会直接导致JavaScript引擎崩溃，最多只会使当前执行的任务终止  当前代码块将作为一个任务压入任务队列中，JavaScript引擎线程会不断地从任务队列中提取任务执行 当任务执行过程中出现异常，且异常没有捕获处理，则会一直沿着调用栈一层层向外抛出，最终终止当前任务地执行 JavaScrip">
+<meta name="keywords" content="异常监控">
 <meta property="og:type" content="article">
-<meta property="og:title" content="前端架构&amp;软实力-预加载&amp;懒加载">
-<meta property="og:url" content="https://mrrs878.github.io/2020/04/24/前端架构&软实力-预加载&懒加载/index.html">
+<meta property="og:title" content="前端架构&amp;软实力-异常监控">
+<meta property="og:url" content="https://mrrs878.github.io/2020/06/08/前端架构&软实力-异常监控/index.html">
 <meta property="og:site_name" content="Mr.RS">
-<meta property="og:description" content="预加载实现思路new一个新的Imgnode，给Imgnode的src赋值为真正的src；该Imgnode在加载完毕后相应的图片资源就会在本地缓存。 123456function  preLoad (...src) &amp;#123;	src.forEach(item  =&amp;gt; &amp;#123;		const  imgNode = new Image()		imgNode.src = realSrc	&amp;#">
+<meta property="og:description" content="JavaScript中的异常处理方式对于JavaScript而言，我们面对的仅仅只是异常，异常的出现并不会直接导致JavaScript引擎崩溃，最多只会使当前执行的任务终止  当前代码块将作为一个任务压入任务队列中，JavaScript引擎线程会不断地从任务队列中提取任务执行 当任务执行过程中出现异常，且异常没有捕获处理，则会一直沿着调用栈一层层向外抛出，最终终止当前任务地执行 JavaScrip">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-24T13:19:48.105Z">
+<meta property="og:updated_time" content="2020-06-08T15:02:11.341Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="前端架构&amp;软实力-预加载&amp;懒加载">
-<meta name="twitter:description" content="预加载实现思路new一个新的Imgnode，给Imgnode的src赋值为真正的src；该Imgnode在加载完毕后相应的图片资源就会在本地缓存。 123456function  preLoad (...src) &amp;#123;	src.forEach(item  =&amp;gt; &amp;#123;		const  imgNode = new Image()		imgNode.src = realSrc	&amp;#">
-  <link rel="canonical" href="https://mrrs878.github.io/2020/04/24/前端架构&软实力-预加载&懒加载/">
+<meta name="twitter:title" content="前端架构&amp;软实力-异常监控">
+<meta name="twitter:description" content="JavaScript中的异常处理方式对于JavaScript而言，我们面对的仅仅只是异常，异常的出现并不会直接导致JavaScript引擎崩溃，最多只会使当前执行的任务终止  当前代码块将作为一个任务压入任务队列中，JavaScript引擎线程会不断地从任务队列中提取任务执行 当任务执行过程中出现异常，且异常没有捕获处理，则会一直沿着调用栈一层层向外抛出，最终终止当前任务地执行 JavaScrip">
+  <link rel="canonical" href="https://mrrs878.github.io/2020/06/08/前端架构&软实力-异常监控/">
 
 
 <script id="page-configurations">
@@ -81,7 +81,7 @@
   };
 </script>
 
-  <title>前端架构&软实力-预加载&懒加载 | Mr.RS</title>
+  <title>前端架构&软实力-异常监控 | Mr.RS</title>
   
 
 
@@ -239,7 +239,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/04/24/前端架构&软实力-预加载&懒加载/">
+    <link itemprop="mainEntityOfPage" href="https://mrrs878.github.io/2020/06/08/前端架构&软实力-异常监控/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Mr.RS">
@@ -253,7 +253,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            前端架构&软实力-预加载&懒加载
+            前端架构&软实力-异常监控
             
 
           
@@ -270,7 +270,7 @@
                 
               
 
-              <time title="创建时间：2020-04-24 21:17:04 / 修改时间：21:19:48" itemprop="dateCreated datePublished" datetime="2020-04-24T21:17:04+08:00">2020-04-24</time>
+              <time title="创建时间：2020-06-08 22:33:01 / 修改时间：23:02:11" itemprop="dateCreated datePublished" datetime="2020-06-08T22:33:01+08:00">2020-06-08</time>
             </span>
           
             
@@ -306,44 +306,84 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="预加载"><a href="#预加载" class="headerlink" title="预加载"></a>预加载</h1><h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><p><code>new</code>一个新的<code>Imgnode</code>，给<code>Imgnode</code>的<code>src</code>赋值为真正的<code>src</code>；该<code>Imgnode</code>在加载完毕后相应的图片资源就会在本地缓存。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>  <span class="title">preLoad</span> (<span class="params">...src</span>) </span>&#123;</span><br><span class="line">	src.forEach(<span class="function"><span class="params">item</span>  =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">const</span>  imgNode = <span class="keyword">new</span> Image()</span><br><span class="line">		imgNode.src = realSrc</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h1><h2 id="实现思路-1"><a href="#实现思路-1" class="headerlink" title="实现思路"></a>实现思路</h2><p>首先设置一个临时属性 <code>data-src</code>，当前元素是否出现在视口时使用 <code>src</code> 代替 <code>data-src</code>。</p>
+        <h1 id="JavaScript中的异常处理方式"><a href="#JavaScript中的异常处理方式" class="headerlink" title="JavaScript中的异常处理方式"></a>JavaScript中的异常处理方式</h1><p>对于JavaScript而言，我们面对的仅仅只是异常，异常的出现并不会直接导致JavaScript引擎崩溃，最多只会使当前执行的任务终止</p>
 <ol>
-<li><p><code>window.onscroll</code> + <code>clientTop</code>，<code>offsetTop</code>，<code>clientHeight</code> <code>scrollTop</code> + 节流 👎</p>
-<p>不容易判断元素的位置</p>
-</li>
-<li><p><code>window.onscroll</code> + <code>Element.getBoundingClientRect()</code> + 节流👎</p>
-<p><code>getBoundingClientRect</code>会触发回流</p>
-</li>
-<li><p><code>IntersectionObserver</code>👍</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;img  style=<span class="string">"width: 200px;"</span>  id=<span class="string">"img"</span>  data-src=<span class="string">"./assets/yoda.jpg"</span>  alt=<span class="string">""</span>  srcset=<span class="string">""</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span>  observer = <span class="keyword">new</span>  IntersectionObserver(<span class="function"><span class="params">changes</span>=&gt;</span> &#123;</span><br><span class="line">	changes.forEach(<span class="function"><span class="params">change</span>  =&gt;</span> &#123;</span><br><span class="line">		<span class="comment">// change.isIntersecting 判断当前元素是否出现在视口中</span></span><br><span class="line">		<span class="keyword">if</span> (change.isIntersecting) &#123;</span><br><span class="line">			<span class="keyword">const</span>  img = change.target</span><br><span class="line">			img.src = img.dataset.src</span><br><span class="line">			<span class="built_in">Reflect</span>.deleteProperty(img.dataset, <span class="string">"src"</span>)</span><br><span class="line">			observer.unobserve(img)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;)</span><br><span class="line">observer.observe(<span class="built_in">document</span>.querySelector(<span class="string">"#img"</span>))</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>img</code>的<code>lazy</code>属性 👎</p>
-<p>兼容性差，<a href="https://www.jianguoyun.com/static/stackedit/[https://www.zhangxinxu.com/wordpress/2019/09/native-img-loading-lazy/](https://www.zhangxinxu.com/wordpress/2019/09/native-img-loading-lazy/)" target="_blank" rel="noopener">具体实践</a></p>
-<p><code>&lt;img loading=&quot;lazy&quot; src=&quot;http://blog.p18c.top/imgs/avatar.png&quot; alt=&quot;&quot; srcset=&quot;&quot;&gt;</code></p>
-</li>
+<li>当前代码块将作为一个任务压入任务队列中，JavaScript引擎线程会不断地从任务队列中提取任务执行</li>
+<li>当任务执行过程中出现异常，且异常没有捕获处理，则会一直沿着调用栈一层层向外抛出，最终终止当前任务地执行</li>
+<li>JavaScript引擎线程继续从任务队列中取出下一个任务继续执行</li>
 </ol>
-<h1 id="预加载-VS-懒加载"><a href="#预加载-VS-懒加载" class="headerlink" title="预加载 VS 懒加载"></a>预加载 VS 懒加载</h1><table>
+<p>异常主要分为两大中：<strong>运行时错误</strong>和语<strong>法错误</strong>。语法错误在编写代码期间很容易被发现，运行时错误主要由取值/赋值异常、函数执行出错等</p>
+<h1 id="如何捕获异常"><a href="#如何捕获异常" class="headerlink" title="如何捕获异常"></a>如何捕获异常</h1><h2 id="捕获普通JavaScript异常"><a href="#捕获普通JavaScript异常" class="headerlink" title="捕获普通JavaScript异常"></a>捕获普通JavaScript异常</h2><p>对于普通的JavaScript异常，常见的做法是使用<code>try-catch</code>进行包裹，当<code>try</code>中的代码块执行出错后，<code>catch</code>将能捕捉到异常，代码也可以继续执行下去</p>
+<p>但<code>try-catch</code>处理异常的能力有限，<strong>只能捕捉到运行时非异步错误</strong>，对于语法错误和异步错误就显得无能为力，捕捉不到</p>
+<h2 id="捕获异步JavaScript异常"><a href="#捕获异步JavaScript异常" class="headerlink" title="捕获异步JavaScript异常"></a>捕获异步JavaScript异常</h2><p><code>window.onerror</code>捕获异常能力比<code>try-catch</code>稍微强点，无论是异步还是非异步运行时错误，<code>onerror</code>都能捕获到</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onerror = <span class="function"><span class="keyword">function</span> (<span class="params">msg, url, row, col, error</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'我知道错误了'</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(&#123;</span><br><span class="line">    msg,  url,  row, col, error</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>使用注意：</p>
+<ul>
+<li>在实际的使用过程中，<code>windows.onerror</code> 主要是来捕获预料之外的错误，而 <code>try-catch</code> 则是用来在可预见情况下监控特定的错误，两者结合使用更加高效。</li>
+<li><code>window.onerror</code> 函数只有在返回 true 的时候，异常才不会向上抛出，否则即使是知道异常的发生控制台还是会显示</li>
+<li><code>window.onerror</code>无法捕获到网络异常的错误</li>
+<li>无法捕获<code>Promise</code>异常</li>
+</ul>
+<h2 id="捕获Promise-异常"><a href="#捕获Promise-异常" class="headerlink" title="捕获Promise 异常"></a>捕获<strong>Promise</strong> 异常</h2><p>通过 <code>Promise</code> 可以帮助我们解决异步回调地狱的问题，但是一旦 ~实例抛出异常而你没有用 <code>catch</code> 去捕获的话，<code>onerror</code> 或 <code>try-catch</code> 也无能为力，无法捕捉到错误</p>
+<p>对此可以添加一个 <strong><code>Promise</code> 全局异常捕获事件</strong> <code>unhandledrejection</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">"unhandledrejection"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">  e.preventDefault()</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'我知道 promise 的错误了'</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(e.reason);</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<table>
 <thead>
 <tr>
 <th></th>
-<th>预加载</th>
-<th>懒加载</th>
+<th><code>同步方法</code></th>
+<th><code>异步方法</code></th>
+<th><code>资源加载</code></th>
+<th><code>Promise</code></th>
+<th><code>async/await</code></th>
 </tr>
 </thead>
 <tbody><tr>
-<td>优点</td>
-<td>真正的img渲染时速度快</td>
-<td>减轻获取资源时的压力(按需加载)</td>
+<td><code>try/catch</code></td>
+<td>👌</td>
+<td></td>
+<td></td>
+<td></td>
+<td>👌</td>
 </tr>
 <tr>
-<td>缺点</td>
-<td>加载资源过多(有些图片可能不会展示)</td>
-<td>真正的img渲染时才获取，若网络差依然体验不好</td>
+<td><code>onerror</code></td>
+<td>👌</td>
+<td>👌</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>error Handler</code></td>
+<td>👌</td>
+<td>👌</td>
+<td>👌</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>unhandledrejection</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>👌</td>
+<td>👌</td>
 </tr>
 </tbody></table>
+<h2 id="捕获Vue-js-React-js等项目中的异常"><a href="#捕获Vue-js-React-js等项目中的异常" class="headerlink" title="捕获Vue.js/React.js等项目中的异常"></a>捕获Vue.js/React.js等项目中的异常</h2><ul>
+<li><p>Vue.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.config.errorHandler = <span class="function">(<span class="params">err, vm, info</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'error: '</span>, err)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>React.js</p>
+<p>自定义<code>ErrorBoundary</code>组件</p>
+</li>
+</ul>
+<h1 id="上报异常"><a href="#上报异常" class="headerlink" title="上报异常"></a>上报异常</h1><p>参考：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/142418902" target="_blank" rel="noopener">从0到1，Vue大牛的前端搭建——异常监控系统</a></p>
+<p><a href="https://juejin.im/post/5b53218cf265da0f9313a3de" target="_blank" rel="noopener">前端异常监控</a></p>
 
     </div>
 
@@ -359,7 +399,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/预加载-懒加载/" rel="tag"># 预加载&懒加载</a>
+              <a href="/tags/异常监控/" rel="tag"># 异常监控</a>
             
           </div>
         
@@ -369,8 +409,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2020/04/21/前端架构&软实力-移动端适配/" rel="next" title="前端架构/软实力-移动端适配">
-                  <i class="fa fa-chevron-left"></i> 前端架构/软实力-移动端适配
+                <a href="/2020/06/04/前端架构&软实力-前端埋点/" rel="next" title="前端架构&软实力-前端埋点">
+                  <i class="fa fa-chevron-left"></i> 前端架构&软实力-前端埋点
                 </a>
               
             </div>
@@ -378,10 +418,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2020/04/24/JavaScript-模块化机制/" rel="prev" title="JavaScript-模块化机制">
-                  JavaScript-模块化机制 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -427,7 +463,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#预加载"><span class="nav-number">1.</span> <span class="nav-text">预加载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现思路"><span class="nav-number">1.1.</span> <span class="nav-text">实现思路</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#懒加载"><span class="nav-number">2.</span> <span class="nav-text">懒加载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现思路-1"><span class="nav-number">2.1.</span> <span class="nav-text">实现思路</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#预加载-VS-懒加载"><span class="nav-number">3.</span> <span class="nav-text">预加载 VS 懒加载</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript中的异常处理方式"><span class="nav-number">1.</span> <span class="nav-text">JavaScript中的异常处理方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何捕获异常"><span class="nav-number">2.</span> <span class="nav-text">如何捕获异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获普通JavaScript异常"><span class="nav-number">2.1.</span> <span class="nav-text">捕获普通JavaScript异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获异步JavaScript异常"><span class="nav-number">2.2.</span> <span class="nav-text">捕获异步JavaScript异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获Promise-异常"><span class="nav-number">2.3.</span> <span class="nav-text">捕获Promise 异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获Vue-js-React-js等项目中的异常"><span class="nav-number">2.4.</span> <span class="nav-text">捕获Vue.js/React.js等项目中的异常</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#上报异常"><span class="nav-number">3.</span> <span class="nav-text">上报异常</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
