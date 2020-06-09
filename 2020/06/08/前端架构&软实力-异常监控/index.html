@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="Mr.RS">
 <meta property="og:description" content="JavaScript中的异常处理方式对于JavaScript而言，我们面对的仅仅只是异常，异常的出现并不会直接导致JavaScript引擎崩溃，最多只会使当前执行的任务终止  当前代码块将作为一个任务压入任务队列中，JavaScript引擎线程会不断地从任务队列中提取任务执行 当任务执行过程中出现异常，且异常没有捕获处理，则会一直沿着调用栈一层层向外抛出，最终终止当前任务地执行 JavaScrip">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-06-08T15:02:11.341Z">
+<meta property="og:updated_time" content="2020-06-09T14:47:25.904Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端架构&amp;软实力-异常监控">
 <meta name="twitter:description" content="JavaScript中的异常处理方式对于JavaScript而言，我们面对的仅仅只是异常，异常的出现并不会直接导致JavaScript引擎崩溃，最多只会使当前执行的任务终止  当前代码块将作为一个任务压入任务队列中，JavaScript引擎线程会不断地从任务队列中提取任务执行 当任务执行过程中出现异常，且异常没有捕获处理，则会一直沿着调用栈一层层向外抛出，最终终止当前任务地执行 JavaScrip">
@@ -270,11 +270,19 @@
                 
               
 
-              <time title="创建时间：2020-06-08 22:33:01 / 修改时间：23:02:11" itemprop="dateCreated datePublished" datetime="2020-06-08T22:33:01+08:00">2020-06-08</time>
+              <time title="创建时间：2020-06-08 22:33:01" itemprop="dateCreated datePublished" datetime="2020-06-08T22:33:01+08:00">2020-06-08</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-09 22:47:25" itemprop="dateModified" datetime="2020-06-09T22:47:25+08:00">2020-06-09</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -333,15 +341,15 @@
 <thead>
 <tr>
 <th></th>
-<th><code>同步方法</code></th>
-<th><code>异步方法</code></th>
-<th><code>资源加载</code></th>
-<th><code>Promise</code></th>
-<th><code>async/await</code></th>
+<th>同步方法</th>
+<th>异步方法</th>
+<th>资源加载</th>
+<th>Promise</th>
+<th>async/await</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>try/catch</code></td>
+<td>try/catch</td>
 <td>👌</td>
 <td></td>
 <td></td>
@@ -351,13 +359,13 @@
 <tr>
 <td><code>onerror</code></td>
 <td>👌</td>
-<td>👌</td>
+<td><code>👌</code></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 <tr>
-<td><code>error Handler</code></td>
+<td>error Handler</td>
 <td>👌</td>
 <td>👌</td>
 <td>👌</td>
@@ -365,7 +373,7 @@
 <td></td>
 </tr>
 <tr>
-<td><code>unhandledrejection</code></td>
+<td>unhandledrejection</td>
 <td></td>
 <td></td>
 <td></td>
@@ -378,10 +386,18 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.config.errorHandler = <span class="function">(<span class="params">err, vm, info</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'error: '</span>, err)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>React.js</p>
-<p>自定义<code>ErrorBoundary</code>组件</p>
+<p>自定义ErrorBoundary组件</p>
 </li>
 </ul>
-<h1 id="上报异常"><a href="#上报异常" class="headerlink" title="上报异常"></a>上报异常</h1><p>参考：</p>
+<h2 id="实际项目运用"><a href="#实际项目运用" class="headerlink" title="实际项目运用"></a>实际项目运用</h2><p>写一个webpack插件全局劫持<code>console.error</code></p>
+<h1 id="上报异常"><a href="#上报异常" class="headerlink" title="上报异常"></a>上报异常</h1><ul>
+<li>异步请求上报, 后端提供接口，或者直接发到日志服务器</li>
+<li>img请求上报, url参数带上错误信息<ul>
+<li>eg:(new Image()).src = ‘<a href="https://xxx&#39;" target="_blank" rel="noopener">https://xxx&#39;</a></li>
+</ul>
+</li>
+</ul>
+<p>参考：</p>
 <p><a href="https://zhuanlan.zhihu.com/p/142418902" target="_blank" rel="noopener">从0到1，Vue大牛的前端搭建——异常监控系统</a></p>
 <p><a href="https://juejin.im/post/5b53218cf265da0f9313a3de" target="_blank" rel="noopener">前端异常监控</a></p>
 
@@ -463,7 +479,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript中的异常处理方式"><span class="nav-number">1.</span> <span class="nav-text">JavaScript中的异常处理方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何捕获异常"><span class="nav-number">2.</span> <span class="nav-text">如何捕获异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获普通JavaScript异常"><span class="nav-number">2.1.</span> <span class="nav-text">捕获普通JavaScript异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获异步JavaScript异常"><span class="nav-number">2.2.</span> <span class="nav-text">捕获异步JavaScript异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获Promise-异常"><span class="nav-number">2.3.</span> <span class="nav-text">捕获Promise 异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获Vue-js-React-js等项目中的异常"><span class="nav-number">2.4.</span> <span class="nav-text">捕获Vue.js/React.js等项目中的异常</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#上报异常"><span class="nav-number">3.</span> <span class="nav-text">上报异常</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript中的异常处理方式"><span class="nav-number">1.</span> <span class="nav-text">JavaScript中的异常处理方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何捕获异常"><span class="nav-number">2.</span> <span class="nav-text">如何捕获异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获普通JavaScript异常"><span class="nav-number">2.1.</span> <span class="nav-text">捕获普通JavaScript异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获异步JavaScript异常"><span class="nav-number">2.2.</span> <span class="nav-text">捕获异步JavaScript异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获Promise-异常"><span class="nav-number">2.3.</span> <span class="nav-text">捕获Promise 异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获Vue-js-React-js等项目中的异常"><span class="nav-number">2.4.</span> <span class="nav-text">捕获Vue.js/React.js等项目中的异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际项目运用"><span class="nav-number">2.5.</span> <span class="nav-text">实际项目运用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#上报异常"><span class="nav-number">3.</span> <span class="nav-text">上报异常</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -534,7 +550,7 @@
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共67.9k字</span>
+  <span class="post-count">博客全站共68k字</span>
 </div>
 <div class="copyright">
   &copy; 
